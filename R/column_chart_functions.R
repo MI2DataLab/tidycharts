@@ -224,6 +224,27 @@ add_first_bar <- function(svg_string,
 }
 
 
+#' Add waterfall style bars to the column chart
+#'
+#' @param svg_string
+#' @param df
+#' @param x
+#' @param series
+#' @param bar_width
+#' @param pos_color
+#' @param neg_color
+#' @param add_result_bar boolean flag to add result bar as the last bar or not.
+#' @param result_bar_pos flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completly new bar. If add_result_bar is false, it is ignored.
+#' @param positive_prefix how to indicate positive value, ie. "+" or ""(empty string).
+#' @param result_bar_color color of result bar. If add_result_bar is false, it is ignored.
+#' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
+#' @param ref_value first bar starts from this value, intended to be used with add_first_bar function.
+
+#'
+#' @return
+#' @export
+#'
+#' @examples
 add_waterfall_bars <-
   function(svg_string,
            df,
@@ -238,27 +259,7 @@ add_waterfall_bars <-
            result_bar_color = NULL,
            result_title = NULL,
            ref_value = 0) {
-    #' Add waterfall style bars to the column chart
-    #'
-    #' @param svg_string
-    #' @param df
-    #' @param x
-    #' @param series
-    #' @param bar_width
-    #' @param pos_color
-    #' @param neg_color
-    #' @param add_result_bar boolean flag to add result bar as the last bar or not.
-    #' @param result_bar_pos flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completly new bar. If add_result_bar is false, it is ignored.
-    #' @param positive_prefix how to indicate positive value, ie. "+" or ""(empty string).
-    #' @param result_bar_color color of result bar. If add_result_bar is false, it is ignored.
-    #' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
-    #' @param ref_value first bar starts from this value, intended to be used with add_first_bar function.
 
-    #'
-    #' @return
-    #' @export
-    #'
-    #' @examples
     x_axis_pos <- 250
     max_bar_height <- 200
     top_value <- max(df[series])
@@ -740,6 +741,14 @@ reference <- function(df, x, series, ref_value) {
 }
 
 
+#' Create a basic column chart.
+#'
+#' @param df data frame with data to be plotted
+#' @param x vector of labels that will be on the x axis on the chart
+#' @param series names of columns in df that will be plotted
+#'
+#' @return string containing plot in svg format. It can be displayed using \code{show} function.
+#' @export
 column_chart <- function(df, x, series = NULL) {
   bar_width = 32
   # TODO all values in one bar must have the same sign
@@ -752,6 +761,16 @@ column_chart <- function(df, x, series = NULL) {
 }
 
 
+#' Create normalized column chart. Each bar is divided proportionally
+#'
+#' @param df data frame containing data
+#' @param x vector with x axis labels
+#' @param series column names in df that will be plotted
+#'
+#' @return
+#' @export
+#'
+#' @examples
 column_chart_normalized <- function(df, x, series = NULL) {
   bar_width = 32
   stopifnot(length(series) <= 6) # maximum 6 series

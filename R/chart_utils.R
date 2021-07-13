@@ -18,6 +18,14 @@ finalize <- function(svg_string) {
 }
 
 
+#' Show SVG graphic
+#'
+#' @param svg_string character vector containing graphics in svg format
+#'
+#' @return
+#' @export
+#'
+#' @examples
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
