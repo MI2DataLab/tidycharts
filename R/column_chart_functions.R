@@ -1,9 +1,3 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils.R"))
-source(file.path("utils", "chart_utils.R"))
-
-
 add_bar <-
   function(svg_string,
            df,
@@ -31,14 +25,14 @@ add_bar <-
       bar_colors <- rep(color, 6)
       text_colors <- rep("black", 6)
     }
-    
+
     bar_height = 0 # height of existing bar, updated in the loop
-    
+
     for (j in 1:length(series)) {
       column_name <- series[j]
       height <- df[i, column_name] * 200 / max_height
       color <- bar_colors[j]
-      
+
       # add bar
       svg_string <- draw_bar(
         svg_string = svg_string,
@@ -49,7 +43,7 @@ add_bar <-
         color = color
       )
       bar_height <- bar_height + height
-      
+
       # numeric value on bar
       if (abs(height) > 1.5 * 12 & length(series) > 1) {
         # height at least 150% of font size and more than one series
@@ -89,7 +83,7 @@ add_bars <-
     #' @param x_offset how much bars should be offset to the right (negative value means offsetting to the left)
     #' @param add_x_axis boolean flag, if true automatically adds x axis with label
     #' @param color optional custom color of the bars series, in svg string format, ie.: "rgb(223,12,121)" or "black"
-    
+
     # TODO check series lengths and NA there
     svg_string <- paste(svg_string,
                         initialize(
@@ -97,13 +91,13 @@ add_bars <-
                         ),
                         sep = "\n")
     n_bars = length(x)
-    
+
     n_splits = length(series)
     x_axis_pos <- 250
     max_height <- ifelse(is.null(max_val),
                          max(abs(rowSums(df[series]))),
                          max_val)
-    
+
     sums <- rowSums(df[series])
     for (i in 1:n_bars) {
       x_label <- substr(x[i], 1, 4)
@@ -128,7 +122,7 @@ add_bars <-
           y = x_axis_pos + sign(sums[i]) * 4.8 + ifelse(sums[i] > 0, 12, 0)
           # if total value of the bar is negative -> x_label is on top of x axis
         )
-        
+
         # add x axis
         svg_string <- draw_x_axis(
           svg_string = svg_string,
@@ -188,7 +182,7 @@ add_first_bar <- function(svg_string,
     x = x_pos + 0.75 * bar_width,
     y = x_label_pos
   )
-  
+
   if (bar_height >= 0) {
     bar_y <- x_axis_pos  - bar_height
     bar_h <- ceiling(bar_height)
@@ -259,7 +253,7 @@ add_waterfall_bars <-
     #' @param result_bar_color color of result bar. If add_result_bar is false, it is ignored.
     #' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
     #' @param ref_value first bar starts from this value, intended to be used with add_first_bar function.
-    
+
     #'
     #' @return
     #' @export
@@ -269,7 +263,7 @@ add_waterfall_bars <-
     max_bar_height <- 200
     top_value <- max(df[series])
     prev_level <- ref_value / top_value * max_bar_height
-    
+
     # calculate x labels y position
     low_value <- min(df[series])
     x_label_pos <- ifelse(
@@ -277,19 +271,19 @@ add_waterfall_bars <-
       x_axis_pos + 4.8 + 10,
       x_axis_pos - low_value / top_value * max_bar_height + 25
     )
-    
+
     for (i in 1:length(x)) {
       bar_top_pos <- df[i, series] / top_value * max_bar_height
       bar_height <- bar_top_pos - prev_level
       x_pos = 1.5 * bar_width * (i - 1)
-      
+
       if (i == 1)
         actual_delta <- df[1, series] - ref_value
       else{
         actual_delta <- df[i, series] - df[i - 1, series]
       }
-      
-      
+
+
       # add axis on the bottom
       svg_string <- draw_x_axis(
         svg_string = svg_string,
@@ -297,7 +291,7 @@ add_waterfall_bars <-
         y = x_axis_pos,
         bar_width = bar_width
       )
-      
+
       # add label on axis
       svg_string <- draw_text(
         svg_string = svg_string,
@@ -305,7 +299,7 @@ add_waterfall_bars <-
         x = x_pos + 0.75 * bar_width,
         y = x_label_pos
       )
-      
+
       if (bar_height >= 0) {
         bar_y <- x_axis_pos - prev_level - bar_height
         bar_h <- ceiling(bar_height)
@@ -394,7 +388,7 @@ add_waterfall_bars <-
         y = x_axis_pos - result_hight / 2,
         text_color = "white"
       )
-      
+
       if (offset > bar_width) {
         # add reference line
         svg_string <- draw_bar(
@@ -412,7 +406,7 @@ add_waterfall_bars <-
           y = x_axis_pos,
           bar_width = bar_width
         )
-        
+
         # add label on axis
         svg_string <- draw_text(
           svg_string = svg_string,
@@ -437,22 +431,22 @@ add_abs_variance_bars <-
     # TODO x_axis_pos depending on negative values
     x_axis_pos <- 200
     x_pos <- 35
-    
+
     color <- choose_variance_colors(colors)
     max_val <- max(baseline, real)
     variance <- real - baseline
-    
+
     # add legend on the left of plot
     first_bar_h <- variance[1] / max_val * 200
-    
+
     svg_string <- draw_text(
       svg_string,
-      text = paste0("Δ", x_title),
+      text = paste0("delta", x_title), # TODO add delta
       x = x_pos,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
     )
-    
+
     for (i in 1:length(x)) {
       # add axis
       svg_string <- draw_bar(
@@ -463,9 +457,9 @@ add_abs_variance_bars <-
         width = 1.5 * bar_width,
         color = "rgb(166,166,166)"
       )
-      
+
       bar_h <- abs(variance[i] / max_val * 200)
-      
+
       if (variance[i] > 0) {
         c <- color[["pos_color"]]
         bar_y <- x_axis_pos - bar_h + 2.4
@@ -485,7 +479,7 @@ add_abs_variance_bars <-
         label_text <- variance[i]
         x_label_y <- x_axis_pos + 4.8 + 12
       }
-      
+
       # add bar
       svg_string <- draw_bar(
         svg_string,
@@ -529,19 +523,19 @@ add_relative_variance_pins <-
     x_pos <- 35
     values <- real / baseline * 100 - 100
     max_val <- 100
-    
+
     # add legend on the left of plot
     first_bar_h <- values[1] / max_val * 100
-    
+
     svg_string <- draw_text(
       svg_string,
-      text = paste0("Δ", x_title),
+      text = paste0("delta", x_title), # TODO add delta sign
       x = x_pos + bar_width * 0.5,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
     )
-    
-    
+
+
     for (i in 1:length(x)) {
       # add axis
       svg_string <- draw_bar(
@@ -552,9 +546,9 @@ add_relative_variance_pins <-
         width = 1.5 * bar_width,
         color = "rgb(166,166,166)"
       )
-      
+
       bar_h <- abs(values[i] / max_val * 100)
-      
+
       if (values[i] > 0) {
         c <- color[["pos_color"]]
         bar_y <- x_axis_pos - bar_h + 2.4
@@ -577,7 +571,7 @@ add_relative_variance_pins <-
         label_text <- round(values[i])
         x_label_y <- x_axis_pos + 4.8 + 12
       }
-      
+
       # add box
       svg_string <- draw_bar(
         svg_string,
@@ -633,10 +627,10 @@ add_triangles <- function(svg_string,
                         transformation = paste0("translate(", translate[1], ",", translate[2], ")")
                       ),
                       sep = "\n")
-  
+
   for (i in 1:length(x)) {
     x_pos <- 1.5 * bar_width * (i - 1) + 4 + 0.25 * bar_width
-    
+
     svg_string <- draw_triangle(
       svg_string = svg_string,
       tip_position_x = x_pos,
@@ -665,7 +659,7 @@ add_legend <- function(svg_string, df, x, series, bar_width) {
   for (column_name in series) {
     bar_height <- df[length(x), column_name] * 200 / max_height
     label_height <- bar_height / 2
-    
+
     svg_string <- draw_text(
       svg_string = svg_string,
       text = column_name,
@@ -673,7 +667,7 @@ add_legend <- function(svg_string, df, x, series, bar_width) {
       y = x_axis_pos - label_height - total_height + 6,
       text_anchor = "left"
     )
-    
+
     total_height <- total_height + bar_height
   }
   return(svg_string)
@@ -693,11 +687,11 @@ add_top_values <-
     x_axis_pos <- 250
     heights <- rowSums(df[series])
     max_height <-
-      if_else(is.null(max_val), max(abs(heights)), max_val)
-    
-    ref_value <- 
-      if_else(is.null(ref_value), max_height, ref_value)
-    
+      ifelse(is.null(max_val), max(abs(heights)), max_val)
+
+    ref_value <-
+      ifelse(is.null(ref_value), max_height, ref_value)
+
     if (is.null(labels)) {
       labels <- heights
     }
@@ -712,11 +706,11 @@ add_top_values <-
                           transformation = paste0("translate(", translate[1], ",", translate[2], ")")
                         ),
                         sep = "\n")
-    
+
     for (i in 1:length(x)) {
       x_pos <- 1.5 * bar_width * (i - 1)
       bar_height <- heights[i] * 200 / max_height
-      
+
       # numeric value label for total bar
       svg_string <- draw_text(
         svg_string = svg_string,
@@ -751,9 +745,9 @@ column_chart <- function(df, x, series = NULL) {
   # TODO all values in one bar must have the same sign
   stopifnot(length(series) <= 6) # maximum 6 series
   initialize() %>%
-    add_bars(., df, x, series, bar_width = bar_width) %>%
-    add_legend(., df, x, series, bar_width = bar_width) %>%
-    add_top_values(., df, x, series, bar_width = bar_width) %>%
+    add_bars(df, x, series, bar_width = bar_width) %>%
+    add_legend(df, x, series, bar_width = bar_width) %>%
+    add_top_values(df, x, series, bar_width = bar_width) %>%
     finalize()
 }
 
@@ -763,9 +757,9 @@ column_chart_normalized <- function(df, x, series = NULL) {
   stopifnot(length(series) <= 6) # maximum 6 series
   normalized_df <- normalize_rows(df, x, series)
   initialize() %>%
-    add_bars(., normalized_df, x, series, bar_width = bar_width) %>%
-    add_legend(., normalized_df, x, series, bar_width = bar_width) %>%
-    draw_100_mark_horizontal(., x, bar_width = bar_width, line_y = 50) %>%
+    add_bars(normalized_df, x, series, bar_width = bar_width) %>%
+    add_legend( normalized_df, x, series, bar_width = bar_width) %>%
+    draw_ref_line_horizontal( x, bar_width = bar_width, line_y = 50, label = "100") %>%
     finalize()
 }
 
@@ -778,9 +772,9 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL) {
   index_level <-
     ref_value / max(df[series]) * 200
   initialize() %>%
-    add_bars(., referenced_df, x, series, bar_width = bar_width) %>%
-    draw_ref_line_horizontal(., x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
-    add_top_values(., df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>% 
+    add_bars( referenced_df, x, series, bar_width = bar_width) %>%
+    draw_ref_line_horizontal( x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
+    add_top_values( df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
     finalize()
 }
 
@@ -788,7 +782,7 @@ column_chart_waterfall <- function(df, x, series) {
   bar_width = 32
   stopifnot(length(series) == 1) # only one series
   initialize() %>%
-    add_waterfall_bars(., df, x, series, bar_width) %>%
+    add_waterfall_bars( df, x, series, bar_width) %>%
     finalize()
 }
 
@@ -805,10 +799,10 @@ column_chart_absolute_variance <-
     #'
     bar_width <- 32
     x_title <- "PY" # TODO get title as param
-    
+
     stopifnot(colors %in% c(1, 2))
     initialize() %>%
-      add_abs_variance_bars(., x, baseline, real, colors, bar_width, x_title) %>%
+      add_abs_variance_bars( x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
 
@@ -825,27 +819,25 @@ column_chart_grouped <-
     #'  @param background vector representing heights of bars visible in the background
     #'  @param triangles optional vector representing heights of triangles
     #'  @param titles vector of series titles. Consists of 2 or 3 elements
-    
+
     bar_width <- 32
     translation_vec <- c(30, 0)
-    
+
     stopifnot(length(titles) >= 2)
     df <- data.frame(foreground, background)
     colnames(df) <- titles[1:2]
-    
+
     if (!is.null(triangles)) {
       stopifnot(length(titles) == 3)
       triangles_df <-  data.frame(triangles)
       df <- cbind(df, triangles_df)
       colnames(df) <- titles
     }
-    print(str(df))
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-    
+
     initialize() %>%
       add_bars(
-        .,
         df[, titles[2], drop = FALSE],
         x = x,
         bar_width = bar_width,
@@ -858,7 +850,6 @@ column_chart_grouped <-
         max_val = max_bar_height
       ) %>%
       add_bars(
-        .,
         df[, titles[1], drop = FALSE],
         x = x,
         bar_width = bar_width,
@@ -886,7 +877,7 @@ column_chart_grouped <-
         )
       } %>%
       add_top_values(
-        .,
+
         df,
         labels = foreground,
         x = x,
@@ -908,11 +899,11 @@ column_chart_relative_variance <-
     #' @param colors 1 if green color represents positive values having good buisness
     #' impact and red negative values having bad impact or 2 if otherwise
     #' @param x_title title of a series
-    
+
     bar_width <- 32
-    
+
     initialize() %>%
-      add_relative_variance_pins(., x, baseline, real, colors, bar_width, x_title) %>%
+      add_relative_variance_pins( x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
 
@@ -921,19 +912,19 @@ column_chart_waterfall_variance <-
     bar_width <- 32
     difference <- real - baseline
     df <- data.frame("series" = difference)
-    
+
     initialize() %>%
       add_first_bar(
-        .,
+
         x[1],
         df[1, 'series'],
         top_value = max(df['series']),
         low_value = min(df['series']),
         bar_width = bar_width
       ) %>%
-      initialize(., transformation = "translate(50,0)") %>%
+      initialize( transformation = "translate(50,0)") %>%
       add_waterfall_bars(
-        .,
+
         df[-1, , drop = FALSE],
         x[-1],
         series = "series",
