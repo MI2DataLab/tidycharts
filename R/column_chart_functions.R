@@ -1,4 +1,5 @@
-add_bar <-
+
+add_column_bar <-
   function(svg_string,
            df,
            i,
@@ -7,31 +8,22 @@ add_bar <-
            series,
            max_height,
            bar_width,
-           color = NULL) {
+           color = NULL,
+           style = NULL) {
     x_axis_pos <- 250
-    if (is.null(color)) {
-      bar_colors <-
-        c(
-          "rgb(64,64,64)",
-          "rgb(216,216,216)",
-          "rgb(96,96,96)",
-          "rgb(192,192,192)",
-          "rgb(128,128,128)",
-          "rgb(160,160,160)"
-        )
-      text_colors <-
-        c("white", "black", "white", "black", "white", "black")
-    } else{
-      bar_colors <- rep(color, 6)
-      text_colors <- rep("black", 6)
-    }
 
     bar_height = 0 # height of existing bar, updated in the loop
 
     for (j in 1:length(series)) {
       column_name <- series[j]
       height <- df[i, column_name] * 200 / max_height
-      color <- bar_colors[j]
+      if (is.null(color)) {
+        colors_ <- get_gray_color_stacked(j)
+      }
+      else{
+        colors_ <- list(bar_color = color,
+                        text_color = "black")
+      }
 
       # add bar
       svg_string <- draw_bar(
@@ -40,7 +32,8 @@ add_bar <-
         y = x_axis_pos - height - bar_height,
         height = ceiling(height),
         width = bar_width,
-        color = color
+        color = colors_$bar_color,
+        style = style
       )
       bar_height <- bar_height + height
 
@@ -52,7 +45,7 @@ add_bar <-
           text = round(df[i, series[j], 1], digits = 1),
           x = x_pos + bar_width * 1.5 / 2,
           y = x_axis_pos - bar_height + (height / 2) + 6,
-          text_color =  text_colors[j]
+          text_color = colors_$text_color
         )
       }
     }
@@ -60,12 +53,34 @@ add_bar <-
   }
 
 
+
+
+#' add bars to svg string
+#'
+#' @param svg_string the svg string to br appended, need to be finalized after
+#' @param df data to be plotted - data frame in wide format
+#' @param x vector to be on x axis
+#' @param series character vector of column names representing series to split bars by it
+#' @param bar_width the width of plotted bar
+#' @param styles vector of styles of the bars
+#' @param x_offset how much bars should be offset to the right (negative value means offsetting to the left)
+#' @param translate vector of translation of the bars from the origin
+#' @param add_x_axis boolean flag, if true automatically adds x axis with label
+#' @param color optional custom color of the bars series, in svg string format, ie.: "rgb(223,12,121)" or "black"
+#' @param add_legend boolean flag if legend should be added
+#' @param legend_position string with legend position
+#' @param max_val maximal value that bars will be scaled to
+#'
+#' @return svg string with added bars
+#'
+#' @examples
 add_bars <-
   function(svg_string,
            df,
            x,
            series,
            bar_width,
+           styles = NULL,
            x_offset = 0,
            translate = c(0, 0),
            add_x_axis = TRUE,
@@ -73,16 +88,6 @@ add_bars <-
            add_legend = FALSE,
            legend_position = "left_top",
            max_val = NULL) {
-    #' add bars to svg string
-    #'
-    #' @param svg_string the svg string to br appended, need to be finalized after
-    #' @param df data to be plotted - data frame in wide format
-    #' @param x vector to be on x axis
-    #' @param series character vector of column names representing series to split bars by it
-    #' @param bar_width the width of plotted bar
-    #' @param x_offset how much bars should be offset to the right (negative value means offsetting to the left)
-    #' @param add_x_axis boolean flag, if true automatically adds x axis with label
-    #' @param color optional custom color of the bars series, in svg string format, ie.: "rgb(223,12,121)" or "black"
 
     # TODO check series lengths and NA there
     svg_string <- paste(svg_string,
@@ -102,7 +107,7 @@ add_bars <-
     for (i in 1:n_bars) {
       x_label <- substr(x[i], 1, 4)
       x_pos <- 1.5 * bar_width * (i - 1) + x_offset
-      svg_string <- add_bar(
+      svg_string <- add_column_bar(
         svg_string,
         df = df,
         i = i,
@@ -111,7 +116,8 @@ add_bars <-
         series = series,
         max_height = max_height,
         bar_width,
-        color = color
+        color = color,
+        style = styles[i]
       )
       if (add_x_axis) {
         # add label on x axis
@@ -226,23 +232,22 @@ add_first_bar <- function(svg_string,
 
 #' Add waterfall style bars to the column chart
 #'
-#' @param svg_string
-#' @param df
-#' @param x
-#' @param series
-#' @param bar_width
-#' @param pos_color
-#' @param neg_color
+#' @param svg_string the svg string to br appended, need to be finalized after
+#' @param df data to be plotted - data frame in wide format
+#' @param x vector to be on x axis
+#' @param series character vector of column names representing series to split bars by it
+#' @param bar_width the width of plotted bar
+#' @param styles vector of styles of the bars
+#' @param pos_color color to be asociated with positive values (in string format)
+#' @param neg_color color to be asociated with negative values (in string format)
 #' @param add_result_bar boolean flag to add result bar as the last bar or not.
 #' @param result_bar_pos flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completly new bar. If add_result_bar is false, it is ignored.
 #' @param positive_prefix how to indicate positive value, ie. "+" or ""(empty string).
 #' @param result_bar_color color of result bar. If add_result_bar is false, it is ignored.
 #' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
 #' @param ref_value first bar starts from this value, intended to be used with add_first_bar function.
-
 #'
-#' @return
-#' @export
+#' @return svg string with appended waterfall bars
 #'
 #' @examples
 add_waterfall_bars <-
@@ -251,6 +256,7 @@ add_waterfall_bars <-
            x,
            series,
            bar_width,
+           styles = NULL,
            pos_color = "rgb(64,64,64)",
            neg_color = "black",
            add_result_bar = TRUE,
@@ -328,7 +334,8 @@ add_waterfall_bars <-
           y = bar_y,
           height = bar_h,
           width = bar_width,
-          color = choose_waterfall_color(bar_height, pos_color, neg_color)
+          color = choose_waterfall_color(bar_height, pos_color, neg_color),
+          style = styles[i]
         )
       # draw line but not after the last one
       if (i < length(x)) {
@@ -442,7 +449,7 @@ add_abs_variance_bars <-
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("delta", x_title), # TODO add delta
+      text = paste0("delta ", x_title),
       x = x_pos,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
@@ -518,24 +525,27 @@ add_relative_variance_pins <-
            real,
            colors,
            bar_width,
-           x_title) {
+           x_title,
+           translate = c(0,0),
+           styles = NULL) {
     x_axis_pos <- 150
     color <- choose_variance_colors(colors)
-    x_pos <- 35
+    x_pos <- 0
     values <- real / baseline * 100 - 100
     max_val <- 100
-
     # add legend on the left of plot
     first_bar_h <- values[1] / max_val * 100
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("delta", x_title), # TODO add delta sign
-      x = x_pos + bar_width * 0.5,
+      text = paste0("delta ", x_title),
+      x = x_pos + translate[1] + bar_width * 0.5,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
     )
-
+    svg_string <-
+      initialize(svg_string,
+                 transformation = paste0("translate(", translate[1], ",", translate[2], ")"))
 
     for (i in 1:length(x)) {
       # add axis
@@ -580,7 +590,7 @@ add_relative_variance_pins <-
         y = marker_y,
         height = 11.2,
         width = 11.2,
-        color = "black"
+        style = styles[i]
       )
       # add bar
       svg_string <- draw_bar(
@@ -608,6 +618,7 @@ add_relative_variance_pins <-
       )
       x_pos <- x_pos + bar_width * 1.5
     }
+    svg_string <- finalize(svg_string)
     return(svg_string)
   }
 
@@ -620,7 +631,8 @@ add_triangles <- function(svg_string,
                           x_offset = 0,
                           translate = c(0, 0),
                           max_val = NULL,
-                          add_legend = FALSE) {
+                          add_legend = FALSE,
+                          styles = NULL) {
   x_axis_pos <- 250
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
   svg_string <- paste(svg_string,
@@ -636,7 +648,8 @@ add_triangles <- function(svg_string,
       svg_string = svg_string,
       tip_position_x = x_pos,
       tip_position_y = 250 - df[i, series] / max_height * 200,
-      orientation = "right"
+      orientation = "right",
+      style = styles[i]
     )
   }
   svg_string <- finalize(svg_string)
@@ -724,12 +737,6 @@ add_top_values <-
   }
 
 
-normalize_rows <- function(df, x, series) {
-  new_df <- data.frame(df)
-  new_df[series] <- new_df[series] / rowSums(new_df[series]) * 100
-  return(new_df)
-}
-
 normalize_df <- function(df, max_bar_height) {
   return(df / max(df) * max_bar_height)
 }
@@ -741,108 +748,162 @@ reference <- function(df, x, series, ref_value) {
 }
 
 
-#' Create a basic column chart.
+#' Generate basic column chart. If more than one series is supplied, stacked column plot is generated
 #'
-#' @param df data frame with data to be plotted
-#' @param x vector of labels that will be on the x axis on the chart
-#' @param series names of columns in df that will be plotted
+#' @param df data frame in wide format containing data to be plotted
+#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
+#' @param series vector containing names of columns in df with values to plot
+#' @param styles optional vector with styles of bars
 #'
-#' @return string containing plot in svg format. It can be displayed using \code{show} function.
+#' @return SVG string containing chart
 #' @export
-column_chart <- function(df, x, series = NULL) {
+#'
+#' @examples
+column_chart <- function(df, x, series = NULL, styles = NULL) {
   bar_width = 32
-  # TODO all values in one bar must have the same sign
-  stopifnot(length(series) <= 6) # maximum 6 series
+  stop_if_many_series(series, max_series = 6) # maximum 6 series
+  stop_if_pos_neg_values(df, series) # signum of values in one bar is the same for every bar
+  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+  stop_if_many_categories(x, max_categories = 24)
+
   initialize() %>%
-    add_bars(df, x, series, bar_width = bar_width) %>%
+    add_bars(df, x, series, bar_width = bar_width, styles) %>%
     add_legend(df, x, series, bar_width = bar_width) %>%
     add_top_values(df, x, series, bar_width = bar_width) %>%
     finalize()
 }
 
 
-#' Create normalized column chart. Each bar is divided proportionally
+#' Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
 #'
-#' @param df data frame containing data
-#' @param x vector with x axis labels
-#' @param series column names in df that will be plotted
+#' @param df data frame in wide format containing data to be plotted
+#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
+#' @param series vector containing names of columns in df with values to plot
 #'
-#' @return
+#' @return SVG string containing chart
 #' @export
 #'
 #' @examples
 column_chart_normalized <- function(df, x, series = NULL) {
   bar_width = 32
-  stopifnot(length(series) <= 6) # maximum 6 series
+  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+  stop_if_many_series(series, max_series = 6) # maximum 6 series
+  stop_if_many_categories(x, max_categories = 24)
+
   normalized_df <- normalize_rows(df, x, series)
+
   initialize() %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
-    add_legend( normalized_df, x, series, bar_width = bar_width) %>%
-    draw_ref_line_horizontal( x, bar_width = bar_width, line_y = 50, label = "100") %>%
+    add_legend(normalized_df, x, series, bar_width = bar_width) %>%
+    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 50, label = "100") %>%
     finalize()
 }
 
 
-column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL) {
+#' Generate column chart with reference line.
+#'
+#' @param df data frame in wide format containing data to be plotted
+#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
+#' @param series vector containing name of column in df with values to plot
+#' @param ref_value one element numeric vector with referencing value.
+#' @param ref_label name of the referencing value
+#' @param styles optional vector with styles of the bars
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
+column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL) {
   bar_width = 32
-  stopifnot(length(series) == 1)
+  stop_if_many_series(series, max_series = 1) # maximum 1 series
+  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+  stop_if_many_categories(x, max_categories = 24)
+
   ref_label <-ifelse(is.null(ref_label), ref_value, ref_label)
   referenced_df <- reference(df, x, series, ref_value)
   index_level <-
     ref_value / max(df[series]) * 200
   initialize() %>%
-    add_bars( referenced_df, x, series, bar_width = bar_width) %>%
-    draw_ref_line_horizontal( x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
-    add_top_values( df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
+    add_bars(referenced_df, x, series, bar_width = bar_width, styles = styles) %>%
+    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
+    add_top_values(df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
     finalize()
 }
 
-column_chart_waterfall <- function(df, x, series) {
+#' Generate column waterfall chart for visualizing contribution.
+#'
+#' @param df data frame in wide format containing data to be plotted
+#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
+#' @param series vector containing name of column in df with values to plot
+#' @param styles optional vector with styles of the bars
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
+column_chart_waterfall <- function(df, x, series, styles = NULL) {
   bar_width = 32
-  stopifnot(length(series) == 1) # only one series
+  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+
+  stop_if_many_categories(x, max_categories = 24)
+  stop_if_many_series(series, max_series = 1) # maximum 1 series
+
   initialize() %>%
-    add_waterfall_bars( df, x, series, bar_width) %>%
+    add_waterfall_bars(df, x, series, bar_width, styles) %>%
     finalize()
 }
 
+#' Generate column chart with absolute variance
+#'
+#' @param x vector containing labels for x axis
+#' @param baseline vector containing base values
+#' @param real vector containing values that will be compared to baseline
+#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
+#' @param x_title the title of the plot
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
 column_chart_absolute_variance <-
-  function(x, baseline, real, colors) {
-    #' Plot absolute variance chart. Columns for absolute variances use the same scale as the underlying measure columns.
-    #'
-    #' @param x vector to be on x axis
-    #' @param baseline vector containing baseline values
-    #' @param real vector containing real values to be compared with baseline
-    #' @param colors 1 if green color represents positive values having good buisness
-    #' impact and red negative values having bad impact or 2 if otherwise
-    #'
-    #'
-    bar_width <- 32
-    x_title <- "PY" # TODO get title as param
+  function(x, baseline, real, colors = 1, x_title = "PY") {
 
-    stopifnot(colors %in% c(1, 2))
+    bar_width <- 32
+    stop_if_variance_colors(colors)
+    stop_if_many_categories(x, max_categories = 24)
+
     initialize() %>%
-      add_abs_variance_bars( x, baseline, real, colors, bar_width, x_title) %>%
+      add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
 
+#' Generate grouped column chart for visualizing up to 3 data series
+#'
+#' @param x vector containing labels for x axis
+#' @param foreground vector representing heights of bars visible in the foreground
+#' @param background vector representing heights of bars visible in the background
+#' @param triangles optional vector representing position of triangles
+#' @param titles vector of series titles. Consists of 2 or 3 elements
+#' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
 column_chart_grouped <-
   function(x,
            foreground,
            background,
            triangles = NULL,
-           titles) {
-    #' Plot grouped data in a form of a column chart.
-    #'
-    #'  @param x vector representing values on x axis
-    #'  @param foreground vector representing heights of bars visible in the foreground
-    #'  @param background vector representing heights of bars visible in the background
-    #'  @param triangles optional vector representing heights of triangles
-    #'  @param titles vector of series titles. Consists of 2 or 3 elements
+           titles,
+           styles = NULL) {
 
     bar_width <- 32
-    translation_vec <- c(30, 0)
+    translation_vec <- c(max(str_width(titles)) + 10, 0)
 
     stopifnot(length(titles) >= 2)
+    stop_if_many_categories(x, max_categories = 24)
+
     df <- data.frame(foreground, background)
     colnames(df) <- titles[1:2]
 
@@ -854,7 +915,6 @@ column_chart_grouped <-
     }
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-
     initialize() %>%
       add_bars(
         df[, titles[2], drop = FALSE],
@@ -866,7 +926,8 @@ column_chart_grouped <-
         color = "rgb(166,166,166)",
         translate = translation_vec,
         add_legend = TRUE,
-        max_val = max_bar_height
+        max_val = max_bar_height,
+        styles = styles[[2]]
       ) %>%
       add_bars(
         df[, titles[1], drop = FALSE],
@@ -875,7 +936,8 @@ column_chart_grouped <-
         series = titles[1],
         translate = translation_vec,
         add_legend = TRUE,
-        max_val = max_bar_height
+        max_val = max_bar_height,
+        styles = styles[[1]]
       ) %>%
       {
         ifelse(
@@ -891,12 +953,12 @@ column_chart_grouped <-
             series = titles[3],
             translate = translation_vec,
             max_val = max_bar_height,
-            add_legend = TRUE
+            add_legend = TRUE,
+            styles = styles[[3]]
           )
         )
       } %>%
       add_top_values(
-
         df,
         labels = foreground,
         x = x,
@@ -904,46 +966,67 @@ column_chart_grouped <-
         bar_width = bar_width,
         translate = translation_vec,
         max_val = max_bar_height
-      ) %>% # TODO styles in utils?
+      ) %>%
       finalize()
   }
 
+
+#' Generate column chart with relative variance (in percents)
+#'
+#' @param x vector containing labels for x axis
+#' @param baseline vector containing base values
+#' @param real vector containing values that will be compared to baseline
+#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
+#' @param x_title the title of the plot
+#' @param styles optional data frame of styles applied to pin heads
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
 column_chart_relative_variance <-
-  function(x, baseline, real, colors, x_title) {
-    #' Plot relative variance chart. All relative variance charts have the same scale
-    #'
-    #' @param x vector to be on x axis
-    #' @param baseline vector containing baseline values
-    #' @param real vector containing real values to be compared with baseline
-    #' @param colors 1 if green color represents positive values having good buisness
-    #' impact and red negative values having bad impact or 2 if otherwise
-    #' @param x_title title of a series
+  function(x, baseline, real, colors = 1, x_title, styles = NULL) {
+    stop_if_variance_colors(colors)
+    stop_if_many_categories(x, max_categories = 24)
 
     bar_width <- 32
-
+    translation_vec = c(str_width(x_title), 0)
     initialize() %>%
-      add_relative_variance_pins( x, baseline, real, colors, bar_width, x_title) %>%
+      add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, translate = translation_vec, styles = styles) %>%
       finalize()
   }
 
+
+#' Generate column waterfall chart with absolute variance
+#'
+#' @param x vector containing labels for x axis
+#' @param baseline vector containing base values
+#' @param real vector containing values that will be compared to baseline
+#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
+#' @param result_title title for the last bar with total result
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
 column_chart_waterfall_variance <-
-  function(x, baseline, real, colors, result_title) {
+  function(x, baseline, real, colors = 1, result_title) {
     bar_width <- 32
+    stop_if_many_categories(x, max_categories = 24)
+
     difference <- real - baseline
     df <- data.frame("series" = difference)
 
     initialize() %>%
       add_first_bar(
-
         x[1],
         df[1, 'series'],
         top_value = max(df['series']),
         low_value = min(df['series']),
         bar_width = bar_width
       ) %>%
-      initialize( transformation = "translate(50,0)") %>%
+      initialize(., transformation = "translate(50,0)") %>%
       add_waterfall_bars(
-
         df[-1, , drop = FALSE],
         x[-1],
         series = "series",
