@@ -1,11 +1,8 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils_K.R"))
-source(file.path("utils", "chart_utils.R"))
+
 
 #adding a rectangle marker with label above or under + categories labels
 add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minimal){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
-  
+
   label<-""
   if(value > 0){
     rect <- draw_rect(x-5.6, (244.4-(height_of_one*value)), color, 11.2, 11.2)
@@ -15,7 +12,7 @@ add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minima
     rect <- draw_rect(x-5.6, (250-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2)
     y_label <- (250 + (height_of_one*abs(value)))
     }
-  
+
   if(minimal==1){ #ostatni podpis pod spodem
     #label under
     label <- add_label(x, y_label + 5.6 + 4.8 +9, value, color) #?
@@ -23,7 +20,7 @@ add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minima
     #label above
     label <- add_label(x, y_label -5.6 - 4.8, value, color)
   }
-  
+
   return(paste(
       #marker
       rect,
@@ -36,9 +33,9 @@ add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minima
       #label with the marker value
       label,
       sep="\n"
-    
+
     ))
-  
+
 }
 
 find_height <- function(data, series){
@@ -54,7 +51,7 @@ find_height <- function(data, series){
 
 #----
 draw_points <- function(svg_string, data, cat, series, series_labels){
-  
+
   points <- svg_string
   labels <- ""
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
@@ -74,17 +71,17 @@ draw_points <- function(svg_string, data, cat, series, series_labels){
   #calculating the shift
   shift <- height_of_one*abs(min(neg)) + 12 + 4.8
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
-  
 
- 
+
+
   for(k in 1:(length(series))){ #going through series
-    
+
     if(mean(data[,series[k]])==min_avg){
       minimal <- 1
     }else{
       minimal<-0
     }
-    
+
     color <- colors[k]
     values <- data[, series[k]]
     labels <- paste(labels, add_label(80-4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
@@ -94,17 +91,17 @@ draw_points <- function(svg_string, data, cat, series, series_labels){
                      #line between two points
                      draw_line(x,x+48,(250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
                      sep='\n')
-      
+
       x <- x+48
     }
     i <- length(cat)
-    points <- paste(points, 
+    points <- paste(points,
                     add_point(shift, data, cat[i], values[i], x, height_of_one, color, k, minimal),
                     sep='\n')
     x<-80
   }
-  
-  
+
+
   return (paste(points, labels, sep='\n'))
 }
 

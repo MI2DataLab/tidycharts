@@ -1,7 +1,3 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils_K.R"))
-source(file.path("utils", "chart_utils_K.R"))
 
 #---
 
@@ -10,13 +6,13 @@ add_marker_normalized <- function(data, cat, value, x, height_of_one, k, y, if_r
   #we do not draw the rectangle markers on the top
   if(if_rect==1){rect<-draw_rect(x-2.4, (247.6-(height_of_one*value))-y, "rgb(127,127,127)", 4.8, 4.8)}
   else(rect<-"")
-  
+
   # if(is.na(show_label) == FALSE){
   value_label <- add_label(x,250-y - (height_of_one*value/2) +6, value,get_gray_color_stacked(k)$text_color)
   # }else{
   #   value_label<-""
   # }
-  
+
   return(paste(rect,
     #asisting line
     draw_line(x,x,50,250, "white", 0.1),
@@ -30,14 +26,14 @@ add_marker_normalized <- function(data, cat, value, x, height_of_one, k, y, if_r
     #x-axis line
     draw_line(x-24,x+24,250, 250),
     sep="\n"
-    
+
   ))
-  
+
 }
 
 #----
 
-draw_polygons_normalized <- function(svg_string, data, cat, series, series_labels){ 
+draw_polygons_normalized <- function(svg_string, data, cat, series, series_labels){
 
   polygons <- svg_string
   x = 80
@@ -55,9 +51,9 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
     labels <- paste(labels,
                     add_label(75.2, 250-y[1] - (height_of_one*values[1]/2), series_labels[k], anchor="end"),
                     sep="\n"
-                    
+
     )
-    
+
     for(i in 1:(length(cat)-1)){ #going throug categories
       #defining if its the top level or not, deciding if the markers are gonna show
       if(k == length(series)){
@@ -68,7 +64,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
                         draw_quadrangle(x, (250-(height_of_one*values[i])) - y[i],
                                         x+48, (250-(200/all_sums[i+1]*values[i+1])) - y[i+1],
                                         x+48, 250 - y[i+1],
-                                        x,250 - y[i], 
+                                        x,250 - y[i],
                                         color),
                         sep='\n')
 
@@ -84,7 +80,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
                       sep='\n')
     x<-80
     y[j] <- y[j] + height_of_one*values[j]
-    
+
   }
   x<-80
   return (paste(polygons, markers,labels, add_index(80+48*(length(cat)-1), 50),  sep='\n'))
@@ -115,9 +111,9 @@ line_plot_normalized <- function( data, cat, series, series_labels, show_labels)
 #     val1 = c(8, 8.5, 8, 9, 9.2),
 #   val2 = c(5,6,5,7,7),
 #   val3= c(3,3,3.5,4,3)
-# 
+#
 # )
 # groups <- c("val1","val2", "val3")
 # series_labels <- c("speed", "mlemler", "defence")
-# 
+#
 # line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% show()

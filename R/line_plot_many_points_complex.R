@@ -1,9 +1,3 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils_K.R"))
-source(file.path("utils", "chart_utils_K.R"))
-source(file.path("utils", "chart_utils.R"))
-
 
 #podaje sie liste dataframow, wektor x kolejno odpowiednio, wektor y i cat
 
@@ -12,7 +6,7 @@ source(file.path("utils", "chart_utils.R"))
 #y - normlanie wartosc
 #cat - categorie, z czego tu sie powatarzaja
 #---
-#musi byc osobny data frame dla kazdej serii 
+#musi byc osobny data frame dla kazdej serii
 
 add_category <- function(shift, data, cat, x,k){ #cat jest calym wektorem
   return(paste(
@@ -32,7 +26,7 @@ draw_lines_complex <-function(svg_string, list, vector_x, vector_y, vector_cat, 
   neg<-c()
   labels<-""
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
-  
+
   for(k in 1:length(list)){
     maxes <- c(maxes, max(abs(list[[k]][,vector_y[k]])))
     neg<- c(neg,list[[k]][,vector_y[k]][list[[k]][,vector_y[k]]<0] )
@@ -41,7 +35,7 @@ draw_lines_complex <-function(svg_string, list, vector_x, vector_y, vector_cat, 
   #calculating the shift
   shift <- height_of_one*abs(min(neg))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
-  
+
   lines<-""
   x_start <-80
   for(k in 1:length(list)) {
@@ -98,10 +92,10 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
     y <- vector_y[k]
     cat <- vector_cat[k]
     color <- colors[k]
-    
+
     #calculating x coordinate
     p_cat <- data[,cat][point_cords[i]]
-    cat_index <- match( p_cat, categories[,cat])[1] #which category it is 
+    cat_index <- match( p_cat, categories[,cat])[1] #which category it is
     x_start <- 80 + 48*(cat_index-1)
     x_cir <- x_start + 48*data[,x][point_cords[i]]/100
 
@@ -118,7 +112,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
 
 
 #----
-#' Generates a line plot with markers on chosen points, many points within one time interval allowed. 
+#' Generates a line plot with markers on chosen points, many points within one time interval allowed.
 #'
 #' @param list list of data frames, each representing one series. Data frame should consist of columns:
 #' * containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinattes of the point)
@@ -158,7 +152,7 @@ line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, 
 #mlem <- data.frame(
 #  df_num = c(2,2,2,2,2,2,2,2,2,2,2),
 #  point_cords = c(1,2,3,4,5,6,7,8,9,10,11)
-#) 
+#)
 
 
 #lista <- list(data, df)

@@ -1,7 +1,4 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils_K.R"))
-source(file.path("utils", "chart_utils.R"))
+
 
 #system jest taki ze jest druga ramka danych z dwoma kolumnami ktora zawiera nazwe serii i wspolrzedne punktu ktory ma byc wyswietlony
 
@@ -28,19 +25,19 @@ add_category <- function(shift, data, cat, x,k){ #cat jest calym wektorem
     draw_line(x,x,50,250+shift, "white", 0.1),
     sep="\n"
     ))
-  
+
 }
 
 #----
 draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, point_cords){
-  
+
   labels <-""
   lines <- svg_string
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x = 80
   maxes <- c()
   neg <- c()
-  
+
   for(k in 1:(length(series))){
     maxes <- c(maxes, max(abs(data[,series[k]])))
     neg <- c(neg, data[,series[k]][data[,series[k]]<0])
@@ -50,17 +47,17 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
   #calculating the shift
   shift <- height_of_one*abs(min(neg))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
-  
+
   for(k in 1:(length(series))){ #going through series
     color <- colors[k]
     values <- data[, series[k]]
     labels <- paste(labels,
                     add_label(75.2, 250- height_of_one*values[1] +6, series_labels[k],anchor="end"),
                     sep="\n"
-                    
+
     )
-  
-    
+
+
     for(i in 1:(length(cat)-1)){ #going through categories
       lines <- paste(lines,
                      draw_line(x, x+48, 250-(height_of_one*values[i]), 250-(height_of_one*values[i+1]), color),
@@ -74,7 +71,7 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
                       sep='\n')
     x<-80
   }
- 
+
   chosen_points <- draw_chosen_points(data, series, height_of_one, ser_names, point_cords, colors)
   return (paste(lines, labels, chosen_points, sep='\n'))
 }
@@ -104,7 +101,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' @param cat vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
-#' @param ser_names vector containing column names of a value to be marked 
+#' @param ser_names vector containing column names of a value to be marked
 #' @param point_cords vector of the same length as ser_names containing numerical values of indexes in data of values to be marked
 #'
 #' @return SVG string containing chart
@@ -119,11 +116,11 @@ line_plot_many_points <- function(data, cat, series, series_labels, ser_names, p
 
 #test
 #data <- data.frame(
-#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"), 
+#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
 #  value = c(1159, 795, 377, 345, 266,120,74,602),
 #  products = c(538, 250, 75, 301,227,90, 40, 269),
 #  services = c(621,545,302,44,39,30,34,333)
-#) 
+#)
 #groups <- c("products", "services")
 
 

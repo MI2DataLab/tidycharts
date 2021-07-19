@@ -1,10 +1,7 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils_K.R"))
-source(file.path("utils", "chart_utils.R"))
+
 
 #---
-draw_x_axis <- function(space_size, width_of_one ,maximum){ 
+draw_x_axis <- function(space_size, width_of_one ,maximum){
   ticks <- ""
   tick <- space_size
   while(tick < maximum){
@@ -81,7 +78,7 @@ draw_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, 
     bubble_min <- min(bubble_value)
     r_of_one <- 2.4/bubble_min
   }
-  
+
   for (i in 1:length(x)){
     cat_index <- match(cat[i],categories)[1]
     color <- colors[cat_index]
@@ -90,18 +87,18 @@ draw_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, 
     }else{
       points <- paste(points, draw_circle(80 + width_of_one*x[i], 250 - height_of_one*y[i], color), sep='\n')
     }
-    
-   
+
+
   }
-  return(paste(svg_string, 
-               draw_x_axis(x_space_size, width_of_one, x_maximum), 
-               draw_y_axis(y_space_size, height_of_one, maximum), 
+  return(paste(svg_string,
+               draw_x_axis(x_space_size, width_of_one, x_maximum),
+               draw_y_axis(y_space_size, height_of_one, maximum),
                add_label( 334.8+4.8, 250+6, x_names[1], anchor="start"),
                add_label( 334.8+4.8, 250+4.8+12, x_names[2], anchor="start"),
                add_label( 80-4.8, 50, y_names[1], anchor="end"),
                add_label( 80-4.8, 50+4.8+6, y_names[2], anchor="end"),
                add_legend(legend_title, categories, colors),
-               points, 
+               points,
                sep='\n'))
 }
 

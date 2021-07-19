@@ -1,13 +1,8 @@
-library(magrittr) # pipes
-library(docstring)
-source(file.path("utils", "drawing_utils_K.R"))
-source(file.path("utils", "chart_utils_K.R"))
-source(file.path("utils", "drawing_utils.R"))
 
 
 
 add_marker <- function(data, cat, value, x, height_of_one, k, y, show_label){ #cat jest calym wektore, k to numer serii w ktorej jestesmy y - przesuniecie
-  
+
   if(is.na(show_label) == FALSE){
     value_label <- add_label(x,250-y - (height_of_one*value/2) +6, value, get_gray_color_stacked(k)$text_color )
   }else{
@@ -28,14 +23,14 @@ return(paste(
     #xaxis line
     draw_line(x-24, x+24, 250, 250),
     sep="\n"
-    
+
   ))
-  
+
 }
 
 #----
-draw_polygons <- function(svg_string, data, cat, series, series_labels, show_labels){ #show label - vector with null or not null 
-  
+draw_polygons <- function(svg_string, data, cat, series, series_labels, show_labels){ #show label - vector with null or not null
+
   polygons <- svg_string
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x = 80
@@ -46,28 +41,28 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
   y <- rep(0, length(cat))
   #-----
   for(k in 1:(length(series))){ #points which series it is
-  
+
     color <- get_gray_color_stacked(k)$bar_color
     values <- data[, series[k]]
-    
+
     #series labels
     labels <- paste(labels,
                     add_label(75.2, 250-y[1] - (height_of_one*values[1]/2), series_labels[k], anchor="end"),
                     sep="\n"
-      
+
     )
-    
+
     for(i in 1:(length(cat)-1)){ #going through categories
       polygons <- paste(polygons,
                         #draw area
-                        draw_quadrangle(x, (250-(height_of_one*values[i])) - y[i], 
-                                        x+48,(250-(height_of_one*values[i+1])) - y[i+1], 
+                        draw_quadrangle(x, (250-(height_of_one*values[i])) - y[i],
+                                        x+48,(250-(height_of_one*values[i+1])) - y[i+1],
                                         x+48, 250 - y[i+1],
                                         x, 250 - y[i],
                                         color),
                       add_marker(data, cat[i], values[i], x, height_of_one, k, y[i], show_labels[i]),
                       sep='\n')
-      
+
       x <- x+48
       y[i] <- y[i] + height_of_one*values[i]
     }
@@ -77,10 +72,10 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
                       sep='\n')
     x<-80
     y[j] <- y[j] + height_of_one*values[j]
-    
+
   }
   x<-80
-  
+
   #sums labels
   for(i in 1:length(all_sums)){
    if(is.na(show_labels[i])==FALSE){
@@ -88,9 +83,9 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
                      add_label(x,250 - y[i] -4.8-6, all_sums[i]),
                      sep='\n')
    }
-    x<-x+48 
+    x<-x+48
   }
-  
+
   return (paste(polygons, labels, sep='\n'))
 }
 
@@ -102,7 +97,7 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param show_labels vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed
-#' 
+#'
 #' @return SVG string containing chart
 #' @export
 #'
@@ -115,11 +110,11 @@ line_plot_stacked <- function(data, cat, series, series_labels, show_labels){
 
 #test
 #data <- data.frame(
-#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"), 
+#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
 #  value = c(1159, 795, 377, 345, 266,120,74,602),
 #  products = c(538, 250, 75, 301,227,90, 40, 269),
 #  services = c(621,545,302,44,39,30,34,333)
-#) 
+#)
 #groups <- c("products", "services")
 #series_labels <- groups
 #line_plot_stacked(data, data$city, groups, series_labels) %>% show()
@@ -129,7 +124,7 @@ line_plot_stacked <- function(data, cat, series, series_labels, show_labels){
 #  val1 = c(8, 8.5, 8, 9, 9.2),
 #  val2 = c(5,6,5,7,7),
 #  val3= c(3,3,3.5,4,3)
-  
+
 #)
 #groups <- c("val1","val2", "val3")
 #labels <- groups
