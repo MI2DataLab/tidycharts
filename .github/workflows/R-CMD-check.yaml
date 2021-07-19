@@ -12,7 +12,7 @@ on:
       - 'ms*'
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - '**.R'
       - '**.r'
