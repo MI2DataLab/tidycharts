@@ -124,39 +124,3 @@ barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = 
     draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
     finalize()
 }
-
-
-#--- test ---
-#data <- data.frame(
-#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
-#  products = c(538, 250, -75, 301,227,90, 40, 269),
-#  services = c(621,545,-302, 44,39,30,34,333),
-#  triangles = c(600,600,-302, 600,600,30,600,600)
-#)
-#series <- c("triangles","products", "services")
-
-#df <- data.frame(
-#  animal = c("cat", "doggo", "rabbito"),
-#  hungry = c(7,5,9),
-#  relaxed = c(3,4,5),
-#  wounded = c(1,8,5)
-#)
-#srs <- c("hungry", "relaxed", "wounded")
-
-#df_styles <- data.frame(
-#  products = c(rep('plan',8)),
-#  services = c(rep('actual', 8)),
-#  triangles = c(rep('plan', 8))
-#)
-#styles <- c(rep('actual',6), 'forecast', 'actual')
-
-#barchart_plot_grouped(data, data$city, series, series, df_styles) %>% show()
-
-
-
-
-
-
-
-
-
