@@ -176,7 +176,6 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
 }
 
 # test
-
 # data <- data.frame(
 #   city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
 #  value = c(1159, 795, 377, 345, 266,120,74,602),
