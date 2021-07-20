@@ -8,7 +8,7 @@
 #---
 #musi byc osobny data frame dla kazdej serii
 
-add_category <- function(shift, data, cat, x,k){ #cat jest calym wektorem
+add_category_complex <- function(shift, data, cat, x,k){ #cat jest calym wektorem
   return(paste(
     #linia
     draw_line(x-24, x+24, 250, 250),
@@ -68,7 +68,7 @@ draw_lines_complex <-function(svg_string, list, vector_x, vector_y, vector_cat, 
                        draw_line(x_start + 48*filtered[,x][j]/100, x_start + 48*filtered[,x][j+1]/100, 250-(height_of_one*filtered[,y][j]), 250-(height_of_one*filtered[,y][j+1]), color),
                        sep='\n')
       }
-      lines <- paste(lines, add_category(shift ,data, categories[,cat], x_start+24, i),sep='\n')
+      lines <- paste(lines, add_category_complex(shift ,data, categories[,cat], x_start+24, i),sep='\n')
       x_to_connect <- x_start + 48*filtered[,x][j+1]/100
       x_start <- x_start+48
       y_to_connect <- 250-(height_of_one*filtered[,y][j+1])
