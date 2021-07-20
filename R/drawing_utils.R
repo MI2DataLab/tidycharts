@@ -153,6 +153,25 @@ draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientatio
   }
 
   svg_string <- paste(svg_string,
+                      # add white triangle in the background
+                      paste0(
+                        '<polygon points="',
+                        tip_position_x-3,
+                        ', ',
+                        tip_position_y,
+                        ' ',
+                        tip_position_x + 13,
+                        ', ',
+                        tip_position_y - 7,
+                        ' ',
+                        tip_position_x + 13,
+                        ', ',
+                        tip_position_y + 7,
+                        '" transform="',
+                        transformation,
+                        '" fill="white" stroke="white" />'
+                      ),
+                      # add styled triangle in the foreground
                       paste0(
                         '<polygon points="',
                         tip_position_x,

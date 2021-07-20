@@ -45,7 +45,7 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
   maximum <- max(maxes)
   height_of_one <- 200/maximum
   #calculating the shift
-  shift <- height_of_one*abs(min(neg))
+  shift <- height_of_one*abs(min(ifelse(is.null(neg),0,neg)))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
   for(k in 1:(length(series))){ #going through series
@@ -113,26 +113,3 @@ line_plot_many_points <- function(data, cat, series, series_labels, ser_names, p
   draw_lines(.,data, cat, series, series_labels, ser_names, point_cords) %>%
   finalize() #%>% show()
 }
-
-#test
-#data <- data.frame(
-#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
-#  value = c(1159, 795, 377, 345, 266,120,74,602),
-#  products = c(538, 250, 75, 301,227,90, 40, 269),
-#  services = c(621,545,302,44,39,30,34,333)
-#)
-#groups <- c("products", "services")
-
-
-#df <- data.frame(
-  #ser_name = c("products","products", "services"),
-#  ser_name = c("products","products","products","products","products","products","products","products"),
-#  point_coordinates = c(1,2,3,4,5,6,7,8)
-#)
-#series_labels <-groups
-#line_plot_many_points(data, data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
-
-
-
-
-

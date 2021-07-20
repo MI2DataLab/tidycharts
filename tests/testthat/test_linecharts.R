@@ -1,0 +1,146 @@
+context("Line plots")
+
+
+test_that("Line plot with few points is working without errors", {
+  data <- data.frame(
+    cat = c("blop", "mlem", "kwak", "beep", "moo"),
+    val1 = c(1, 3, 5, 7, 7),
+    val2 = c(3, 3, -3. - 5, -4, 3),
+    val3 = c(8, 8.5, -8, -9, 9.2)
+  )
+  groups <- c("val1", "val2", "val3")
+
+  expect_magick(line_plot_index(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% show())
+  expect_magick(line_plot(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% show())
+})
+
+test_that("Line plot with many points is working without errors", {
+  data <- data.frame(
+    x = c(5, 25, 45, 65, 85, 30, 60, 90, 30, 60, 90, 30, 60, 90),
+    y = c(3, 4, 3, 5, 2, 6, 7, 6, 5, 6, 5, 7, 7, 6),
+    cat = c(
+      "Jan",
+      "Jan",
+      "Jan",
+      "Jan",
+      "Jan",
+      "Feb",
+      "Feb",
+      "Feb",
+      "Mar",
+      "Mar",
+      "Mar",
+      "Apr",
+      "Apr",
+      "Apr"
+    )
+  )
+
+  df <- data.frame(
+    xdf = c(5, 25, 45, 65, 5, 25, 45, 65, 30, 60, 90, 30, 60, 90),
+    ydf = c(7, 8, 4, 6, 4, 5, 2, -1, -3, -4, 4 , 5, 2, 2),
+    cat = c(
+      "Jan",
+      "Jan",
+      "Jan",
+      "Jan",
+      "Feb",
+      "Feb",
+      "Feb",
+      "Feb",
+      "Mar",
+      "Mar",
+      "Mar",
+      "Apr",
+      "Apr",
+      "Apr"
+    )
+  )
+
+  mlem <- data.frame(
+    df_num = c(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+    point_cords = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+  )
+
+  lista <- list(data, df)
+  xes <- c("x", "xdf")
+  yes <- c("y", "ydf")
+  cats <- c("cat", "cat")
+  expect_magick(
+    line_plot_many_points_complex(
+      lista,
+      xes,
+      yes,
+      cats,
+      c("kwak", "moo"),
+      mlem$df_num,
+      mlem$point_cords
+    ) %>% show()
+  )
+})
+
+test_that("Normalized line plot is working without errors", {
+  data <- data.frame(
+    cat = c("blop", "mlem", "kwak", "beep", "moo"),
+    val1 = c(8, 8.5, 8, 9, 9.2),
+    val2 = c(5, 6, 5, 7, 7),
+    val3 = c(3, 3, 3.5, 4, 3)
+
+  )
+  groups <- c("val1", "val2", "val3")
+  series_labels <- c("speed", "mlemler", "defence")
+
+  expect_magick(line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% show())
+})
+
+test_that("Stacked line plots work without errors", {
+  data <- data.frame(
+    city = c(
+      "Berlin",
+      "Munich",
+      "Cologne",
+      "London",
+      "Vienna",
+      "Paris",
+      "Zurich",
+      "Rest"
+    ),
+    value = c(1159, 795, 377, 345, 266, 120, 74, 602),
+    products = c(538, 250, 75, 301, 227, 90, 40, 269),
+    services = c(621, 545, 302, 44, 39, 30, 34, 333)
+  )
+  groups <- c("products", "services")
+  series_labels <- groups
+  expect_magick(line_plot_stacked(data, data$city, groups, series_labels, T) %>% show())
+
+  data <- data.frame(
+    cat = c("blop", "mlem", "kwak", "beep", "moo"),
+    val1 = c(8, 8.5, 8, 9, 9.2),
+    val2 = c(5, 6, 5, 7, 7),
+    val3 = c(3, 3, 3.5, 4, 3)
+
+  )
+  groups <- c("val1", "val2", "val3")
+  labels <- groups
+  expect_magick(line_plot_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% show())
+})
+
+test_that('Line plots with many points work without errors', {
+  data <- data.frame(
+   city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
+   value = c(1159, 795, 377, 345, 266,120,74,602),
+   products = c(538, 250, 75, 301,227,90, 40, 269),
+   services = c(621,545,302,44,39,30,34,333)
+  )
+  groups <- c("products", "services")
+
+
+  df <- data.frame(
+   ser_name = c("products","products","products","products","products","products","products","products"),
+   point_coordinates = c(1,2,3,4,5,6,7,8)
+  )
+  series_labels <-groups
+  expect_magick(
+  line_plot_many_points(data, data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
+  )
+})

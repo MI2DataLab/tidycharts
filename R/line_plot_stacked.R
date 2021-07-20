@@ -107,27 +107,3 @@ line_plot_stacked <- function(data, cat, series, series_labels, show_labels){
     draw_polygons(.,data, cat, series, series_labels, show_labels) %>%
     finalize() #%>% show()
 }
-
-#test
-#data <- data.frame(
-#  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
-#  value = c(1159, 795, 377, 345, 266,120,74,602),
-#  products = c(538, 250, 75, 301,227,90, 40, 269),
-#  services = c(621,545,302,44,39,30,34,333)
-#)
-#groups <- c("products", "services")
-#series_labels <- groups
-#line_plot_stacked(data, data$city, groups, series_labels) %>% show()
-
-#data <- data.frame(
-#  cat = c("blop", "mlem","kwak", "beep", "moo"),
-#  val1 = c(8, 8.5, 8, 9, 9.2),
-#  val2 = c(5,6,5,7,7),
-#  val3= c(3,3,3.5,4,3)
-
-#)
-#groups <- c("val1","val2", "val3")
-#labels <- groups
-#line_plot_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>%
-
-

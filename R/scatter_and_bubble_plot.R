@@ -93,7 +93,7 @@ add_scatter_legend <- function(shift_x, title, categories, colors){
 }
 
 #---
-draw_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value){ #labels_vector - x axis name, y axis name
+draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value){ #labels_vector - x axis name, y axis name
   points <- ""
   colors <- c("rgb(0,90,255)", "rgb(0,132,255)", "rgb(0,168,255)", "rgb(96,124,180)", "rgb(30,69,148)", "rgb(64,64,64)")
   categories <- unique(cat)
@@ -159,22 +159,22 @@ draw_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, 
 #' @param legend_title title of the legend
 #' @param bubble_value vector containing values defining the size of bubbles. Set by default to NULL.
 #'
-#' @returnSVG SVg string containing chart
+#' @returnSVG SVG string containing chart
 #' @export
 #'
 #' @examples
 scatter_plot <- function(data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value=NULL){
   initialize() %>%
-    draw_points(.,data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value) %>%
+    draw_scatter_points(.,data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value) %>%
     finalize() #%>% show()
 }
 
 #--- test ---
-data <- data.frame(
-  x = c(2, 3, 5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
-  value = c(5,3,2,6, 7, 3, 2, 1,7,8,3, 5),
-  cat = c("mlem","mlem","mlem","mlem","mlem", "kwa","kwa","kwa", "moo","moo","moo","moo"),
-  bubble =c (1,2,3,4,5,4,6,-2,1,3, 3.5, 4.5 )
-)
+#data <- data.frame(
+#  x = c(2, 3, 5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
+#  value = c(5,3,2,6, 7, 3, 2, 1,7,8,3, 5),
+#  cat = c("mlem","mlem","mlem","mlem","mlem", "kwa","kwa","kwa", "moo","moo","moo","moo"),
+#  bubble =c (1,2,3,4,5,4,6,-2,1,3, 3.5, 4.5 )
+#)
 
-scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% show()
+#scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% show()
