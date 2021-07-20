@@ -48,7 +48,7 @@ draw_line <- function(x1, x2, y1, y2, color="black", stroke_width=1.6){
                 '" y1="',
                 y1,
                 '" y2="',
-                y2,  
+                y2,
                 '" stroke="',
                 color,
                 '" stroke-width="',
@@ -79,7 +79,7 @@ draw_quadrangle <- function(x1,y1,x2,y2,x3,y3,x4,y4, color){
                  '" fill="',
                  color,
                  '" />'
-                 
+
   ))
 }
 
@@ -115,10 +115,10 @@ add_index <- function(x, y){ #x defines how long the line is
       y,
       '" font-family="Arial" text-anchor="start" font-size="1em" >100</text>'),
     sep='\n'
-    
-    
+
+
   ))
-  
+
 }
 
 
@@ -159,21 +159,10 @@ add_vertical_index <- function(x, y){ #y defines how long the index line will be
            y,
            '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
     sep='\n'
-    
+
   ))
-  
 }
 
-
-str_width <- function(string, bold = FALSE){
-  font <- ifelse(bold, 2, 1)
-  strwidth(string, units = "inches", font = font, cex = 0.75) %>% 
-    inch2px() %>% 
-    return()
-}
-
-
-inch2px <- function(inches) inches * 96
 
 find_height <- function(data, series){
   maxes <- c()
