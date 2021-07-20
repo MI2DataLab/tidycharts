@@ -1,7 +1,7 @@
 
 
 #---
-draw_x_axis <- function(space_size, width_of_one ,maximum){
+draw_x_axis_scatter <- function(space_size, width_of_one ,maximum){
   ticks <- ""
   tick <- space_size
   while(tick < maximum){
@@ -50,7 +50,7 @@ draw_y_axis <- function(space_size, height_of_one, maximum){ #na przyklad 5
 }
 
 #---
-add_legend <- function(title, categories, colors){
+add_scatter_legend <- function(title, categories, colors){
   legend <- add_label(334.8+4.8, 56, title, anchor="start")
   y <- 56+4.8+6
   for(i in 1:length(categories)){
@@ -91,13 +91,13 @@ draw_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, 
 
   }
   return(paste(svg_string,
-               draw_x_axis(x_space_size, width_of_one, x_maximum),
+               draw_x_axis_scatter(x_space_size, width_of_one, x_maximum),
                draw_y_axis(y_space_size, height_of_one, maximum),
                add_label( 334.8+4.8, 250+6, x_names[1], anchor="start"),
                add_label( 334.8+4.8, 250+4.8+12, x_names[2], anchor="start"),
                add_label( 80-4.8, 50, y_names[1], anchor="end"),
                add_label( 80-4.8, 50+4.8+6, y_names[2], anchor="end"),
-               add_legend(legend_title, categories, colors),
+               add_scatter_legend(legend_title, categories, colors),
                points,
                sep='\n'))
 }
