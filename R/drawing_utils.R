@@ -247,7 +247,7 @@ get_gray_color_stacked <- function(series_number, colors_df = pkg.env$colors_df)
 #' @examples
 str_width <- function(string, bold = FALSE){
   font <- ifelse(bold, 2, 1)
-  strwidth(string, units = "inches", font = font, cex = 0.75) %>%
+  graphics::strwidth(string, units = "inches", font = font, cex = 0.75) %>%
     inch2px() %>%
     return()
 }
