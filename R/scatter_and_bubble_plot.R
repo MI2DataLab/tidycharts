@@ -122,7 +122,7 @@ draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_spac
 #' @param legend_title title of the legend
 #' @param bubble_value vector containing values defining the size of bubbles. Set by default to NULL.
 #'
-#' @returnSVG SVg string containing chart
+#' @returnSVG SVG string containing chart
 #' @export
 #'
 #' @examples
@@ -131,4 +131,3 @@ scatter_plot <- function(data, x, y, cat, x_space_size, y_space_size, x_names, y
     draw_scatter_points(.,data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value) %>%
     finalize() #%>% show()
 }
-
