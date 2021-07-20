@@ -15,4 +15,5 @@ Imports:
     magick,
     rsvg,
     rlang,
-    dplyr
+    dplyr,
+    lubridate
