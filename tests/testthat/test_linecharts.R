@@ -93,6 +93,54 @@ test_that("Normalized line plot is working without errors", {
   expect_magick(line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% show())
 })
 
-test_that("", {
+test_that("Stacked line plots work without errors", {
+  data <- data.frame(
+    city = c(
+      "Berlin",
+      "Munich",
+      "Cologne",
+      "London",
+      "Vienna",
+      "Paris",
+      "Zurich",
+      "Rest"
+    ),
+    value = c(1159, 795, 377, 345, 266, 120, 74, 602),
+    products = c(538, 250, 75, 301, 227, 90, 40, 269),
+    services = c(621, 545, 302, 44, 39, 30, 34, 333)
+  )
+  groups <- c("products", "services")
+  series_labels <- groups
+  expect_magick(line_plot_stacked(data, data$city, groups, series_labels, T) %>% show())
 
+  data <- data.frame(
+    cat = c("blop", "mlem", "kwak", "beep", "moo"),
+    val1 = c(8, 8.5, 8, 9, 9.2),
+    val2 = c(5, 6, 5, 7, 7),
+    val3 = c(3, 3, 3.5, 4, 3)
+
+  )
+  groups <- c("val1", "val2", "val3")
+  labels <- groups
+  expect_magick(line_plot_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% show())
+})
+
+test_that('Line plots with many points work without errors', {
+  data <- data.frame(
+   city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
+   value = c(1159, 795, 377, 345, 266,120,74,602),
+   products = c(538, 250, 75, 301,227,90, 40, 269),
+   services = c(621,545,302,44,39,30,34,333)
+  )
+  groups <- c("products", "services")
+
+
+  df <- data.frame(
+   ser_name = c("products","products","products","products","products","products","products","products"),
+   point_coordinates = c(1,2,3,4,5,6,7,8)
+  )
+  series_labels <-groups
+  expect_magick(
+  line_plot_many_points(data, data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
+  )
 })
