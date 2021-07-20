@@ -16,7 +16,7 @@ initialize <- function(svg_string="", transformation = "", svg_string_append = "
             <rect x="0" y="0" width="4" height="4" fill="white"/>
             <path d="M-1,1 l2,-2
                      M0,4 l4,-4
-                     M3,5 l2,-2" 
+                     M3,5 l2,-2"
             style="stroke:rgb(64,64,64); stroke-width:1" />
             </pattern>',
           svg_string_append,
@@ -44,10 +44,10 @@ finalize <- function(svg_string) {
 #' @examples
 
 add_title <- function(svg_string, line1, line2_measure, line2_rest, line3=""){
-  initialize(svg_string_append = svg_string) %>% 
-    draw_text(text = line1, x = 0, y = 12, text_anchor = "start") %>% 
-    draw_text(text = line2_measure, x = 0, y = 24, text_anchor = "start", text_weight = "bold") %>% 
-    draw_text(text = line2_rest, x = str_width(line2_measure, bold = T)+2, y = 24, text_anchor = "start") %>% 
+  initialize(svg_string_append = svg_string) %>%
+    draw_text(text = line1, x = 0, y = 12, text_anchor = "start") %>%
+    draw_text(text = line2_measure, x = 0, y = 24, text_anchor = "start", text_weight = "bold") %>%
+    draw_text(text = line2_rest, x = str_width(line2_measure, bold = T)+2, y = 24, text_anchor = "start") %>%
     draw_text(text = line3, x = 0, y = 36, text_anchor = "start") %>%
     finalize() %>%
     return()

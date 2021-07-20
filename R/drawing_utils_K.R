@@ -122,7 +122,7 @@ add_index <- function(x, y){ #x defines how long the line is
 }
 
 
-draw_circle <- function(x,y, color, radius=2.4){
+draw_circle <- function(x,y, color, radius=2.4, opacity = 1){
   return(paste0('<circle cx="',
                 x,
                 '" cy="',
@@ -133,6 +133,8 @@ draw_circle <- function(x,y, color, radius=2.4){
                 color,
                 '" stroke="',
                 color,
+                '" fill-opacity="',
+                opacity,
                 '" />'))}
 
 add_vertical_index <- function(x, y){ #y defines how long the index line will be
@@ -159,7 +161,6 @@ add_vertical_index <- function(x, y){ #y defines how long the index line will be
            y,
            '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
     sep='\n'
-
   ))
 }
 

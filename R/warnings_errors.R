@@ -17,3 +17,9 @@ stop_if_pos_neg_values <- function(df, series){
 stop_if_variance_colors <- function(colors_encoding){
   stopifnot(colors_encoding %in% c(1,2))
 }
+
+#error when data in the bubble plot is negative
+stop_if_bubble_negative <- function(bubble){
+  neg <- bubble[bubble<0]
+  stopifnot(length(neg)==0)
+}
