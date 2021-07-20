@@ -104,16 +104,3 @@ line_plot_normalized <- function( data, cat, series, series_labels, show_labels)
     draw_polygons_normalized(.,data, cat, series, series_labels) %>%
     finalize() #%>% show()
 }
-
-# #test
-# data <- data.frame(
-#   cat = c("blop", "mlem","kwak", "beep", "moo"),
-#     val1 = c(8, 8.5, 8, 9, 9.2),
-#   val2 = c(5,6,5,7,7),
-#   val3= c(3,3,3.5,4,3)
-#
-# )
-# groups <- c("val1","val2", "val3")
-# series_labels <- c("speed", "mlemler", "defence")
-#
-# line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% show()
