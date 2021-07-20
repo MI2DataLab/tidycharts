@@ -134,31 +134,3 @@ line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, 
     draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords) %>%
     finalize() #%>% show()
 }
-
-#test
-#data <- data.frame(
-#  x = c(5,25,45,65,85, 30,60,90,30,60,90,30,60,90),
-#  y=c(3,4,3,5,2, 6, 7, 6, 5, 6, 5, 7, 7, 6),
-#  cat =c("Jan","Jan","Jan","Jan","Jan","Feb", "Feb","Feb","Mar","Mar","Mar", "Apr", "Apr", "Apr")
-
-#)
-
-#df <- data.frame(
-#  xdf = c(5,25,45,65, 5,25,45,65,30,60,90,30,60,90),
-#  ydf = c(7,8,4,6,4,5,2,-1, -3,-4, 4 ,5,2,2),
-#  cat = c("Jan","Jan","Jan","Jan","Feb", "Feb", "Feb","Feb","Mar","Mar","Mar", "Apr", "Apr", "Apr")
-#)
-
-#mlem <- data.frame(
-#  df_num = c(2,2,2,2,2,2,2,2,2,2,2),
-#  point_cords = c(1,2,3,4,5,6,7,8,9,10,11)
-#)
-
-
-#lista <- list(data, df)
-#xes <- c("x", "xdf")
-#yes <- c("y","ydf")
-#cats <- c("cat", "cat")
-#line_plot_many_points_complex(lista, xes, yes, cats, c("kwak", "moo"), mlem$df_num, mlem$point_cords) %>%show()
-
-
