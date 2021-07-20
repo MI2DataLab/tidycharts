@@ -45,7 +45,7 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
   maximum <- max(maxes)
   height_of_one <- 200/maximum
   #calculating the shift
-  shift <- height_of_one*abs(min(neg))
+  shift <- height_of_one*abs(min(ifelse(is.null(neg),0,neg)))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
   for(k in 1:(length(series))){ #going through series
