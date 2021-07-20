@@ -1,6 +1,5 @@
 context('Column charts')
 
-# normalized plot
 library(datasets)
 library(dplyr)
 data("iris")
