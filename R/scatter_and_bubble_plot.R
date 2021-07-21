@@ -79,15 +79,15 @@ draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, maximum, mi
 #---
 add_scatter_legend <- function(shift_x, title, categories, colors){
   legend <- add_label(334.8+4.8 + shift_x, 56, title, anchor="start")
-  y <- 56+4.8+6
+  y <- 50+4.8+12
   for(i in 1:length(categories)){
     legend <- paste(
       legend,
       draw_circle(343.6 + shift_x, y, colors[i]),
-      add_label(343.6+4.8+2.4 + shift_x, y+3, categories[i], anchor="start"),
+      add_label(343.6+4.8+2.4 + shift_x, y+6, categories[i], anchor="start"),
       sep='\n'
     )
-    y <- y+4.8+6
+    y <- y + 4.8+ 12
   }
   return(legend)
 }
