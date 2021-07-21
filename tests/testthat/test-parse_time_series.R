@@ -9,7 +9,7 @@ test_that("dummy months example works", {
   expected <- data.frame(
     x = c(3,3,3),
     y = c(10,12,15),
-    cat = paste(month.abb[1:3], '2021', sep = '\n')
+    cat = paste(month.abb[1:3])
   )
   expect_equal(result, expected, tolerance = 0.12)
 })
@@ -23,7 +23,7 @@ test_that('parsing into weeks works', {
   expected <- data.frame(
     x = c(2/7, 1/7, 1) * 100,
     y = c(10, 21, 15),
-    cat = rep(paste(29,2021, sep = '\n'),3)
+    cat = c(29,29,29)
     )
   expect_equal(result, expected)
 })
