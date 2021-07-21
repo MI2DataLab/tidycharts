@@ -20,7 +20,8 @@ Depends:
     dplyr,
     methods,
     graphics,
-    htmlwidgets
+    htmlwidgets,
+    lubridate
 Suggests: 
     knitr,
     rmarkdown
