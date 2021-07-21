@@ -19,5 +19,9 @@ Depends:
     testthat,
     dplyr,
     methods,
-    graphics
-
+    graphics,
+    htmlwidgets
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
