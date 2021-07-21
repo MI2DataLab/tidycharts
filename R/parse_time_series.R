@@ -1,3 +1,4 @@
+#' @export
 parse_time_series <- function(df, x, y, convert.to = 'months') {
   stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
   x <- df[[x]]
@@ -5,17 +6,17 @@ parse_time_series <- function(df, x, y, convert.to = 'months') {
 
   if (convert.to == 'weeks') {
     week.lengths <- 7
-    result.categories <- paste(lubridate::epiweek(x), lubridate::year(x), sep = "\n")
+    result.categories <- lubridate::epiweek(x)
     result.x <- lubridate::wday(x) / week.lengths * 100
 
   } else if (convert.to == 'months') {
     mon.lengths <-lubridate::days_in_month(x)
-    result.categories <-  paste(names(mon.lengths), lubridate::year(x), sep = "\n")
+    result.categories <- names(mon.lengths)
     result.x <- lubridate::day(x) / mon.lengths * 100
 
   } else if (convert.to == 'quarters') {
     quarter.lengths <- 92 # TODO get exact quarters length
-    result.categories <- paste(quarter_abbr(x), lubridate::year(x), sep = "\n")
+    result.categories <-quarter_abbr(x)
     result.x <- lubridate::qday(x) / quarter.lengths * 100
   } else if (convert.to == 'years') {
     year.lengths <- ifelse(lubridate::leap_year(x), 366, 365)
