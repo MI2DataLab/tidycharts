@@ -107,7 +107,8 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #' @export
 #'
 #' @examples
-#'
+#' @importFrom magrittr "%>%"
+
 barchart_plot <- function(data, cat, series, series_labels, styles = NULL){
   # TODO all values in one bar should have the same sign
   initialize() %>%

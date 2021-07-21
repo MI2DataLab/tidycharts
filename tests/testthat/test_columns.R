@@ -46,6 +46,12 @@ test_that('Simple column charts are generating',{
   )
 
 })
+test_that('Most simple example works',{
+  df <- data.frame(x = c('a','b','c'),
+                   val = c(1,2,3))
+  expect_magick(column_chart(df, x='x', series = 'val') %>% show())
+})
+
 
 test_that('Stacked column charts are generating',{
   # negative values

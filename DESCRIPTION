@@ -14,5 +14,14 @@ Imports:
     magrittr,
     magick,
     rsvg,
-    rlang,
-    dplyr
+    rlang
+Depends:
+    testthat,
+    dplyr,
+    methods,
+    graphics,
+    htmlwidgets
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

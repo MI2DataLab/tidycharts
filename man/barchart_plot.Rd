@@ -23,6 +23,3 @@ SVG string containing chart
 \description{
 Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.
 }
-\examples{
-
-}

@@ -161,21 +161,9 @@ add_vertical_index <- function(x, y){ #y defines how long the index line will be
            y,
            '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
     sep='\n'
-
   ))
-
 }
 
-
-str_width <- function(string, bold = FALSE){
-  font <- ifelse(bold, 2, 1)
-  strwidth(string, units = "inches", font = font, cex = 0.75) %>%
-    inch2px() %>%
-    return()
-}
-
-
-inch2px <- function(inches) inches * 96
 
 find_height <- function(data, series){
   maxes <- c()
