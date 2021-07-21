@@ -1,5 +1,5 @@
 #' @export
-parse_time_series <- function(df, x, y, convert.to = 'months') {
+parse_time_series_column <- function(y, df, x, convert.to = 'months') {
   stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
   x <- df[[x]]
   result.y <- df[[y]]
@@ -33,4 +33,8 @@ parse_time_series <- function(df, x, y, convert.to = 'months') {
 
 quarter_abbr <- function(x){
   paste0('Q', lubridate::quarter(x))
+}
+
+parse_time_series <- function(df, dates, series, convert.to = 'months'){
+  lapply(series, parse_time_series_column, df = df, x = dates, convert.to = convert.to)
 }
