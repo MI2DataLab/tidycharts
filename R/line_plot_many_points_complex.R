@@ -54,7 +54,7 @@ draw_lines_complex <-function(svg_string, list, vector_x, vector_y, vector_cat, 
     categories <- unique(data[cat])
     for(i in 1:length(categories[,cat])){ #going through categories/ time series
       category <- categories[,cat][i]
-      filtered <- data %>% filter(cat==category)
+      filtered <- data %>% dplyr::filter(cat==category)
       #lines between two categories
       if( i!=1){
         lines <- paste(

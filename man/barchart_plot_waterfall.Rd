@@ -16,7 +16,7 @@ barchart_plot_waterfall(y, values, add_result = FALSE, result_title = NULL)
 \item{result_title}{the title for the result bar. Ignored if add_result is false}
 }
 \value{
-
+SVG string containing chart
 }
 \description{
 Generate horizontal waterfall chart

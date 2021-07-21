@@ -177,7 +177,7 @@ add_result_bar <- function(svg_string,
 #' @param add_result boolean value if result bar should be plotted
 #' @param result_title the title for the result bar. Ignored if add_result is false
 #'
-#' @return
+#' @return SVG string containing chart
 #' @export
 #'
 #' @examples
