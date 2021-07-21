@@ -51,6 +51,10 @@ test_that("Basic barchart is working", {
   expect_magick(barchart_plot(data, data$city, groups, groups, styles = styles) %>% show())
 })
 
+test_that('Only positive values on a barchart_index don\'t throw warnings', {
+  expect_magick(barchart_plot_index(df, df$animal, series = srs, index_val = 3, series_labels = srs) %>% show())
+})
+
 test_that("Barchart with index line is working", {
   expect_magick(
     barchart_plot_index(
@@ -71,6 +75,12 @@ test_that("Normalized horizontal barcharts work", {
 test_that("Grouped horizontal barcharts work", {
   expect_magick(
     barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% show()
+  )
+})
+
+test_that("Grouped horizontal barcharts work with only positive velues", {
+  expect_magick(
+    barchart_plot_grouped(df, df$animal, srs, srs) %>% show()
   )
 })
 
