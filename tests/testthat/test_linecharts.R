@@ -144,3 +144,16 @@ test_that('Line plots with many points work without errors', {
   line_plot_many_points(data, data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
   )
 })
+
+
+test_that('Lineplot complex with with only positive values doesn\'t give warnings',{
+  df <- data.frame(
+    x = seq.Date(as.Date('2021-01-01'), as.Date('2022-01-01'), length.out = 200),
+    y = 5 * sin(seq(from = 0, to = 2*pi, length.out = 200 )) +  rnorm(200, mean = 5, sd = 0.5)
+  )
+  df <- df[df$x < as.Date('2021-02-28'),]
+  l <- df %>% parse_time_series('x', 'y') %>% list()
+  line_plot_many_points_complex(list = l, vector_x = 'x', vector_y = 'y',
+                                vector_cat = 'cat', series_labels = 'test_data',
+                                df_numbers = 1, point_cords = NULL) %>% show()
+} )
