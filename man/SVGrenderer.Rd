@@ -2,10 +2,19 @@
 % Please edit documentation in R/SVGrenderer.R
 \name{SVGrenderer}
 \alias{SVGrenderer}
-\title{<Add Title>}
+\title{Function to render SVG image as htmlwidget}
 \usage{
-SVGrenderer(message, width = NULL, height = NULL, elementId = NULL)
+SVGrenderer(svg_string, width = NULL, height = NULL, elementId = NULL)
+}
+\arguments{
+\item{svg_string}{one element character vector with image in svg format}
+
+\item{width}{NOT IMPLEMENTED width of the widget}
+
+\item{height}{NOT IMPLEMENTED height of the widget}
+
+\item{elementId}{NOT IMPLEMENTED HTML element ID}
 }
 \description{
-<Add Description>
+Use this function to show SVG images from given string in SVG embedded in HTML.
 }
