@@ -35,6 +35,8 @@ quarter_abbr <- function(x){
   paste0('Q', lubridate::quarter(x))
 }
 
+#' @export
 parse_time_series <- function(df, dates, series, convert.to = 'months'){
+  stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
   lapply(series, parse_time_series_column, df = df, x = dates, convert.to = convert.to)
 }

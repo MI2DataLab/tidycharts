@@ -134,3 +134,27 @@ line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, 
     draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords) %>%
     finalize() #%>% show()
 }
+
+#' Title
+#'
+#' @param df
+#' @param dates
+#' @param series
+#' @param scale
+#'
+#' @return
+#' @export
+#'
+#' @examples
+line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
+  stopifnot(scale %in% c('weeks', 'months', 'quarters', 'years'))
+
+  parse_time_series(df, dates, series, scale) %>%
+    line_plot_many_points_complex(list = .,
+                                  vector_x = rep('x', length(series)),
+                                  vector_y = rep('y', length(series)),
+                                  vector_cat = rep('cat', length(series)),
+                                  series_labels = series,
+                                  df_numbers = 1,
+                                  point_cords = NULL)
+}
