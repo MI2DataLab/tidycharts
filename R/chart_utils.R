@@ -12,9 +12,14 @@ initialize <-
            height = 500,
            x_vector = NULL,
            bar_width = NULL,
-           x_margin = 50) {
+           x_margin = 50,
+           y_vector = NULL,
+           y_margin = 50) {
     if (!is.null(x_vector) & !is.null(bar_width)) {
       width <- length(x_vector) * 1.5 * bar_width + x_margin
+    }
+    if (!is.null(y_vector) & ! is.null(bar_width)) {
+      height <- length(y_vector) * 1.5 * bar_width + y_margin
     }
     return(
       paste(
