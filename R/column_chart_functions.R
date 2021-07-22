@@ -92,7 +92,9 @@ add_bars <-
     # TODO check series lengths and NA there
     svg_string <- paste(svg_string,
                         initialize(
-                          transformation = paste0("translate(", translate[1], ",", translate[2], ")")
+                          transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
+                          x_vector = x,
+                          bar_width = bar_width
                         ),
                         sep = "\n")
     n_bars = length(x)
@@ -545,7 +547,9 @@ add_relative_variance_pins <-
     )
     svg_string <-
       initialize(svg_string,
-                 transformation = paste0("translate(", translate[1], ",", translate[2], ")"))
+                 transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
+                 x_vector = x,
+                 bar_width = bar_width)
 
     for (i in 1:length(x)) {
       # add axis
@@ -637,7 +641,9 @@ add_triangles <- function(svg_string,
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
   svg_string <- paste(svg_string,
                       initialize(
-                        transformation = paste0("translate(", translate[1], ",", translate[2], ")")
+                        transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
+                        x_vector = x,
+                        bar_width = bar_width
                       ),
                       sep = "\n")
 
@@ -717,7 +723,9 @@ add_top_values <-
     }
     svg_string <- paste(svg_string,
                         initialize(
-                          transformation = paste0("translate(", translate[1], ",", translate[2], ")")
+                          transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
+                          x_vector = x,
+                          bar_width = bar_width
                         ),
                         sep = "\n")
 
@@ -766,7 +774,7 @@ column_chart <- function(df, x, series = NULL, styles = NULL) {
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_categories(x, max_categories = 24)
 
-  initialize() %>%
+  initialize(x_vector = x, bar_width = bar_width) %>%
     add_bars(df, x, series, bar_width = bar_width, styles) %>%
     add_legend(df, x, series, bar_width = bar_width) %>%
     add_top_values(df, x, series, bar_width = bar_width) %>%
@@ -792,7 +800,7 @@ column_chart_normalized <- function(df, x, series = NULL) {
 
   normalized_df <- normalize_rows(df, x, series)
 
-  initialize() %>%
+  initialize(x_vector = x, bar_width = bar_width) %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
     add_legend(normalized_df, x, series, bar_width = bar_width) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 50, label = "100") %>%
@@ -823,7 +831,7 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
   referenced_df <- reference(df, x, series, ref_value)
   index_level <-
     ref_value / max(df[series]) * 200
-  initialize() %>%
+  initialize(x_vector = x, bar_width = bar_width) %>%
     add_bars(referenced_df, x, series, bar_width = bar_width, styles = styles) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
     add_top_values(df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
@@ -848,7 +856,7 @@ column_chart_waterfall <- function(df, x, series, styles = NULL) {
   stop_if_many_categories(x, max_categories = 24)
   stop_if_many_series(series, max_series = 1) # maximum 1 series
 
-  initialize() %>%
+  initialize(x_vector = x, bar_width = bar_width) %>%
     add_waterfall_bars(df, x, series, bar_width, styles) %>%
     finalize()
 }
@@ -872,7 +880,7 @@ column_chart_absolute_variance <-
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    initialize() %>%
+    initialize(x_vector = x, bar_width = bar_width) %>%
       add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
@@ -915,7 +923,7 @@ column_chart_grouped <-
     }
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-    initialize() %>%
+    initialize(x_vector = x, bar_width = bar_width) %>%
       add_bars(
         df[, titles[2], drop = FALSE],
         x = x,
@@ -991,7 +999,7 @@ column_chart_relative_variance <-
 
     bar_width <- 32
     translation_vec = c(str_width(x_title), 0)
-    initialize() %>%
+    initialize(x_vector = x, bar_width = bar_width) %>%
       add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, translate = translation_vec, styles = styles) %>%
       finalize()
   }
@@ -1017,7 +1025,7 @@ column_chart_waterfall_variance <-
     difference <- real - baseline
     df <- data.frame("series" = difference)
 
-    initialize() %>%
+    initialize(x_vector = x, bar_width = bar_width) %>%
       add_first_bar(
         x[1],
         df[1, 'series'],
@@ -1025,7 +1033,8 @@ column_chart_waterfall_variance <-
         low_value = min(df['series']),
         bar_width = bar_width
       ) %>%
-      initialize(., transformation = "translate(50,0)") %>%
+      initialize(., transformation = "translate(50,0)",
+                 x_vector = x, bar_width = bar_width) %>%
       add_waterfall_bars(
         df[-1, , drop = FALSE],
         x[-1],
