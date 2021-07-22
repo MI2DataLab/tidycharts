@@ -7,7 +7,7 @@ Authors@R: c(
     person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = 'cre'))
 Maintainer: Bartosz Sawicki <sawicki.bartosz@interia.pl>
 Description: The ibcsplot package enables user to generate charts compliant with IBCS.
-All charts are generated in SVG format and can be shown in RStudio viewer pane or can be exported to HTML output of knitr/markdown.
+    All charts are generated in SVG format and can be shown in RStudio viewer pane or can be exported to HTML output of knitr/markdown.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
