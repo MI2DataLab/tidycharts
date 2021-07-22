@@ -767,8 +767,8 @@ reference <- function(df, x, series, ref_value) {
 #' @export
 #'
 #' @examples
-column_chart <- function(df, x, series = NULL, styles = NULL) {
-  bar_width = 32
+column_chart <- function(df, x, series = NULL, styles = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
   stop_if_many_series(series, max_series = 6) # maximum 6 series
   stop_if_pos_neg_values(df, series) # signum of values in one bar is the same for every bar
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
@@ -792,8 +792,8 @@ column_chart <- function(df, x, series = NULL, styles = NULL) {
 #' @export
 #'
 #' @examples
-column_chart_normalized <- function(df, x, series = NULL) {
-  bar_width = 32
+column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_series(series, max_series = 6) # maximum 6 series
   stop_if_many_categories(x, max_categories = 24)
@@ -821,8 +821,8 @@ column_chart_normalized <- function(df, x, series = NULL) {
 #' @export
 #'
 #' @examples
-column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL) {
-  bar_width = 32
+column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
   stop_if_many_series(series, max_series = 1) # maximum 1 series
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_categories(x, max_categories = 24)
@@ -849,8 +849,8 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
 #' @export
 #'
 #' @examples
-column_chart_waterfall <- function(df, x, series, styles = NULL) {
-  bar_width = 32
+column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
 
   stop_if_many_categories(x, max_categories = 24)
@@ -874,9 +874,9 @@ column_chart_waterfall <- function(df, x, series, styles = NULL) {
 #'
 #' @examples
 column_chart_absolute_variance <-
-  function(x, baseline, real, colors = 1, x_title = "PY") {
+  function(x, baseline, real, colors = 1, x_title = "PY", interval = 'months') {
 
-    bar_width <- 32
+    bar_width <- get_interval_width(interval)$bar_width
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
@@ -904,9 +904,10 @@ column_chart_grouped <-
            background,
            triangles = NULL,
            titles,
-           styles = NULL) {
+           styles = NULL,
+           interval = 'months') {
 
-    bar_width <- 32
+    bar_width <- get_interval_width(interval)$bar_width
     translation_vec <- c(max(str_width(titles)) + 10, 0)
 
     stopifnot(length(titles) >= 2)
@@ -993,11 +994,11 @@ column_chart_grouped <-
 #'
 #' @examples
 column_chart_relative_variance <-
-  function(x, baseline, real, colors = 1, x_title, styles = NULL) {
+  function(x, baseline, real, colors = 1, x_title, styles = NULL, interval = 'months') {
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    bar_width <- 32
+    bar_width <- get_interval_width(interval)$bar_width
     translation_vec = c(str_width(x_title), 0)
     initialize(x_vector = x, bar_width = bar_width) %>%
       add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, translate = translation_vec, styles = styles) %>%
@@ -1018,8 +1019,8 @@ column_chart_relative_variance <-
 #'
 #' @examples
 column_chart_waterfall_variance <-
-  function(x, baseline, real, colors = 1, result_title) {
-    bar_width <- 32
+  function(x, baseline, real, colors = 1, result_title, interval = 'months') {
+    bar_width <- get_interval_width(interval)$bar_width
     stop_if_many_categories(x, max_categories = 24)
 
     difference <- real - baseline
