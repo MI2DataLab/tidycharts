@@ -4,7 +4,14 @@
 \alias{column_chart_absolute_variance}
 \title{Generate column chart with absolute variance}
 \usage{
-column_chart_absolute_variance(x, baseline, real, colors = 1, x_title = "PY")
+column_chart_absolute_variance(
+  x,
+  baseline,
+  real,
+  colors = 1,
+  x_title = "PY",
+  interval = "months"
+)
 }
 \arguments{
 \item{x}{vector containing labels for x axis}

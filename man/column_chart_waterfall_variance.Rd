@@ -4,7 +4,14 @@
 \alias{column_chart_waterfall_variance}
 \title{Generate column waterfall chart with absolute variance}
 \usage{
-column_chart_waterfall_variance(x, baseline, real, colors = 1, result_title)
+column_chart_waterfall_variance(
+  x,
+  baseline,
+  real,
+  colors = 1,
+  result_title,
+  interval = "months"
+)
 }
 \arguments{
 \item{x}{vector containing labels for x axis}

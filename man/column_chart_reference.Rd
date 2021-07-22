@@ -10,7 +10,8 @@ column_chart_reference(
   series,
   ref_value,
   ref_label = NULL,
-  styles = NULL
+  styles = NULL,
+  interval = "months"
 )
 }
 \arguments{

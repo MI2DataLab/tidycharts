@@ -10,7 +10,8 @@ column_chart_relative_variance(
   real,
   colors = 1,
   x_title,
-  styles = NULL
+  styles = NULL,
+  interval = "months"
 )
 }
 \arguments{

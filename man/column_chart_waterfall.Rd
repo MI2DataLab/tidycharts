@@ -4,7 +4,7 @@
 \alias{column_chart_waterfall}
 \title{Generate column waterfall chart for visualizing contribution.}
 \usage{
-column_chart_waterfall(df, x, series, styles = NULL)
+column_chart_waterfall(df, x, series, styles = NULL, interval = "months")
 }
 \arguments{
 \item{df}{data frame in wide format containing data to be plotted}

@@ -4,7 +4,7 @@
 \alias{column_chart}
 \title{Generate basic column chart. If more than one series is supplied, stacked column plot is generated}
 \usage{
-column_chart(df, x, series = NULL, styles = NULL)
+column_chart(df, x, series = NULL, styles = NULL, interval = "months")
 }
 \arguments{
 \item{df}{data frame in wide format containing data to be plotted}

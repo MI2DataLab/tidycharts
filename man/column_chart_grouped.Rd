@@ -10,7 +10,8 @@ column_chart_grouped(
   background,
   triangles = NULL,
   titles,
-  styles = NULL
+  styles = NULL,
+  interval = "months"
 )
 }
 \arguments{
