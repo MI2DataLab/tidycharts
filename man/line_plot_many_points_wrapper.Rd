@@ -2,16 +2,22 @@
 % Please edit documentation in R/line_plot_many_points_complex.R
 \name{line_plot_many_points_wrapper}
 \alias{line_plot_many_points_wrapper}
-\title{Title}
+\title{Wrapper for complex lineplot}
 \usage{
 line_plot_many_points_wrapper(df, dates, series, scale = "months")
 }
 \arguments{
-\item{scale}{}
+\item{df}{Date frame with data in wide format.}
+
+\item{dates}{Name of column in `df` which contains dates.}
+
+\item{series}{Vector of column names in `df` with values of time series.}
+
+\item{scale}{Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.}
 }
 \value{
-
+SVG string containing chart
 }
 \description{
-Title
+Easier to use version of `line_plot_many_points_complex`.
 }
