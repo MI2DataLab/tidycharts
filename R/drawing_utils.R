@@ -1,33 +1,4 @@
 
-pkg.env <- new.env(parent = emptyenv())
-
-
-pkg.env$styles_df <-
-  rbind(
-    actual = c("rgb(64,64,64)", "rgb(64,64,64)"),
-    prevoius =
-      c("rgb(166,166,166)", "rgb(166,166,166)"),
-    forecast =
-      c("url(#diagonalHatch)", "rgb(64,64,64)"),
-    plan = c("white", "rgb(64,64,64)"),
-    total_white = c("white", "white")
-  )
-colnames(pkg.env$styles_df) <- c("fill", "stroke")
-
-
-
-pkg.env$colors_df <- cbind(
-  bar_colors =  c(
-    "rgb(64,64,64)",
-    "rgb(166,166,166)",
-    "rgb(70,70,70)",
-    "rgb(90,90,90)" ,
-    "rgb(110,110,110)",
-    "rgb(127,127,127)"
-  ),
-  text_colors = c("white", "black", "white", "white", "white", "black")
-)
-
 draw_bar <- function(svg_string, x, y, height, width, color = "black", style = NULL) {
   if(height < 0 ){
     y = y + height

@@ -1,4 +1,5 @@
 
+
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
@@ -75,4 +76,13 @@ add_title <- function(svg_string, line1, line2_measure, line2_rest, line3=""){
     draw_text(text = line3, x = 0, y = 36, text_anchor = "start") %>%
     finalize() %>%
     return()
+}
+
+
+get_interval_width <- function(interval){
+  stopifnot(interval %in% c("days", "weeks", "months", "quarters", "years"))
+  return(list(
+    bar_width = pkg.env$widths[[interval, "bar_width"]],
+    category_width = pkg.env$widths[[interval, "category_width"]]
+  ))
 }
