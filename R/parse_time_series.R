@@ -1,4 +1,4 @@
-#' @export
+
 parse_time_series_column <- function(y, df, x, convert.to = 'months') {
   stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
   x <- df[[x]]
@@ -35,6 +35,18 @@ quarter_abbr <- function(x){
   paste0('Q', lubridate::quarter(x))
 }
 
+#' Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.
+#'
+#' @param df Date frame with data in wide format.
+#' @param dates Name of column in `df` which contains dates.
+#' @param series Vector of column names in `df` with values of time series.
+#' @param convert.to Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.
+#'
+#' @return list of data frames, each one containing data about one time series.  Data frames in returned list consist of columns:
+#' * containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinattes of the point)
+#' * containing the value of a point  (y - coordinates of the point)
+#' * containing the time interval of the value
+#'
 #' @export
 parse_time_series <- function(df, dates, series, convert.to = 'months'){
   stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
