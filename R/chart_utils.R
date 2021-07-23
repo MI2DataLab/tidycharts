@@ -1,4 +1,3 @@
-
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
@@ -8,7 +7,7 @@ initialize <-
   function(svg_string = "",
            transformation = "",
            svg_string_append = "",
-           width = 500,
+           width = 1000,
            height = 500,
            x_vector = NULL,
            bar_width = NULL,
@@ -27,13 +26,6 @@ initialize <-
         paste0(
           '<svg  version="1.1"
           baseProfile="full"
-<<<<<<< HEAD
-          width="700" height="500" transform="',
-            transformation,
-            '" >'
-          ),
-          '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
-=======
           width="',
           width,
           '" height="',
@@ -43,7 +35,6 @@ initialize <-
           '" >'
         ),
         '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
->>>>>>> 2e0b138886bc9433fff436bb84ce54febb3d2d69
             <rect x="0" y="0" width="4" height="4" fill="white"/>
             <path d="M-1,1 l2,-2
                      M0,4 l4,-4
