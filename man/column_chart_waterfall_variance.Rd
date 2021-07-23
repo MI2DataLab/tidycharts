@@ -4,7 +4,14 @@
 \alias{column_chart_waterfall_variance}
 \title{Generate column waterfall chart with absolute variance}
 \usage{
-column_chart_waterfall_variance(x, baseline, real, colors = 1, result_title)
+column_chart_waterfall_variance(
+  x,
+  baseline,
+  real,
+  colors = 1,
+  result_title,
+  interval = "months"
+)
 }
 \arguments{
 \item{x}{vector containing labels for x axis}
@@ -15,7 +22,9 @@ column_chart_waterfall_variance(x, baseline, real, colors = 1, result_title)
 
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
 
-\item{result_title}{title for the last bar with total result}
+\item{result_title}{title for the result bar}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
