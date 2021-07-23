@@ -21,3 +21,18 @@ SVG string containing chart
 \description{
 Generate basic column chart. If more than one series is supplied, stacked column plot is generated
 }
+\examples{
+# prepare some data frame
+df <- data.frame(x = month.abb[1:6],
+                 y = c(2, 4, 2, 1, 2.5, 3),
+                 z = c(3, 4.5, 2, 1, 4, 2))
+
+# generate character vectors with svg data
+svg1 <- column_chart(df, x = 'x', series = 'y')
+svg2 <- column_chart(df, x = df$x, series = c('y', 'z'))
+
+
+# show the plot
+svg1 \%>\% SVGrenderer()
+
+}

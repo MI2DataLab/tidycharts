@@ -33,3 +33,18 @@ SVG string containing chart
 \description{
 Generate column chart with reference line.
 }
+\examples{
+#' # prepare some data frame
+df <- data.frame(x = month.abb[1:6],
+                 y = c(2, 4, 2, 1, 2.5, 3),
+                 z = c(3, 4.5, 2, 1, 4, 2))
+
+# generate character vector with svg data
+svg <- column_chart_reference(df, x = 'x',
+                              series = 'y',
+                              ref_value = 3,
+                              ref_label = 'baseline')
+
+# show the plot
+svg \%>\% SVGrenderer()
+}

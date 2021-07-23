@@ -21,3 +21,8 @@ SVG string containing chart
 \description{
 Generate column waterfall chart for visualizing contribution.
 }
+\examples{
+df <- data.frame(x = 10:18,
+                 y = rnorm(9))
+column_chart_waterfall(df, 'x', 'y') \%>\% SVGrenderer()
+}
