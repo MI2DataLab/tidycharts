@@ -439,11 +439,11 @@ add_abs_variance_bars <-
            bar_width,
            x_title) {
     # TODO x_axis_pos depending on negative values
-    x_axis_pos <- 200
+    x_axis_pos <- 250
     x_pos <- 35
 
     color <- choose_variance_colors(colors)
-    max_val <- max(baseline, real)
+    max_val <- max(abs(baseline), abs(real))
     variance <- real - baseline
 
     # add legend on the left of plot
@@ -474,19 +474,19 @@ add_abs_variance_bars <-
         c <- color[["pos_color"]]
         bar_y <- x_axis_pos - bar_h + 2.4
         label_y <- bar_y - 4.8
-        label_text <- paste("+", variance[i])
+        label_text <- paste("+", format(variance[i], digits = 4))
         x_label_y <- x_axis_pos + 4.8 + 12
       } else if (variance[i] < 0) {
         c <- color[["neg_color"]]
         bar_y <- x_axis_pos + 2.4
         label_y <- bar_y + bar_h + 4.8 + 9
-        label_text <- variance[i]
+        label_text <-format(variance[i], digits = 4)
         x_label_y <- x_axis_pos - 2.4
       } else{
         c <- "rgb(128,128,128)" # neutral gray
         bar_y <- x_axis_pos + 2.4
         label_y <- bar_y - 4.8
-        label_text <- variance[i]
+        label_text <- format(variance[i], digits = 4)
         x_label_y <- x_axis_pos + 4.8 + 12
       }
 
