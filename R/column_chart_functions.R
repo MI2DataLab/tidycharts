@@ -270,7 +270,7 @@ add_waterfall_bars <-
 
     x_axis_pos <- 250
     max_bar_height <- 200
-    top_value <- max(df[series])
+    top_value <- max(abs(df[series]))
     prev_level <- ref_value / top_value * max_bar_height
 
     # calculate x labels y position
@@ -530,7 +530,7 @@ add_relative_variance_pins <-
            x_title,
            translate = c(0,0),
            styles = NULL) {
-    x_axis_pos <- 150
+    x_axis_pos <- 200
     color <- choose_variance_colors(colors)
     x_pos <- 0
     values <- real / baseline * 100 - 100
