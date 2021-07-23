@@ -451,7 +451,7 @@ add_abs_variance_bars <-
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("delta ", x_title),
+      text = paste0("\u0394 ", x_title),
       x = x_pos,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
@@ -540,7 +540,7 @@ add_relative_variance_pins <-
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("delta ", x_title),
+      text = paste0("\u0394 ", x_title), # Δ = \u0394
       x = x_pos + translate[1] + bar_width * 0.5,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
