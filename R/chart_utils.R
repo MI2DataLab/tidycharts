@@ -1,4 +1,3 @@
-
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
@@ -8,7 +7,7 @@ initialize <-
   function(svg_string = "",
            transformation = "",
            svg_string_append = "",
-           width = 500,
+           width = 1000,
            height = 500,
            x_vector = NULL,
            bar_width = NULL,

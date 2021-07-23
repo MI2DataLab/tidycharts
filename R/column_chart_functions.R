@@ -223,7 +223,7 @@ add_first_bar <- function(svg_string,
   # add label to bar
   svg_string <- draw_text(
     svg_string = svg_string,
-    text = format(value, digits = 3),
+    text = format(value, digits = 5),
     x = x_pos + 0.75 * bar_width,
     y = label_y,
     text_color = label_color
@@ -352,7 +352,7 @@ add_waterfall_bars <-
         # add label to bar
         svg_string <- draw_text(
           svg_string = svg_string,
-          text = paste0(text_prefix, format(actual_delta, digits = 3)),
+          text = paste0(text_prefix, format(actual_delta, digits = 5)),
           x = x_pos + 0.75 * bar_width,
           y = label_y,
           text_color = "black"
@@ -361,7 +361,7 @@ add_waterfall_bars <-
         # add label next to last bar
         svg_string <- draw_text(
           svg_string = svg_string,
-          text = paste0(positive_prefix, format(actual_delta, digits = 3)),
+          text = paste0(positive_prefix, format(actual_delta, digits = 5)),
           x = last_label_x,
           y = last_label_y,
           text_anchor = last_label_anchor,
@@ -716,10 +716,10 @@ add_top_values <-
       labels <- heights
     }
     if (length(labels) == 1 && labels == "percent"){
-      labels <- paste0(format(heights / ref_value * 100, digits = 3),"%")
+      labels <- paste0(format(heights / ref_value * 100, digits = 5),"%")
     }
     else{
-      labels <- format(labels, digits = 4)
+      labels <- format(labels, digits = 5)
     }
     svg_string <- paste(svg_string,
                         initialize(

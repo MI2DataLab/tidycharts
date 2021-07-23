@@ -30,7 +30,7 @@ add_label<- function(x, y, value, color="black", anchor="middle"){
                 x,
                 '" y="',
                 y,
-                '"  font-family="Arial" text-anchor="',
+                '"  font-family="Arial" font-size="12" text-anchor="',
                 anchor,
                 '" fill="',
                 color,
