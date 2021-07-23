@@ -188,25 +188,6 @@ draw_ref_line_horizontal <- function(svg_string, x, bar_width, line_y, label) {
   return(svg_string)
 }
 
-get_style <- function(style, styles_df = pkg.env$styles_df){
-  return(styles_df[style, ])
-}
-
-#' Function to get bar/area color for stacked plots.
-#'
-#' @param series_number what is the number of the series. one of 1:6.
-#' @param colors_df data frame with variety of colors
-#'
-#' @return list with bar_color and text_color
-#'
-#' @examples
-get_gray_color_stacked <- function(series_number, colors_df = pkg.env$colors_df){
-
-  stopifnot(series_number %in% 1:6)
-  return(list(bar_color = colors_df[series_number,][['bar_colors']],
-              text_color = colors_df[series_number,][['text_colors']]))
-}
-
 #' Caclulate string width in pixels
 #'
 #' @param string string which width will be calculated
