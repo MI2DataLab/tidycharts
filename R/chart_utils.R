@@ -8,7 +8,7 @@ initialize <- function(svg_string="", transformation = "", svg_string_append = "
           paste0(
             '<svg  version="1.1"
           baseProfile="full"
-          width="500" height="500" transform="',
+          width="700" height="500" transform="',
             transformation,
             '" >'
           ),
