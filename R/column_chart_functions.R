@@ -767,6 +767,19 @@ reference <- function(df, x, series, ref_value) {
 #' @export
 #'
 #' @examples
+#' # prepare some data frame
+#' df <- data.frame(x = month.abb[1:6],
+#'                  y = c(2, 4, 2, 1, 2.5, 3),
+#'                  z = c(3, 4.5, 2, 1, 4, 2))
+#'
+#' # generate character vectors with svg data
+#' svg1 <- column_chart(df, x = 'x', series = 'y')
+#' svg2 <- column_chart(df, x = df$x, series = c('y', 'z'))
+#'
+#'
+#' # show the plot
+#' svg1 %>% SVGrenderer()
+#'
 column_chart <- function(df, x, series = NULL, styles = NULL) {
   bar_width = 32
   stop_if_many_series(series, max_series = 6) # maximum 6 series
@@ -792,6 +805,16 @@ column_chart <- function(df, x, series = NULL, styles = NULL) {
 #' @export
 #'
 #' @examples
+#' # prepare some data frame
+#' df <- data.frame(x = month.abb[1:6],
+#'                  y = c(2, 4, 2, 1, 2.5, 3),
+#'                  z = c(3, 4.5, 2, 1, 4, 2))
+#'
+#' # generate character vector with svg data
+#' svg <- column_chart_normalized(df, x = df$x, series = c('y', 'z'))
+#'
+#' # show the plot
+#' svg %>% SVGrenderer()
 column_chart_normalized <- function(df, x, series = NULL) {
   bar_width = 32
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
