@@ -844,6 +844,19 @@ column_chart_normalized <- function(df, x, series = NULL) {
 #' @export
 #'
 #' @examples
+#' #' # prepare some data frame
+#' df <- data.frame(x = month.abb[1:6],
+#'                  y = c(2, 4, 2, 1, 2.5, 3),
+#'                  z = c(3, 4.5, 2, 1, 4, 2))
+#'
+#' # generate character vector with svg data
+#' svg <- column_chart_reference(df, x = 'x',
+#'                               series = 'y',
+#'                               ref_value = 3,
+#'                               ref_label = 'baseline')
+#'
+#' # show the plot
+#' svg %>% SVGrenderer()
 column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL) {
   bar_width = 32
   stop_if_many_series(series, max_series = 1) # maximum 1 series
@@ -872,6 +885,9 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
 #' @export
 #'
 #' @examples
+#' df <- data.frame(x = 10:18,
+#'                  y = rnorm(9))
+#' column_chart_waterfall(df, 'x', 'y') %>% SVGrenderer()
 column_chart_waterfall <- function(df, x, series, styles = NULL) {
   bar_width = 32
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
@@ -886,6 +902,8 @@ column_chart_waterfall <- function(df, x, series, styles = NULL) {
 
 #' Generate column chart with absolute variance
 #'
+#' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+#'
 #' @param x vector containing labels for x axis
 #' @param baseline vector containing base values
 #' @param real vector containing values that will be compared to baseline
@@ -896,6 +914,11 @@ column_chart_waterfall <- function(df, x, series, styles = NULL) {
 #' @export
 #'
 #' @examples
+#' x <- month.abb
+#' baseline <- rnorm(12)
+#' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
+#' column_chart_absolute_variance(x, baseline, real, x_title = 'profit') %>%
+#'   SVGrenderer()
 column_chart_absolute_variance <-
   function(x, baseline, real, colors = 1, x_title = "PY") {
 
@@ -921,6 +944,17 @@ column_chart_absolute_variance <-
 #' @export
 #'
 #' @examples
+# df <- data.frame(x = month.abb[7:12],
+#                  actual = rnorm(6, mean = 5, sd = 0.3),
+#                  budget = rnorm(6, mean = 4.5, sd = 0.7),
+#                  prev_year = rnorm(6, mean = 4))
+#
+# column_chart_grouped(x = df$x,
+#                      foreground = df$actual,
+#                      background = df$budget,
+#                      triangles = df$prev_year,
+#                      titles = c('AC', 'BU', 'PY')) %>% SVGrenderer()
+
 column_chart_grouped <-
   function(x,
            foreground,
@@ -1015,6 +1049,11 @@ column_chart_grouped <-
 #' @export
 #'
 #' @examples
+#' x <- month.abb
+#' baseline <- rnorm(12, mean = 1, sd = 0.2)
+#' real <- c(rnorm(6, mean = 0.8, sd = 0.2), rnorm(6, mean = 1.2, sd = 0.2))
+#' column_chart_relative_variance(x, baseline, real, x_title = 'profit %') %>%
+#'   SVGrenderer()
 column_chart_relative_variance <-
   function(x, baseline, real, colors = 1, x_title, styles = NULL) {
     stop_if_variance_colors(colors)
@@ -1040,6 +1079,11 @@ column_chart_relative_variance <-
 #' @export
 #'
 #' @examples
+#' x <- month.abb
+#' baseline <- rnorm(12)
+#' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
+#' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') %>%
+#'   SVGrenderer()
 column_chart_waterfall_variance <-
   function(x, baseline, real, colors = 1, result_title) {
     bar_width <- 32

@@ -23,3 +23,10 @@ SVG string containing chart
 \description{
 Generate column waterfall chart with absolute variance
 }
+\examples{
+x <- month.abb
+baseline <- rnorm(12)
+real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
+column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') \%>\%
+  SVGrenderer()
+}

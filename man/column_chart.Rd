@@ -32,7 +32,7 @@ svg1 <- column_chart(df, x = 'x', series = 'y')
 svg2 <- column_chart(df, x = df$x, series = c('y', 'z'))
 
 
-# show the plots
+# show the plot
 svg1 \%>\% SVGrenderer()
 
 }
