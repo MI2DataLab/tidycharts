@@ -12,6 +12,8 @@ column_chart_normalized(df, x, series = NULL, interval = "months")
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
 \item{series}{vector containing names of columns in df with values to plot}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

@@ -14,6 +14,8 @@ column_chart(df, x, series = NULL, styles = NULL, interval = "months")
 \item{series}{vector containing names of columns in df with values to plot}
 
 \item{styles}{optional vector with styles of bars}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

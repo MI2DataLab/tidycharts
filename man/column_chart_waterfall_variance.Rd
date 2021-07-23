@@ -22,7 +22,9 @@ column_chart_waterfall_variance(
 
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
 
-\item{result_title}{title for the last bar with total result}
+\item{result_title}{title for the result bar}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

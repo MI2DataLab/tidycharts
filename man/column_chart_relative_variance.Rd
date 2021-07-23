@@ -25,7 +25,9 @@ column_chart_relative_variance(
 
 \item{x_title}{the title of the plot}
 
-\item{styles}{optional data frame of styles applied to pin heads}
+\item{styles}{optional vector with styles of the pin heads}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

@@ -762,6 +762,7 @@ reference <- function(df, x, series, ref_value) {
 #' @param x vector containing labels for x axis or name of column in df with values of x axis labels
 #' @param series vector containing names of columns in df with values to plot
 #' @param styles optional vector with styles of bars
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
@@ -797,10 +798,7 @@ column_chart <- function(df, x, series = NULL, styles = NULL, interval = 'months
 
 #' Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing names of columns in df with values to plot
-#'
+#' @inheritParams column_chart
 #' @return SVG string containing chart
 #' @export
 #'
@@ -834,12 +832,9 @@ column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
 
 #' Generate column chart with reference line.
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing name of column in df with values to plot
+#' @inheritParams column_chart
 #' @param ref_value one element numeric vector with referencing value.
 #' @param ref_label name of the referencing value
-#' @param styles optional vector with styles of the bars
 #'
 #' @return SVG string containing chart
 #' @export
@@ -858,7 +853,6 @@ column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
 #'
 #' # show the plot
 #' svg %>% SVGrenderer()
-
 column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
 
@@ -880,10 +874,7 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
 
 #' Generate column waterfall chart for visualizing contribution.
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing name of column in df with values to plot
-#' @param styles optional vector with styles of the bars
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
@@ -914,6 +905,7 @@ column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'mon
 #' @param real vector containing values that will be compared to baseline
 #' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
@@ -944,6 +936,7 @@ column_chart_absolute_variance <-
 #' @param triangles optional vector representing position of triangles
 #' @param titles vector of series titles. Consists of 2 or 3 elements
 #' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
@@ -1044,12 +1037,9 @@ column_chart_grouped <-
 
 #' Generate column chart with relative variance (in percents)
 #'
-#' @param x vector containing labels for x axis
-#' @param baseline vector containing base values
-#' @param real vector containing values that will be compared to baseline
-#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
+#' @inheritParams column_chart_absolute_variance
 #' @param x_title the title of the plot
-#' @param styles optional data frame of styles applied to pin heads
+#' @param styles optional vector with styles of the pin heads
 #'
 #' @return SVG string containing chart
 #' @export
@@ -1075,11 +1065,8 @@ column_chart_relative_variance <-
 
 #' Generate column waterfall chart with absolute variance
 #'
-#' @param x vector containing labels for x axis
-#' @param baseline vector containing base values
-#' @param real vector containing values that will be compared to baseline
-#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
-#' @param result_title title for the last bar with total result
+#' @inheritParams column_chart_absolute_variance
+#' @param result_title title for the result bar
 #'
 #' @return SVG string containing chart
 #' @export
