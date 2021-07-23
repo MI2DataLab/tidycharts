@@ -393,7 +393,7 @@ add_waterfall_bars <-
       # add label on result bar
       svg_string <- draw_text(
         svg_string = svg_string,
-        text = df[length(x), series],
+        text = format(df[length(x), series], digits = 5),
         x = x_pos + offset + bar_width * 0.75,
         y = x_axis_pos - result_hight / 2,
         text_color = "white"
