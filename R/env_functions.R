@@ -51,3 +51,11 @@ get_gray_color_stacked <- function(series_number, colors_df = pkg.env$colors_df)
   return(list(bar_color = colors_df[series_number,][['bar_colors']],
               text_color = colors_df[series_number,][['text_colors']]))
 }
+
+get_interval_width <- function(interval){
+  stopifnot(interval %in% c("days", "weeks", "months", "quarters", "years"))
+  return(list(
+    bar_width = pkg.env$widths[[interval, "bar_width"]],
+    category_width = pkg.env$widths[[interval, "category_width"]]
+  ))
+}
