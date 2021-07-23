@@ -111,7 +111,8 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 
 barchart_plot <- function(data, cat, series, series_labels, styles = NULL){
   # TODO all values in one bar should have the same sign
-  initialize() %>%
+  initialize(y_vector = cat,
+             bar_width = 16) %>%
     draw_bars_basic(.,data, cat, series, series_labels, styles = styles) %>%
     finalize()
 }
@@ -142,7 +143,8 @@ barchart_plot_index <- function(data, cat, series, index_val, series_labels, sty
   shift <- width_of_one*abs(min(neg))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
-  initialize() %>%
+  initialize(y_vector = cat,
+             bar_width = 16) %>%
     paste(.,
           draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
           add_vertical_index(80+(width_of_one*index_val)+shift, (66+24*(length(cat)-1))),
@@ -166,7 +168,8 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
   df <- normalize_rows(data, cat, series)
   y_end <- 50 + 24*length(cat)
   # TODO all values should have the same sign
-  initialize() %>%
+  initialize(y_vector = cat,
+             bar_width = 16) %>%
     #draw_bars_normalized(.,data, cat, series, series_labels) %>%
     draw_bars_basic(.,df, cat, series, series_labels, data) %>%
     paste(.,

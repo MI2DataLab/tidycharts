@@ -6,8 +6,6 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // TODO: define shared variables for this instance
-
     return {
 
       renderValue: function(x) {
@@ -17,8 +15,9 @@ HTMLWidgets.widget({
       },
 
       resize: function(width, height) {
+        el.setAttribute("style", "width:".concat(width));
+        el.setAttribute("style", "height:".concat(height));
 
-        // TODO: code to re-render the widget with a new size
       }
 
     };

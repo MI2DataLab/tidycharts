@@ -134,3 +134,29 @@ line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, 
     draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords) %>%
     finalize() #%>% show()
 }
+
+#' Wrapper for complex lineplot
+#'
+#' Easier to use version of `line_plot_many_points_complex`.
+#'
+#' @param df Date frame with data in wide format.
+#' @param dates Name of column in `df` which contains dates.
+#' @param series Vector of column names in `df` with values of time series.
+#' @param scale Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
+line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
+  stopifnot(scale %in% c('weeks', 'months', 'quarters', 'years'))
+
+  parse_time_series(df, dates, series, scale) %>%
+    line_plot_many_points_complex(list = .,
+                                  vector_x = rep('x', length(series)),
+                                  vector_y = rep('y', length(series)),
+                                  vector_cat = rep('cat', length(series)),
+                                  series_labels = series,
+                                  df_numbers = 1,
+                                  point_cords = NULL)
+}

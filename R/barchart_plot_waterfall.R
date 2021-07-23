@@ -188,7 +188,8 @@ barchart_plot_waterfall <-
            result_title = NULL) {
     stopifnot(length(y) == length(values))
 
-    initialize() %>%
+    initialize(y_vector = y,
+               bar_width = 16) %>%
       add_horiz_waterfall_bars(., y, values) %>%
       {
         ifelse(add_result,

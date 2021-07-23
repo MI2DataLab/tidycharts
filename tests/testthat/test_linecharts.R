@@ -79,6 +79,18 @@ test_that("Line plot with many points is working without errors", {
   )
 })
 
+
+test_that('Lineplot with positive values does not throw warnings', {
+  df <- data.frame(
+    animal = c("cat", "doggo", "rabbito"),
+    hungry = c(7, 5, 9),
+    relaxed = c(3, 4, 5),
+    wounded = c(1, 8, 5)
+  )
+  srs <- c("hungry", "relaxed", "wounded")
+  line_plot(df, df$animal, srs, srs)
+})
+
 test_that("Normalized line plot is working without errors", {
   data <- data.frame(
     cat = c("blop", "mlem", "kwak", "beep", "moo"),
@@ -142,5 +154,38 @@ test_that('Line plots with many points work without errors', {
   series_labels <-groups
   expect_magick(
   line_plot_many_points(data, data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
+  )
+})
+
+
+test_that('Lineplot complex with with only positive values doesn\'t give warnings',{
+  df <- data.frame(
+    x = seq.Date(as.Date('2021-01-01'), as.Date('2022-01-01'), length.out = 200),
+    y = 5 * sin(seq(from = 0, to = 2*pi, length.out = 200 )) +  rnorm(200, mean = 5, sd = 0.5)
+  )
+  df <- df[df$x < as.Date('2021-02-28'),]
+  l <- df %>% parse_time_series_column(df = ., x = 'x', y = 'y') %>% list()
+  expect_magick(
+    line_plot_many_points_complex(list = l, vector_x = 'x', vector_y = 'y',
+                                  vector_cat = 'cat', series_labels = 'test_data',
+                                  df_numbers = 1, point_cords = NULL) %>% show())
+  })
+
+
+test_that('Lineplot wrapper works', {
+  dates = seq.Date(as.Date('2021-07-01'), as.Date('2021-08-31'), by = 1)
+  df <- data.frame(
+    dates = dates,
+    y = seq(8, 8, along.with = dates) + rnorm(length(dates), sd = 0.5),
+    z = seq(6, 6, along.with = dates) + rcauchy(length(dates), scale = 0.5)
+  )
+  expect_magick(
+    line_plot_many_points_wrapper(
+      df,
+      dates = 'dates',
+      series = c('y', 'z'),
+      scale = 'weeks'
+    ) %>%
+      show()
   )
 })

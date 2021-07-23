@@ -1,0 +1,147 @@
+---
+title: "test-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{test-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{css, echo=FALSE}
+  body .main-container{
+    max-width: 100%;
+    width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+body {
+  max-width:1800px;
+}
+```
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+```
+
+# This vignette is mainly for testing purposes. Here we can test that generated charts look ok
+
+
+```{r setup}
+library(ibcsplot)
+df <- data.frame(x = letters[1:20],
+                 val = rnorm(20, mean = 5),
+                 style = rep('actual',20))
+```
+
+```{r svg, fig.align='center'}
+column_chart(df, 'x', 'val') %>% SVGrenderer()
+```
+
+## Line with many points 
+```{r lineplot}
+df <- data.frame(
+  x = seq.Date(as.Date('2021-01-01'), as.Date('2022-01-01'), length.out = 200),
+  y = 5 * sin(seq(
+    from = 0,
+    to = 2 * pi,
+    length.out = 200
+  )) +  rnorm(200, mean = 5, sd = 0.5),
+  z = 5 * cos(seq(
+    from = 0,
+    to = 2 * pi,
+    length.out = 200
+  )) +  rnorm(200, mean = 5, sd = 0.5)
+)
+l <- df %>% parse_time_series(., dates = 'x', series = c('y', 'z'))
+line_plot_many_points_complex(
+  list = l,
+  vector_x = c('x', 'x'),
+  vector_y = c('y', 'y'),
+  vector_cat = c('cat', 'cat'),
+  series_labels = 'test_data',
+  df_numbers = 1,
+  point_cords = NULL
+) %>% SVGrenderer()
+```
+## the same but using lineplot wrapper
+```{r}
+line_plot_many_points_wrapper(df, dates = 'x', series = c('y', 'z')) %>% SVGrenderer()
+```
+
+## Barcharts 
+
+```{r barcharts-data, include=FALSE}
+data <- data.frame(
+  city = c(
+    "Berlin",
+    "Munich",
+    "Cologne",
+    "London",
+    "Vienna",
+    "Paris",
+    "Zurich",
+    "Rest"
+  ),
+  value = c(1159, 795, 377, 345, 266, 120, 74, 602),
+  products = c(538, 250, -75, -301, 227, 90, 40, 269),
+  services = c(621, 545, -302, -44, 39, 30, 34, 333),
+  triangles = c(600, 600, -302, 600, 600, 30, 600, 600)
+)
+groups <- c("products")
+series <- c("triangles", "products", "services")
+styles <- c(rep('actual', 6), 'forecast', 'actual')
+
+df_styles <- data.frame(
+  products = c(rep('plan', 8)),
+  services = c(rep('actual', 8)),
+  triangles = c(rep('plan', 8))
+)
+
+
+df <- data.frame(
+  animal = c("cat", "doggo", "rabbito"),
+  hungry = c(7, 5, 9),
+  relaxed = c(3, 4, 5),
+  wounded = c(1, 8, 5)
+)
+srs <- c("hungry", "relaxed", "wounded")
+
+df_waterfall <- data.frame(
+  'category' = c(
+    "Sales",
+    "Other income",
+    "Personnel expenses",
+    "Material expenses",
+    "Capital expenses",
+    "Investment income"
+  ),
+  'values' = c(12.8, 1.4, -4.2, -8.5, -3.1, 0.6)
+)
+```
+
+```{r barcharts}
+barchart_plot(data, data$city, groups, groups, styles = styles) %>% SVGrenderer()
+barchart_plot_index(df, df$animal, series = srs, index_val = 3, series_labels = srs) %>% SVGrenderer()
+barchart_plot_index(
+      data,
+      cat = data$city,
+      groups,
+      index_val = 602,
+      series_labels = groups
+    ) %>% SVGrenderer()
+
+groups2 <- c(groups, 'services')
+
+barchart_plot_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
+barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% SVGrenderer()
+barchart_plot_waterfall(
+      df_waterfall$category,
+      df_waterfall$values,
+      add_result = TRUE,
+      result_title = "Profit before tax"
+    ) %>% SVGrenderer()
+```
+

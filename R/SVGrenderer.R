@@ -1,15 +1,20 @@
-#' <Add Title>
+#' Function to render SVG image as htmlwidget
 #'
-#' <Add Description>
+#' Use this function to show SVG images from given string in SVG embedded in HTML.
+#'
+#' @param svg_string one element character vector with image in svg format
+#' @param width NOT IMPLEMENTED width of the widget
+#' @param height NOT IMPLEMENTED height of the widget
+#' @param elementId NOT IMPLEMENTED HTML element ID
 #'
 #' @import htmlwidgets
 #'
 #' @export
-SVGrenderer <- function(message, width = NULL, height = NULL, elementId = NULL) {
+SVGrenderer <- function(svg_string, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
-    message = message
+    message = svg_string
   )
   # create widget
   htmlwidgets::createWidget(

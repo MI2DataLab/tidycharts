@@ -2,27 +2,59 @@
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
-initialize <- function(svg_string="", transformation = "", svg_string_append = "") {
-  return(
-    paste(svg_string,
-          paste0(
-            '<svg  version="1.1"
+
+
+initialize <-
+  function(svg_string = "",
+           transformation = "",
+           svg_string_append = "",
+           width = 500,
+           height = 500,
+           x_vector = NULL,
+           bar_width = NULL,
+           x_margin = 50,
+           y_vector = NULL,
+           y_margin = 50) {
+    if (!is.null(x_vector) & !is.null(bar_width)) {
+      width <- length(x_vector) * 1.5 * bar_width + x_margin
+    }
+    if (!is.null(y_vector) & ! is.null(bar_width)) {
+      height <- length(y_vector) * 1.5 * bar_width + y_margin
+    }
+    return(
+      paste(
+        svg_string,
+        paste0(
+          '<svg  version="1.1"
           baseProfile="full"
+<<<<<<< HEAD
           width="700" height="500" transform="',
             transformation,
             '" >'
           ),
           '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+=======
+          width="',
+          width,
+          '" height="',
+          height,
+          '" transform="',
+          transformation,
+          '" >'
+        ),
+        '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+>>>>>>> 2e0b138886bc9433fff436bb84ce54febb3d2d69
             <rect x="0" y="0" width="4" height="4" fill="white"/>
             <path d="M-1,1 l2,-2
                      M0,4 l4,-4
                      M3,5 l2,-2"
             style="stroke:rgb(64,64,64); stroke-width:1" />
             </pattern>',
-          svg_string_append,
-          sep = "\n")
-  )
-}
+        svg_string_append,
+        sep = "\n"
+      )
+    )
+  }
 
 
 finalize <- function(svg_string) {

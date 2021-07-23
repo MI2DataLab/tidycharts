@@ -120,7 +120,8 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
 #' @examples
 barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = NULL){
   # TODO all values in one bar should have the same sign
-  initialize() %>%
+  initialize(y_vector = cat,
+             bar_width = 16) %>%
     draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
     finalize()
 }
