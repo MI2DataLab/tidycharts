@@ -37,27 +37,34 @@ draw_bar <- function(svg_string, x, y, height, width, color = "black", style = N
 
 
 draw_text <- function(svg_string, text, x, y, font_size = 12, text_anchor = "middle", text_color = "black", text_weight = "") {
-  svg_string <- paste(
-    svg_string,
-    paste0(
-      '<text x="',
-      x,
-      '" y="',
-      y,
-      '" font-size="',
-      font_size,
-      '"  font-family="Arial" text-anchor="',
-      text_anchor,
-      '" fill="',
-      text_color,
-      '" font-weight="',
-      text_weight,
-      '" >',
-      text,
-      '</text>'
-    ),
-    sep = "\n"
-  )
+  parsed <- lapply(strsplit(text, '\n'), trimws)[[1]]
+  y_offset <- 0
+  for (line in parsed){
+    svg_string <- paste(
+      svg_string,
+      paste0(
+        '<text x="',
+        x,
+        '" y="',
+        y,
+        '" font-size="',
+        font_size,
+        '"  font-family="Arial" text-anchor="',
+        text_anchor,
+        '" fill="',
+        text_color,
+        '" font-weight="',
+        text_weight,
+        '" transform="translate(0 ',
+        y_offset,
+        ')" >',
+        line,
+        '</text>'
+      ),
+      sep = "\n"
+    )
+    y_offset <- y_offset + font_size
+  }
   return(svg_string)
 }
 
