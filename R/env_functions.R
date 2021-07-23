@@ -64,7 +64,9 @@ get_interval_width <- function(interval){
 
 #' Change default colors of the package
 #'
-#' @param colors_df data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors"
+#' Customize your plots and change default color palette.
+#'
+#' @param colors_df data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors". In cells there should be rgb values of chosen colors in format: "rgb(x,y,z)". Rows represent subsequent colors on stacked plots.
 #'
 #' @return NULL
 #' @export
@@ -87,3 +89,17 @@ pkg.env$mi2lab_colors <- cbind(
   ),
   text_colors = c("white", "white", "white", "white", "white", "white")
 )
+
+
+#' Change default styles for plots
+#'
+#' @param styles_df data frame with columns 'fill' and 'stroke'. Rows represent subsequent styles which names can be passed to plotting functions, usually as styles argument.
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+set_styles <- function(styles_df){
+  stopifnot(colnames(styles_df) %in% c('stroke', 'fill'))
+  pkg.env$styles_df <-styles_df
+}
