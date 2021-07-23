@@ -59,3 +59,31 @@ get_interval_width <- function(interval){
     category_width = pkg.env$widths[[interval, "category_width"]]
   ))
 }
+
+
+
+#' Change default colors of the package
+#'
+#' @param colors_df data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors"
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+set_colors <- function(colors_df){
+  stopifnot(all(dim(colors_df) == c(6,2)))
+  stopifnot(all(dimnames(colors_df)[[2]] %in% c("text_colors", "bar_colors")))
+  pkg.env$colors_df <- colors_df
+}
+
+pkg.env$mi2lab_colors <- cbind(
+  bar_colors =  c(
+    "rgb(68, 19, 71)",
+    "rgb(243, 46, 255)",
+    "rgb(106, 0, 112)",
+    "rgb(217, 43, 227)" ,
+    "rgb(114, 49, 117)",
+    "rgb(249, 110, 255)"
+  ),
+  text_colors = c("white", "white", "white", "white", "white", "white")
+)
