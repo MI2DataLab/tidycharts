@@ -1,4 +1,3 @@
-
 #---
 add_bar_basic <-
   function(shift,
@@ -14,57 +13,57 @@ add_bar_basic <-
     #k-który to wiersz
     #df_with_real_values - to show real values after the normalization
 
-  all_sums <- rowSums(data[series])
-  svg_string <- ""
-  labels <- ""
-  x <- 80 + shift
-  for (i in 1:length(series)){ #going through series
-    value <- data[,series[i]] #a vector
-    color <- get_gray_color_stacked(i)
+    all_sums <- rowSums(data[series])
+    svg_string <- ""
+    labels <- ""
+    x <- 80 + shift
+    for (i in 1:length(series)){ #going through series
+      value <- data[,series[i]] #a vector
+      color <- get_gray_color_stacked(i)
 
-    if(is.null(series_labels)==FALSE){
-      if(length(series)>1){
-      labels <- paste(labels,
-                      #series label
-                      add_label((x+(width_of_one*(value[k])/2)), y+12-16, series_labels[i]),
-                      sep='\n')}
+      if(is.null(series_labels)==FALSE){
+        if(length(series)>1){
+          labels <- paste(labels,
+                          #series label
+                          add_label((x+(width_of_one*(value[k])/2)), y+12-16, series_labels[i]),
+                          sep='\n')}
+      }
+
+      if(value[k] < 0){
+        x <- x - (width_of_one*abs(value[k]))}
+
+      rect <- draw_rect(x, y, color$bar_color, (width_of_one*abs(value[k])), 16, style = style)
+
+      if(is.null(df_with_real_values)==FALSE){value_text <- df_with_real_values[,series[i]][k]}
+      else{value_text <- value[k]}
+      #checking if there's enough place for a label
+      if(str_width(abs(value_text))+3.2 < abs(value_text)*width_of_one && length(series) > 1){
+
+        labels <- paste(
+          labels,
+          #each series value label
+          add_label((x+(width_of_one*(abs(value[k]))/2)), y+12, value_text, color=color$text_color),
+          sep='\n'
+        )
+      }
+      svg_string <- paste(svg_string, rect, labels,  sep = '\n')
+      if(value[k] > 0){ x <- x + (width_of_one*value[k])}
+
     }
-
-    if(value[k] < 0){
-      x <- x - (width_of_one*abs(value[k]))}
-
-    rect <- draw_rect(x, y, color$bar_color, (width_of_one*abs(value[k])), 16, style = style)
-
-    if(is.null(df_with_real_values)==FALSE){value_text <- df_with_real_values[,series[i]][k]}
-    else{value_text <- value[k]}
-    #checking if there's enough place for a label
-    if(str_width(abs(value_text))+3.2 < abs(value_text)*width_of_one && length(series) > 1){
-
-      labels <- paste(
-        labels,
-        #each series value label
-        add_label((x+(width_of_one*(abs(value[k]))/2)), y+12, value_text, color=color$text_color),
-        sep='\n'
-      )
-    }
-    svg_string <- paste(svg_string, rect, labels,  sep = '\n')
-    if(value[k] > 0){ x <- x + (width_of_one*value[k])}
-
+    if(value[k]>0){sum_label <- add_label((x+4.8), y+12,all_sums[k], anchor="start")}
+    else{sum_label <- add_label(80+shift+4.8, y+12, all_sums[k], anchor="start")}
+    return(paste(svg_string,
+                 # value label
+                 #add_label((x+4.8), y+12,all_sums[k], anchor="start"),
+                 sum_label,
+                 #category label
+                 add_label( 72.2, y+14, cat[k], anchor="end"),
+                 #vertical axis
+                 draw_line(80+shift, 80+shift,(y-4.8), (y+16+4.8)),
+                 labels,
+                 sep = '\n'
+    ))
   }
-  if(value[k]>0){sum_label <- add_label((x+4.8), y+12,all_sums[k], anchor="start")}
-  else{sum_label <- add_label(80+shift+4.8, y+12, all_sums[k], anchor="start")}
-  return(paste(svg_string,
-               # value label
-               #add_label((x+4.8), y+12,all_sums[k], anchor="start"),
-               sum_label,
-               #category label
-               add_label( 72.2, y+14, cat[k], anchor="end"),
-               #vertical axis
-               draw_line(80+shift, 80+shift,(y-4.8), (y+16+4.8)),
-               labels,
-               sep = '\n'
-  ))
-}
 
 #---
 draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_with_real_values=NULL, styles = NULL, shift = 0){
@@ -178,3 +177,11 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
           sep='\n') %>%
     finalize()
 }
+
+data <- data.frame(
+  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
+  value = c(1159, 795, 377, 345, 266,120,74,602),
+  products = c(538, 250, 75, 301,227,90, 40, 269),
+  services = c(621,545,302,44,39,30,34,333)
+)
+groups <- c("products", "services")

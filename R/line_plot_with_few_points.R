@@ -56,6 +56,7 @@ draw_points <- function(svg_string, data, cat, series, series_labels){
   labels <- ""
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x = 80
+  #TODO tu jest redundancja kodu
   maxes <- c()
   averages <- c()
   neg <- c()
@@ -120,7 +121,23 @@ draw_points <- function(svg_string, data, cat, series, series_labels){
 #'
 #' @examples
 line_plot <- function(data, cat, series, series_labels){
-    initialize() %>%
+  maxes <- c()
+  averages <- c()
+  neg <- c()
+  #looking for the maximum value and minimum average
+  for(k in 1:(length(series))){
+    maxes <- c(maxes, max(abs(data[,series[k]])))
+    averages <- c(averages, mean(data[,series[k]]))
+    neg <- c(neg, data[,series[k]][data[,series[k]]<0])
+  }
+  maximum <- max(maxes)
+  min_avg <- min(averages)
+  height_of_one <- 200/maximum
+  #calculating the shift
+  shift <- height_of_one*abs(min(neg)) + 12 + 4.8
+  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+
+    initialize(width = 80+ 48*length(cat) + 80, height = 250+shift + 20) %>%
     draw_points(.,data, cat, series, series_labels) %>%
     finalize() #%>% show()
 }
@@ -139,8 +156,24 @@ line_plot <- function(data, cat, series, series_labels){
 #'
 #' @examples
 line_plot_index <- function(data, cat, series, series_labels, index_val){
-  height_of_one <- find_height(data, series)
-  initialize() %>%
+  #height_of_one <- find_height(data, series)
+  maxes <- c()
+  averages <- c()
+  neg <- c()
+  #looking for the maximum value and minimum average
+  for(k in 1:(length(series))){
+    maxes <- c(maxes, max(abs(data[,series[k]])))
+    averages <- c(averages, mean(data[,series[k]]))
+    neg <- c(neg, data[,series[k]][data[,series[k]]<0])
+  }
+  maximum <- max(maxes)
+  min_avg <- min(averages)
+  height_of_one <- 200/maximum
+  #calculating the shift
+  shift <- height_of_one*abs(min(neg)) + 12 + 4.8
+  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+
+  initialize(width = 80+ 48*length(cat) + 80, height = 250+shift + 20) %>%
     draw_points(.,data, cat, series, series_labels) %>%
     paste(.,
           add_index(80+5.6+48*(length(cat)-1),250-height_of_one*index_val),

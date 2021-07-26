@@ -107,7 +107,7 @@ add_bars <-
 
     sums <- rowSums(df[series])
     for (i in 1:n_bars) {
-      x_label <- substr(x[i], 1, 4)
+      x_label <- substr(x[i], 1, 7)
       x_pos <- 1.5 * bar_width * (i - 1) + x_offset
       svg_string <- add_column_bar(
         svg_string,
@@ -352,7 +352,7 @@ add_waterfall_bars <-
         # add label to bar
         svg_string <- draw_text(
           svg_string = svg_string,
-          text = paste0(text_prefix, format(actual_delta, digits = 5)),
+          text = paste0(text_prefix, format(actual_delta, digits = 6)),
           x = x_pos + 0.75 * bar_width,
           y = label_y,
           text_color = "black"
@@ -361,7 +361,7 @@ add_waterfall_bars <-
         # add label next to last bar
         svg_string <- draw_text(
           svg_string = svg_string,
-          text = paste0(positive_prefix, format(actual_delta, digits = 5)),
+          text = paste0(positive_prefix, format(actual_delta, digits = 6)),
           x = last_label_x,
           y = last_label_y,
           text_anchor = last_label_anchor,
@@ -716,10 +716,10 @@ add_top_values <-
       labels <- heights
     }
     if (length(labels) == 1 && labels == "percent"){
-      labels <- paste0(format(heights / ref_value * 100, digits = 5),"%")
+      labels <- paste0(format(heights / ref_value * 100, digits = 6),"%")
     }
     else{
-      labels <- format(labels, digits = 5)
+      labels <- format(labels, digits = 6)
     }
     svg_string <- paste(svg_string,
                         initialize(

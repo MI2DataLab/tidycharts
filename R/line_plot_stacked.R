@@ -103,7 +103,7 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
 #'
 #' @examples
 line_plot_stacked <- function(data, cat, series, series_labels, show_labels){
-  initialize() %>%
+  initialize(width = 80 + 48*length(cat) +80, height = 300) %>%
     draw_polygons(.,data, cat, series, series_labels, show_labels) %>%
     finalize() #%>% show()
 }

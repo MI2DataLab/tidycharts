@@ -11,7 +11,7 @@ draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,maxi
       draw_line(80 + shift_x + width_of_one*tick, 80+width_of_one*tick + shift_x, 250, 251.6),
       add_label(80+width_of_one*tick+shift_x, 251.6+4.8+6 + 1.6, tick),
       #adding grid lines
-      draw_line(80+width_of_one*tick+shift_x, 80+width_of_one*tick + shift_x, 250 + shift_y, 50-4.8, "white", 0.1),
+      draw_line(80+width_of_one*tick+shift_x, 80+width_of_one*tick + shift_x, 250 + shift_y, 50-4.8, "black", 0.1),
       sep='\n'
     )
     tick <- tick+space_size
@@ -25,7 +25,7 @@ draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,maxi
       draw_line(80 + shift_x + width_of_one*tick, 80 + width_of_one*tick + shift_x, 250, 251.6),
       add_label(80 + width_of_one*tick+shift_x, 251.6+4.8+6 + 1.6, tick),
       #adding grid lines
-      draw_line(80 + width_of_one*tick+shift_x, 80+width_of_one*tick + shift_x, 250 + shift_y, 50-4.8, "white", 0.1),
+      draw_line(80 + width_of_one*tick+shift_x, 80+width_of_one*tick + shift_x, 250 + shift_y, 50-4.8,  "black", 0.1),
       sep='\n'
     )
     tick <- tick - space_size
@@ -50,7 +50,7 @@ draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, maximum, mi
       draw_line(78.4 + shift_x, 80 + shift_x, 250 - height_of_one*tick, 250 - height_of_one*tick),
       add_label(80-1.6-4.8 + shift_x, 250 - height_of_one*tick +6, tick, anchor="end"),
       #adding grid lines
-      draw_line(80, 330 + shift_x, 250 - height_of_one*tick, 250 - height_of_one*tick,  "white", 0.1),
+      draw_line(80, 330 + shift_x, 250 - height_of_one*tick, 250 - height_of_one*tick,"black", 0.1),
       sep='\n'
     )
     tick <- tick+space_size
@@ -62,7 +62,7 @@ draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, maximum, mi
       draw_line(78.4 + shift_x, 80 + shift_x, 250 - height_of_one*tick, 250 - height_of_one*tick),
       add_label(80-1.6-4.8 + shift_x, 250 - height_of_one*tick +6, tick, anchor="end"),
       #adding grid lines
-      draw_line(80, 330 + shift_x, 250 - height_of_one*tick, 250 - height_of_one*tick,  "white", 0.1),
+      draw_line(80, 330 + shift_x, 250 - height_of_one*tick, 250 - height_of_one*tick, "black", 0.1),
       sep='\n'
     )
     tick <- tick-space_size
@@ -164,7 +164,22 @@ draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_spac
 #'
 #' @examples
 scatter_plot <- function(data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value=NULL){
-  initialize() %>%
+  maximum <- max(abs(y))
+  x_maximum <-max(abs(x))
+  height_of_one <- 200/maximum
+  width_of_one <- 250/x_maximum
+
+  #dealing with negative values
+  neg_x <-x[x<0]
+  neg_y <- y[y<0]
+  #calculating the shifts
+  shift_y <- height_of_one*abs(min(neg_y))
+  if(is.finite(shift_y)==FALSE){shift_y <- 0} #in case there are no negative values
+  shift_x <- width_of_one*abs(min(neg_x))
+  if(is.finite(shift_x)==FALSE){shift_x <- 0} #in case there are no negative values
+
+
+  initialize(width = 80 + shift_x + 250 + 80, height= 250 + shift_y + 20) %>%
     draw_scatter_points(.,data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value) %>%
     finalize() #%>% show()
 }
@@ -178,3 +193,9 @@ scatter_plot <- function(data, x, y, cat, x_space_size, y_space_size, x_names, y
 #)
 
 #scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% show()
+#p <- penguins %>%
+#  drop_na(bill_length_mm, bill_depth_mm)
+
+#scatter_plot(p, p$bill_length_mm, p$bill_depth_mm, p$species, 10, 5, c("bill length", "in mm"), c("bill depht", "in mm"), "Legend") %>%
+#  add_title("Relationship between bill length and bill depth","","") %>%
+#  SVGrenderer()
