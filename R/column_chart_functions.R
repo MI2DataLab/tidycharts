@@ -97,7 +97,8 @@ add_bars <-
                           bar_width = bar_width
                         ),
                         sep = "\n")
-    n_bars = length(x)
+    n_bars <- length(x)
+    left_margin <- 80
 
     n_splits = length(series)
     x_axis_pos <- get_x_axis_pos(df[series], max_val)
@@ -108,7 +109,7 @@ add_bars <-
     sums <- rowSums(df[series])
     for (i in 1:n_bars) {
       x_label <- substr(x[i], 1, 7)
-      x_pos <- 1.5 * bar_width * (i - 1) + x_offset
+      x_pos <- 1.5 * bar_width * (i - 1) + x_offset + left_margin
       svg_string <- add_column_bar(
         svg_string,
         df = df,
@@ -168,7 +169,8 @@ add_first_bar <- function(svg_string,
                           bar_width,
                           color = "rgb(166,166,166)",
                           label_color = "black") {
-  x_pos <- 50 - bar_width * 1.5
+  left_margin <- 80
+  x_pos <- 50 - bar_width * 1.5 + left_margin
   bar_height <- value / top_value * max_bar_height
   # calculate x labels y position
   x_label_pos <- ifelse(
@@ -272,6 +274,7 @@ add_waterfall_bars <-
     max_bar_height <- 200
     top_value <- max(abs(df[series]))
     prev_level <- ref_value / top_value * max_bar_height
+    left_margin <- 80
 
     # calculate x labels y position
     low_value <- min(df[series])
@@ -284,7 +287,7 @@ add_waterfall_bars <-
     for (i in 1:length(x)) {
       bar_top_pos <- df[i, series] / top_value * max_bar_height
       bar_height <- bar_top_pos - prev_level
-      x_pos = 1.5 * bar_width * (i - 1)
+      x_pos = 1.5 * bar_width * (i - 1) + left_margin
 
       if (i == 1)
         actual_delta <- df[1, series] - ref_value
@@ -438,8 +441,7 @@ add_abs_variance_bars <-
            colors,
            bar_width,
            x_title) {
-    # TODO x_axis_pos depending on negative values
-    x_pos <- 35
+    x_pos <- 80
 
     color <- choose_variance_colors(colors)
     max_val <- max(abs(baseline), abs(real))
@@ -639,6 +641,7 @@ add_triangles <- function(svg_string,
                           styles = NULL) {
   x_axis_pos <- get_x_axis_pos(df[series], max_val)
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
+  left_margin <- 80
   svg_string <- paste(svg_string,
                       initialize(
                         transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
@@ -648,7 +651,7 @@ add_triangles <- function(svg_string,
                       sep = "\n")
 
   for (i in 1:length(x)) {
-    x_pos <- 1.5 * bar_width * (i - 1) + 4 + 0.25 * bar_width
+    x_pos <- 1.5 * bar_width * (i - 1) + 4 + 0.25 * bar_width + left_margin
 
     svg_string <- draw_triangle(
       svg_string = svg_string,
@@ -671,9 +674,10 @@ add_triangles <- function(svg_string,
 
 add_legend <- function(svg_string, df, x, series, bar_width) {
   x_axis_pos <- get_x_axis_pos(df[series])
+  left_margin <- 80
   if (length(series) == 1)
     return(svg_string)
-  x_pos = 1.5 * bar_width * length(x) + 4.8 - bar_width / 4
+  x_pos = 1.5 * bar_width * length(x) + 4.8 - bar_width / 4 + left_margin
   max_height = max(abs(rowSums(df[series])))
   total_height = 0
   for (column_name in series) {
@@ -708,6 +712,7 @@ add_top_values <-
     heights <- rowSums(df[series])
     max_height <-
       ifelse(is.null(max_val), max(abs(heights)), max_val)
+    left_margin <- 80
 
     ref_value <-
       ifelse(is.null(ref_value), max_height, ref_value)
@@ -730,7 +735,7 @@ add_top_values <-
                         sep = "\n")
 
     for (i in 1:length(x)) {
-      x_pos <- 1.5 * bar_width * (i - 1)
+      x_pos <- 1.5 * bar_width * (i - 1) + left_margin
       bar_height <- heights[i] * 200 / max_height
 
       # numeric value label for total bar

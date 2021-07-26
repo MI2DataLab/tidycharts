@@ -12,7 +12,7 @@ initialize <-
            height = 500,
            x_vector = NULL,
            bar_width = NULL,
-           x_margin = 50,
+           x_margin = 130,
            y_vector = NULL,
            y_margin = 50) {
     if (!is.null(x_vector) & !is.null(bar_width)) {

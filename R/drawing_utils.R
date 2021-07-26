@@ -178,19 +178,20 @@ draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientatio
 
 
 draw_ref_line_horizontal <- function(svg_string, x, bar_width, line_y, label) {
+  left_margin <- 80
   len <- bar_width * 1.5 * length(x)
   svg_string <- draw_bar(svg_string,
-                         x = 0,
+                         x = left_margin,
                          y = line_y,
                          width = len,
                          height = 1.6,
                          color = "black")
   svg_string <- draw_triangle(svg_string,
-                              tip_position_x = len,
+                              tip_position_x = len + left_margin,
                               tip_position_y = line_y + 1)
   svg_string <- draw_text(svg_string,
                           text = label,
-                          x = len + 8 + 4.8,
+                          x = len + 8 + 4.8 + left_margin,
                           y = line_y + 4,
                           text_anchor = "start")
   return(svg_string)
