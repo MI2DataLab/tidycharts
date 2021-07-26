@@ -150,3 +150,49 @@ barchart_plot_waterfall(
     ) %>% SVGrenderer()
 ```
 
+## Column charts
+```{r column-data, echo=F}
+df <-
+  iris %>% group_by(Species) %>% summarise(avg = mean(-1 * Sepal.Length))
+
+df2 <-
+  iris %>% group_by(Species) %>% summarise(
+    avg = mean(Sepal.Length),
+    std = sqrt(var(Sepal.Length)),
+    median = median(Sepal.Length)
+  )
+
+df3 <- data.frame('sales' = c(1.5, 2.5, 1, -0.5, 5, 4),
+                  'month' = c('a','b','c','d','e', 'F'))
+
+df4 <- data.frame(
+  'month' = c('a','b','c','d','e', 'F', 'G'),
+  's1' = c(1.5, 1.5, 1.6, 1.7, 1.3, 1.2, 1),
+  's2' = c(1.9, 1.8, 1  , 1.3, 1.7, 1.5, 2),
+  's3' = c(0.9, 1.8, 1  , 1.3, 1.7, 1.5, 2))
+
+styles <- data.frame(
+  's1' = c(rep('actual',6), 'forecast'),
+  's2' = rep('plan',7),
+  's3' = rep('prevoius',7)
+)
+```
+
+```{r columns}
+column_chart(df, x = df$Species, series = c("avg"), styles = c('actual', 'actual', 'forecast')) %>% SVGrenderer()
+column_chart(df, x = df$Species, series = c("avg")) %>%
+    add_title(line1 = 'Iris', line2_measure = "Typical measure", line2_rest = "in cm", line3 = "2020..2021") %>% SVGrenderer()
+
+column_chart(
+  df2,
+  x = df2$Species,
+  series = c("avg", "std", "median")
+) %>% SVGrenderer()
+
+column_chart_normalized(
+  df2,
+  x = df2$Species,
+  series = c("avg", "std", "median")
+) %>% SVGrenderer()
+```
+
