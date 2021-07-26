@@ -1,5 +1,5 @@
 
-draw_bar <- function(svg_string, x, y, height, width, color = "black", style = NULL) {
+draw_bar <- function(svg_string, x, y, height, width, color = "black", style = NULL, translate_vec = c(0,0)) {
   if(height < 0 ){
     y = y + height
     height = -1 * height
@@ -13,6 +13,8 @@ draw_bar <- function(svg_string, x, y, height, width, color = "black", style = N
     fill <- styling[['fill']]
     stroke <- styling[['stroke']]
   }
+  x <- x + translate_vec[1]
+  y <- y + translate_vec[2]
   svg_string <- paste(
     svg_string,
     paste0(
@@ -36,7 +38,7 @@ draw_bar <- function(svg_string, x, y, height, width, color = "black", style = N
 }
 
 
-draw_text <- function(svg_string, text, x, y, font_size = 12, text_anchor = "middle", text_color = "black", text_weight = "") {
+draw_text <- function(svg_string, text, x, y, font_size = 12, text_anchor = "middle", text_color = "black", text_weight = "", translate_vec = c(0,0)) {
 
   parsed <- lapply(strsplit(as.character(text), '\n'), trimws)[[1]]
   y_offset <- 0
@@ -45,9 +47,9 @@ draw_text <- function(svg_string, text, x, y, font_size = 12, text_anchor = "mid
       svg_string,
       paste0(
         '<text x="',
-        x,
+        x + translate_vec[1],
         '" y="',
-        y,
+        y + translate_vec[2],
         '" font-size="',
         font_size,
         '"  font-family="Arial" text-anchor="',
@@ -70,14 +72,14 @@ draw_text <- function(svg_string, text, x, y, font_size = 12, text_anchor = "mid
 }
 
 
-draw_x_axis <- function(svg_string, x, y, bar_width, line_width = 1.6) {
+draw_x_axis <- function(svg_string, x, y, bar_width, line_width = 1.6, translate_vec = c(0,0)) {
   svg_string <- paste(
     svg_string,
     paste0(
       '<rect x="',
-      x,
+      x + translate_vec[1],
       '" y="',
-      y,
+      y + translate_vec[2],
       '" width="',
       bar_width * 1.5,
       '" height="',
@@ -110,7 +112,7 @@ choose_variance_colors <- function(colors){
 }
 
 
-draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientation = "left", style=NULL){
+draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientation = "left", style=NULL, translate_vec = c(0,0)){
   #' @param orientation where the triangle should be pointing. One of c('top', 'right', 'bottom', 'left').
   #'
   stopifnot(orientation %in% c('top', 'right', 'bottom', 'left'))
@@ -120,7 +122,8 @@ draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientatio
                            "right" = "rotate(180,",
                            "bottom" = "rotate(270,")
   transformation <- paste0(transformation, tip_position_x,",",tip_position_y,")")
-
+  tip_position_x <-  tip_position_x + translate_vec[1]
+  tip_position_y <-  tip_position_y + translate_vec[2]
   if(is.null(style)){
     fill <- ""
     stroke <- ""

@@ -18,7 +18,8 @@ add_waterfall_bars(
   positive_prefix = "",
   result_bar_color = NULL,
   result_title = NULL,
-  ref_value = 0
+  ref_value = 0,
+  translate_vec = c(0, 0)
 )
 }
 \arguments{

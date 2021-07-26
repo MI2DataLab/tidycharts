@@ -9,7 +9,8 @@ add_column_bar <-
            max_height,
            bar_width,
            color = NULL,
-           style = NULL) {
+           style = NULL,
+           translate_vec = c(0,0)) {
 
     x_axis_pos <- get_x_axis_pos(df[series])
     bar_height = 0 # height of existing bar, updated in the loop
@@ -33,7 +34,8 @@ add_column_bar <-
         height = ceiling(height),
         width = bar_width,
         color = colors_$bar_color,
-        style = style
+        style = style,
+        translate_vec = translate_vec
       )
       bar_height <- bar_height + height
 
@@ -45,7 +47,8 @@ add_column_bar <-
           text = round(df[i, series[j], 1], digits = 1),
           x = x_pos + bar_width * 1.5 / 2,
           y = x_axis_pos - bar_height + (height / 2) + 6,
-          text_color = colors_$text_color
+          text_color = colors_$text_color,
+          translate_vec = translate_vec
         )
       }
     }
@@ -90,13 +93,6 @@ add_bars <-
            max_val = NULL) {
 
     # TODO check series lengths and NA there
-    svg_string <- paste(svg_string,
-                        initialize(
-                          transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
-                          x_vector = x,
-                          bar_width = bar_width
-                        ),
-                        sep = "\n")
     n_bars <- length(x)
     left_margin <- 80
 
@@ -120,7 +116,8 @@ add_bars <-
         max_height = max_height,
         bar_width,
         color = color,
-        style = styles[i]
+        style = styles[i],
+        translate_vec = translate
       )
       if (add_x_axis) {
         # add label on x axis
@@ -128,7 +125,8 @@ add_bars <-
           svg_string = svg_string,
           text = x_label,
           x = x_pos + bar_width * 1.5 / 2,
-          y = x_axis_pos + sign(sums[i]) * 4.8 + ifelse(sums[i] > 0, 12, 0)
+          y = x_axis_pos + sign(sums[i]) * 4.8 + ifelse(sums[i] > 0, 12, 0),
+          translate_vec = translate
           # if total value of the bar is negative -> x_label is on top of x axis
         )
 
@@ -138,16 +136,16 @@ add_bars <-
           x = x_pos,
           y = x_axis_pos,
           bar_width = bar_width,
-          line_width = 1.6
+          line_width = 1.6,
+          translate_vec = translate
         )
       }
     }
-    svg_string <- finalize(svg_string)
     if (add_legend == TRUE) {
       legend_pos <- switch (
         legend_position,
         "left_top" = c(
-          x_offset + translate[1],
+          x_offset + translate[1] + left_margin,
           x_axis_pos - df[1, series] / max_height * 200 + 6 + translate[2]
         )
       )
@@ -268,13 +266,14 @@ add_waterfall_bars <-
            positive_prefix = "",
            result_bar_color = NULL,
            result_title = NULL,
-           ref_value = 0) {
-
+           ref_value = 0,
+           translate_vec = c(0,0)) {
+    # NOT IMPLEMENTED translation along y axis
     x_axis_pos <- get_x_axis_pos(df[series])
     max_bar_height <- 200
     top_value <- max(abs(df[series]))
     prev_level <- ref_value / top_value * max_bar_height
-    left_margin <- 80
+    left_margin <- 80 + translate_vec[1]
 
     # calculate x labels y position
     low_value <- min(df[series])
@@ -547,12 +546,6 @@ add_relative_variance_pins <-
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
     )
-    svg_string <-
-      initialize(svg_string,
-                 transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
-                 x_vector = x,
-                 bar_width = bar_width)
-
     for (i in 1:length(x)) {
       # add axis
       svg_string <- draw_bar(
@@ -561,7 +554,8 @@ add_relative_variance_pins <-
         y = x_axis_pos,
         height = 4.8,
         width = 1.5 * bar_width,
-        color = "rgb(166,166,166)"
+        color = "rgb(166,166,166)",
+        translate_vec = translate
       )
 
       bar_h <- abs(values[i] / max_val * 100)
@@ -596,7 +590,8 @@ add_relative_variance_pins <-
         y = marker_y,
         height = 11.2,
         width = 11.2,
-        style = styles[i]
+        style = styles[i],
+        translate_vec = translate
       )
       # add bar
       svg_string <- draw_bar(
@@ -605,14 +600,16 @@ add_relative_variance_pins <-
         y = bar_y,
         height = bar_h,
         width = 4.8,
-        color = c
+        color = c,
+        translate_vec = translate
       )
       # add label
       svg_string <- draw_text(
         svg_string,
         text = label_text,
         x = x_pos + 0.75 * bar_width,
-        y = label_y
+        y = label_y,
+        translate_vec = translate
       )
       # add x label
       svg_string <- draw_text(
@@ -620,11 +617,11 @@ add_relative_variance_pins <-
         text = x[i],
         # TODO formatting xlabel
         x = x_pos + 0.75 * bar_width,
-        y = x_label_y
+        y = x_label_y,
+        translate_vec = translate
       )
       x_pos <- x_pos + bar_width * 1.5
     }
-    svg_string <- finalize(svg_string)
     return(svg_string)
   }
 
@@ -642,28 +639,19 @@ add_triangles <- function(svg_string,
   x_axis_pos <- get_x_axis_pos(df[series], max_val)
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
   left_margin <- 80
-  svg_string <- paste(svg_string,
-                      initialize(
-                        transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
-                        x_vector = x,
-                        bar_width = bar_width
-                      ),
-                      sep = "\n")
-
   for (i in 1:length(x)) {
     x_pos <- 1.5 * bar_width * (i - 1) + 4 + 0.25 * bar_width + left_margin
 
     svg_string <- draw_triangle(
       svg_string = svg_string,
       tip_position_x = x_pos,
-      tip_position_y = 250 - df[i, series] / max_height * 200,
+      tip_position_y = x_axis_pos - df[i, series] / max_height * 200,
       orientation = "right",
       style = styles[i]
     )
   }
-  svg_string <- finalize(svg_string)
   if (add_legend == TRUE) {
-    legend_pos <- c(x_offset + translate[1],
+    legend_pos <- c(x_offset + translate[1] + left_margin,
                     x_axis_pos - df[1, series] / max_height * 200 + 6 + translate[2])
     svg_string <-
       draw_text(svg_string, series, legend_pos[1], legend_pos[2], text_anchor = "end")
@@ -726,13 +714,6 @@ add_top_values <-
     else{
       labels <- format(labels, digits = 6)
     }
-    svg_string <- paste(svg_string,
-                        initialize(
-                          transformation = paste0("translate(", translate[1], ",", translate[2], ")"),
-                          x_vector = x,
-                          bar_width = bar_width
-                        ),
-                        sep = "\n")
 
     for (i in 1:length(x)) {
       x_pos <- 1.5 * bar_width * (i - 1) + left_margin
@@ -746,7 +727,7 @@ add_top_values <-
         y = x_axis_pos - bar_height - sign(bar_height) * 4.8 + ifelse(bar_height > 0, 0, 6)
       )
     }
-    return(finalize(svg_string))
+    return(svg_string)
   }
 
 
@@ -993,7 +974,7 @@ column_chart_grouped <-
            interval = 'months') {
 
     bar_width <- get_interval_width(interval)$bar_width
-    translation_vec <- c(max(str_width(titles)) + 10, 0)
+    translation_vec <- c(0,0) # c(max(str_width(titles)) + 10, 0)
 
     stopifnot(length(titles) >= 2)
     stop_if_many_categories(x, max_categories = 24)
@@ -1124,8 +1105,6 @@ column_chart_waterfall_variance <-
         bar_width = bar_width,
         x_axis_pos = get_x_axis_pos(real - baseline)
       ) %>%
-      initialize(., transformation = "translate(50,0)",
-                 x_vector = x, bar_width = bar_width) %>%
       add_waterfall_bars(
         df[-1, , drop = FALSE],
         x[-1],
@@ -1138,8 +1117,8 @@ column_chart_waterfall_variance <-
         positive_prefix = "+",
         result_bar_color = "rgb(64,64,64)",
         result_title = result_title,
-        ref_value = df[1, 'series']
+        ref_value = df[1, 'series'],
+        translate_vec = c(50,0)
       ) %>%
-      finalize() %>%
       finalize()
   }
