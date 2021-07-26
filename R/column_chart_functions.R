@@ -1116,7 +1116,8 @@ column_chart_waterfall_variance <-
         df[1, 'series'],
         top_value = max(df['series']),
         low_value = min(df['series']),
-        bar_width = bar_width
+        bar_width = bar_width,
+        x_axis_pos = get_x_axis_pos(real - baseline)
       ) %>%
       initialize(., transformation = "translate(50,0)",
                  x_vector = x, bar_width = bar_width) %>%
