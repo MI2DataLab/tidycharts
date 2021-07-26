@@ -4,20 +4,27 @@
 \alias{column_chart_waterfall}
 \title{Generate column waterfall chart for visualizing contribution.}
 \usage{
-column_chart_waterfall(df, x, series, styles = NULL)
+column_chart_waterfall(df, x, series, styles = NULL, interval = "months")
 }
 \arguments{
 \item{df}{data frame in wide format containing data to be plotted}
 
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
-\item{series}{vector containing name of column in df with values to plot}
+\item{series}{vector containing names of columns in df with values to plot}
 
-\item{styles}{optional vector with styles of the bars}
+\item{styles}{optional vector with styles of bars}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
 }
 \description{
 Generate column waterfall chart for visualizing contribution.
+}
+\examples{
+df <- data.frame(x = 10:18,
+                 y = rnorm(9))
+column_chart_waterfall(df, 'x', 'y') \%>\% SVGrenderer()
 }

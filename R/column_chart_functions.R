@@ -270,7 +270,7 @@ add_waterfall_bars <-
 
     x_axis_pos <- 250
     max_bar_height <- 200
-    top_value <- max(df[series])
+    top_value <- max(abs(df[series]))
     prev_level <- ref_value / top_value * max_bar_height
 
     # calculate x labels y position
@@ -393,7 +393,7 @@ add_waterfall_bars <-
       # add label on result bar
       svg_string <- draw_text(
         svg_string = svg_string,
-        text = df[length(x), series],
+        text = format(df[length(x), series], digits = 5),
         x = x_pos + offset + bar_width * 0.75,
         y = x_axis_pos - result_hight / 2,
         text_color = "white"
@@ -439,11 +439,11 @@ add_abs_variance_bars <-
            bar_width,
            x_title) {
     # TODO x_axis_pos depending on negative values
-    x_axis_pos <- 200
+    x_axis_pos <- 250
     x_pos <- 35
 
     color <- choose_variance_colors(colors)
-    max_val <- max(baseline, real)
+    max_val <- max(abs(baseline), abs(real))
     variance <- real - baseline
 
     # add legend on the left of plot
@@ -451,7 +451,7 @@ add_abs_variance_bars <-
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("delta ", x_title),
+      text = paste0("\u0394 ", x_title),
       x = x_pos,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
@@ -474,19 +474,19 @@ add_abs_variance_bars <-
         c <- color[["pos_color"]]
         bar_y <- x_axis_pos - bar_h + 2.4
         label_y <- bar_y - 4.8
-        label_text <- paste("+", variance[i])
+        label_text <- paste("+", format(variance[i], digits = 4))
         x_label_y <- x_axis_pos + 4.8 + 12
       } else if (variance[i] < 0) {
         c <- color[["neg_color"]]
         bar_y <- x_axis_pos + 2.4
         label_y <- bar_y + bar_h + 4.8 + 9
-        label_text <- variance[i]
+        label_text <-format(variance[i], digits = 4)
         x_label_y <- x_axis_pos - 2.4
       } else{
         c <- "rgb(128,128,128)" # neutral gray
         bar_y <- x_axis_pos + 2.4
         label_y <- bar_y - 4.8
-        label_text <- variance[i]
+        label_text <- format(variance[i], digits = 4)
         x_label_y <- x_axis_pos + 4.8 + 12
       }
 
@@ -530,7 +530,7 @@ add_relative_variance_pins <-
            x_title,
            translate = c(0,0),
            styles = NULL) {
-    x_axis_pos <- 150
+    x_axis_pos <- 200
     color <- choose_variance_colors(colors)
     x_pos <- 0
     values <- real / baseline * 100 - 100
@@ -540,7 +540,7 @@ add_relative_variance_pins <-
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("delta ", x_title),
+      text = paste0("\u0394 ", x_title), # Δ = \u0394
       x = x_pos + translate[1] + bar_width * 0.5,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"
@@ -762,13 +762,27 @@ reference <- function(df, x, series, ref_value) {
 #' @param x vector containing labels for x axis or name of column in df with values of x axis labels
 #' @param series vector containing names of columns in df with values to plot
 #' @param styles optional vector with styles of bars
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-column_chart <- function(df, x, series = NULL, styles = NULL) {
-  bar_width = 32
+#' # prepare some data frame
+#' df <- data.frame(x = month.abb[1:6],
+#'                  y = c(2, 4, 2, 1, 2.5, 3),
+#'                  z = c(3, 4.5, 2, 1, 4, 2))
+#'
+#' # generate character vectors with svg data
+#' svg1 <- column_chart(df, x = 'x', series = 'y')
+#' svg2 <- column_chart(df, x = df$x, series = c('y', 'z'))
+#'
+#'
+#' # show the plot
+#' svg1 %>% SVGrenderer()
+#'
+column_chart <- function(df, x, series = NULL, styles = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
   stop_if_many_series(series, max_series = 6) # maximum 6 series
   stop_if_pos_neg_values(df, series) # signum of values in one bar is the same for every bar
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
@@ -784,16 +798,24 @@ column_chart <- function(df, x, series = NULL, styles = NULL) {
 
 #' Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing names of columns in df with values to plot
-#'
+#' @inheritParams column_chart
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-column_chart_normalized <- function(df, x, series = NULL) {
-  bar_width = 32
+#' # prepare some data frame
+#' df <- data.frame(x = month.abb[1:6],
+#'                  y = c(2, 4, 2, 1, 2.5, 3),
+#'                  z = c(3, 4.5, 2, 1, 4, 2))
+#'
+#' # generate character vector with svg data
+#' svg <- column_chart_normalized(df, x = df$x, series = c('y', 'z'))
+#'
+#' # show the plot
+#' svg %>% SVGrenderer()
+column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
+
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_series(series, max_series = 6) # maximum 6 series
   stop_if_many_categories(x, max_categories = 24)
@@ -810,19 +832,31 @@ column_chart_normalized <- function(df, x, series = NULL) {
 
 #' Generate column chart with reference line.
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing name of column in df with values to plot
+#' @inheritParams column_chart
 #' @param ref_value one element numeric vector with referencing value.
 #' @param ref_label name of the referencing value
-#' @param styles optional vector with styles of the bars
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL) {
-  bar_width = 32
+#' # prepare some data frame
+#' df <- data.frame(x = month.abb[1:6],
+#'                  y = c(2, 4, 2, 1, 2.5, 3),
+#'                  z = c(3, 4.5, 2, 1, 4, 2))
+#'
+#' # generate character vector with svg data
+#' svg <- column_chart_reference(df, x = 'x',
+#'                               series = 'y',
+#'                               ref_value = 3,
+#'                               ref_label = 'baseline')
+#'
+#' # show the plot
+#' svg %>% SVGrenderer()
+column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
+
+
   stop_if_many_series(series, max_series = 1) # maximum 1 series
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_categories(x, max_categories = 24)
@@ -840,17 +874,18 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
 
 #' Generate column waterfall chart for visualizing contribution.
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing name of column in df with values to plot
-#' @param styles optional vector with styles of the bars
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-column_chart_waterfall <- function(df, x, series, styles = NULL) {
-  bar_width = 32
+#' df <- data.frame(x = 10:18,
+#'                  y = rnorm(9))
+#' column_chart_waterfall(df, 'x', 'y') %>% SVGrenderer()
+column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'months') {
+  bar_width <- get_interval_width(interval)$bar_width
+
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
 
   stop_if_many_categories(x, max_categories = 24)
@@ -863,20 +898,28 @@ column_chart_waterfall <- function(df, x, series, styles = NULL) {
 
 #' Generate column chart with absolute variance
 #'
+#' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+#'
 #' @param x vector containing labels for x axis
 #' @param baseline vector containing base values
 #' @param real vector containing values that will be compared to baseline
 #' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
+#' x <- month.abb
+#' baseline <- rnorm(12)
+#' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
+#' column_chart_absolute_variance(x, baseline, real, x_title = 'profit') %>%
+#'   SVGrenderer()
 column_chart_absolute_variance <-
-  function(x, baseline, real, colors = 1, x_title = "PY") {
+  function(x, baseline, real, colors = 1, x_title = "PY", interval = 'months') {
 
-    bar_width <- 32
+    bar_width <- get_interval_width(interval)$bar_width
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
@@ -893,20 +936,33 @@ column_chart_absolute_variance <-
 #' @param triangles optional vector representing position of triangles
 #' @param titles vector of series titles. Consists of 2 or 3 elements
 #' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
+# df <- data.frame(x = month.abb[7:12],
+#                  actual = rnorm(6, mean = 5, sd = 0.3),
+#                  budget = rnorm(6, mean = 4.5, sd = 0.7),
+#                  prev_year = rnorm(6, mean = 4))
+#
+# column_chart_grouped(x = df$x,
+#                      foreground = df$actual,
+#                      background = df$budget,
+#                      triangles = df$prev_year,
+#                      titles = c('AC', 'BU', 'PY')) %>% SVGrenderer()
+
 column_chart_grouped <-
   function(x,
            foreground,
            background,
            triangles = NULL,
            titles,
-           styles = NULL) {
+           styles = NULL,
+           interval = 'months') {
 
-    bar_width <- 32
+    bar_width <- get_interval_width(interval)$bar_width
     translation_vec <- c(max(str_width(titles)) + 10, 0)
 
     stopifnot(length(titles) >= 2)
@@ -981,23 +1037,25 @@ column_chart_grouped <-
 
 #' Generate column chart with relative variance (in percents)
 #'
-#' @param x vector containing labels for x axis
-#' @param baseline vector containing base values
-#' @param real vector containing values that will be compared to baseline
-#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
+#' @inheritParams column_chart_absolute_variance
 #' @param x_title the title of the plot
-#' @param styles optional data frame of styles applied to pin heads
+#' @param styles optional vector with styles of the pin heads
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
+#' x <- month.abb
+#' baseline <- rnorm(12, mean = 1, sd = 0.2)
+#' real <- c(rnorm(6, mean = 0.8, sd = 0.2), rnorm(6, mean = 1.2, sd = 0.2))
+#' column_chart_relative_variance(x, baseline, real, x_title = 'profit %') %>%
+#'   SVGrenderer()
 column_chart_relative_variance <-
-  function(x, baseline, real, colors = 1, x_title, styles = NULL) {
+  function(x, baseline, real, colors = 1, x_title, styles = NULL, interval = 'months') {
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    bar_width <- 32
+    bar_width <- get_interval_width(interval)$bar_width
     translation_vec = c(str_width(x_title), 0)
     initialize(x_vector = x, bar_width = bar_width) %>%
       add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, translate = translation_vec, styles = styles) %>%
@@ -1007,19 +1065,21 @@ column_chart_relative_variance <-
 
 #' Generate column waterfall chart with absolute variance
 #'
-#' @param x vector containing labels for x axis
-#' @param baseline vector containing base values
-#' @param real vector containing values that will be compared to baseline
-#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
-#' @param result_title title for the last bar with total result
+#' @inheritParams column_chart_absolute_variance
+#' @param result_title title for the result bar
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
+#' x <- month.abb
+#' baseline <- rnorm(12)
+#' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
+#' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') %>%
+#'   SVGrenderer()
 column_chart_waterfall_variance <-
-  function(x, baseline, real, colors = 1, result_title) {
-    bar_width <- 32
+  function(x, baseline, real, colors = 1, result_title, interval = 'months') {
+    bar_width <- get_interval_width(interval)$bar_width
     stop_if_many_categories(x, max_categories = 24)
 
     difference <- real - baseline

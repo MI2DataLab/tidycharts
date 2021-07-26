@@ -10,7 +10,8 @@ column_chart_relative_variance(
   real,
   colors = 1,
   x_title,
-  styles = NULL
+  styles = NULL,
+  interval = "months"
 )
 }
 \arguments{
@@ -24,11 +25,20 @@ column_chart_relative_variance(
 
 \item{x_title}{the title of the plot}
 
-\item{styles}{optional data frame of styles applied to pin heads}
+\item{styles}{optional vector with styles of the pin heads}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
 }
 \description{
 Generate column chart with relative variance (in percents)
+}
+\examples{
+x <- month.abb
+baseline <- rnorm(12, mean = 1, sd = 0.2)
+real <- c(rnorm(6, mean = 0.8, sd = 0.2), rnorm(6, mean = 1.2, sd = 0.2))
+column_chart_relative_variance(x, baseline, real, x_title = 'profit \%') \%>\%
+  SVGrenderer()
 }

@@ -4,7 +4,14 @@
 \alias{column_chart_absolute_variance}
 \title{Generate column chart with absolute variance}
 \usage{
-column_chart_absolute_variance(x, baseline, real, colors = 1, x_title = "PY")
+column_chart_absolute_variance(
+  x,
+  baseline,
+  real,
+  colors = 1,
+  x_title = "PY",
+  interval = "months"
+)
 }
 \arguments{
 \item{x}{vector containing labels for x axis}
@@ -16,10 +23,19 @@ column_chart_absolute_variance(x, baseline, real, colors = 1, x_title = "PY")
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
 
 \item{x_title}{the title of the plot}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
 }
 \description{
-Generate column chart with absolute variance
+Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+}
+\examples{
+x <- month.abb
+baseline <- rnorm(12)
+real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
+column_chart_absolute_variance(x, baseline, real, x_title = 'profit') \%>\%
+  SVGrenderer()
 }

@@ -10,7 +10,8 @@ column_chart_grouped(
   background,
   triangles = NULL,
   titles,
-  styles = NULL
+  styles = NULL,
+  interval = "months"
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ column_chart_grouped(
 \item{titles}{vector of series titles. Consists of 2 or 3 elements}
 
 \item{styles}{optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

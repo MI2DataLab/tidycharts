@@ -10,7 +10,8 @@ column_chart_reference(
   series,
   ref_value,
   ref_label = NULL,
-  styles = NULL
+  styles = NULL,
+  interval = "months"
 )
 }
 \arguments{
@@ -18,17 +19,34 @@ column_chart_reference(
 
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
-\item{series}{vector containing name of column in df with values to plot}
+\item{series}{vector containing names of columns in df with values to plot}
 
 \item{ref_value}{one element numeric vector with referencing value.}
 
 \item{ref_label}{name of the referencing value}
 
-\item{styles}{optional vector with styles of the bars}
+\item{styles}{optional vector with styles of bars}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
 }
 \description{
 Generate column chart with reference line.
+}
+\examples{
+# prepare some data frame
+df <- data.frame(x = month.abb[1:6],
+                 y = c(2, 4, 2, 1, 2.5, 3),
+                 z = c(3, 4.5, 2, 1, 4, 2))
+
+# generate character vector with svg data
+svg <- column_chart_reference(df, x = 'x',
+                              series = 'y',
+                              ref_value = 3,
+                              ref_label = 'baseline')
+
+# show the plot
+svg \%>\% SVGrenderer()
 }

@@ -4,7 +4,7 @@
 \alias{column_chart_normalized}
 \title{Generate column chart with normalization. Every column will be rescaled, so columns have the same height.}
 \usage{
-column_chart_normalized(df, x, series = NULL)
+column_chart_normalized(df, x, series = NULL, interval = "months")
 }
 \arguments{
 \item{df}{data frame in wide format containing data to be plotted}
@@ -12,10 +12,24 @@ column_chart_normalized(df, x, series = NULL)
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
 \item{series}{vector containing names of columns in df with values to plot}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
 }
 \description{
 Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
+}
+\examples{
+# prepare some data frame
+df <- data.frame(x = month.abb[1:6],
+                 y = c(2, 4, 2, 1, 2.5, 3),
+                 z = c(3, 4.5, 2, 1, 4, 2))
+
+# generate character vector with svg data
+svg <- column_chart_normalized(df, x = df$x, series = c('y', 'z'))
+
+# show the plot
+svg \%>\% SVGrenderer()
 }
