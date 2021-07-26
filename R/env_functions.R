@@ -72,23 +72,26 @@ get_interval_width <- function(interval){
 #' @export
 #'
 #' @examples
+#' mi2lab_colors <- cbind(
+#'   bar_colors =  c(
+#'    "rgb(68, 19, 71)",
+#'    "rgb(243, 46, 255)",
+#'    "rgb(106, 0, 112)",
+#'    "rgb(217, 43, 227)" ,
+#'    "rgb(114, 49, 117)",
+#'    "rgb(249, 110, 255)"
+#'  ),
+#' text_colors = c("white", "white", "white", "white", "white", "white"))
+#'
+#' set_colors(mi2lab_colors)
+#'
 set_colors <- function(colors_df){
   stopifnot(all(dim(colors_df) == c(6,2)))
   stopifnot(all(dimnames(colors_df)[[2]] %in% c("text_colors", "bar_colors")))
   pkg.env$colors_df <- colors_df
 }
 
-pkg.env$mi2lab_colors <- cbind(
-  bar_colors =  c(
-    "rgb(68, 19, 71)",
-    "rgb(243, 46, 255)",
-    "rgb(106, 0, 112)",
-    "rgb(217, 43, 227)" ,
-    "rgb(114, 49, 117)",
-    "rgb(249, 110, 255)"
-  ),
-  text_colors = c("white", "white", "white", "white", "white", "white")
-)
+
 
 
 #' Change default styles for plots
@@ -99,6 +102,19 @@ pkg.env$mi2lab_colors <- cbind(
 #' @export
 #'
 #' @examples
+#' styles_df <-
+#'   rbind(
+#'   actual = c("rgb(64,64,64)", "rgb(64,64,64)"),
+#'   prevoius =
+#'     c("rgb(166,166,166)", "rgb(166,166,166)"),
+#'   forecast =
+#'     c("url(#diagonalHatch)", "rgb(64,64,64)"),
+#'   plan = c("white", "rgb(64,64,64)"),
+#'   total_white = c("white", "white")
+#'   )
+#' colnames(styles_df) <- c("fill", "stroke")
+#'
+#' set_styles(styles_df)
 set_styles <- function(styles_df){
   stopifnot(colnames(styles_df) %in% c('stroke', 'fill'))
   pkg.env$styles_df <-styles_df

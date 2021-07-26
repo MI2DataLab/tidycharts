@@ -9,7 +9,7 @@ add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 \arguments{
 \item{svg_string}{one element character vector containing SVG graphic statements. Legend will be added to this plot.}
 
-\item{line1}{first line of title. It should represent object of the plot}
+\item{line1}{first line of title. Element(s) of the structure dimension represent the object of the report, typically a legal entity, an organization unit, or a line of business}
 
 \item{line2_measure}{First part of second line of the title. It wil be in bold text. It should represent buisness measure being analyzed.}
 
@@ -22,4 +22,14 @@ one element character vector containing SVG graphic statements. svg_string with 
 }
 \description{
 Add IBCS complient legend
+}
+\examples{
+df <- data.frame(x = 2010:2015, sales = rnorm(6,10, 2))
+column_chart(df, df$x, 'sales') \%>\%
+  add_title(line1 = 'Department of Big Computers',
+    line2_measure = "Sales",
+    line2_rest = "in mEUR",
+    line3 = "2010..2015") \%>\%
+  SVGrenderer()
+
 }

@@ -24,3 +24,10 @@ list of data frames, each one containing data about one time series.  Data frame
 \description{
 Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.
 }
+\examples{
+df <- data.frame(
+    dates = as.Date(c('2021-07-12', '2021-06-18', '2021-05-12')),
+    val1 = c(1.5, 1.2, 2.1),
+    val2 = c(0.9, 3.2, 1.1))
+parse_time_series(df, 'dates', c('val1', 'val2'))
+}

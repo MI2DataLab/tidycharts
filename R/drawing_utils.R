@@ -206,7 +206,6 @@ draw_ref_line_horizontal <- function(svg_string, x, bar_width, line_y, label) {
 #' @param bold boolean value, if string will be written in bold
 #'
 #' @return string width in pixels
-#' @export
 #'
 #' @examples
 str_width <- function(string, bold = FALSE){

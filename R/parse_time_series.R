@@ -48,6 +48,12 @@ quarter_abbr <- function(x){
 #' * containing the time interval of the value
 #'
 #' @export
+#' @examples
+#' df <- data.frame(
+#'     dates = as.Date(c('2021-07-12', '2021-06-18', '2021-05-12')),
+#'     val1 = c(1.5, 1.2, 2.1),
+#'     val2 = c(0.9, 3.2, 1.1))
+#' parse_time_series(df, 'dates', c('val1', 'val2'))
 parse_time_series <- function(df, dates, series, convert.to = 'months'){
   stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
   lapply(series, parse_time_series_column, df = df, x = dates, convert.to = convert.to)
