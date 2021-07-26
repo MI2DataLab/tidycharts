@@ -10,8 +10,8 @@ add_column_bar <-
            bar_width,
            color = NULL,
            style = NULL) {
-    x_axis_pos <- 250
 
+    x_axis_pos <- get_x_axis_pos(df[series])
     bar_height = 0 # height of existing bar, updated in the loop
 
     for (j in 1:length(series)) {
@@ -100,7 +100,7 @@ add_bars <-
     n_bars = length(x)
 
     n_splits = length(series)
-    x_axis_pos <- 250
+    x_axis_pos <- get_x_axis_pos(df[series], max_val)
     max_height <- ifelse(is.null(max_val),
                          max(abs(rowSums(df[series]))),
                          max_val)
@@ -268,7 +268,7 @@ add_waterfall_bars <-
            result_title = NULL,
            ref_value = 0) {
 
-    x_axis_pos <- 250
+    x_axis_pos <- get_x_axis_pos(df[series])
     max_bar_height <- 200
     top_value <- max(abs(df[series]))
     prev_level <- ref_value / top_value * max_bar_height
@@ -393,7 +393,7 @@ add_waterfall_bars <-
       # add label on result bar
       svg_string <- draw_text(
         svg_string = svg_string,
-        text = format(df[length(x), series], digits = 5),
+        text = format(df[[length(x), series]], digits = 5),
         x = x_pos + offset + bar_width * 0.75,
         y = x_axis_pos - result_hight / 2,
         text_color = "white"
@@ -439,12 +439,12 @@ add_abs_variance_bars <-
            bar_width,
            x_title) {
     # TODO x_axis_pos depending on negative values
-    x_axis_pos <- 250
     x_pos <- 35
 
     color <- choose_variance_colors(colors)
     max_val <- max(abs(baseline), abs(real))
     variance <- real - baseline
+    x_axis_pos <- get_x_axis_pos(variance)
 
     # add legend on the left of plot
     first_bar_h <- variance[1] / max_val * 200
@@ -637,7 +637,7 @@ add_triangles <- function(svg_string,
                           max_val = NULL,
                           add_legend = FALSE,
                           styles = NULL) {
-  x_axis_pos <- 250
+  x_axis_pos <- get_x_axis_pos(df[series], max_val)
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
   svg_string <- paste(svg_string,
                       initialize(
@@ -670,7 +670,7 @@ add_triangles <- function(svg_string,
 
 
 add_legend <- function(svg_string, df, x, series, bar_width) {
-  x_axis_pos <- 250
+  x_axis_pos <- get_x_axis_pos(df[series])
   if (length(series) == 1)
     return(svg_string)
   x_pos = 1.5 * bar_width * length(x) + 4.8 - bar_width / 4
@@ -704,7 +704,7 @@ add_top_values <-
            translate = c(0, 0),
            max_val = NULL,
            ref_value = NULL) {
-    x_axis_pos <- 250
+    x_axis_pos <- get_x_axis_pos(df[series], max_val)
     heights <- rowSums(df[series])
     max_height <-
       ifelse(is.null(max_val), max(abs(heights)), max_val)
@@ -755,6 +755,32 @@ reference <- function(df, x, series, ref_value) {
   return(new_df)
 }
 
+get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num)){
+  max_bar_height <- 200
+  min_val <- min(df_num)
+  max_val <- max(df_num)
+  if(abs(min_val) > max_val){
+    return(x_axis_pos + max_bar_height + 50) # axis position + height of the longest negative bar + 50 margin
+  }else if(min_val < 0){
+    return(x_axis_pos + abs(min_val) / max_val * max_bar_height + 50)
+  }else{
+    return(x_axis_pos + 50)
+  }
+}
+
+get_x_axis_pos <- function(df_num, max_val = NULL){
+  max_bar_height <- 200
+  top_margin <- 75
+  min_val <- min(df_num)
+  max_val <- max(df_num)
+  longest_bar <- ifelse(is.null(max_val),max(abs(min_val), abs(max_val)),max_val)
+  if (max_val > 0) {
+    return(top_margin + max_bar_height * max_val / longest_bar)
+  }
+  else{
+    return(top_margin)
+  }
+}
 
 #' Generate basic column chart. If more than one series is supplied, stacked column plot is generated
 #'
@@ -787,8 +813,7 @@ column_chart <- function(df, x, series = NULL, styles = NULL, interval = 'months
   stop_if_pos_neg_values(df, series) # signum of values in one bar is the same for every bar
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_categories(x, max_categories = 24)
-
-  initialize(x_vector = x, bar_width = bar_width) %>%
+  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series])) %>%
     add_bars(df, x, series, bar_width = bar_width, styles) %>%
     add_legend(df, x, series, bar_width = bar_width) %>%
     add_top_values(df, x, series, bar_width = bar_width) %>%
@@ -822,10 +847,10 @@ column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
 
   normalized_df <- normalize_rows(df, x, series)
 
-  initialize(x_vector = x, bar_width = bar_width) %>%
+  initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
     add_legend(normalized_df, x, series, bar_width = bar_width) %>%
-    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 50, label = "100") %>%
+    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 75, label = "100") %>%
     finalize()
 }
 
@@ -865,7 +890,7 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
   referenced_df <- reference(df, x, series, ref_value)
   index_level <-
     ref_value / max(df[series]) * 200
-  initialize(x_vector = x, bar_width = bar_width) %>%
+  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(referenced_df[series], x_axis_pos = 250)) %>%
     add_bars(referenced_df, x, series, bar_width = bar_width, styles = styles) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
     add_top_values(df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
@@ -891,7 +916,7 @@ column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'mon
   stop_if_many_categories(x, max_categories = 24)
   stop_if_many_series(series, max_series = 1) # maximum 1 series
 
-  initialize(x_vector = x, bar_width = bar_width) %>%
+  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series], x_axis_pos = 250)) %>%
     add_waterfall_bars(df, x, series, bar_width, styles) %>%
     finalize()
 }
@@ -979,7 +1004,7 @@ column_chart_grouped <-
     }
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-    initialize(x_vector = x, bar_width = bar_width) %>%
+    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[titles])) %>%
       add_bars(
         df[, titles[2], drop = FALSE],
         x = x,
@@ -1057,7 +1082,7 @@ column_chart_relative_variance <-
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec = c(str_width(x_title), 0)
-    initialize(x_vector = x, bar_width = bar_width) %>%
+    initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
       add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, translate = translation_vec, styles = styles) %>%
       finalize()
   }
@@ -1085,7 +1110,7 @@ column_chart_waterfall_variance <-
     difference <- real - baseline
     df <- data.frame("series" = difference)
 
-    initialize(x_vector = x, bar_width = bar_width) %>%
+    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df)) %>%
       add_first_bar(
         x[1],
         df[1, 'series'],
