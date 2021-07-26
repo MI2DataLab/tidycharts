@@ -9,9 +9,11 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
-
         el.innerHTML = x.message;
-
+        children = el.children;
+        svg = children.item('svg');
+        el.setAttribute("style", "width:".concat(svg.getAttribute('width')));
+        el.setAttribute("style", "height:".concat(svg.getAttribute('height')));
       },
 
       resize: function(width, height) {
