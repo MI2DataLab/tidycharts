@@ -37,7 +37,8 @@ draw_bar <- function(svg_string, x, y, height, width, color = "black", style = N
 
 
 draw_text <- function(svg_string, text, x, y, font_size = 12, text_anchor = "middle", text_color = "black", text_weight = "") {
-  parsed <- lapply(strsplit(text, '\n'), trimws)[[1]]
+
+  parsed <- lapply(strsplit(as.character(text), '\n'), trimws)[[1]]
   y_offset <- 0
   for (line in parsed){
     svg_string <- paste(
