@@ -22,7 +22,7 @@ add_category <- function(shift, data, cat, x,k){ #cat jest calym wektorem
     #label with the value
     add_label(x, 268.4+shift, cat[k]),
     #asisting line
-    draw_line(x,x,50,250+shift, "white", 0.1),
+    draw_line(x,x,50,250+shift, "black", 0.1),
     sep="\n"
     ))
 
@@ -113,3 +113,6 @@ line_plot_many_points <- function(data, cat, series, series_labels, ser_names, p
   draw_lines(.,data, cat, series, series_labels, ser_names, point_cords) %>%
   finalize() #%>% show()
 }
+
+
+

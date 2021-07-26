@@ -21,13 +21,6 @@ add_bar_grouped <-
       value <- data[,series[i]] #a vector
       color <- get_gray_color_stacked(i)
       styles <- df_styles[,series[i]]
-      #if(is.null(series_labels)==FALSE){
-      #  if(length(series)>1){ #if there is only one series, no series label needed
-      #    labels <- paste(labels,
-                          #series label
-      #                    add_label((x+(width_of_one*(value[k])/2)), y+12-16, series_labels[i]),
-      #                    sep='\n')}
-      #}
 
       if(i != 1 && value[k] < 0){
           x <- x - (width_of_one*abs(value[k]))
@@ -40,19 +33,7 @@ add_bar_grouped <-
       }
       x <- 80 + shift
 
-      #value_text <- value[k]
-      #checking if there's enough place for a label
-      #if(str_width(abs(value_text))+3.2 < abs(value_text)*width_of_one && length(series) > 1){
-
-        #labels <- paste(
-          #labels,
-          #each series value label
-          #add_label((x+(width_of_one*(abs(value[k]))/2)), y+12, value_text, color=color$text_color),
-          #sep='\n'
-        #)
-      #}
       svg_string <- paste(svg_string, rect, labels,  sep = '\n')
-      #if(value[k] > 0){ x <- x + (width_of_one*value[k])}
 
       if(i == 2){
         if(value[k]>0){value_label <- paste(value_label,
@@ -125,3 +106,12 @@ barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = 
     draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
     finalize()
 }
+
+
+df <- data.frame(
+  cat=c("cos", "cos2", "cos3")
+
+
+)
+
+
