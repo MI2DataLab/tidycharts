@@ -4,7 +4,14 @@
 \alias{line_plot_stacked}
 \title{Generates areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.}
 \usage{
-line_plot_stacked(data, cat, series, series_labels, show_labels)
+line_plot_stacked(
+  data,
+  cat,
+  series,
+  series_labels,
+  show_labels,
+  interval = "months"
+)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}

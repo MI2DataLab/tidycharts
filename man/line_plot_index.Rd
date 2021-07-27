@@ -4,7 +4,14 @@
 \alias{line_plot_index}
 \title{Generates line plot with markers on every value with index on a given value.}
 \usage{
-line_plot_index(data, cat, series, series_labels, index_val)
+line_plot_index(
+  data,
+  cat,
+  series,
+  series_labels,
+  index_val,
+  interval = "months"
+)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
