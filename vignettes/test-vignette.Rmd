@@ -258,8 +258,10 @@ df <- data.frame(
 )
 column_chart(df, df$months, series = c('Operational.profit', 'Dividend', 'Property.income')) %>% SVGrenderer()
 
-styles <- rep('actual', )
+styles <- c(rep('actual', 7), rep('forecast',5))
   
-column_chart(df, df$months, series = 'Operational.profit') %>% SVGrenderer()
+column_chart(df, df$months, series = 'Operational.profit', styles = styles) %>% SVGrenderer()
+
+
 ```
 
