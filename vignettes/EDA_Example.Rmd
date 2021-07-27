@@ -203,7 +203,13 @@ p <- penguins_raw %>%
   as.data.frame()
 
 
-line_plot_stacked(p, p$date, series = c('Adelie', 'Gentoo', 'Chinstrap'), series_labels = c('Adelie', 'Gentoo', 'Chinstrap'), show_labels = rep(NA, length.out = 14)) %>% SVGrenderer()
+line_plot_stacked(p, p$date, 
+                  series = c('Adelie', 'Gentoo', 'Chinstrap'), 
+                  series_labels = c('Adelie', 'Gentoo', 'Chinstrap'), 
+                  show_labels = rep(NA, length.out = 14),
+                  interval = 'weeks') %>%
+  add_title('Palmer penguins sampling expedition', 'Number of new eggs observed', '', '2007...2009') %>% 
+  SVGrenderer()
 ```
 
 
