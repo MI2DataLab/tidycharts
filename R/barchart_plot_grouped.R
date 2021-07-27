@@ -106,12 +106,3 @@ barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = 
     draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
     finalize()
 }
-
-
-df <- data.frame(
-  cat=c("cos", "cos2", "cos3")
-
-
-)
-
-
