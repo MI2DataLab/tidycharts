@@ -23,6 +23,8 @@ line_plot_stacked(
 \item{series_labels}{vector containing names of series to be shown on the plot}
 
 \item{show_labels}{vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

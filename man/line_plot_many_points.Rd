@@ -26,6 +26,8 @@ line_plot_many_points(
 \item{ser_names}{vector containing column names of a value to be marked}
 
 \item{point_cords}{vector of the same length as ser_names containing numerical values of indexes in data of values to be marked}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
