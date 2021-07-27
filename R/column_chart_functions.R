@@ -248,6 +248,7 @@ add_first_bar <- function(svg_string,
 #' @param result_bar_color color of result bar. If add_result_bar is false, it is ignored.
 #' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
 #' @param ref_value first bar starts from this value, intended to be used with add_first_bar function.
+#' @param translate_vec 2 element translation vector. By setting this parameter you can translate bars and legend.
 #'
 #' @return svg string with appended waterfall bars
 #'

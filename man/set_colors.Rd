@@ -12,3 +12,18 @@ set_colors(colors_df)
 \description{
 Customize your plots and change default color palette.
 }
+\examples{
+mi2lab_colors <- cbind(
+  bar_colors =  c(
+   "rgb(68, 19, 71)",
+   "rgb(243, 46, 255)",
+   "rgb(106, 0, 112)",
+   "rgb(217, 43, 227)" ,
+   "rgb(114, 49, 117)",
+   "rgb(249, 110, 255)"
+ ),
+text_colors = c("white", "white", "white", "white", "white", "white"))
+
+set_colors(mi2lab_colors)
+
+}

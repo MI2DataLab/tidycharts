@@ -23,7 +23,8 @@ Depends:
     methods,
     graphics,
     htmlwidgets,
-    lubridate
+    lubridate,
+    stringr
 Suggests: 
     knitr,
     rmarkdown

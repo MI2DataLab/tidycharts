@@ -12,3 +12,18 @@ set_styles(styles_df)
 \description{
 Change default styles for plots
 }
+\examples{
+styles_df <-
+  rbind(
+  actual = c("rgb(64,64,64)", "rgb(64,64,64)"),
+  prevoius =
+    c("rgb(166,166,166)", "rgb(166,166,166)"),
+  forecast =
+    c("url(#diagonalHatch)", "rgb(64,64,64)"),
+  plan = c("white", "rgb(64,64,64)"),
+  total_white = c("white", "white")
+  )
+colnames(styles_df) <- c("fill", "stroke")
+
+set_styles(styles_df)
+}

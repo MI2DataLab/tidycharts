@@ -3,9 +3,9 @@
 #' Use this function to show SVG images from given string in SVG embedded in HTML.
 #'
 #' @param svg_string one element character vector with image in svg format
-#' @param width NOT IMPLEMENTED width of the widget
-#' @param height NOT IMPLEMENTED height of the widget
-#' @param elementId NOT IMPLEMENTED HTML element ID
+#' @param width width of the widget
+#' @param height height of the widget
+#' @param elementId  HTML element ID
 #'
 #' @import htmlwidgets
 #'

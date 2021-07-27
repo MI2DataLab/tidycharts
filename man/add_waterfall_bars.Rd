@@ -50,6 +50,8 @@ add_waterfall_bars(
 \item{result_title}{title of result bar to be on x axis. If add_result_bar is false, it is ignored.}
 
 \item{ref_value}{first bar starts from this value, intended to be used with add_first_bar function.}
+
+\item{translate_vec}{2 element translation vector. By setting this parameter you can translate bars and legend.}
 }
 \value{
 svg string with appended waterfall bars
