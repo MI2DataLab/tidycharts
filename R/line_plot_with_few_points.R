@@ -1,7 +1,7 @@
 
 
 #adding a rectangle marker with label above or under + categories labels
-add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minimal){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
+add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minimal, cat_width){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
 
   label<-""
   if(value > 0){
@@ -25,11 +25,11 @@ add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minima
       #marker
       rect,
       #category label
-      add_label(x, 268.4 + shift, cat, color),
+      add_label(x, 268.4 + shift, cat, "black"),
       #ticks
-      draw_line(x,x,250,251.6),
+      draw_line(x, x, 250,251.6),
       #x-axis line
-      draw_line(x-24,x+24,250,250),
+      draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
       #label with the marker value
       label,
       sep="\n"
@@ -50,7 +50,7 @@ find_height <- function(data, series){
 
 
 #----
-draw_points <- function(svg_string, data, cat, series, series_labels){
+draw_points <- function(svg_string, data, cat, series, series_labels, cat_width){
 
   points <- svg_string
   labels <- ""
@@ -88,18 +88,18 @@ draw_points <- function(svg_string, data, cat, series, series_labels){
     labels <- paste(labels, add_label(80-4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
     for(i in 1:(length(cat)-1)){ #drawing each point
       points <- paste(points,
-                     add_point(shift, data, cat[i], values[i], x, height_of_one, color,k, minimal),
+                     add_point(shift, data, cat[i], values[i], x, height_of_one, color,k, minimal, cat_width),
                      #line between two points
-                     draw_line(x,x+48,(250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
+                     draw_line(x, x + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
                      sep='\n')
 
-      x <- x+48
+      x <- x + cat_width
     }
     i <- length(cat)
     points <- paste(points,
-                    add_point(shift, data, cat[i], values[i], x, height_of_one, color, k, minimal),
+                    add_point(shift, data, cat[i], values[i], x, height_of_one, color, k, minimal, cat_width ),
                     sep='\n')
-    x<-80
+    x <-80
   }
 
 
@@ -120,7 +120,13 @@ draw_points <- function(svg_string, data, cat, series, series_labels){
 #' @export
 #'
 #' @examples
-line_plot <- function(data, cat, series, series_labels){
+line_plot <- function(data, cat, series, series_labels, interval="months"){ #interval <- week, month, quarter, year
+
+  #if(interval == "week"){cat_width <- 32}
+  #if(interval == "month"){cat_width <- 48}
+  #if(interval == "quarter"){cat_width <- 56}
+  #if(interval == "year"){cat_width <- 32}
+  cat_width <- get_interval_width(interval)$category_width
   maxes <- c()
   averages <- c()
   neg <- c()
@@ -137,8 +143,8 @@ line_plot <- function(data, cat, series, series_labels){
   shift <- height_of_one*abs(min(neg)) + 12 + 4.8
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
-    initialize(width = 80+ 48*length(cat) + 80, height = 250+shift + 20) %>%
-    draw_points(.,data, cat, series, series_labels) %>%
+    initialize(width = 80+ cat_width*length(cat) + 80, height = 250+shift + 20) %>%
+    draw_points(.,data, cat, series, series_labels, cat_width) %>%
     finalize() #%>% show()
 }
 
@@ -155,8 +161,9 @@ line_plot <- function(data, cat, series, series_labels){
 #' @export
 #'
 #' @examples
-line_plot_index <- function(data, cat, series, series_labels, index_val){
+line_plot_index <- function(data, cat, series, series_labels, index_val, interval = "month"){
   #height_of_one <- find_height(data, series)
+  cat_width <- get_interval_width(interval)$category_width
   maxes <- c()
   averages <- c()
   neg <- c()
@@ -173,10 +180,11 @@ line_plot_index <- function(data, cat, series, series_labels, index_val){
   shift <- height_of_one*abs(min(neg)) + 12 + 4.8
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
-  initialize(width = 80+ 48*length(cat) + 80, height = 250+shift + 20) %>%
-    draw_points(.,data, cat, series, series_labels) %>%
+  initialize(width = 80+ cat_width*length(cat) + 80, height = 250+shift + 20) %>%
+    draw_points(.,data, cat, series, series_labels, cat_width) %>%
     paste(.,
-          add_index(80+5.6+48*(length(cat)-1),250-height_of_one*index_val),
+          add_index(80 +cat_width/2 + cat_width*(length(cat)-1), 250-height_of_one*index_val),
           sep='\n') %>%
     finalize() #%>% show()
 }
+
