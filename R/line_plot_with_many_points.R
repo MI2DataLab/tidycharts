@@ -103,6 +103,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param ser_names vector containing column names of a value to be marked
 #' @param point_cords vector of the same length as ser_names containing numerical values of indexes in data of values to be marked
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export

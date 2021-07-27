@@ -115,6 +115,7 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width)
 #' @param cat vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export
@@ -155,7 +156,9 @@ line_plot <- function(data, cat, series, series_labels, interval="months"){ #int
 #' @param cat vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #' @param index_val numeric value of the index
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
 #' @export

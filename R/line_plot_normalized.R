@@ -110,13 +110,3 @@ line_plot_normalized <- function( data, cat, series, series_labels, show_labels,
     draw_polygons_normalized(.,data, cat, series, series_labels,show_labels, cat_width) %>%
     finalize()
 }
-
-#tests
-data <- data.frame(
-  months = c("Jan", "Feb", "Mar", "Apr"),
-  cos = c(4,5,4,6),
-  cosiek = c(2, 3, 3.5, 1)
-)
-series <- c("cos", "cosiek")
-
-line_plot_normalized(data, data$months, series, series ,c(NA,1,1,NA),"years") %>% SVGrenderer()
