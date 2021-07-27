@@ -15,21 +15,21 @@ draw_circle_lineplot <- function(x,y, color){
                 '" />'))}
 #---
 #adding category names, x-axis, assisting lines
-add_category <- function(shift, data, cat, x,k){ #cat jest calym wektorem
+add_category <- function(shift, data, cat, x, k, cat_width){ #cat jest calym wektorem
   return(paste(
     #x-axis line
-    draw_line(x-24, x+24, 250, 250),
+    draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
     #label with the value
-    add_label(x, 268.4+shift, cat[k]),
+    add_label(x, 268.4 + shift, cat[k]),
     #asisting line
-    draw_line(x,x,50,250+shift, "black", 0.1),
+    draw_line(x, x, 50, 250+shift, "black", 0.1),
     sep="\n"
     ))
 
 }
 
 #----
-draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, point_cords){
+draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, point_cords, cat_width){
 
   labels <-""
   lines <- svg_string
@@ -60,29 +60,29 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
 
     for(i in 1:(length(cat)-1)){ #going through categories
       lines <- paste(lines,
-                     draw_line(x, x+48, 250-(height_of_one*values[i]), 250-(height_of_one*values[i+1]), color),
-                     add_category(shift, data, cat, x, i),
+                     draw_line(x, x + cat_width, 250-(height_of_one*values[i]), 250-(height_of_one*values[i+1]), color),
+                     add_category(shift, data, cat, x, i, cat_width),
                      sep='\n')
-      x <- x+48
+      x <- x + cat_width
     }
     j <- length(cat)
     lines <- paste(lines,
-                    add_category(shift,data, cat, x, j),
+                    add_category(shift, data, cat, x, j, cat_width),
                       sep='\n')
-    x<-80
+    x <- 80
   }
 
-  chosen_points <- draw_chosen_points(data, series, height_of_one, ser_names, point_cords, colors)
+  chosen_points <- draw_chosen_points(data, series, height_of_one, ser_names, point_cords, colors, cat_width)
   return (paste(lines, labels, chosen_points, sep='\n'))
 }
 
 
 #drawing the point we have to have highlighted on the plot
-draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cords, colors){
+draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cords, colors, cat_width){
   chosen_points <- ""
   for(i in 1:length(ser_names)){
     #calculating the x cordinates
-    x <- 80 + 48*(point_cords[i]-1)
+    x <- 80 + cat_width*(point_cords[i]-1)
     y <- 250 - height_of_one*data[, ser_names[i]][point_cords[i]]
     circle_color <- colors[match(ser_names[i], series)[1]]
     chosen_points <- paste(chosen_points,
@@ -108,11 +108,24 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' @export
 #'
 #' @examples
-line_plot_many_points <- function(data, cat, series, series_labels, ser_names, point_cords){
+line_plot_many_points <- function(data, cat, series, series_labels, ser_names, point_cords, interval="months"){
+
+  cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-  draw_lines(.,data, cat, series, series_labels, ser_names, point_cords) %>%
-  finalize() #%>% show()
+  draw_lines(.,data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
+  finalize()
 }
+
+
+#tests
+data <- data.frame(
+  months = c("Jan", "Feb", "Mar", "Apr"),
+  cos = c(4,5,4,6),
+  cosiek = c(2, 3, 3.5, 1)
+)
+series <- c("cos", "cosiek")
+
+line_plot_normalized(data, data$months, series, series ,c(NA,1,1,NA),"years") %>% SVGrenderer()
 
 
 
