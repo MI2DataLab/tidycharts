@@ -75,11 +75,19 @@ finalize <- function(svg_string) {
 #'   SVGrenderer()
 #'
 add_title <- function(svg_string, line1, line2_measure, line2_rest, line3=""){
-  initialize(svg_string_append = svg_string) %>%
+  size = get_svg_size(svg_string)
+  initialize(svg_string_append = svg_string, width = size[1], height = size[2]) %>%
     draw_text(text = line1, x = 0, y = 12, text_anchor = "start") %>%
     draw_text(text = line2_measure, x = 0, y = 24, text_anchor = "start", text_weight = "bold") %>%
     draw_text(text = line2_rest, x = str_width(line2_measure, bold = T)+2, y = 24, text_anchor = "start") %>%
     draw_text(text = line3, x = 0, y = 36, text_anchor = "start") %>%
     finalize() %>%
     return()
+}
+
+get_svg_size <- function(svg_string){
+  size <- numeric()
+  size[1] <- str_extract(svg_string, 'width="\\d+"') %>% str_extract("\\d+") %>% as.numeric()
+  size[2] <- str_extract(svg_string, 'height="\\d+"') %>% str_extract("\\d+") %>% as.numeric()
+  return(size)
 }
