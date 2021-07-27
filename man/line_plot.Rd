@@ -4,7 +4,7 @@
 \alias{line_plot}
 \title{Generates line plot with markers on every value.}
 \usage{
-line_plot(data, cat, series, series_labels)
+line_plot(data, cat, series, series_labels, interval = "months")
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}

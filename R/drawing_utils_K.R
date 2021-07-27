@@ -26,17 +26,29 @@ draw_rect <- function(x, y, color, width, height, style = NULL){
 
 
 add_label<- function(x, y, value, color="black", anchor="middle"){
-  return(paste0('<text x="',
-                x,
-                '" y="',
-                y,
-                '"  font-family="Arial" font-size="12" text-anchor="',
-                anchor,
-                '" fill="',
-                color,
-                '" >',
-                value,
-                '</text>'))
+  if (length(value) < 1) {
+    value = ''
+  }
+  parsed <- lapply(strsplit(as.character(value), '\n'), trimws)[[1]]
+  y_offset <- 0
+  svg_string <- character()
+  for (line in parsed) {
+    svg_string <- paste(svg_string,
+                        paste0('<text x="',
+                               x,
+                               '" y="',
+                               y + y_offset,
+                               '"  font-family="Arial" font-size="12" text-anchor="',
+                               anchor,
+                               '" fill="',
+                               color,
+                               '" >',
+                               line,
+                               '</text>'),
+                        sep = '\n')
+    y_offset <- y_offset + 12
+  }
+  return(svg_string)
 }
 
 

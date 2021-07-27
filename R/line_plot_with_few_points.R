@@ -161,7 +161,7 @@ line_plot <- function(data, cat, series, series_labels, interval="months"){ #int
 #' @export
 #'
 #' @examples
-line_plot_index <- function(data, cat, series, series_labels, index_val, interval = "month"){
+line_plot_index <- function(data, cat, series, series_labels, index_val, interval = "months"){
   #height_of_one <- find_height(data, series)
   cat_width <- get_interval_width(interval)$category_width
   maxes <- c()
