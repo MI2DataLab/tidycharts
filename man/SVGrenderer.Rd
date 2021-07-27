@@ -9,11 +9,11 @@ SVGrenderer(svg_string, width = NULL, height = NULL, elementId = NULL)
 \arguments{
 \item{svg_string}{one element character vector with image in svg format}
 
-\item{width}{NOT IMPLEMENTED width of the widget}
+\item{width}{width of the widget}
 
-\item{height}{NOT IMPLEMENTED height of the widget}
+\item{height}{height of the widget}
 
-\item{elementId}{NOT IMPLEMENTED HTML element ID}
+\item{elementId}{HTML element ID}
 }
 \description{
 Use this function to show SVG images from given string in SVG embedded in HTML.
