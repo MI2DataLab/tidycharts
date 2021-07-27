@@ -3,8 +3,8 @@ Type: Package
 Title: Generate plots in IBCS-like style
 Version: 0.1.0
 Authors@R: c(
-    person('Kinga', 'Ułasik', email = 'simple-mail@simple.server.com', role = 'aut'),
-    person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = 'cre'))
+    person('Kinga', 'Ułasik', email = 'kinia.u@poczta.fm', role = c("aut")),
+    person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = c("aut", "cre")))
 Maintainer: Bartosz Sawicki <sawicki.bartosz@interia.pl>
 Description: The ibcsplot package enables user to generate charts compliant with IBCS.
     All charts are generated in SVG format and can be shown in RStudio viewer pane or can be exported to HTML output of knitr/markdown.
