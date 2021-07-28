@@ -2,6 +2,7 @@
 
 export(SVGrenderer)
 export(SVGrendererOutput)
+export(SVGsave)
 export(add_title)
 export(barchart_plot)
 export(barchart_plot_grouped)
