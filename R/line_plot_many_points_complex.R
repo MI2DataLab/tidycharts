@@ -21,7 +21,7 @@ add_category_complex <- function(shift, data, cat, x,k){ #cat jest calym wektore
 }
 
 #----
-draw_lines_complex <-function(svg_string, list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords){ #x,y,cat to string z nazwa kolumny
+draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords){ #x,y,cat to string z nazwa kolumny
   maxes<-c()
   neg<-c()
   labels<-""

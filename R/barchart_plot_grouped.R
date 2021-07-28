@@ -51,7 +51,7 @@ add_bar_grouped <-
                  #category label
                  add_label( 72.2, y+14, cat[k], anchor="end"),
                  #vertical axis
-                 draw_line(80+shift, 80+shift,(y-4.8), (y+16+4.8)),
+                 draw_line(80 + shift, 80+shift, (y-4.8) - 4.8, (y+16+4.8)),
                  #labels,
                  sep = '\n'
     ))

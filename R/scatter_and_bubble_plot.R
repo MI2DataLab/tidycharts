@@ -185,17 +185,27 @@ scatter_plot <- function(data, x, y, cat, x_space_size, y_space_size, x_names, y
 }
 
 #--- test ---
-#data <- data.frame(
-#  x = c(2, 3, 5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
-#  value = c(5,3,2,6, 7, 3, 2, 1,7,8,3, 5),
-#  cat = c("mlem","mlem","mlem","mlem","mlem", "kwa","kwa","kwa", "moo","moo","moo","moo"),
-#  bubble =c (1,2,3,4,5,4,6,-2,1,3, 3.5, 4.5 )
-#)
+data <- data.frame(
+  x = c(2, 3, 5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
+  value = c(5,3,2,6, 7, 3, 2, 1,7,8,3, 5),
+  cat = c("mlem","mlem","mlem","mlem","mlem", "kwa","kwa","kwa", "moo","moo","moo","moo"),
+  bubble =c (1,2,3,4,5,4,6,2,1,3, 3.5, 4.5 )
+)
 
-#scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% show()
+scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% SVGrenderer()
 #p <- penguins %>%
 #  drop_na(bill_length_mm, bill_depth_mm)
 
 #scatter_plot(p, p$bill_length_mm, p$bill_depth_mm, p$species, 10, 5, c("bill length", "in mm"), c("bill depht", "in mm"), "Legend") %>%
 #  add_title("Relationship between bill length and bill depth","","") %>%
 #  SVGrenderer()
+
+data("mtcars")
+df <- mtcars
+# Convert cyl as a grouping variable
+df$cyl <- as.factor(df$cyl)
+# Inspect the data
+#head(df[, c("wt", "mpg", "cyl", "qsec")], 4)
+
+scatter_plot(df, df$wt,df$mpg, df$cyl, 1, 5, c("car's weigt", "in 1000lbs"), c("number of cylinders", ""), "Legend", df$hp) %>% SVGrenderer()
+
