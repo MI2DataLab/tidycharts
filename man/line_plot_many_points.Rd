@@ -4,7 +4,15 @@
 \alias{line_plot_many_points}
 \title{Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().}
 \usage{
-line_plot_many_points(data, cat, series, series_labels, ser_names, point_cords)
+line_plot_many_points(
+  data,
+  cat,
+  series,
+  series_labels,
+  ser_names,
+  point_cords,
+  interval = "months"
+)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
@@ -18,6 +26,8 @@ line_plot_many_points(data, cat, series, series_labels, ser_names, point_cords)
 \item{ser_names}{vector containing column names of a value to be marked}
 
 \item{point_cords}{vector of the same length as ser_names containing numerical values of indexes in data of values to be marked}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart

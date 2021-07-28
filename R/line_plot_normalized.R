@@ -98,8 +98,10 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param show_labels vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed
+#' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
-#' @returnSVG SVg string containing chart
+#'
+#' @returnSVG SVG string containing chart
 #' @export
 #'
 #' @examples

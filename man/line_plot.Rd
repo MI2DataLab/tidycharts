@@ -14,6 +14,8 @@ line_plot(data, cat, series, series_labels, interval = "months")
 \item{series}{vector containing names of columns in data with values to plot}
 
 \item{series_labels}{vector containing names of series to be shown on the plot}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
