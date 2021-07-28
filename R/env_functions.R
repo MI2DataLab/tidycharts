@@ -105,7 +105,7 @@ set_colors <- function(colors_df){
 #' styles_df <-
 #'   rbind(
 #'   actual = c("rgb(64,64,64)", "rgb(64,64,64)"),
-#'   prevoius =
+#'   previous =
 #'     c("rgb(166,166,166)", "rgb(166,166,166)"),
 #'   forecast =
 #'     c("url(#diagonalHatch)", "rgb(64,64,64)"),
