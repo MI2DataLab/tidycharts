@@ -25,7 +25,7 @@ df4 <- data.frame(
 styles <- data.frame(
   's1' = c(rep('actual',6), 'forecast'),
   's2' = rep('plan',7),
-  's3' = rep('prevoius',7)
+  's3' = rep('previous',7)
 )
 
 test_that('Simple column charts are generating',{
@@ -137,7 +137,7 @@ test_that("Column waterfall is working", {
     df,
     x = df$Species,
     series = c("avg"),
-    styles = c('prevoius', 'actual', 'actual')
+    styles = c('previous', 'actual', 'actual')
   ) %>% show())
 
   expect_magick(column_chart_waterfall(df3, x = df3$month, series = c('sales')) %>% show())

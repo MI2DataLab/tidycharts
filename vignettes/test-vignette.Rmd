@@ -245,3 +245,23 @@ column_chart_waterfall_variance(
     ) %>% SVGrenderer()
 ```
 
+## Code for poster
+
+```{r}
+set.seed(997)
+
+df <- data.frame(
+  months = month.abb,
+  'Operational profit' = rnorm(12, mean = 12),
+  'Dividend' = rnorm(12, mean = 3),
+  'Property income' = rnorm(12, mean = 3, sd = 0.2)
+)
+column_chart(df, df$months, series = c('Operational.profit', 'Dividend', 'Property.income')) %>% SVGrenderer()
+
+styles <- c(rep('actual', 7), rep('forecast',5))
+  
+column_chart(df, df$months, series = 'Operational.profit', styles = styles) %>% SVGrenderer()
+
+
+```
+
