@@ -174,7 +174,7 @@ df4 <- data.frame(
 styles <- data.frame(
   's1' = c(rep('actual',6), 'forecast'),
   's2' = rep('plan',7),
-  's3' = rep('prevoius',7)
+  's3' = rep('previous',7)
 )
 ```
 
@@ -212,7 +212,7 @@ column_chart_waterfall(
     df,
     x = df$Species,
     series = c("avg"),
-    styles = c('prevoius', 'actual', 'actual')
+    styles = c('previous', 'actual', 'actual')
   ) %>% SVGrenderer()
 
 column_chart_absolute_variance(df4$month, df4$s1, df4$s2, colors = 1) %>% SVGrenderer()
@@ -256,12 +256,55 @@ df <- data.frame(
   'Dividend' = rnorm(12, mean = 3),
   'Property income' = rnorm(12, mean = 3, sd = 0.2)
 )
-column_chart(df, df$months, series = c('Operational.profit', 'Dividend', 'Property.income')) %>% SVGrenderer()
 
 styles <- c(rep('actual', 7), rep('forecast',5))
   
+
+df <- df %>%
+  mutate(Total.income = Operational.profit + Dividend + Property.income) %>% 
+  mutate(Costs = rnorm(12,mean = 17)) %>% 
+  mutate(Profit = Total.income - Costs)
+
+
+df <- df %>% 
+  mutate(Plan = rnorm(12, mean = 17.5, sd = 0.2),
+         PrevYear = rnorm(12, mean = 12))
+df$Plan[1] = df$Plan[1] + 2
+df[-1] <- round(df[-1],2)
+styles_df <- cbind.data.frame(styles, plan = rep('plan',12), prevoius = rep('previous',12))
+
+column_chart(df, df$months, series = c('Operational.profit', 'Dividend', 'Property.income')) %>% SVGsave()
+
 column_chart(df, df$months, series = 'Operational.profit', styles = styles) %>% SVGrenderer()
 
+column_chart_waterfall(df, df$months, series = 'Profit') %>% SVGrenderer()
 
+column_chart_grouped(x = df$month,
+                     foreground = df$Total.income,
+                     background = df$Plan,
+                     triangles = df$PrevYear,
+                     titles = c('Profit', 'Plan', 'PrevYear'),
+                     styles = styles_df) %>% 
+  SVGrenderer()
+
+column_chart_absolute_variance(
+    x = df$months,
+    baseline = df$Plan,
+    real = df$Total.income,
+    x_title = 'PL') %>% 
+  SVGrenderer()
+
+column_chart_relative_variance(
+  x = df$months,
+  baseline = df$Plan,
+  real = df$Total.income,
+  x_title = 'PL',
+  styles = styles
+) %>% 
+  SVGrenderer()
+```
+
+```{r}
+line_plot(df, cat = df$months, series = c('Operational.profit', 'Dividend', 'Property.income'), series_labels = c('Operational \n profit', 'Dividend', 'Property \n income'), styles = styles_df) %>% SVGrenderer()
 ```
 
