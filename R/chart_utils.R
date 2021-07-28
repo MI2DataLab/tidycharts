@@ -91,3 +91,16 @@ get_svg_size <- function(svg_string){
   size[2] <- str_extract(svg_string, 'height="\\d+"') %>% str_extract("\\d+") %>% as.numeric()
   return(size)
 }
+
+#' Save svg image
+#'
+#' @param svg_string string containing SVG statements
+#' @param path path to file where image will be saved
+#'
+#' @return NULL
+#' @export
+#'
+#' @examples
+SVGsave <- function(svg_string, path){
+  write(svg_string, path)
+}
