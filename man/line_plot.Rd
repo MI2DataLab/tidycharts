@@ -4,7 +4,7 @@
 \alias{line_plot}
 \title{Generates line plot with markers on every value.}
 \usage{
-line_plot(data, cat, series, series_labels, interval = "months")
+line_plot(data, cat, series, series_labels, interval = "months", styles = NULL)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
@@ -16,6 +16,8 @@ line_plot(data, cat, series, series_labels, interval = "months")
 \item{series_labels}{vector containing names of series to be shown on the plot}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
+
+\item{styles}{optional data frame with style names. Styles of the markers will be plotted accordingly.}
 }
 \value{
 SVG string containing chart

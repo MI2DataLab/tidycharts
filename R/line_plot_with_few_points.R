@@ -1,15 +1,15 @@
 
 
 #adding a rectangle marker with label above or under + categories labels
-add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minimal, cat_width){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
+add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minimal, cat_width, style = NULL){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
 
   label<-""
   if(value > 0){
-    rect <- draw_rect(x-5.6, (244.4-(height_of_one*value)), color, 11.2, 11.2)
+    rect <- draw_rect(x-5.6, (244.4-(height_of_one*value)), color, 11.2, 11.2, style = style)
     y_label <- (250-(height_of_one*value))
     }
   else{
-    rect <- draw_rect(x-5.6, (250-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2)
+    rect <- draw_rect(x-5.6, (250-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2, style = style)
     y_label <- (250 + (height_of_one*abs(value)))
     }
 
@@ -22,14 +22,14 @@ add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minima
   }
 
   return(paste(
-      #marker
-      rect,
       #category label
       add_label(x, 268.4 + shift, cat, "black"),
       #ticks
       draw_line(x, x, 250,251.6),
       #x-axis line
       draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+      #marker
+      rect,
       #label with the marker value
       label,
       sep="\n"
@@ -50,13 +50,14 @@ find_height <- function(data, series){
 
 
 #----
-draw_points <- function(svg_string, data, cat, series, series_labels, cat_width){
+draw_points <- function(svg_string, data, cat, series, series_labels, cat_width, styles = NULL){
 
   points <- svg_string
   labels <- ""
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x = 80
   #TODO tu jest redundancja kodu
+  # zeby znalezc takie maksimum mozna wywolac max(data[series])
   maxes <- c()
   averages <- c()
   neg <- c()
@@ -87,8 +88,9 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width)
     values <- data[, series[k]]
     labels <- paste(labels, add_label(80-4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
     for(i in 1:(length(cat)-1)){ #drawing each point
+      style <- styles[i, k]
       points <- paste(points,
-                     add_point(shift, data, cat[i], values[i], x, height_of_one, color,k, minimal, cat_width),
+                     add_point(shift, data, cat[i], values[i], x, height_of_one, color,k, minimal, cat_width, style = style),
                      #line between two points
                      draw_line(x, x + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
                      sep='\n')
@@ -96,8 +98,9 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width)
       x <- x + cat_width
     }
     i <- length(cat)
+    style = tail(styles, n=1)[[k]]
     points <- paste(points,
-                    add_point(shift, data, cat[i], values[i], x, height_of_one, color, k, minimal, cat_width ),
+                    add_point(shift, data, cat[i], values[i], x, height_of_one, color, k, minimal, cat_width, style = style ),
                     sep='\n')
     x <-80
   }
@@ -116,12 +119,13 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width)
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
+#' @param styles optional data frame with style names. Styles of the markers will be plotted accordingly.
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-line_plot <- function(data, cat, series, series_labels, interval="months"){ #interval <- week, month, quarter, year
+line_plot <- function(data, cat, series, series_labels, interval="months", styles = NULL){ #interval <- week, month, quarter, year
 
   #if(interval == "week"){cat_width <- 32}
   #if(interval == "month"){cat_width <- 48}
@@ -145,7 +149,7 @@ line_plot <- function(data, cat, series, series_labels, interval="months"){ #int
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
     initialize(width = 80+ cat_width*length(cat) + 80, height = 250+shift + 20) %>%
-    draw_points(.,data, cat, series, series_labels, cat_width) %>%
+    draw_points(.,data, cat, series, series_labels, cat_width, styles) %>%
     finalize() #%>% show()
 }
 
