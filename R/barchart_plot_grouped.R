@@ -73,6 +73,14 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
   #dealing with negative values
   shift <- width_of_one*abs(min(neg))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+
+  #adding series labels
+  bars <- paste(
+    bars,
+    add_label(80 + data[,series] ),
+    sep= '\n'
+  )
+
   bars <- paste(bars,
                 add_bar_grouped(shift, data,cat, series,1, y, width_of_one, series_labels, df_styles=df_styles),
                 sep='\n')
