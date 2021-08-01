@@ -92,7 +92,7 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width,
       points <- paste(points,
                      add_point(shift, data, cat[i], values[i], x, height_of_one, color,k, minimal, cat_width, style = style),
                      #line between two points
-                     draw_line(x, x + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
+                     draw_line(x+5.6, x + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
                      sep='\n')
 
       x <- x + cat_width

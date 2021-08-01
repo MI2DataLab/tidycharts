@@ -95,7 +95,7 @@ add_scatter_legend <- function(shift_x, title, categories, colors){
 #---
 draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value){ #labels_vector - x axis name, y axis name
   points <- ""
-  colors <- c("rgb(0,90,255)", "rgb(0,132,255)", "rgb(0,168,255)", "rgb(96,124,180)", "rgb(30,69,148)", "rgb(64,64,64)")
+  colors <- c("rgb(89,79,223)", "rgb(115,65,183)", "rgb(31, 210, 237)", "rgb(96,124,180)", "rgb(30,69,148)", "rgb(64,64,64)")
   categories <- unique(cat)
   maximum <- max(abs(y))
   x_maximum <-max(abs(x))
@@ -192,7 +192,7 @@ data <- data.frame(
   bubble =c (1,2,3,4,5,4,6,2,1,3, 3.5, 4.5 )
 )
 
-scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% SVGrenderer()
+#scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legenda", data$bubble) %>% SVGrenderer()
 #p <- penguins %>%
 #  drop_na(bill_length_mm, bill_depth_mm)
 
@@ -207,5 +207,5 @@ df$cyl <- as.factor(df$cyl)
 # Inspect the data
 #head(df[, c("wt", "mpg", "cyl", "qsec")], 4)
 
-scatter_plot(df, df$wt,df$mpg, df$cyl, 1, 5, c("car's weigt", "in 1000lbs"), c("number of cylinders", ""), "Legend", df$hp) %>% SVGrenderer()
+#scatter_plot(df, df$wt,df$mpg, df$cyl, 1, 5, c("car's weigt", "in 1000lbs"), c("number of cylinders", ""), "Legend", df$hp) %>% SVGrenderer()
 

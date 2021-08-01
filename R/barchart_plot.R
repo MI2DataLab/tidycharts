@@ -142,8 +142,7 @@ barchart_plot_index <- function(data, cat, series, index_val, series_labels, sty
   shift <- width_of_one*abs(min(neg))
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
-  initialize(y_vector = cat,
-             bar_width = 16) %>%
+  initialize(width=360) %>%
     paste(.,
           draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
           add_vertical_index(80+(width_of_one*index_val)+shift, (66+24*(length(cat)-1))),

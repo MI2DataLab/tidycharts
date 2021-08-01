@@ -65,7 +65,6 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
   #looking for the maximum value
   for(k in 1:(length(series))){
     maxes <- c(maxes, max(abs(data[,series[k]])))
-    neg <- c(neg, data[,series[k]][data[,series[k]]<0])
   }
   maximum <- max(maxes)
   width_of_one <- 200/maximum
@@ -75,13 +74,18 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
   #adding series labels
-  bars <- paste(
-    bars,
-    add_label(80 + data[,series] ),
-    sep= '\n'
-  )
+  #zakladamy sie że w series sa dwa albo trzy elementy
+  if(length(series)==3){
+    bars <- paste(
+      bars,
+      add_label(80 + data[,series[3]][1]*width_of_one/2, 50 - 4.8*(length(series)-1), series_labels[3]),
+      sep= '\n'
+    )
+  }
+
 
   bars <- paste(bars,
+                add_label(80 + data[,series[2]][5]*width_of_one/2, 50 + 24 * length(cat) + 4.8, series_labels[2]),
                 add_bar_grouped(shift, data,cat, series,1, y, width_of_one, series_labels, df_styles=df_styles),
                 sep='\n')
   y <- y+24
@@ -109,8 +113,7 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
 #' @examples
 barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = NULL){
   # TODO all values in one bar should have the same sign
-  initialize(y_vector = cat,
-             bar_width = 16) %>%
+  initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
     draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
     finalize()
 }
