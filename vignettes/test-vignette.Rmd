@@ -441,4 +441,3 @@ line_plot_many_points_wrapper(df,
   SVGrenderer()
 
 ```
-

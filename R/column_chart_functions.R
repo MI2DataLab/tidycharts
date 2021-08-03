@@ -446,7 +446,7 @@ add_abs_variance_bars <-
     color <- choose_variance_colors(colors)
     max_val <- max(abs(baseline), abs(real))
     variance <- real - baseline
-    x_axis_pos <- get_x_axis_pos(variance)
+    x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real)
 
     # add legend on the left of plot
     first_bar_h <- variance[1] / max_val * 200
@@ -742,8 +742,7 @@ reference <- function(df, x, series, ref_value) {
   return(new_df)
 }
 
-get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num)){
-  max_bar_height <- 200
+get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num), max_bar_height = 200){
   min_val <- min(df_num)
   max_val <- max(df_num)
   if(abs(min_val) > max_val){
@@ -755,18 +754,49 @@ get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num)){
   }
 }
 
+get_plot_height_abs_var <- function(real, baseline){
+  max_bar_height <- 200
+  top_margin <- 75
+  x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real)
+  max_val <- max(abs(baseline), abs(real))
+  variance <- real - baseline
+  highest_bar <- max(variance) / max_val * max_bar_height
+  lowest_bar <- min(variance) / max_val * max_bar_height
+  if(abs(lowest_bar) > max_val){
+    return(x_axis_pos + abs(lowest_bar) + 50) # axis position + height of the longest negative bar + 50 margin
+  }else if(min_val < 0){
+    return(x_axis_pos + abs(lowest_bar) + 50)
+  }else{
+    return(x_axis_pos + 50)
+  }
+}
+
 get_x_axis_pos <- function(df_num, max_val = NULL){
   max_bar_height <- 200
   top_margin <- 75
   min_val <- min(df_num)
   max_val <- max(df_num)
-  longest_bar <- ifelse(is.null(max_val),max(abs(min_val), abs(max_val)),max_val)
+  longest_bar <- max(abs(min_val), abs(max_val))
   if (max_val > 0) {
     return(top_margin + max_bar_height * max_val / longest_bar)
   }
   else{
     return(top_margin)
   }
+}
+
+get_x_axis_pos_abs_variance <- function(baseline, real){
+  max_bar_height <- 200
+  top_margin <- 75
+  max_val <- max(abs(baseline), abs(real))
+  variance <- real - baseline
+  highest_bar <- max(variance) / max_val * max_bar_height
+  lowest_bar <- min(variance) / max_val * max_bar_height
+  if (highest_bar < 0) {
+    highest_bar <- 0
+  }
+  return(top_margin + highest_bar)
+
 }
 
 #' Generate basic column chart. If more than one series is supplied, stacked column plot is generated
@@ -873,7 +903,7 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_categories(x, max_categories = 24)
 
-  x_axis_pos <- get_x_axis_pos(df[series], max_val)
+  x_axis_pos <- get_x_axis_pos(df[series])
 
   ref_label <-ifelse(is.null(ref_label), ref_value, ref_label)
   referenced_df <- reference(df, x, series, ref_value)
@@ -938,7 +968,7 @@ column_chart_absolute_variance <-
     stop_if_many_categories(x, max_categories = 24)
 
     initialize(x_vector = x, bar_width = bar_width,
-               height =get_plot_height(real - baseline)) %>%
+               height = get_plot_height_abs_var(real, baseline)) %>%
       add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
