@@ -27,5 +27,7 @@ Depends:
     stringr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    palmerpenguins,
+    tidyverse
 VignetteBuilder: knitr
