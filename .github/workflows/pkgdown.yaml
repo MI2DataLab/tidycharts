@@ -1,6 +1,8 @@
 on:
   push:
-    branches: main
+    branches: 
+      # -main
+      - 'placeholder_for main'
 
 name: pkgdown
 
