@@ -937,7 +937,8 @@ column_chart_absolute_variance <-
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    initialize(x_vector = x, bar_width = bar_width) %>%
+    initialize(x_vector = x, bar_width = bar_width,
+               height =get_plot_height(real - baseline)) %>%
       add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
