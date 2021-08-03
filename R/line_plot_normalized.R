@@ -21,15 +21,9 @@ add_marker_normalized <- function(data, cat, value, x, height_of_one, k, y, show
   return(paste(rect,
     #asisting line
     draw_line(x, x, 50,250, "white", 0.1),
-    #category label
-    add_label(x, 268.4, cat),
     #value label
     #add_label(x,250-y - (height_of_one*value/2) +6, value,"white"),
     value_label,
-    #adding ticks
-    draw_line(x, x ,250, 251.6),
-    #x-axis line
-    draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
     sep="\n"
 
   ))
@@ -64,6 +58,16 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
       if(k == length(series)){
         if_rect <- 0
       }else{if_rect<-1}
+      if (k == 1) {
+        polygons <- paste(polygons,
+                          #adding ticks
+                          draw_line(x, x ,250, 251.6),
+                          #x-axis line
+                          draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+                          #category label
+                          add_label(x, 268.4, cat[i]),
+                          sep = '\n')
+      }
       height_of_one <- 200/all_sums[i]
       polygons <- paste(polygons,
                         draw_quadrangle(x, (250-(height_of_one*values[i])) - y[i],
@@ -79,6 +83,16 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
     }
     j <- length(cat)
     height_of_one <- 200/all_sums[j]
+    if (k == 1) {
+      polygons <- paste(polygons,
+                        #adding ticks
+                        draw_line(x, x ,250, 251.6),
+                        #x-axis line
+                        draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+                        #category label
+                        add_label(x, 268.4, cat[j]),
+                        sep = '\n')
+    }
     polygons <- paste(polygons,
                       add_marker_normalized(data, cat[j], values[j], x, height_of_one, j, y[j], show_labels[j], if_rect, cat_width),
                       sep='\n')

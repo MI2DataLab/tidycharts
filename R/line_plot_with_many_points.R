@@ -66,9 +66,11 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
       x <- x + cat_width
     }
     j <- length(cat)
-    lines <- paste(lines,
-                    add_category(shift, data, cat, x, j, cat_width),
-                      sep='\n')
+    if (k == 1) {
+      lines <- paste(lines,
+                     add_category(shift, data, cat, x, j, cat_width),
+                     sep='\n')
+    }
     x <- 80
   }
 
