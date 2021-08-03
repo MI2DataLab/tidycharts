@@ -95,6 +95,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/EDA_Example.html">EDA for palmer penguins data set</a>
+    </li>
+    <li>
       <a href="../articles/test-vignette.html">test-vignette</a>
     </li>
   </ul>
@@ -124,7 +127,7 @@
     <p>Generate column waterfall chart for visualizing contribution.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>column_chart_waterfall</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, <span class='va'>series</span>, styles <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>column_chart_waterfall</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>x</span>, <span class='va'>series</span>, styles <span class='op'>=</span> <span class='cn'>NULL</span>, interval <span class='op'>=</span> <span class='st'>"months"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,11 +142,15 @@
     </tr>
     <tr>
       <th>series</th>
-      <td><p>vector containing name of column in df with values to plot</p></td>
+      <td><p>vector containing names of columns in df with values to plot</p></td>
     </tr>
     <tr>
       <th>styles</th>
-      <td><p>optional vector with styles of the bars</p></td>
+      <td><p>optional vector with styles of bars</p></td>
+    </tr>
+    <tr>
+      <th>interval</th>
+      <td><p>intervals on x axis. The width of the bars depends on this parameter</p></td>
     </tr>
     </table>
 
@@ -151,6 +158,11 @@
 
     <p>SVG string containing chart</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>18</span>,
+                 y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>column_chart_waterfall</span><span class='op'>(</span><span class='va'>df</span>, <span class='st'>'x'</span>, <span class='st'>'y'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -162,7 +174,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by The package maintainer.</p>
+  <p>Developed by Kinga Ułasik, Bartosz Sawicki.</p>
 </div>
 
 <div class="pkgdown">

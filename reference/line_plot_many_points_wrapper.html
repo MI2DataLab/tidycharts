@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Title — line_plot_many_points_wrapper • ibcsplot</title>
+<title>Wrapper for complex lineplot — line_plot_many_points_wrapper • ibcsplot</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Title — line_plot_many_points_wrapper" />
-<meta property="og:description" content="Title" />
+<meta property="og:title" content="Wrapper for complex lineplot — line_plot_many_points_wrapper" />
+<meta property="og:description" content="Easier to use version of `line_plot_many_points_complex`." />
 
 
 
@@ -95,6 +95,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/EDA_Example.html">EDA for palmer penguins data set</a>
+    </li>
+    <li>
       <a href="../articles/test-vignette.html">test-vignette</a>
     </li>
   </ul>
@@ -115,13 +118,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Title</h1>
+    <h1>Wrapper for complex lineplot</h1>
     
     <div class="hidden name"><code>line_plot_many_points_wrapper.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Title</p>
+    <p>Easier to use version of `line_plot_many_points_complex`.</p>
     </div>
 
     <pre class="usage"><span class='fu'>line_plot_many_points_wrapper</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>dates</span>, <span class='va'>series</span>, scale <span class='op'>=</span> <span class='st'>"months"</span><span class='op'>)</span></pre>
@@ -130,16 +133,26 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>df</th>
+      <td><p>Date frame with data in wide format.</p></td>
+    </tr>
+    <tr>
+      <th>dates</th>
+      <td><p>Name of column in `df` which contains dates.</p></td>
+    </tr>
+    <tr>
+      <th>series</th>
+      <td><p>Vector of column names in `df` with values of time series.</p></td>
+    </tr>
+    <tr>
       <th>scale</th>
-      <td></td>
+      <td><p>Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>SVG string containing chart</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -152,7 +165,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by The package maintainer.</p>
+  <p>Developed by Kinga Ułasik, Bartosz Sawicki.</p>
 </div>
 
 <div class="pkgdown">

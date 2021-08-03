@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated. — barchart_plot • ibcsplot</title>
+<title>Change default colors of the package — set_colors • ibcsplot</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated. — barchart_plot" />
-<meta property="og:description" content="Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated." />
+<meta property="og:title" content="Change default colors of the package — set_colors" />
+<meta property="og:description" content="Customize your plots and change default color palette." />
 
 
 
@@ -118,46 +118,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.</h1>
+    <h1>Change default colors of the package</h1>
     
-    <div class="hidden name"><code>barchart_plot.Rd</code></div>
+    <div class="hidden name"><code>set_colors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.</p>
+    <p>Customize your plots and change default color palette.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>barchart_plot</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>cat</span>, <span class='va'>series</span>, <span class='va'>series_labels</span>, styles <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>set_colors</span><span class='op'>(</span><span class='va'>colors_df</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data frame containing data to be plotted</p></td>
-    </tr>
-    <tr>
-      <th>cat</th>
-      <td><p>vector cointaining category names of values</p></td>
-    </tr>
-    <tr>
-      <th>series</th>
-      <td><p>vector containing names of columns in data with values to plot</p></td>
-    </tr>
-    <tr>
-      <th>series_labels</th>
-      <td><p>vector containing names of series to be shown on the plot</p></td>
-    </tr>
-    <tr>
-      <th>styles</th>
-      <td><p>optional vector with styles of bars</p></td>
+      <th>colors_df</th>
+      <td><p>data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors". In cells there should be rgb values of chosen colors in format: "rgb(x,y,z)". Rows represent subsequent colors on stacked plots.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>SVG string containing chart</p>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>mi2lab_colors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>
+  bar_colors <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+   <span class='st'>"rgb(68, 19, 71)"</span>,
+   <span class='st'>"rgb(243, 46, 255)"</span>,
+   <span class='st'>"rgb(106, 0, 112)"</span>,
+   <span class='st'>"rgb(217, 43, 227)"</span> ,
+   <span class='st'>"rgb(114, 49, 117)"</span>,
+   <span class='st'>"rgb(249, 110, 255)"</span>
+ <span class='op'>)</span>,
+text_colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"white"</span>, <span class='st'>"white"</span>, <span class='st'>"white"</span>, <span class='st'>"white"</span>, <span class='st'>"white"</span>, <span class='st'>"white"</span><span class='op'>)</span><span class='op'>)</span>
 
+<span class='fu'>set_colors</span><span class='op'>(</span><span class='va'>mi2lab_colors</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

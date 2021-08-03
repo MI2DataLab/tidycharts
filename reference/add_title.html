@@ -95,6 +95,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/EDA_Example.html">EDA for palmer penguins data set</a>
+    </li>
+    <li>
       <a href="../articles/test-vignette.html">test-vignette</a>
     </li>
   </ul>
@@ -135,7 +138,7 @@
     </tr>
     <tr>
       <th>line1</th>
-      <td><p>first line of title. It should represent object of the plot</p></td>
+      <td><p>first line of title. Element(s) of the structure dimension represent the object of the report, typically a legal entity, an organization unit, or a line of business</p></td>
     </tr>
     <tr>
       <th>line2_measure</th>
@@ -155,6 +158,16 @@
 
     <p>one element character vector containing SVG graphic statements. svg_string with appended legend.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>2010</span><span class='op'>:</span><span class='fl'>2015</span>, sales <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>6</span>,<span class='fl'>10</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='column_chart.html'>column_chart</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>, <span class='st'>'sales'</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_title</span><span class='op'>(</span>line1 <span class='op'>=</span> <span class='st'>'Department of Big Computers'</span>,
+    line2_measure <span class='op'>=</span> <span class='st'>"Sales"</span>,
+    line2_rest <span class='op'>=</span> <span class='st'>"in mEUR"</span>,
+    line3 <span class='op'>=</span> <span class='st'>"2010..2015"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -166,7 +179,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by The package maintainer.</p>
+  <p>Developed by Kinga Ułasik, Bartosz Sawicki.</p>
 </div>
 
 <div class="pkgdown">

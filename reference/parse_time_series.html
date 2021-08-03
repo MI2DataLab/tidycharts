@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated. — barchart_plot • ibcsplot</title>
+<title>Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`. — parse_time_series • ibcsplot</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated. — barchart_plot" />
-<meta property="og:description" content="Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated." />
+<meta property="og:title" content="Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`. — parse_time_series" />
+<meta property="og:description" content="Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`." />
 
 
 
@@ -118,46 +118,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.</h1>
+    <h1>Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.</h1>
     
-    <div class="hidden name"><code>barchart_plot.Rd</code></div>
+    <div class="hidden name"><code>parse_time_series.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.</p>
+    <p>Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>barchart_plot</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>cat</span>, <span class='va'>series</span>, <span class='va'>series_labels</span>, styles <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>parse_time_series</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>dates</span>, <span class='va'>series</span>, convert.to <span class='op'>=</span> <span class='st'>"months"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data frame containing data to be plotted</p></td>
+      <th>df</th>
+      <td><p>Date frame with data in wide format.</p></td>
     </tr>
     <tr>
-      <th>cat</th>
-      <td><p>vector cointaining category names of values</p></td>
+      <th>dates</th>
+      <td><p>Name of column in `df` which contains dates.</p></td>
     </tr>
     <tr>
       <th>series</th>
-      <td><p>vector containing names of columns in data with values to plot</p></td>
+      <td><p>Vector of column names in `df` with values of time series.</p></td>
     </tr>
     <tr>
-      <th>series_labels</th>
-      <td><p>vector containing names of series to be shown on the plot</p></td>
-    </tr>
-    <tr>
-      <th>styles</th>
-      <td><p>optional vector with styles of bars</p></td>
+      <th>convert.to</th>
+      <td><p>Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>SVG string containing chart</p>
+    <p>list of data frames, each one containing data about one time series.  Data frames in returned list consist of columns:
+* containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinattes of the point)
+* containing the value of a point  (y - coordinates of the point)
+* containing the time interval of the value</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+    dates <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'2021-07-12'</span>, <span class='st'>'2021-06-18'</span>, <span class='st'>'2021-05-12'</span><span class='op'>)</span><span class='op'>)</span>,
+    val1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.5</span>, <span class='fl'>1.2</span>, <span class='fl'>2.1</span><span class='op'>)</span>,
+    val2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9</span>, <span class='fl'>3.2</span>, <span class='fl'>1.1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>parse_time_series</span><span class='op'>(</span><span class='va'>df</span>, <span class='st'>'dates'</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'val1'</span>, <span class='st'>'val2'</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
+#&gt;          x   y cat
+#&gt; 1 38.70968 1.5 Jul
+#&gt; 2 60.00000 1.2 Jun
+#&gt; 3 38.70968 2.1 May
+#&gt; 
+#&gt; [[2]]
+#&gt;          x   y cat
+#&gt; 1 38.70968 0.9 Jul
+#&gt; 2 60.00000 3.2 Jun
+#&gt; 3 38.70968 1.1 May
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

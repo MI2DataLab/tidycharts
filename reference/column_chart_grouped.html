@@ -95,6 +95,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/EDA_Example.html">EDA for palmer penguins data set</a>
+    </li>
+    <li>
       <a href="../articles/test-vignette.html">test-vignette</a>
     </li>
   </ul>
@@ -130,7 +133,8 @@
   <span class='va'>background</span>,
   triangles <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>titles</span>,
-  styles <span class='op'>=</span> <span class='cn'>NULL</span>
+  styles <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interval <span class='op'>=</span> <span class='st'>"months"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -160,6 +164,10 @@
       <th>styles</th>
       <td><p>optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)</p></td>
     </tr>
+    <tr>
+      <th>interval</th>
+      <td><p>intervals on x axis. The width of the bars depends on this parameter</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -177,7 +185,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by The package maintainer.</p>
+  <p>Developed by Kinga Ułasik, Bartosz Sawicki.</p>
 </div>
 
 <div class="pkgdown">

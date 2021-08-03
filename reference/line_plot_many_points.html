@@ -95,6 +95,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/EDA_Example.html">EDA for palmer penguins data set</a>
+    </li>
+    <li>
       <a href="../articles/test-vignette.html">test-vignette</a>
     </li>
   </ul>
@@ -124,7 +127,15 @@
     <p>Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().</p>
     </div>
 
-    <pre class="usage"><span class='fu'>line_plot_many_points</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>cat</span>, <span class='va'>series</span>, <span class='va'>series_labels</span>, <span class='va'>ser_names</span>, <span class='va'>point_cords</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>line_plot_many_points</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>cat</span>,
+  <span class='va'>series</span>,
+  <span class='va'>series_labels</span>,
+  <span class='va'>ser_names</span>,
+  <span class='va'>point_cords</span>,
+  interval <span class='op'>=</span> <span class='st'>"months"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +164,10 @@
       <th>point_cords</th>
       <td><p>vector of the same length as ser_names containing numerical values of indexes in data of values to be marked</p></td>
     </tr>
+    <tr>
+      <th>interval</th>
+      <td><p>intervals on x axis. The width of the bars depends on this parameter</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -170,7 +185,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by The package maintainer.</p>
+  <p>Developed by Kinga Ułasik, Bartosz Sawicki.</p>
 </div>
 
 <div class="pkgdown">
