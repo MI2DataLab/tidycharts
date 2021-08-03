@@ -710,7 +710,7 @@ add_top_values <-
       labels <- heights
     }
     if (length(labels) == 1 && labels == "percent"){
-      labels <- paste0(format(heights / ref_value * 100, digits = 6),"%")
+      labels <- paste0(format(heights / ref_value * 100, digits = 3),"%")
     }
     else{
       labels <- format(labels, digits = 6)
