@@ -48,19 +48,20 @@ column_chart(df, 'x', 'val', interval = 'days') %>% SVGrenderer()
 ## Line with many points 
 ```{r lineplot}
 df <- data.frame(
-  x = seq.Date(as.Date('2021-01-01'), as.Date('2022-01-01'), length.out = 200),
-  y = 5 * sin(seq(
+  x = seq.Date(as.Date('2021-01-01'), as.Date('2021-07-01'), length.out = 200),
+  'Company_sin' = 5 * sin(seq(
     from = 0,
     to = 2 * pi,
     length.out = 200
   )) +  rnorm(200, mean = 5, sd = 0.5),
-  z = 5 * cos(seq(
+  'Company_cos' = 5 * cos(seq(
     from = 0,
     to = 2 * pi,
     length.out = 200
   )) +  rnorm(200, mean = 5, sd = 0.5)
 )
-l <- df %>% parse_time_series(., dates = 'x', series = c('y', 'z'))
+df <- head(df, n = 199)
+l <- df %>% parse_time_series(., dates = 'x', series = c('Company_sin', 'Company_cos'))
 line_plot_many_points_complex(
   list = l,
   vector_x = c('x', 'x'),
@@ -73,7 +74,7 @@ line_plot_many_points_complex(
 ```
 ## the same but using lineplot wrapper
 ```{r}
-line_plot_many_points_wrapper(df, dates = 'x', series = c('y', 'z')) %>% SVGrenderer()
+line_plot_many_points_wrapper(df, dates = 'x', series = c('Company_sin', 'Company_cos')) %>% SVGrenderer()
 ```
 
 ## Barcharts 
@@ -244,67 +245,3 @@ column_chart_waterfall_variance(
       result_title = "Total"
     ) %>% SVGrenderer()
 ```
-
-## Code for poster
-
-```{r}
-set.seed(997)
-
-df <- data.frame(
-  months = month.abb,
-  'Operational profit' = rnorm(12, mean = 12),
-  'Dividend' = rnorm(12, mean = 3),
-  'Property income' = rnorm(12, mean = 3, sd = 0.2)
-)
-
-styles <- c(rep('actual', 7), rep('forecast',5))
-  
-
-df <- df %>%
-  mutate(Total.income = Operational.profit + Dividend + Property.income) %>% 
-  mutate(Costs = rnorm(12,mean = 17)) %>% 
-  mutate(Profit = Total.income - Costs)
-
-
-df <- df %>% 
-  mutate(Plan = rnorm(12, mean = 17.5, sd = 0.2),
-         PrevYear = rnorm(12, mean = 12))
-df$Plan[1] = df$Plan[1] + 2
-df[-1] <- round(df[-1],2)
-styles_df <- cbind.data.frame(styles, plan = rep('plan',12), prevoius = rep('previous',12))
-
-column_chart(df, df$months, series = c('Operational.profit', 'Dividend', 'Property.income')) %>% SVGsave()
-
-column_chart(df, df$months, series = 'Operational.profit', styles = styles) %>% SVGrenderer()
-
-column_chart_waterfall(df, df$months, series = 'Profit') %>% SVGrenderer()
-
-column_chart_grouped(x = df$month,
-                     foreground = df$Total.income,
-                     background = df$Plan,
-                     triangles = df$PrevYear,
-                     titles = c('Profit', 'Plan', 'PrevYear'),
-                     styles = styles_df) %>% 
-  SVGrenderer()
-
-column_chart_absolute_variance(
-    x = df$months,
-    baseline = df$Plan,
-    real = df$Total.income,
-    x_title = 'PL') %>% 
-  SVGrenderer()
-
-column_chart_relative_variance(
-  x = df$months,
-  baseline = df$Plan,
-  real = df$Total.income,
-  x_title = 'PL',
-  styles = styles
-) %>% 
-  SVGrenderer()
-```
-
-```{r}
-line_plot(df, cat = df$months, series = c('Operational.profit', 'Dividend', 'Property.income'), series_labels = c('Operational \n profit', 'Dividend', 'Property \n income'), styles = styles_df) %>% SVGrenderer()
-```
-

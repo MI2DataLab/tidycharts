@@ -1,21 +1,16 @@
 ---
 title: "EDA for palmer penguins data set"
-output:
-  html_document:
-    df_print: paged
-  pdf_document: default
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{EDA-Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 ```{r data, echo=FALSE, results="hide", warning = FALSE, message = FALSE}
 library(palmerpenguins)
 library(tidyverse)
-library(dplyr)
-#data(package = 'palmerpenguins')
-library(dplyr)
 library(ibcsplot)
-# plotting_files <- 
-#   file.path('ibcsplot/R',
-#             list.files("ibcsplot/R"))
-# sapply(c(plotting_files), source)
+
 penguins <- as.data.frame(penguins)
 ```
 

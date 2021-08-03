@@ -16,11 +16,8 @@ line_plot(data, cat, series, series_labels, interval = "months", styles = NULL)
 \item{series_labels}{vector containing names of series to be shown on the plot}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
-<<<<<<< HEAD
-=======
 
 \item{styles}{optional data frame with style names. Styles of the markers will be plotted accordingly.}
->>>>>>> e370a88fda030200c011417a8be48d315b3114dc
 }
 \value{
 SVG string containing chart

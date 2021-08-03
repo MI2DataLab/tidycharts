@@ -710,7 +710,7 @@ add_top_values <-
       labels <- heights
     }
     if (length(labels) == 1 && labels == "percent"){
-      labels <- paste0(format(heights / ref_value * 100, digits = 6),"%")
+      labels <- paste0(format(heights / ref_value * 100, digits = 3),"%")
     }
     else{
       labels <- format(labels, digits = 6)
@@ -873,13 +873,15 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
   if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
   stop_if_many_categories(x, max_categories = 24)
 
+  x_axis_pos <- get_x_axis_pos(df[series], max_val)
+
   ref_label <-ifelse(is.null(ref_label), ref_value, ref_label)
   referenced_df <- reference(df, x, series, ref_value)
   index_level <-
     ref_value / max(df[series]) * 200
-  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(referenced_df[series], x_axis_pos = 250)) %>%
+  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(referenced_df[series], x_axis_pos = x_axis_pos)) %>%
     add_bars(referenced_df, x, series, bar_width = bar_width, styles = styles) %>%
-    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 250 - index_level, label = ref_label) %>%
+    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = x_axis_pos - index_level, label = ref_label) %>%
     add_top_values(df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
     finalize()
 }
@@ -935,7 +937,8 @@ column_chart_absolute_variance <-
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    initialize(x_vector = x, bar_width = bar_width) %>%
+    initialize(x_vector = x, bar_width = bar_width,
+               height =get_plot_height(real - baseline)) %>%
       add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title) %>%
       finalize()
   }
