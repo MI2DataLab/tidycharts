@@ -88,7 +88,7 @@ test_that('Lineplot with positive values does not throw warnings', {
     wounded = c(1, 8, 5)
   )
   srs <- c("hungry", "relaxed", "wounded")
-  line_plot(df, df$animal, srs, srs)
+  expect_magick(line_plot(df, df$animal, srs, srs) %>% show())
 })
 
 test_that("Normalized line plot is working without errors", {

@@ -13,15 +13,9 @@ return(paste(
     draw_line(x,x,50,250, "white", 0.1),
     #draw rectangle marker
     draw_rect(x-2.4, (247.6-(height_of_one*value))-y, "rgb(127,127,127)", 4.8, 4.8),
-    #category label
-    add_label(x, 268.4, cat),
     #label with value
     #add_label(x,250-y - (height_of_one*value/2) +6, value, "white" ),
     value_label,
-    #adding ticks
-    draw_line(x, x, 250,251.6),
-    #xaxis line
-    draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
     sep="\n"
 
   ))
@@ -53,6 +47,18 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
     )
 
     for(i in 1:(length(cat)-1)){ #going through categories
+      if (k == 1) {
+        polygons <- paste(
+          polygons,
+          #adding ticks
+          draw_line(x, x, 250, 251.6),
+          #xaxis line
+          draw_line(x - cat_width / 2, x + cat_width / 2, 250, 250),
+          #category label
+          add_label(x, 268.4, cat[i]),
+          sep = '/n'
+        )
+      }
       polygons <- paste(polygons,
                         #draw area
                         draw_quadrangle(x, (250-(height_of_one*values[i])) - y[i],
@@ -67,6 +73,18 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
       y[i] <- y[i] + height_of_one*values[i]
     }
     j <- length(cat)
+    if (k == 1) {
+      polygons <- paste(
+        polygons,
+        #adding ticks
+        draw_line(x, x, 250, 251.6),
+        #xaxis line
+        draw_line(x - cat_width / 2, x + cat_width / 2, 250, 250),
+        #category label
+        add_label(x, 268.4, cat[j]),
+        sep = '/n'
+      )
+    }
     polygons <- paste(polygons,
                       add_marker(data, cat[j], values[j], x, height_of_one, j, y[j], show_labels[j], cat_width),
                       sep='\n')

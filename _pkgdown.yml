@@ -1,0 +1,34 @@
+template:
+  package: DrWhyTemplate
+  default_assets: false
+
+reference:
+- title: "Linecharts"
+  desc: >
+    Functions generating linecharts. Use them to visualize time series data.
+- contents:
+  - starts_with("line_plot")
+
+- title: "Horizontal barcharts"
+  desc: "Functions generating bracharts. Use them to visualize structure."
+- contents:
+  - starts_with("barchart_plot")
+
+- title: "Columncharts"
+  desc: "Functions generating columncharts. Use them to visualize time series data"
+- contents:
+  - starts_with("column_chart")
+
+- title: "Scatter and bubble plots"
+  desc: "Functions generating scatter and bubble plots. Use them to visualize data in 2, 3 or even 4 dimensions"
+- contents:
+  - scatter_plot
+
+- title: "Utility functions"
+  desc: "Functions for other utilities, not for generating charts"
+- contents:
+  - starts_with('SVG')
+  - starts_with('set')
+  - add_title
+  - parse_time_series
+  - renderSVGrenderer

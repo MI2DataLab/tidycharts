@@ -110,9 +110,17 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 
 barchart_plot <- function(data, cat, series, series_labels, styles = NULL){
   # TODO all values in one bar should have the same sign
+
+  all_sums <- rowSums(data[series])
+  width_of_one <- 200/max(all_sums)
+
+  #dealing with negative values
+  neg <- all_sums[all_sums < 0]
+  shift <- width_of_one*abs(min(neg))
+
   initialize(y_vector = cat,
              bar_width = 16) %>%
-    draw_bars_basic(.,data, cat, series, series_labels, styles = styles) %>%
+    draw_bars_basic(.,data, cat, series, series_labels, styles = styles, shift = shift) %>%
     finalize()
 }
 
