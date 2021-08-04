@@ -1,6 +1,7 @@
 context("Joining plots (facetting)")
 
 test_that("Simple joining works",{
+  set.seed(123)
   df <- data.frame(
     mon = month.abb[1:6],
     values = rnorm(6)

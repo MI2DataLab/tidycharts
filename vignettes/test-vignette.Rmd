@@ -43,6 +43,10 @@ column_chart(df, 'x', 'val') %>% SVGrenderer()
 ```{r column-plot-interval}
 column_chart(df, 'x', 'val', interval = 'days') %>% SVGrenderer()
 
+
+join_plots(column_chart(df, 'x', 'val'),
+           column_chart(df, 'x', 'val')) %>% SVGrenderer()
+
 ```
 
 ## Line with many points 
