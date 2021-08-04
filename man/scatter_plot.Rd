@@ -14,7 +14,11 @@ scatter_plot(
   x_names,
   y_names,
   legend_title,
-  bubble_value = NULL
+  bubble_value = NULL,
+  x_start = 0,
+  x_end = max(x),
+  y_start = 0,
+  y_end = max(y)
 )
 }
 \arguments{
@@ -24,7 +28,7 @@ scatter_plot(
 
 \item{y}{vector containing y - coordinates of values}
 
-\item{cat}{vector cointaining categories of the values}
+\item{cat}{vector containing categories of the values}
 
 \item{x_space_size}{numeric value of the space between the ticks on the x- axis}
 
@@ -41,7 +45,33 @@ scatter_plot(
 \item{legend_title}{title of the legend}
 
 \item{bubble_value}{vector containing values defining the size of bubbles. Set by default to NULL.}
+
+\item{x_start}{numeric value defining where the x axis should start at. Set by default to 0.}
+
+\item{x_end}{numeric value defining where the x axis should end at. Set by default to max(x).}
+
+\item{y_start}{numeric value defining where the y axis should start at. Set by default to 0.}
+
+\item{y_end}{numeric value defining where the y axis should end at. Set by default to max(y).}
 }
 \description{
 Generates a scatter plot. If additional argument added, a bubble plot is generated.
+}
+\examples{
+# prepare a data frame
+data <- data.frame(
+    x = c(2, -3, -5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
+    value = c(5,-3,2,6, 7, 3, -2, 1,7,8,3, -5),
+    cat = c("val1","val1","val2","val2","val2", "val3","val3","val3", "val4","val4","val4","val4"),
+    bubble = c (1,2,3,4,5,4,6,2,1,3, 3.5, 4.5 )
+)
+
+# generate character vectors with svg data
+scatter <- scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legend")
+bubble <- scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legend", bubble_value = data$bubble)
+
+# show the plots
+scatter \%>\% SVGrenderer()
+bubble \%>\% SVGrenderer()
+
 }
