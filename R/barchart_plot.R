@@ -73,7 +73,6 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
   width_of_one <- 200/max(abs(all_sums))
 
 
-
   if (length(series) > 1) {
     styles <-  NULL # delete styles if there is more than one series
   }
@@ -97,7 +96,7 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #' Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining category names of values
+#' @param cat vector containing category names of values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param styles optional vector with styles of bars
@@ -106,17 +105,30 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #' @export
 #'
 #' @examples
+#' #prepare the data frame
+#' data <- data.frame(
+#' city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+#' Products = c(538, 250, 75, 301, 227, 100, 40),
+#' Services = c(621, 545, 302, 44, 39, 20, 34)
+#')
+#' #generate svgstring
+#' barchart <- barchart_plot(data, data$city, c("Products", "Services"), c("Products", "Services"))
+#'
+#' #show the plot
+#' barchart %>% SVGrenderer()
+#'
+#'
 #' @importFrom magrittr "%>%"
 
 barchart_plot <- function(data, cat, series, series_labels, styles = NULL){
-  # TODO all values in one bar should have the same sign
 
   all_sums <- rowSums(data[series])
-  width_of_one <- 200/max(all_sums)
+  width_of_one <- 200/max(abs(all_sums))
 
   #dealing with negative values
   neg <- all_sums[all_sums < 0]
-  shift <- width_of_one*abs(min(neg))
+  if(length(neg) == 0){shift <- 0}
+  else{shift <- width_of_one*abs(min(neg))}
 
   initialize(y_vector = cat,
              bar_width = 16) %>%
@@ -129,31 +141,46 @@ barchart_plot <- function(data, cat, series, series_labels, styles = NULL){
 #' Generates basic horizontal barchart with index on a given value. If more than one series is supplied, stacked barchart is generated.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining category names of values
+#' @param cat vector containing category names of values
 #' @param series vector containing names of columns in data with values to plot
 #' @param index_val numeric value of the index
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param styles optional vector with styles of bars
+#' @param index_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
+#'
+#' #prepare the data frame
+#' data <- data.frame(
+#' city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+#' Products = c(538, 250, 75, 301, 227, 100, 40),
+#' Services = c(621, 545, 302, 44, 39, 20, 34)
+#')
+#' #create svg string
+#' barchart_index <- barchart_plot_index(data, data$city, c("Products"), 100, c("Products"))
+#'
+#' #show the plot
+#' barchart_index %>% SVGrenderer()
+#'
+#'
 
-barchart_plot_index <- function(data, cat, series, index_val, series_labels, styles = NULL){
+barchart_plot_index <- function(data, cat, series, index_val,series_labels, styles = NULL, index_label=index_val){
 
   all_sums <- rowSums(data[series])
-  width_of_one <- 200/max(all_sums)
+  width_of_one <- 200/max(abs(all_sums))
 
   #dealing with negative values
   neg <- all_sums[all_sums < 0]
-  shift <- width_of_one*abs(min(neg))
-  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+  if(length(neg) == 0){shift <- 0}
+  else{shift <- width_of_one*abs(min(neg))}
 
-  initialize(width=360) %>%
+  initialize(width= 80 + shift + 250, height = 50 + 24*length(cat)) %>%
     paste(.,
           draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
-          add_vertical_index(80+(width_of_one*index_val)+shift, (66+24*(length(cat)-1))),
+          add_vertical_index(80+(width_of_one*index_val)+shift, (66+24*(length(cat)-1)), index_label),
           sep='\n') %>%
     finalize()
 }
@@ -170,13 +197,23 @@ barchart_plot_index <- function(data, cat, series, index_val, series_labels, sty
 #' @export
 #'
 #' @examples
+#' #prepare the data frame
+#' data <- data.frame(
+#' city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+#' Products = c(538, 250, 75, 301, 227, 100, 40),
+#' Services = c(621, 545, 302, 44, 39, 20, 34)
+#')
+#' #create svg string
+#' barchart_normalized <- barchart_plot_normalized(data, data$city,c("Products", "Services"), c("Products", "Services") )
+#'
+#' #show the plot
+#' barchart_normalized %>% SVGrenderer()
+#'
 barchart_plot_normalized <- function(data, cat, series, series_labels){
   df <- normalize_rows(data, cat, series)
   y_end <- 50 + 24*length(cat)
-  # TODO all values should have the same sign
   initialize(y_vector = cat,
              bar_width = 16) %>%
-    #draw_bars_normalized(.,data, cat, series, series_labels) %>%
     draw_bars_basic(.,df, cat, series, series_labels, data) %>%
     paste(.,
           add_vertical_index(280, (y_end+16+4.8-24)),
@@ -185,10 +222,3 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
     finalize()
 }
 
-data <- data.frame(
-  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich", "Rest"),
-  value = c(1159, 795, 377, 345, 266,120,74,602),
-  products = c(538, 250, 75, 301,227,90, 40, 269),
-  services = c(621,545,302,44,39,30,34,333)
-)
-groups <- c("products", "services")

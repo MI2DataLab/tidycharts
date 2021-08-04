@@ -96,7 +96,7 @@ draw_quadrangle <- function(x1,y1,x2,y2,x3,y3,x4,y4, color){
 }
 
 
-add_index <- function(x, y){ #x defines how long the line is
+add_index <- function(x, y, text="100"){ #x defines how long the line is
   return(paste(
     paste0('<line x1="80" x2="',
            x,
@@ -125,7 +125,9 @@ add_index <- function(x, y){ #x defines how long the line is
       x+16+4.8,
       '" y="',
       y,
-      '" font-family="Arial" text-anchor="start" font-size="1em" >100</text>'),
+      '" font-family="Arial" text-anchor="start" font-size="12" >',
+      text,
+      '</text>'),
     sep='\n'
 
 
@@ -149,7 +151,7 @@ draw_circle <- function(x,y, color, radius=2.4, opacity = 1){
                 opacity,
                 '" />'))}
 
-add_vertical_index <- function(x, y){ #y defines how long the index line will be
+add_vertical_index <- function(x, y, text="100"){ #y defines how long the index line will be
   return(paste(
     paste0(
       '<polygon points="',
@@ -163,7 +165,9 @@ add_vertical_index <- function(x, y){ #y defines how long the index line will be
     paste0(
       '<text x="',
       x + 6.4,
-      '" y="45" font-family="Arial" text-anchor="start" font-size="1em" >100</text>'
+      '" y="45" font-family="Arial" text-anchor="start" font-size="12" >',
+      text,
+      '</text>'
     ),
     paste0('<line x1="',
            x,
