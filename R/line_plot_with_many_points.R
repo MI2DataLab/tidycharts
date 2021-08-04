@@ -111,24 +111,29 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' @export
 #'
 #' @examples
+#'
+#' #preparing the data frame
+#' data <- data.frame(
+#' time = c(2015, 2016, 2017, 2018, 2019, 2020),
+#' Gamma = c(98, 80, 16, 25, 55, 48),
+#'Delta = c(22, 25, 67, 73, 102, 98)
+#')
+#'
+#' #defining rest of arguments
+#' names <- c("Gamma", "Gamma", "Gamma","Gamma","Delta", "Delta")
+#' cords <- c(1, 4,5,2, 5,4)
+#'
+#' #generating SVG string
+#' line_plot_many_points  <- line_plot_many_points(data, data$time, c("Gamma", "Delta"), c("Gamma inc.", "Delta inc."), names, cords, "years")
+#'
+#' #showing the plot
+#' line_plot_many_points %>% SVGrenderer
+#'
 line_plot_many_points <- function(data, cat, series, series_labels, ser_names, point_cords, interval="months"){
 
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-  draw_lines(.,data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
+  draw_lines(., data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
   finalize()
 }
-
-
-#tests
-data <- data.frame(
-  months = c("Jan", "Feb", "Mar", "Apr"),
-  cos = c(4,5,4,6),
-  cosiek = c(2, 3, 3.5, 1)
-)
-series <- c("cos", "cosiek")
-
-line_plot_normalized(data, data$months, series, series ,c(NA,1,1,NA),"years") %>% SVGrenderer()
-
-
 

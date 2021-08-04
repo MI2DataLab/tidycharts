@@ -44,31 +44,12 @@ find_height <- function(data, series){
 
 
 #----
-draw_points <- function(svg_string, data, cat, series, series_labels, cat_width, styles = NULL){
+draw_points <- function(svg_string, data, cat, series, series_labels, cat_width, styles = NULL, height_of_one, min_avg, shift){
 
   points <- svg_string
   labels <- ""
   colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x <- 80
-  #TODO tu jest redundancja kodu
-  # zeby znalezc takie maksimum mozna wywolac max(data[series])
-  maxes <- c()
-  averages <- c()
-  neg <- c()
-  #looking for the maximum value and minimum average
-  for(k in 1:(length(series))){
-    maxes <- c(maxes, max(abs(data[,series[k]])))
-    averages <- c(averages, mean(data[,series[k]]))
-    neg <- c(neg, data[,series[k]][data[,series[k]]<0])
-  }
-  maximum <- max(maxes)
-  min_avg <- min(averages)
-  height_of_one <- 200/maximum
-  #calculating the shift
-  shift <- height_of_one*abs(min(neg)) + 12 + 4.8
-  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
-
-
 
   for(k in 1:(length(series))){ #going through series
 
@@ -139,73 +120,98 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width,
 #' @export
 #'
 #' @examples
+#'
+#' #preparing a data frame
+#' data <- data.frame(
+#' time = c("Jan", "Feb", "Mar", "Apr", "May", "Jun"),
+#' PL = (c(51, 42, 50, 58, 78, 79) - 30),
+#' AC = (c(62, 70, 67, 77, 63, 62) - 30)
+#' )
+#' #preparing the styles data frame
+#" styles <- data.frame(
+#'  PL = c("plan", "plan", "plan", "plan", "plan", "plan"),
+#'  AC = c("actual", "actual", "actual", "forecast", "forecast", "forecast")
+#' )
+#'
+#' #generating svg string
+#' line_plot <- line_plot(data, data$time, c("PL", "AC"), c("PL", "AC"),"months", styles)
+#'
+#' #show the plot
+#' line_plot %>% SVGrenderer()
+#'
+#'
 line_plot <- function(data, cat, series, series_labels, interval="months", styles = NULL){ #interval <- week, month, quarter, year
 
-  #if(interval == "week"){cat_width <- 32}
-  #if(interval == "month"){cat_width <- 48}
-  #if(interval == "quarter"){cat_width <- 56}
-  #if(interval == "year"){cat_width <- 32}
   cat_width <- get_interval_width(interval)$category_width
-  maxes <- c()
-  averages <- c()
-  neg <- c()
-  #looking for the maximum value and minimum average
-  for(k in 1:(length(series))){
-    maxes <- c(maxes, max(abs(data[,series[k]])))
-    averages <- c(averages, mean(data[,series[k]]))
-    neg <- c(neg, data[,series[k]][data[,series[k]]<0])
-  }
-  maximum <- max(maxes)
+  averages <-rowMeans(data[,series])
+  maximum <- max(abs(data[, series]))
+  neg <- data[, series][data[,series] < 0]
   min_avg <- min(averages)
   height_of_one <- 200/maximum
-  #calculating the shift
-  shift <- height_of_one*abs(min(neg)) + 12 + 4.8
-  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
-    initialize(width = 80+ cat_width*length(cat) + 80, height = 250+shift + 20) %>%
-    draw_points(.,data, cat, series, series_labels, cat_width, styles) %>%
-    finalize() #%>% show()
+  #calculating the shift
+  if(length(neg) == 0){shift <- 0}
+  else{shift <- height_of_one*abs(min(neg)) + 12 + 4.8}
+
+  initialize(width = 80+ cat_width*length(cat) + 80, height = 250 + shift + 20) %>%
+    draw_points(.,data, cat, series, series_labels, cat_width, styles, height_of_one, min_avg, shift) %>%
+    finalize()
 }
 
 
 #' Generates line plot with markers on every value with index on a given value.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining time interwals of the values
+#' @param cat vector containing time intervals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #' @param index_val numeric value of the index
+#' @param index_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
+#' @param styles optional data frame with style names. Styles of the markers will be plotted accordingly.
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-line_plot_index <- function(data, cat, series, series_labels, index_val, interval = "months"){
-  #height_of_one <- find_height(data, series)
+#'
+#' #preparing a data frame
+#' data <- data.frame(
+#' time = c("Jan", "Feb", "Mar", "Apr", "May", "Jun"),
+#' PL = (c(51, 42, 50, 58, 78, 79) - 30),
+#' AC = (c(62, 70, 67, 77, 63, 62) - 30)
+#' )
+#' #preparing the styles data frame
+#" styles <- data.frame(
+#'  PL = c("plan", "plan", "plan", "plan", "plan", "plan"),
+#'  AC = c("actual", "actual", "actual", "forecast", "forecast", "forecast")
+#' )
+#'
+#' #generating svg string
+#' line_plot_index <- line_plot_index(data, data$time, c("PL", "AC"), c("PL", "AC"),42 , "index", styles=styles)
+#'
+#' #show the plot
+#' line_plot_index %>% SVGrenderer()
+#'
+line_plot_index <- function(data, cat, series, series_labels, index_val, index_label=index_val, interval = "months", styles=NULL){
+
   cat_width <- get_interval_width(interval)$category_width
-  maxes <- c()
-  averages <- c()
-  neg <- c()
-  #looking for the maximum value and minimum average
-  for(k in 1:(length(series))){
-    maxes <- c(maxes, max(abs(data[,series[k]])))
-    averages <- c(averages, mean(data[,series[k]]))
-    neg <- c(neg, data[,series[k]][data[,series[k]]<0])
-  }
-  maximum <- max(maxes)
+  averages <-rowMeans(data[,series])
+  maximum <- max(abs(data[, series]))
+  neg <- data[, series][data[,series] < 0]
   min_avg <- min(averages)
   height_of_one <- 200/maximum
+
   #calculating the shift
-  shift <- height_of_one*abs(min(neg)) + 12 + 4.8
-  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+  if(length(neg) == 0){shift <- 0}
+  else{shift <- height_of_one*abs(min(neg)) + 12 + 4.8}
 
-  initialize(width = 80+ cat_width*length(cat) + 80, height = 250+shift + 20) %>%
-    draw_points(.,data, cat, series, series_labels, cat_width) %>%
+  initialize(width = 80 + cat_width*length(cat) + 80, height = 250+shift + 20) %>%
+    draw_points(.,data, cat, series, series_labels, cat_width, styles, height_of_one, min_avg, shift) %>%
     paste(.,
-          add_index(80 +cat_width/2 + cat_width*(length(cat)-1), 250-height_of_one*index_val),
+          add_index(80 +cat_width/2 + cat_width*(length(cat)-1), 250-height_of_one*index_val, index_label),
           sep='\n') %>%
-    finalize() #%>% show()
-}
+    finalize()
 
+}
