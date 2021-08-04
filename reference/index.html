@@ -147,8 +147,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-linecharts" class="hasAnchor"><a href="#section-linecharts" class="anchor"></a>Linecharts</h2>
+          <p class="section-desc"><p>Functions generating linecharts. Use them to visualize time series data.</p></p>
         </th>
       </tr>
       
@@ -159,40 +159,59 @@
       <tr>
         
         <td>
-          <p><code><a href="SVGrenderer-shiny.html">SVGrendererOutput()</a></code> <code><a href="SVGrenderer-shiny.html">renderSVGrenderer()</a></code> </p>
+          <p><code><a href="line_plot.html">line_plot()</a></code> </p>
         </td>
-        <td><p>Shiny bindings for SVGrenderer</p></td>
+        <td><p>Generates line plot with markers on every value.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="SVGrenderer.html">SVGrenderer()</a></code> </p>
+          <p><code><a href="line_plot_index.html">line_plot_index()</a></code> </p>
         </td>
-        <td><p>Function to render SVG image as htmlwidget</p></td>
+        <td><p>Generates line plot with markers on every value with index on a given value.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="SVGsave.html">SVGsave()</a></code> </p>
+          <p><code><a href="line_plot_many_points.html">line_plot_many_points()</a></code> </p>
         </td>
-        <td><p>Save svg image</p></td>
+        <td><p>Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="add_bars.html">add_bars()</a></code> </p>
+          <p><code><a href="line_plot_many_points_complex.html">line_plot_many_points_complex()</a></code> </p>
         </td>
-        <td><p>add bars to svg string</p></td>
+        <td><p>Generates a line plot with markers on chosen points, many points within one time interval allowed.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="add_title.html">add_title()</a></code> </p>
+          <p><code><a href="line_plot_many_points_wrapper.html">line_plot_many_points_wrapper()</a></code> </p>
         </td>
-        <td><p>Add IBCS complient legend</p></td>
+        <td><p>Wrapper for complex lineplot</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="add_waterfall_bars.html">add_waterfall_bars()</a></code> </p>
+          <p><code><a href="line_plot_normalized.html">line_plot_normalized()</a></code> </p>
         </td>
-        <td><p>Add waterfall style bars to the column chart</p></td>
+        <td><p>Generates normalized areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="line_plot_stacked.html">line_plot_stacked()</a></code> </p>
+        </td>
+        <td><p>Generates areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-horizontal-barcharts" class="hasAnchor"><a href="#section-horizontal-barcharts" class="anchor"></a>Horizontal barcharts</h2>
+          <p class="section-desc"><p>Functions generating bracharts. Use them to visualize structure.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="barchart_plot.html">barchart_plot()</a></code> </p>
@@ -222,7 +241,20 @@
           <p><code><a href="barchart_plot_waterfall.html">barchart_plot_waterfall()</a></code> </p>
         </td>
         <td><p>Generate horizontal waterfall chart</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-columncharts" class="hasAnchor"><a href="#section-columncharts" class="anchor"></a>Columncharts</h2>
+          <p class="section-desc"><p>Functions generating columncharts. Use them to visualize time series data</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="column_chart.html">column_chart()</a></code> </p>
@@ -270,66 +302,56 @@
           <p><code><a href="column_chart_waterfall_variance.html">column_chart_waterfall_variance()</a></code> </p>
         </td>
         <td><p>Generate column waterfall chart with absolute variance</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_gray_color_stacked.html">get_gray_color_stacked()</a></code> </p>
-        </td>
-        <td><p>Function to get bar/area color for stacked plots.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot.html">line_plot()</a></code> </p>
-        </td>
-        <td><p>Generates line plot with markers on every value.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot_index.html">line_plot_index()</a></code> </p>
-        </td>
-        <td><p>Generates line plot with markers on every value with index on a given value.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot_many_points.html">line_plot_many_points()</a></code> </p>
-        </td>
-        <td><p>Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot_many_points_complex.html">line_plot_many_points_complex()</a></code> </p>
-        </td>
-        <td><p>Generates a line plot with markers on chosen points, many points within one time interval allowed.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot_many_points_wrapper.html">line_plot_many_points_wrapper()</a></code> </p>
-        </td>
-        <td><p>Wrapper for complex lineplot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot_normalized.html">line_plot_normalized()</a></code> </p>
-        </td>
-        <td><p>Generates normalized areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="line_plot_stacked.html">line_plot_stacked()</a></code> </p>
-        </td>
-        <td><p>Generates areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parse_time_series.html">parse_time_series()</a></code> </p>
-        </td>
-        <td><p>Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-scatter-and-bubble-plots" class="hasAnchor"><a href="#section-scatter-and-bubble-plots" class="anchor"></a>Scatter and bubble plots</h2>
+          <p class="section-desc"><p>Functions generating scatter and bubble plots. Use them to visualize data in 2, 3 or even 4 dimensions</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="scatter_plot.html">scatter_plot()</a></code> </p>
         </td>
         <td><p>Generates a scatter plot. If additional argument added, a bubble plot is generated.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility functions</h2>
+          <p class="section-desc"><p>Functions for other utilities, not for generating charts</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="SVGrenderer-shiny.html">SVGrendererOutput()</a></code> <code><a href="SVGrenderer-shiny.html">renderSVGrenderer()</a></code> </p>
+        </td>
+        <td><p>Shiny bindings for SVGrenderer</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SVGrenderer.html">SVGrenderer()</a></code> </p>
+        </td>
+        <td><p>Function to render SVG image as htmlwidget</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SVGsave.html">SVGsave()</a></code> </p>
+        </td>
+        <td><p>Save svg image</p></td>
       </tr><tr>
         
         <td>
@@ -345,9 +367,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="str_width.html">str_width()</a></code> </p>
+          <p><code><a href="add_title.html">add_title()</a></code> </p>
         </td>
-        <td><p>Caclulate string width in pixels</p></td>
+        <td><p>Add IBCS complient legend</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parse_time_series.html">parse_time_series()</a></code> </p>
+        </td>
+        <td><p>Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.</p></td>
       </tr>
     </tbody>
     </table>
