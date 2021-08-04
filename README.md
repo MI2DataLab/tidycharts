@@ -62,7 +62,8 @@ library(ibcsplot) # load the package
 df <- data.frame(months = month.abb[1:6],
                  values = round(5 + sin(1:6), 2))
 
-column_chart(df, x = 'months', series = 'values') %>% # create chart in a form of character vector containing SVG content
+column_chart(df, x = 'months', series = 'values') %>% 
+  # create chart in a form of character vector containing SVG content
   SVGrenderer() # render and show the SVG 
 ```
 
