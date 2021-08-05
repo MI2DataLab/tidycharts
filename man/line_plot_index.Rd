@@ -10,13 +10,15 @@ line_plot_index(
   series,
   series_labels,
   index_val,
-  interval = "months"
+  index_label = index_val,
+  interval = "months",
+  styles = NULL
 )
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{cat}{vector cointaining time interwals of the values}
+\item{cat}{vector containing time intervals of the values}
 
 \item{series}{vector containing names of columns in data with values to plot}
 
@@ -24,11 +26,36 @@ line_plot_index(
 
 \item{index_val}{numeric value of the index}
 
+\item{index_label}{string defining a text that should be displayed in the referencing line. Set by default to index_val.}
+
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
+
+\item{styles}{optional data frame with style names. Styles of the markers will be plotted accordingly.}
 }
 \value{
 SVG string containing chart
 }
 \description{
 Generates line plot with markers on every value with index on a given value.
+}
+\examples{
+
+#preparing a data frame
+data <- data.frame(
+time = c("Jan", "Feb", "Mar", "Apr", "May", "Jun"),
+PL = (c(51, 42, 50, 58, 78, 79) - 30),
+AC = (c(62, 70, 67, 77, 63, 62) - 30)
+)
+#preparing the styles data frame
+styles <- data.frame(
+ PL = c("plan", "plan", "plan", "plan", "plan", "plan"),
+ AC = c("actual", "actual", "actual", "forecast", "forecast", "forecast")
+)
+
+#generating svg string
+line_plot_index <- line_plot_index(data, data$time, c("PL", "AC"), c("PL", "AC"),42 , "index", styles=styles)
+
+#show the plot
+line_plot_index \%>\% SVGrenderer()
+
 }
