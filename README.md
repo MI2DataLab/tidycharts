@@ -46,7 +46,8 @@ column_chart(df, x = 'months', series = 'values') %>%
   SVGrenderer() # render and show the SVG 
 ```
 
-![example column chart](man/figures/README-example-columns-1.svg)
+![example column
+chart](https://raw.githubusercontent.com/SawickiBartosz/ibcsplot/main/man/figures/README-example-columns-1.svg)
 
 You can easily create other type of plots, ie. lineplots:
 
