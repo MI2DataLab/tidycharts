@@ -38,3 +38,34 @@ SVG string containing chart
 \description{
 Generates a line plot with markers on chosen points, many points within one time interval allowed.
 }
+\examples{
+
+#preparing data frames
+data <- data.frame(
+xdata = c(1, 60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
+ydata = c(5, -10, -15, 11, 16, 18, 25, 22, 18, 10, 8, 23, 28),
+catdata = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
+)
+
+df <- data.frame(
+  xdf = c(1,60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
+ ydf = c(25, 22,20, 18, 28, 35,33, 29, 30, 38,31,26, 22),
+ catdf = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
+)
+
+#defining the rest of the arguments
+list <- list(data, df)
+vector_x <- c("xdata", "xdf")
+vector_y <- c("ydata", "ydf")
+vector_cat <-c("catdata", "catdf")
+df_numbers <- c(1,2,2, 1)
+point_cords <- c(1, 3, 4, 10)
+
+#generating the svg string
+line_plot_complex <- line_plot_many_points_complex(list, c("xdata", "xdf"), c("ydata", "ydf"), c("catdata", "catdf"), c("Gamma inc.", "Delta inc."), df_numbers, point_cords)
+
+#showing the plot
+line_plot_complex \%>\% SVGrenderer()
+
+
+}
