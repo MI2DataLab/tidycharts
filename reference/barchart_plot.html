@@ -154,7 +154,7 @@
     </tr>
     <tr>
       <th>cat</th>
-      <td><p>vector cointaining category names of values</p></td>
+      <td><p>vector containing category names of values</p></td>
     </tr>
     <tr>
       <th>series</th>
@@ -174,6 +174,21 @@
 
     <p>SVG string containing chart</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>#prepare the data frame</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+city <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Berlin"</span>, <span class='st'>"Munich"</span>, <span class='st'>"Cologne"</span>, <span class='st'>"London"</span>, <span class='st'>"Vienna"</span>, <span class='st'>"Paris"</span>, <span class='st'>"Zurich"</span><span class='op'>)</span>,
+Products <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>538</span>, <span class='fl'>250</span>, <span class='fl'>75</span>, <span class='fl'>301</span>, <span class='fl'>227</span>, <span class='fl'>100</span>, <span class='fl'>40</span><span class='op'>)</span>,
+Services <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>621</span>, <span class='fl'>545</span>, <span class='fl'>302</span>, <span class='fl'>44</span>, <span class='fl'>39</span>, <span class='fl'>20</span>, <span class='fl'>34</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='co'>#generate svgstring</span>
+<span class='va'>barchart</span> <span class='op'>&lt;-</span> <span class='fu'>barchart_plot</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>city</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span>, <span class='st'>"Services"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span>, <span class='st'>"Services"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>#show the plot</span>
+<span class='va'>barchart</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
+
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
