@@ -36,46 +36,24 @@ How to create IBCS inspired charts using ibcsplot?
 
 ``` r
 library(ibcsplot) # load the package
-#> Loading required package: testthat
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following object is masked from 'package:testthat':
-#> 
-#>     matches
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Loading required package: htmlwidgets
-#> Loading required package: lubridate
-#> 
-#> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:base':
-#> 
-#>     date, intersect, setdiff, union
-#> Loading required package: stringr
 
 # create some data to visualize
 df <- data.frame(months = month.abb[1:6],
                  values = round(5 + sin(1:6), 2))
 
-column_chart(df, x = 'months', series = 'values') %>% # create chart in a form of character vector containing SVG content
+column_chart(df, x = 'months', series = 'values') %>% 
+  # create chart in a form of character vector containing SVG content
   SVGrenderer() # render and show the SVG 
 ```
 
-<img src="man/figures/README-example-columns-1.png" width="100%" />
+![example column
+chart](https://raw.githubusercontent.com/SawickiBartosz/ibcsplot/main/man/figures/README-example-columns-1.svg)
 
 You can easily create other type of plots, ie. lineplots:
 
 ``` r
 line_plot(df, cat = df$months, series = 'values', series_labels = 'values') %>% 
   SVGrenderer()
-#> Warning in min(neg): no non-missing arguments to min; returning Inf
-
-#> Warning in min(neg): no non-missing arguments to min; returning Inf
 ```
 
-<img src="man/figures/README-example-lines-1.png" width="100%" />
+![example line chart](man/figures/README-example-lines-1.svg)
