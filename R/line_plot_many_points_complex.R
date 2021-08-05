@@ -115,7 +115,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
 #' Generates a line plot with markers on chosen points, many points within one time interval allowed.
 #'
 #' @param list list of data frames, each representing one series. Data frame should consist of columns:
-#' * containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinattes of the point)
+#' * containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinates of the point)
 #' * containing the value of a point  (y - coordinates of the point)
 #' * containing the time interval of the value
 #' @param vector_x vector containing the names of columns with x - coordinates of the point in the data frames
@@ -129,10 +129,10 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
 #' @export
 #'
 #' @examples
-line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords){
+line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels,df_numbers=NULL, point_cords=NULL){
   initialize() %>%
     draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords) %>%
-    finalize() #%>% show()
+    finalize()
 }
 
 #' Wrapper for complex lineplot
@@ -160,3 +160,22 @@ line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
                                   df_numbers = 1,
                                   point_cords = NULL)
 }
+
+#test
+
+data <- data.frame(
+  xdata = c(30,60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
+  ydata = c(5, 10,15, 11, 16, 18, 25, 22, 18, 10, 8, 23, 28),
+  catdata = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
+)
+
+df <- data.frame(
+  xdf = c(30,60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
+  ydf = c(25, 22,20, 18, 28, 35,33, 29, 30, 38,31,26, 22),
+  catdf = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
+)
+
+lista <- as.list(data, df)
+
+#line_plot_many_points_complex(lista, c("xdata", "xdf"), c("ydata", "ydf"), c("catdata", "catdf"), c("bla1", "bla2")) %>% SVGrenderer()
+
