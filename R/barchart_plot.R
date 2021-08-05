@@ -222,3 +222,16 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
     finalize()
 }
 
+
+barchart_plot_absolute_variance <-
+  function(cat,
+           baseline,
+           real,
+           colors = 1,
+           y_title,
+           y_style = 'previous') {
+
+    initialize(y_vector = cat, bar_width = 16) %>%
+      draw_bars_variance(., cat, baseline, real, colors, y_title, y_style) %>%
+      finalize()
+  }
