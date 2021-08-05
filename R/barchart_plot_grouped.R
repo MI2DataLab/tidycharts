@@ -127,13 +127,13 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
 #' df_styles <- data.frame(
 #'  AC = c("actual","actual","actual","actual","actual"),
 #'  PL = c("plan","plan","plan","plan","plan"),
-#'  triangles = c("previous", "previous","previous","previous","previous")
+#'  triangles = c("previous", "previous","previous","previous","previous"))
 #'
 #' #creating the svg string
 #' barchart_grouped <- barchart_plot_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
 #'
 #' #showing the plot
-#' barchar_grouped %>% SVGrenderer()
+#' barchart_grouped %>% SVGrenderer()
 #'
 barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = NULL){
   initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
