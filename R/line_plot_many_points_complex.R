@@ -8,20 +8,20 @@
 #---
 #musi byc osobny data frame dla kazdej serii
 
-add_category_complex <- function(shift, data, cat, x,k){ #cat jest calym wektorem
+add_category_complex <- function(shift, data, cat, x, k){ #cat jest calym wektorem
   return(paste(
     #linia
-    draw_line(x-24, x+24, 250, 250),
+    draw_line(x - 24, x + 24, 250, 250),
     #label with the value
     add_label(x, 268.4+shift, cat[k]),
     #asisting line
-    draw_line(x-24, x-24, 50, 250+shift, "white", 0.1),
+    draw_line(x-24, x-24, 50, 250+shift, "black", 0.1),
     sep="\n"
   ))
 }
 
 #----
-draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords){ #x,y,cat to string z nazwa kolumny
+draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat, series_labels, df_numbers, point_cords){ #x,y,cat to string z nazwa kolumny
   maxes<-c()
   neg<-c()
   labels<-""
@@ -29,15 +29,19 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
 
   for(k in 1:length(list)){
     maxes <- c(maxes, max(abs(list[[k]][,vector_y[k]])))
-    neg<- c(neg,list[[k]][,vector_y[k]][list[[k]][,vector_y[k]]<0] )
+    neg <- c(neg,list[[k]][,vector_y[k]][list[[k]][,vector_y[k]]<0] )
   }
   height_of_one <- 200/max(maxes)
   #calculating the shift
-  shift <- height_of_one*abs(min(neg))
-  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+  if(length(neg) == 0){shift <- 0}
+  else{shift <- height_of_one*abs(min(neg))}
+
+  #shift <- height_of_one*abs(min(neg))
+  #if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
   lines<-""
-  x_start <-80
+  x_start <- 80
+  x_to_connect <- 80
   for(k in 1:length(list)) {
     #---
     data <- list[[k]]
@@ -50,16 +54,16 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
                     add_label(75.2, 250- height_of_one*data[,y][1] + 6, series_labels[k], anchor="end"),
                     sep='\n')
     #---
-    x_start <-80
+    x_start <- 80
     categories <- unique(data[cat])
     for(i in 1:length(categories[,cat])){ #going through categories/ time series
       category <- categories[,cat][i]
-      filtered <- data %>% dplyr::filter(cat==category)
+      filtered <- data[data[cat] == category,]
       #lines between two categories
-      if( i!=1){
+      if( i!= 1){
         lines <- paste(
           lines,
-          draw_line(x_to_connect,x_start + 48*filtered[,x][1]/100, y_to_connect, 250-(height_of_one*filtered[,y][1]), color),
+          draw_line(x_to_connect, x_start + 48*filtered[,x][1]/100, y_to_connect, 250-(height_of_one*filtered[,y][1]), color),
           sep='\n')
       }
       for(j in 1:(length(filtered[,x])-1)){ #going through points in one category/ time series
@@ -76,15 +80,17 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
   }
   #adding last assisting line
   lines <- paste(lines,
-                 draw_line(80+48*length(categories[,cat]), 80+48*length(categories[,cat]), 50, 250+shift, "white", 0.1),
+                 draw_line(80+48*length(categories[,cat]), 80+48*length(categories[,cat]), 50, 250+shift, "black", 0.1),
                  sep='\n')
   chosen_points <- draw_chosen_points_complex(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords, colors, categories)
-  return(paste(svg_string, lines, labels, chosen_points, sep='\n'))
+  return(paste(svg_string, lines, labels, chosen_points ,sep='\n'))
 }
 
 #---
 draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords, colors, categories){
   chosen_points <- ""
+
+  if(is.null(df_numbers)==FALSE){
   for(i in 1:length(df_numbers)){ #going through all chosen points
     k <- df_numbers[i] #index of data frame on the list
     data <- list[[k]]
@@ -95,7 +101,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
 
     #calculating x coordinate
     p_cat <- data[,cat][point_cords[i]]
-    cat_index <- match( p_cat, categories[,cat])[1] #which category it is
+    cat_index <- match(p_cat, categories[,vector_cat[length(list)]])[1] #which category it is
     x_start <- 80 + 48*(cat_index-1)
     x_cir <- x_start + 48*data[,x][point_cords[i]]/100
 
@@ -106,7 +112,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
                            #label
                            add_label(x_cir, y_cir - 4.8 - 2.4, data[,y][point_cords[i]], "black"),
                            sep='\n')
-  }
+  }}
   return(chosen_points)
 }
 
@@ -129,9 +135,38 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
 #' @export
 #'
 #' @examples
-line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels,df_numbers=NULL, point_cords=NULL){
+#'
+#' #preparing data frames
+#' data <- data.frame(
+#' xdata = c(1, 60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
+#' ydata = c(5, -10, -15, 11, 16, 18, 25, 22, 18, 10, 8, 23, 28),
+#' catdata = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
+#' )
+#'
+#' df <- data.frame(
+#'   xdf = c(1,60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
+#'  ydf = c(25, 22,20, 18, 28, 35,33, 29, 30, 38,31,26, 22),
+#'  catdf = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
+#')
+#'
+#' #defining the rest of the arguments
+#' list <- list(data, df)
+#' vector_x <- c("xdata", "xdf")
+#' vector_y <- c("ydata", "ydf")
+#' vector_cat <-c("catdata", "catdf")
+#' df_numbers <- c(1,2,2, 1)
+#' point_cords <- c(1, 3, 4, 10)
+#'
+#' #generating the svg string
+#' line_plot_complex <- line_plot_many_points_complex(list, c("xdata", "xdf"), c("ydata", "ydf"), c("catdata", "catdf"), c("Gamma inc.", "Delta inc."), df_numbers, point_cords)
+#'
+#' #showing the plot
+#' line_plot_complex %>% SVGrenderer()
+#'
+#'
+line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels, df_numbers=NULL, point_cords=NULL){
   initialize() %>%
-    draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels,df_numbers, point_cords) %>%
+    draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels, df_numbers, point_cords) %>%
     finalize()
 }
 
@@ -160,22 +195,4 @@ line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
                                   df_numbers = 1,
                                   point_cords = NULL)
 }
-
-#test
-
-data <- data.frame(
-  xdata = c(30,60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
-  ydata = c(5, 10,15, 11, 16, 18, 25, 22, 18, 10, 8, 23, 28),
-  catdata = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
-)
-
-df <- data.frame(
-  xdf = c(30,60,90, 30, 60, 90, 30, 60, 90, 45,95,45, 95),
-  ydf = c(25, 22,20, 18, 28, 35,33, 29, 30, 38,31,26, 22),
-  catdf = c("Jan","Jan", "Jan", "Feb","Feb", "Feb", "Mar", "Mar", "Mar", "Apr", "Apr", "May", "May")
-)
-
-lista <- as.list(data, df)
-
-#line_plot_many_points_complex(lista, c("xdata", "xdf"), c("ydata", "ydf"), c("catdata", "catdf"), c("bla1", "bla2")) %>% SVGrenderer()
 
