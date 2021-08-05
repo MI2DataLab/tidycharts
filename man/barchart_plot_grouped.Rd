@@ -37,12 +37,12 @@ triangles = c(545, 800, 900, 600, 538) #AC toten bardziej na wierzchu
 df_styles <- data.frame(
  AC = c("actual","actual","actual","actual","actual"),
  PL = c("plan","plan","plan","plan","plan"),
- triangles = c("previous", "previous","previous","previous","previous")
+ triangles = c("previous", "previous","previous","previous","previous"))
 
 #creating the svg string
 barchart_grouped <- barchart_plot_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
 
 #showing the plot
-barchar_grouped \%>\% SVGrenderer()
+barchart_grouped \%>\% SVGrenderer()
 
 }

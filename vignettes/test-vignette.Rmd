@@ -217,7 +217,7 @@ column_chart_waterfall(
     styles = c('previous', 'actual', 'actual')
   ) %>% SVGrenderer()
 
-column_chart_absolute_variance(df4$month, df4$s1, df4$s2, colors = 1) %>% SVGrenderer()
+column_chart_absolute_variance(df4$month, df4$s1, df4$s2, colors = 1, x_title = 'PL', x_style = 'plan') %>% SVGrenderer()
 
 column_chart_grouped(
       df4$month,
@@ -234,6 +234,7 @@ column_chart_relative_variance(
       df4$s2,
       colors = 1,
       x_title = "Serie",
+      x_style = 'plan',
       styles = styles$s1
     ) %>% SVGrenderer()
 

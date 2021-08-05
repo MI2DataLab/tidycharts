@@ -10,6 +10,7 @@ column_chart_absolute_variance(
   real,
   colors = 1,
   x_title = "PY",
+  x_style = "previous",
   interval = "months"
 )
 }
@@ -23,6 +24,8 @@ column_chart_absolute_variance(
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
 
 \item{x_title}{the title of the plot}
+
+\item{x_style}{style of the x axis to indicate baseline scenario. The default is 'prevoius'.}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }

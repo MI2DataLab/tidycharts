@@ -128,7 +128,7 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width,
 #' AC = (c(62, 70, 67, 77, 63, 62) - 30)
 #' )
 #' #preparing the styles data frame
-#" styles <- data.frame(
+#' styles <- data.frame(
 #'  PL = c("plan", "plan", "plan", "plan", "plan", "plan"),
 #'  AC = c("actual", "actual", "actual", "forecast", "forecast", "forecast")
 #' )
@@ -183,7 +183,7 @@ line_plot <- function(data, cat, series, series_labels, interval="months", style
 #' AC = (c(62, 70, 67, 77, 63, 62) - 30)
 #' )
 #' #preparing the styles data frame
-#" styles <- data.frame(
+#' styles <- data.frame(
 #'  PL = c("plan", "plan", "plan", "plan", "plan", "plan"),
 #'  AC = c("actual", "actual", "actual", "forecast", "forecast", "forecast")
 #' )
