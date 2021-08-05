@@ -21,3 +21,17 @@ SVG string containing chart
 \description{
 Generates normalized horizontal barchart. If more than one series is supplied, stacked barchart is generated.
 }
+\examples{
+#prepare the data frame
+data <- data.frame(
+city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+Products = c(538, 250, 75, 301, 227, 100, 40),
+Services = c(621, 545, 302, 44, 39, 20, 34)
+)
+#create svg string
+barchart_normalized <- barchart_plot_normalized(data, data$city,c("Products", "Services"), c("Products", "Services") )
+
+#show the plot
+barchart_normalized \%>\% SVGrenderer()
+
+}
