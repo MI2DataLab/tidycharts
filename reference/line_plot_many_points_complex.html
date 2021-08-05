@@ -149,8 +149,8 @@
   <span class='va'>vector_y</span>,
   <span class='va'>vector_cat</span>,
   <span class='va'>series_labels</span>,
-  <span class='va'>df_numbers</span>,
-  <span class='va'>point_cords</span>
+  df_numbers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  point_cords <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,7 +159,7 @@
     <tr>
       <th>list</th>
       <td><p>list of data frames, each representing one series. Data frame should consist of columns:
-* containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinattes of the point)
+* containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinates of the point)
 * containing the value of a point  (y - coordinates of the point)
 * containing the time interval of the value</p></td>
     </tr>

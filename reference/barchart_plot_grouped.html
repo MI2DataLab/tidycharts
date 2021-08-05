@@ -175,7 +175,28 @@
     <p>SVG string containing chart</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'>
+<span class='co'>#preparing data frames</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+city <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Berlin"</span>, <span class='st'>"Paris"</span>, <span class='st'>"London"</span>, <span class='st'>"Munich"</span>, <span class='st'>"Vienna"</span><span class='op'>)</span>,
+AC <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>592</span>, <span class='fl'>1166</span>, <span class='fl'>618</span>, <span class='fl'>795</span>, <span class='fl'>538</span><span class='op'>)</span>,
+PL <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>570</span>, <span class='fl'>950</span>, <span class='fl'>800</span>, <span class='fl'>780</span>, <span class='fl'>460</span><span class='op'>)</span>,
+triangles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>545</span>, <span class='fl'>800</span>, <span class='fl'>900</span>, <span class='fl'>600</span>, <span class='fl'>538</span><span class='op'>)</span> <span class='co'>#AC toten bardziej na wierzchu</span>
+<span class='op'>)</span>
+
+<span class='co'>#preparing the styles data frame</span>
+<span class='va'>df_styles</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+ AC <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"actual"</span>,<span class='st'>"actual"</span>,<span class='st'>"actual"</span>,<span class='st'>"actual"</span>,<span class='st'>"actual"</span><span class='op'>)</span>,
+ PL <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"plan"</span>,<span class='st'>"plan"</span>,<span class='st'>"plan"</span>,<span class='st'>"plan"</span>,<span class='st'>"plan"</span><span class='op'>)</span>,
+ triangles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"previous"</span>, <span class='st'>"previous"</span>,<span class='st'>"previous"</span>,<span class='st'>"previous"</span>,<span class='st'>"previous"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>#creating the svg string</span>
+<span class='va'>barchart_grouped</span> <span class='op'>&lt;-</span> <span class='fu'>barchart_plot_grouped</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>city</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"triangles"</span>, <span class='st'>"AC"</span>, <span class='st'>"PL"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"triangles"</span>, <span class='st'>"AC"</span>, <span class='st'>"PL"</span><span class='op'>)</span>, <span class='va'>df_styles</span><span class='op'>)</span>
+
+<span class='co'>#showing the plot</span>
+<span class='va'>barchart_grouped</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
