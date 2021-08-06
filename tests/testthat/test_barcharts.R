@@ -71,6 +71,22 @@ test_that('Absolute variance barplot works', {
   )
 })
 
+test_that('Relative variance barplot works', {
+  real <- sin(1:5)
+  baseline <- cos(1:5)
+  cat <- letters[1:5]
+
+  expect_magick(
+    barchart_plot_relative_variance(
+      cat = cat,
+      baseline = baseline,
+      real = real,
+      y_title = 'a title') %>%
+      show()
+  )
+})
+
+
 
 test_that("Barchart with index line is working", {
   expect_magick(
