@@ -280,32 +280,72 @@ barchart_plot_absolute_variance <-
   }
 
 
-draw_bars_variance <- function(svg_string, cat, baseline, real, colors, y_title, y_style){
+draw_bars_variance <-
+  function(svg_string,
+           cat,
+           baseline,
+           real,
+           colors,
+           y_title,
+           y_style) {
     variance <- real - baseline
-    width_of_one <- 200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
+    width_of_one <-
+      200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
     y <- 50
     #dealing with negative values
     neg <- variance[variance < 0]
-    if(length(neg) == 0) shift <- 0
-    else shift <- width_of_one*abs(min(neg)) + 35 # 35 px for labels
+    if (length(neg) == 0)
+      shift <- 0
+    else
+      shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
 
     data <- data.frame(variance)
     colnames(data) <- y_title
 
     color <- choose_variance_colors(colors)
     curr_color <- list()
-    curr_color$bar_color <- choose_waterfall_color(variance[1], color$pos_color, color$neg_color)
-    svg_string <- paste(svg_string,
-                  add_bar_basic(shift, data, cat, y_title, 1, y, width_of_one, y_title,
-                                color = curr_color, ax_style = y_style, show_series_labels = T, neg_pos = 'left'),
-                  sep='\n')
-    y <- y+24
-    for(i in 2:length(cat)){
-      curr_color$bar_color <- choose_waterfall_color(variance[i], color$pos_color, color$neg_color)
-      svg_string <- paste(svg_string,
-                    add_bar_basic(shift, data, cat, y_title, i, y, width_of_one, color = curr_color, ax_style = y_style, show_series_labels = F, neg_pos = 'left'),
-                    sep='\n')
-      y <- y+24
+    curr_color$bar_color <-
+      choose_waterfall_color(variance[1], color$pos_color, color$neg_color)
+    svg_string <- paste(
+      svg_string,
+      add_bar_basic(
+        shift,
+        data,
+        cat,
+        y_title,
+        1,
+        y,
+        width_of_one,
+        y_title,
+        color = curr_color,
+        ax_style = y_style,
+        show_series_labels = T,
+        neg_pos = 'left'
+      ),
+      sep = '\n'
+    )
+    y <- y + 24
+    for (i in 2:length(cat)) {
+      curr_color$bar_color <-
+        choose_waterfall_color(variance[i], color$pos_color, color$neg_color)
+      svg_string <- paste(
+        svg_string,
+        add_bar_basic(
+          shift,
+          data,
+          cat,
+          y_title,
+          i,
+          y,
+          width_of_one,
+          color = curr_color,
+          ax_style = y_style,
+          show_series_labels = F,
+          neg_pos = 'left'
+        ),
+        sep = '\n'
+      )
+      y <- y + 24
     }
     return(svg_string)
-}
+  }
