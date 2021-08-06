@@ -94,12 +94,15 @@ add_pin <-function(shift,
                    color = NULL,
                    ax_style = NULL,
                    show_series_labels = T) {
+<<<<<<< HEAD
   x <- 80 + shift
   # draw axis
   # draw category label
   # draw pin head
   # draw pin line
   # draw pin label
+=======
+>>>>>>> 0ab18cfc8e897a880ab50d6fa47dd88bc94c1176
 
 }
 
