@@ -55,6 +55,23 @@ test_that('Only positive values on a barchart_index don\'t throw warnings', {
   expect_magick(barchart_plot_index(df, df$animal, series = srs, index_val = 3, series_labels = srs) %>% show())
 })
 
+
+test_that('Absolute variance barplot works', {
+  real <- sin(1:5)
+  baseline <- cos(1:5)
+  cat <- letters[1:5]
+
+  expect_magick(
+  barchart_plot_absolute_variance(
+    cat = cat,
+    baseline = baseline,
+    real = real,
+    y_title = 'a title') %>%
+   show()
+  )
+})
+
+
 test_that("Barchart with index line is working", {
   expect_magick(
     barchart_plot_index(
