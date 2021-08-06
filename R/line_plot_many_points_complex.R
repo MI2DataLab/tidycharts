@@ -185,6 +185,28 @@ line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, 
 #' @export
 #'
 #' @examples
+#'
+#' df <- data.frame(
+#'  x = seq.Date(as.Date('2021-01-01'), as.Date('2021-07-01'), length.out = 200),
+#'  'Company_sin' = 5 * sin(seq(
+#'    from = 0,
+#'    to = 2 * pi,
+#'    length.out = 200
+#'    )) +  rnorm(200, mean = 5, sd = 0.5),
+#'  'Company_cos' = 5 * cos(seq(
+#'    from = 0,
+#'    to = 2 * pi,
+#'    length.out = 200
+#'  )) +  rnorm(200, mean = 5, sd = 0.5))
+#'
+#' df <- head(df, n = 199)
+#'
+#' line_plot_many_points_wrapper(
+#'   df,
+#'   dates = 'x',
+#'   series = c('Company_sin', 'Company_cos')) %>%
+#'   SVGrenderer()
+#'
 line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
   stopifnot(scale %in% c('weeks', 'months', 'quarters', 'years'))
 
