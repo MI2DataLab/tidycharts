@@ -83,6 +83,20 @@ add_bar_basic <-
     ))
   }
 
+
+add_pin <-function(shift,
+                   value,
+                   cat,
+                   y,
+                   width_of_one,
+                   series_labels = '',
+                   style = NULL,
+                   color = NULL,
+                   ax_style = NULL,
+                   show_series_labels = T) {
+
+}
+
 #---
 draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_with_real_values=NULL, styles = NULL, shift = 0){
   bars <- svg_string
@@ -288,10 +302,14 @@ draw_bars_variance <-
            colors,
            y_title,
            y_style) {
+
     variance <- real - baseline
+
     width_of_one <-
       200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
+
     y <- 50
+
     #dealing with negative values
     neg <- variance[variance < 0]
     if (length(neg) == 0)
@@ -349,3 +367,90 @@ draw_bars_variance <-
     }
     return(svg_string)
   }
+
+#' Generate bar chart with relative variance (in percents)
+#'
+#' @inheritParams barchart_plot_absolute_variance
+#'
+#' @return SVG string containing chart
+#' @export
+#'
+#' @examples
+barchart_plot_relative_variance <-
+  function(cat,
+           baseline,
+           real,
+           colors = 1,
+           y_title,
+           y_style = 'previous') {
+
+  initialize(y_vector = cat, bar_width = 16) %>%
+    draw_pins_variance(., cat, baseline, real, colors, y_title, y_style) %>%
+    finalize()
+  }
+
+
+draw_pins_variance <- function(svg_string, cat, baseline, real, colors, y_title, y_style){
+
+  values <- real / baseline * 100 - 100
+
+  y <- 50
+
+  width_of_one <-
+    200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
+
+  #dealing with negative values
+  neg <- values[values < 0]
+  if (length(neg) == 0)
+    shift <- 0
+  else
+    shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
+
+
+  data <- data.frame(values)
+  colnames(data) <- y_title
+
+  color <- choose_variance_colors(colors)
+  curr_color <- list()
+  curr_color$bar_color <-
+    choose_waterfall_color(values[1], color$pos_color, color$neg_color)
+
+  svg_string <- paste(
+    svg_string,
+    add_pin(
+      shift,
+      data[1],
+      cat,
+      y,
+      width_of_one,
+      series_labels = y_title,
+      color = curr_color,
+      ax_style = y_style,
+      show_series_labels = T,
+      style = styles[1]
+    ),
+    sep = '\n'
+  )
+  y <- y + 24
+  for (i in 2:length(cat)) {
+    curr_color$bar_color <-
+      choose_waterfall_color(values[i], color$pos_color, color$neg_color)
+    svg_string <- paste(
+      svg_string,
+      add_pin(
+        shift,
+        data[i],
+        cat,
+        y,
+        width_of_one,
+        color = curr_color,
+        ax_style = y_style,
+        show_series_labels = F,
+        style = styles[i]
+      ),
+      sep = '\n'
+    )
+    y <- y + 24
+  }
+  return(svg_string)
+}
