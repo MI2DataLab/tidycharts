@@ -104,7 +104,7 @@ add_index <- function(x, y, text="100"){ #x defines how long the line is
            y - 0.8,
            '" y2="',
            y,
-           '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
+           '" stroke="rgb(64,64,64)" stroke-width="1.6"/>'),
     #drawing a triangle
     paste0(
       '<polygon points="',
@@ -175,7 +175,7 @@ add_vertical_index <- function(x, y, text="100"){ #y defines how long the index 
            x,
            '" y1="50" y2="',
            y,
-           '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
+           '" stroke="black" stroke-width="1.6"/>'),
     sep='\n'
   ))
 }

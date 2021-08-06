@@ -1,7 +1,7 @@
 
 
 #adding a rectangle marker with label above or under + categories labels
-add_point <- function(shift ,data, cat, value, x, height_of_one, color,k, minimal, cat_width, style = NULL){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
+add_point <- function(shift ,data, cat, value, x, height_of_one, color, k, minimal, cat_width, style = NULL){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
 
   label<-""
   if(value > 0){
@@ -48,20 +48,21 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width,
 
   points <- svg_string
   labels <- ""
-  colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
+  #colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x <- 80
 
   for(k in 1:(length(series))){ #going through series
 
-    if(mean(data[,series[k]])==min_avg){
+    if(mean(data[,series[k]]) == min_avg){
       minimal <- 1
     }else{
       minimal<-0
     }
 
-    color <- colors[k]
+    #color <- colors[k]
+    color <- get_gray_color_stacked(i)$bar_color
     values <- data[, series[k]]
-    labels <- paste(labels, add_label(80-4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
+    labels <- paste(labels, add_label(80 - 4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
     for(i in 1:(length(cat)-1)){ #drawing each point
       style <- styles[i, k]
       if (k == 1) {
@@ -215,3 +216,4 @@ line_plot_index <- function(data, cat, series, series_labels, index_val, index_l
     finalize()
 
 }
+
