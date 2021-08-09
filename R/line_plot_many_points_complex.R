@@ -108,7 +108,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
     x_cir <- x_start + 48*data[,x][point_cords[i]]/100
 
     y_cir <- 250 - height_of_one*data[, y][point_cords[i]]
-    circle_color <- colors[k]
+    circle_color <- color
     chosen_points <- paste(chosen_points,
                            draw_circle(x_cir, y_cir, circle_color, 2.4),
                            #label
