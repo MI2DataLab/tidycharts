@@ -99,7 +99,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
     y <- vector_y[k]
     cat <- vector_cat[k]
     #color <- colors[k]
-    color <- get_gray_color_stacked(i)$bar_color
+    color <- get_gray_color_stacked(k)$bar_color
 
     #calculating x coordinate
     p_cat <- data[,cat][point_cords[i]]
