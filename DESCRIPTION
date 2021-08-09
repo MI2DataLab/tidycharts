@@ -30,5 +30,6 @@ Suggests:
     knitr,
     rmarkdown,
     palmerpenguins,
-    tidyverse
+    tidyverse,
+    covr
 VignetteBuilder: knitr

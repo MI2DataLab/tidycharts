@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # ibcsplot
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/SawickiBartosz/ibcsplot/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/ibcsplot?branch=main)
 <!-- badges: end -->
 
 The goal of ibcsplot is to enable R users to create charts inspired by [International Business Communication Standards (IBCS)](https://www.ibcs.com/). The plots are generated in SVG format, so embedding them in HTML documents is straight forward. 
