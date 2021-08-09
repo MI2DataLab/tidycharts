@@ -37,6 +37,25 @@ get_style <- function(style, styles_df = pkg.env$styles_df){
   return(styles_df[style, ])
 }
 
+#colors for scatter plots
+pkg.env$scatter_colors <-c(
+    "rgb(162, 136, 227)",
+    "rgb(187, 213, 237)",
+    "rgb(204, 255, 203)",
+    "rgb(206, 253, 255)" ,
+    "rgb(56, 2, 59)",
+    "rgb(149, 129, 141)"
+  )
+get_scatter_colors <- function(series_number, scatter_colors = pkg.env$scatter_colors){
+
+  stopifnot(series_number %in% 1:6)
+  #return(list(bar_color = colors_df[series_number,][['bar_colors']],
+  #            text_color = colors_df[series_number,][['text_colors']]))
+  return(scatter_colors[series_number])
+}
+
+
+
 #' Function to get bar/area color for stacked plots.
 #'
 #' @param series_number what is the number of the series. one of 1:6.
