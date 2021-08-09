@@ -25,7 +25,7 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
   maxes<-c()
   neg<-c()
   labels<-""
-  colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
+  #colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
 
   for(k in 1:length(list)){
     maxes <- c(maxes, max(abs(list[[k]][,vector_y[k]])))
@@ -48,7 +48,8 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
     x <- vector_x[k]
     y <- vector_y[k]
     cat <- vector_cat[k]
-    color <- colors[k]
+    #color <- colors[k]
+    color <- get_gray_color_stacked(k)$bar_color
     #labelka z nazwa serii
     labels <- paste(labels,
                     add_label(75.2, 250- height_of_one*data[,y][1] + 6, series_labels[k], anchor="end"),
@@ -82,12 +83,12 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
   lines <- paste(lines,
                  draw_line(80+48*length(categories[,cat]), 80+48*length(categories[,cat]), 50, 250+shift, "black", 0.1),
                  sep='\n')
-  chosen_points <- draw_chosen_points_complex(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords, colors, categories)
+  chosen_points <- draw_chosen_points_complex(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords, categories)
   return(paste(svg_string, lines, labels, chosen_points ,sep='\n'))
 }
 
 #---
-draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords, colors, categories){
+draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords,categories){
   chosen_points <- ""
 
   if(is.null(df_numbers)==FALSE){
@@ -97,7 +98,8 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
     x <- vector_x[k]
     y <- vector_y[k]
     cat <- vector_cat[k]
-    color <- colors[k]
+    #color <- colors[k]
+    color <- get_gray_color_stacked(k)$bar_color
 
     #calculating x coordinate
     p_cat <- data[,cat][point_cords[i]]
@@ -106,7 +108,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
     x_cir <- x_start + 48*data[,x][point_cords[i]]/100
 
     y_cir <- 250 - height_of_one*data[, y][point_cords[i]]
-    circle_color <- colors[k]
+    circle_color <- color
     chosen_points <- paste(chosen_points,
                            draw_circle(x_cir, y_cir, circle_color, 2.4),
                            #label
@@ -183,6 +185,28 @@ line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, 
 #' @export
 #'
 #' @examples
+#'
+#' df <- data.frame(
+#'  x = seq.Date(as.Date('2021-01-01'), as.Date('2021-07-01'), length.out = 200),
+#'  'Company_sin' = 5 * sin(seq(
+#'    from = 0,
+#'    to = 2 * pi,
+#'    length.out = 200
+#'    )) +  rnorm(200, mean = 5, sd = 0.5),
+#'  'Company_cos' = 5 * cos(seq(
+#'    from = 0,
+#'    to = 2 * pi,
+#'    length.out = 200
+#'  )) +  rnorm(200, mean = 5, sd = 0.5))
+#'
+#' df <- head(df, n = 199)
+#'
+#' line_plot_many_points_wrapper(
+#'   df,
+#'   dates = 'x',
+#'   series = c('Company_sin', 'Company_cos')) %>%
+#'   SVGrenderer()
+#'
 line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
   stopifnot(scale %in% c('weeks', 'months', 'quarters', 'years'))
 
@@ -195,4 +219,5 @@ line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
                                   df_numbers = 1,
                                   point_cords = NULL)
 }
+
 
