@@ -10,6 +10,14 @@ draw_rect <- function(x, y, color, width, height, style = NULL){
     fill <- styling[['fill']]
     stroke <- styling[['stroke']]
   }
+  if (width < 0) {
+    x <- x + width
+    width <- -1 * width
+  }
+  if (height < 0) {
+    y <- y + height
+    height <- -1 * height
+  }
   return(paste0('<rect x="',
                 x,
                 '" y="',
