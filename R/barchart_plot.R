@@ -94,16 +94,34 @@ add_pin <-function(shift,
                    color = NULL,
                    ax_style = NULL,
                    show_series_labels = T) {
-<<<<<<< HEAD
   x <- 80 + shift
-  # draw axis
-  # draw category label
-  # draw pin head
-  # draw pin line
-  # draw pin label
-=======
->>>>>>> 0ab18cfc8e897a880ab50d6fa47dd88bc94c1176
 
+  if(value < 0){
+    label_offset <- -10
+    label_anchor <- 'end'
+  }else{
+    label_offset <- 10
+    label_anchor <- 'start'
+  }
+
+  svg_strng <- ''
+  # draw axis
+  svg_string <- draw_rect(80+shift - 2.4, (y - 12), color = NULL, width = 4.8, height = 16 + 8, style = ax_style)
+  # draw category label
+  svg_string <- paste(svg_string, add_label(72.2, y + 6, cat, anchor="end"), sep = '\n')
+  # draw pin head
+  svg_string <- paste(svg_string,
+                      draw_rect(80+shift + width_of_one * value - 5.6, y - 5.6 , color = NULL, width = 11.2, height = 11.2),
+                      sep = '\n')
+  # draw pin line
+  svg_string <- paste(svg_string,
+                      draw_rect(80+shift, y - 2.4 , color = color$bar_color, width = width_of_one * value, height = 4.8),
+                      sep = '\n')
+  # draw pin label
+  svg_string <- paste(svg_string,
+                      add_label(80+shift + width_of_one * value + label_offset, y + 6, format(value, digits = 2), anchor = label_anchor),
+                      sep = '\n')
+  return(svg_string)
 }
 
 #---
@@ -405,16 +423,14 @@ draw_pins_variance <- function(svg_string, cat, baseline, real, colors, y_title,
 
   y <- 50
 
-  width_of_one <-
-    200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
+  width_of_one <- 2 # units in relative variance plot must be the same in all variance plots
 
   #dealing with negative values
   neg <- values[values < 0]
   if (length(neg) == 0)
     shift <- 0
   else
-    shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
-
+    shift <- width_of_one * abs(min(neg)) + 25 # 20 px for value labels
 
   data <- data.frame(values)
   colnames(data) <- y_title
@@ -428,8 +444,8 @@ draw_pins_variance <- function(svg_string, cat, baseline, real, colors, y_title,
     svg_string,
     add_pin(
       shift,
-      data[1],
-      cat,
+      data[1,],
+      cat[1],
       y,
       width_of_one,
       series_labels = y_title,
@@ -448,8 +464,8 @@ draw_pins_variance <- function(svg_string, cat, baseline, real, colors, y_title,
       svg_string,
       add_pin(
         shift,
-        data[i],
-        cat,
+        data[i,],
+        cat[i],
         y,
         width_of_one,
         color = curr_color,
