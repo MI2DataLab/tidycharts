@@ -179,7 +179,7 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #'
 #' @importFrom magrittr "%>%"
 
-barchart_plot <- function(data, cat, series, series_labels, styles = NULL){
+barchart_plot <- function(data, cat, series, series_labels = series, styles = NULL){
 
   all_sums <- rowSums(data[series])
   width_of_one <- 200/max(abs(all_sums))

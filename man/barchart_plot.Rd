@@ -4,7 +4,7 @@
 \alias{barchart_plot}
 \title{Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.}
 \usage{
-barchart_plot(data, cat, series, series_labels, styles = NULL)
+barchart_plot(data, cat, series, series_labels = series, styles = NULL)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
