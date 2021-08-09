@@ -73,7 +73,9 @@ line_plot_many_points_complex(
   point_cords = NULL
 ) %>% SVGrenderer()
 ```
+
 ## the same but using lineplot wrapper
+
 ```{r}
 line_plot_many_points_wrapper(df, dates = 'x', series = c('Company_sin', 'Company_cos')) %>% SVGrenderer()
 ```
@@ -144,6 +146,8 @@ groups2 <- c(groups, 'services')
 
 barchart_plot_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
 barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% SVGrenderer()
+barchart_plot_absolute_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
+barchart_plot_relative_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
 barchart_plot_waterfall(
       df_waterfall$category,
       df_waterfall$values,
