@@ -1,0 +1,76 @@
+---
+title: "Getting_Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting_Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette shows the usage of the ibcsplot package. It contains different chart types examples and tips for proper data visualization.
+
+## Prerequisites
+This package and vignette are created for a user who:
+
+* has basic programming skills in R
+* is familiar with R data structures, such as vector, data.frame
+
+# How to download and install the package?
+
+```{r setup, message=FALSE}
+
+# install from CRAN
+# install.packages(ibcsplot)
+
+library(ibcsplot)
+
+```
+
+# Bar charts
+
+## Basic
+
+Bar charts shoud be used to show structure in one moment of time. One of typical usecase of the barchart is to visualize profit of a company in a division by departments. The data structure could look the following:
+
+```{r data}
+data_barchart <- data.frame(
+  dep = c('Services', 'Production', 'Marketing', 'Purchasing'),
+  profit = c(12, 15, 2, -3)
+)
+```
+
+Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function, `SVGrenderer()` should be used to render the plot as HTML content. Otherwise one element character vector with SVG content is returned. We can chain the commands by pipe operator (`%>%`).
+
+```{r base-barchart}
+
+barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+  SVGrenderer()
+
+```
+
+A plot should contain an informative title. We can use `add_title` function to make one. As with `SVGRenderer`, we chain the commands. 
+
+```{r barchart-title}
+barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
+  SVGrenderer()
+```
+
+## Indexed
+
+We use indecies to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
+
+```{r barchart-index}
+barchart_plot_index(data = data_barchart,
+                    cat = data_barchart$dep, series = 'profit', 
+                    index_val = 10, index_label = 'PY best result') %>% 
+  SVGrenderer()
+```
+
