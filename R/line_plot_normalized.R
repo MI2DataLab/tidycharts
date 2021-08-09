@@ -115,7 +115,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #'
-#' @returnSVG SVG string containing chart
+#' @return SVG SVG string containing chart
 #' @export
 #'
 #' @examples

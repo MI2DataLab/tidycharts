@@ -26,6 +26,9 @@ line_plot_normalized(
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
+\value{
+SVG SVG string containing chart
+}
 \description{
 Generates normalized areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.
 }
