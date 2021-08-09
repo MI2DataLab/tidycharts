@@ -226,7 +226,7 @@ barchart_plot <- function(data, cat, series, series_labels = series, styles = NU
 #'
 #'
 
-barchart_plot_index <- function(data, cat, series, index_val,series_labels, styles = NULL, index_label=index_val){
+barchart_plot_index <- function(data, cat, series, index_val,series_labels = series, styles = NULL, index_label=index_val){
 
   all_sums <- rowSums(data[series])
   width_of_one <- 200/max(abs(all_sums))

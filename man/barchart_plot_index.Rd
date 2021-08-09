@@ -9,7 +9,7 @@ barchart_plot_index(
   cat,
   series,
   index_val,
-  series_labels,
+  series_labels = series,
   styles = NULL,
   index_label = index_val
 )
