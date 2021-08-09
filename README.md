@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/SawickiBartosz/ibcsplot/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/ibcsplot?branch=main)
 <!-- badges: end -->
 
 The goal of ibcsplot is to enable R users to create charts inspired by
