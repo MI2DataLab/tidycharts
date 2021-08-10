@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(dplyr)
 ```
 
 This vignette shows the usage of the ibcsplot package. It contains different chart types examples and tips for proper data visualization.
@@ -33,7 +34,7 @@ library(ibcsplot)
 
 ```
 
-# Bar charts
+# Bar charts<a name="barcharts"></a>
 
 ## Data
 
@@ -126,14 +127,16 @@ Show variance in data using relative variance plots or absolute variance plots. 
 
 Example usage: Visualize difference between two scenarios in division by departments.
 
-```{r barchart-variances}
+```{r barchart-abs-variance}
 barchart_plot_absolute_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
                                 y_style = 'plan') %>% 
   SVGrenderer()
+```
 
+```{r barchart-rel-variance}
 barchart_plot_relative_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
@@ -167,4 +170,58 @@ join_plots(
   ncols = 3
 ) %>% SVGrenderer()
 ```
+
+# Column charts
+
+Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts) 
+
+## Data 
+
+Here is how an example column chart data frame could look like: 
+
+```{r}
+data_time_series <- data.frame(
+  time = month.abb,
+  Poland = 2 + 0.5 * sin(1:12),
+  Germany = 3 + sin(3:14),
+  Slovakia = 2 + 2 * cos(1:12)
+)
+```
+
+The `time` column consists of the three-letter abbreviations for the English month names and other columns constit of some artificial data, it could be for example sales in different countries.
+
+## Basic
+
+Use basic column chart to make a simple visualization of a time series. Pass `interval` parameter to change the width of columns.
+
+Typical task related to this kind of plot could be the following: Show sales from different countries over the months. 
+
+```{r columnchart-basic}
+column_chart(data_time_series, x = 'time', 
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% 
+  SVGrenderer()
+```
+
+## Waterfall
+
+To visualize contribution waterfall charts can be used. We need to transform the data a little bit to before passing it into the plotting function. 
+
+Example usage: visualize contribution of monthly sales as a part of year sales.
+
+```{r columnchart-waterfall}
+data_time_series %>% group_by(time) %>%
+  summarise(Sales = sum(Poland, Germany, Slovakia)) %>%
+  arrange(match(time, month.abb)) %>% 
+  mutate(Sales = round(cumsum(Sales), 2)) -> df_summarized
+
+column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') %>% 
+  SVGrenderer()
+```
+
+## Other column charts
+
+Other types of column charts are available, ie. `column_chart_grouped` or `column_chart_normalized`. When using them similar data visualization rules apply as for [bar charts](#barcharts). Feel free to explore them and see [reference page](https://sawickibartosz.github.io/ibcsplot/reference/index.html) if need help.
+
+# Line charts <a name="linecharts"></a>
+
 
