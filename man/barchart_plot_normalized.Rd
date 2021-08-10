@@ -4,7 +4,7 @@
 \alias{barchart_plot_normalized}
 \title{Generates normalized horizontal barchart. If more than one series is supplied, stacked barchart is generated.}
 \usage{
-barchart_plot_normalized(data, cat, series, series_labels)
+barchart_plot_normalized(data, cat, series, series_labels = series)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
