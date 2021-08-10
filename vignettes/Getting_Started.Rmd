@@ -35,7 +35,7 @@ library(ibcsplot)
 
 # Bar charts
 
-## Basic
+## Data
 
 Bar charts shoud be used to show structure in one moment of time. One of typical usecase of the barchart is to visualize profit of a company in a division by departments. The data structure could look the following:
 
@@ -45,11 +45,15 @@ data_barchart <- data.frame(
   profit = c(12, 15, 2, -3),
   operational = c(9, 7, 1.5, -0.4),
   property = c(2, 4, 0.5, -0.6),
-  bonus = c(1, 4, 0, -2)
+  bonus = c(1, 4, 0, -2),
+  prev_year = c(10, 16, 4, -1),
+  plan = c(11, 13, 2, -2.5)
 )
 ```
 
 In the example data `operational`, `property` and `bonus` are parts of `profit` and sum up to it.
+
+## Basic
 
 Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function, `SVGrenderer()` should be used to render the plot as HTML content. Otherwise one element character vector with SVG content is returned. We can chain the commands by pipe operator (`%>%`).
 
@@ -97,3 +101,70 @@ barchart_plot_index(data = data_barchart,
                     index_val = 10, index_label = 'PY best result') %>% 
   SVGrenderer()
 ```
+
+## Grouped
+
+To visualize 2 or 3 series of data, which **do not** sum up to some value, grouped barchart should be used. First series is visualized by bars in the foreground, second by bars in the background and third in the form of triangles. Style of the bars and triangles indicates type of data, so called scenerios. 
+
+The most typical usecase of this chart is to visualize profit of different departments in a company with comparison to bugdet and previous year data.
+
+```{r barchart-grouped}
+
+styles <- data.frame(profit = rep('actual', 4),
+                     plan = rep('plan', 4),
+                     prev_year = rep('previous',4))
+
+barchart_plot_grouped(data = data_barchart,
+                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
+                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles) %>% 
+  SVGrenderer()
+```
+
+## Variances
+
+Show variance in data using relative variance plots or absolute variance plots. Define the baseline and the real values. Axis on variance plots use styles to scenario of baseline data. Relative variance plot shows difference in percents and absolute variance plot shows it in base units.
+
+Example usage: Visualize difference between two scenarios in division by departments.
+
+```{r barchart-variances}
+barchart_plot_absolute_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan') %>% 
+  SVGrenderer()
+
+barchart_plot_relative_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan') %>% 
+  SVGrenderer()
+
+```
+
+## Join plots
+
+Combining plots in one grid is useful and easy by using the function `join_plots`.
+
+```{r barchart-join}
+
+join_plots(
+  barchart_plot_grouped(data = data_barchart,
+                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
+                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles),
+  barchart_plot_absolute_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan'),
+  barchart_plot_relative_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan'),
+  nrows = 1,
+  ncols = 3
+) %>% SVGrenderer()
+```
+
