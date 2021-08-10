@@ -446,3 +446,27 @@ line_plot_many_points_wrapper(df,
   SVGrenderer()
 
 ```
+
+## Joint plots
+
+```{r}
+df <- data.frame(x = letters[1:20],
+                 val = rnorm(20, mean = 5),
+                 style = rep('actual',20))
+
+join_plots(column_chart(df, 'x', 'val'),
+           column_chart(df, 'x', 'val')) %>% SVGrenderer()
+
+df2 <- data.frame(x = month.abb[1:6],
+                  y = rnorm(6, mean = 3),
+                  z = rnorm(6, mean = 4))
+
+join_plots(
+  column_chart(df2, x = 'x', series = 'y'),
+  column_chart(df2, x = 'x', series = 'z'),
+  column_chart(df2, x = 'x', series = c('y', 'z')),
+  nrows = 2,
+  ncols = 2
+) %>% SVGrenderer()
+```
+
