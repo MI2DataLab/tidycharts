@@ -4,12 +4,12 @@
 \alias{barchart_plot}
 \title{Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.}
 \usage{
-barchart_plot(data, cat, series, series_labels, styles = NULL)
+barchart_plot(data, cat, series, series_labels = series, styles = NULL)
 }
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{cat}{vector cointaining category names of values}
+\item{cat}{vector containing category names of values}
 
 \item{series}{vector containing names of columns in data with values to plot}
 
@@ -22,4 +22,19 @@ SVG string containing chart
 }
 \description{
 Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.
+}
+\examples{
+#prepare the data frame
+data <- data.frame(
+city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+Products = c(538, 250, 75, 301, 227, 100, 40),
+Services = c(621, 545, 302, 44, 39, 20, 34)
+)
+#generate svgstring
+barchart <- barchart_plot(data, data$city, c("Products", "Services"), c("Products", "Services"))
+
+#show the plot
+barchart \%>\% SVGrenderer()
+
+
 }

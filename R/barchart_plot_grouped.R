@@ -1,5 +1,5 @@
 
-
+#---
 add_bar_grouped <-
   function(shift,
            data,
@@ -57,43 +57,46 @@ add_bar_grouped <-
     ))
   }
 
+#---
 draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_with_real_values=NULL, df_styles = NULL){
   bars <- svg_string
   y = 50
-  maxes <- c()
-  neg <- c()
+  #maxes <- c()
+  neg <- data[, series][data[,series] < 0]
   #looking for the maximum value
-  for(k in 1:(length(series))){
-    maxes <- c(maxes, max(abs(data[,series[k]])))
-  }
-  maximum <- max(maxes)
+
+  #for(k in 1:(length(series))){
+  #  maxes <- c(maxes, max(abs(data[,series[k]])))
+  #}
+  #maximum <- max(maxes)
+  maximum <- max(abs(data[,series]))
   width_of_one <- 200/maximum
 
   #dealing with negative values
-  shift <- width_of_one*abs(min(neg))
-  if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
+  if(length(neg) == 0){shift <- 0}
+  else{shift <- width_of_one*abs(min(neg))}
 
   #adding series labels
   #zakladamy sie że w series sa dwa albo trzy elementy
   if(length(series)==3){
     bars <- paste(
       bars,
-      add_label(80 + data[,series[3]][1]*width_of_one/2, 50 - 4.8*(length(series)-1), series_labels[3]),
+      add_label(80 + shift + data[,series[3]][1]*width_of_one/2, 50 - 4.8*(length(series)-1), series_labels[3]),
       sep= '\n'
     )
   }
 
 
   bars <- paste(bars,
-                add_label(80 + data[,series[2]][5]*width_of_one/2, 50 + 24 * length(cat) + 4.8, series_labels[2]),
+                add_label(80 + shift + data[,series[2]][length(cat)]*width_of_one/2, 50 + 24 * length(cat) + 4.8, series_labels[2]),
                 add_bar_grouped(shift, data,cat, series,1, y, width_of_one, series_labels, df_styles=df_styles),
                 sep='\n')
-  y <- y+24
+  y <- y + 24
   for(i in 2:length(cat)){
     bars <- paste(bars,
-                  add_bar_grouped(shift ,data,cat, series,i, y, width_of_one, df_styles = df_styles),
+                  add_bar_grouped(shift ,data, cat, series,i, y, width_of_one, df_styles = df_styles),
                   sep='\n')
-    y <- y+24
+    y <- y + 24
   }
   return (bars)
 }
@@ -111,9 +114,30 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
 #' @export
 #'
 #' @examples
+#'
+#' #preparing data frames
+#' data <- data.frame(
+#' city = c("Berlin", "Paris", "London", "Munich", "Vienna"),
+#' AC = c(592, 1166, 618, 795, 538),
+#' PL = c(570, 950, 800, 780, 460),
+#' triangles = c(545, 800, 900, 600, 538) #AC toten bardziej na wierzchu
+#' )
+#'
+#' #preparing the styles data frame
+#' df_styles <- data.frame(
+#'  AC = c("actual","actual","actual","actual","actual"),
+#'  PL = c("plan","plan","plan","plan","plan"),
+#'  triangles = c("previous", "previous","previous","previous","previous"))
+#'
+#' #creating the svg string
+#' barchart_grouped <- barchart_plot_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
+#'
+#' #showing the plot
+#' barchart_grouped %>% SVGrenderer()
+#'
 barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = NULL){
-  # TODO all values in one bar should have the same sign
   initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
     draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
     finalize()
 }
+

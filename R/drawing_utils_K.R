@@ -10,6 +10,14 @@ draw_rect <- function(x, y, color, width, height, style = NULL){
     fill <- styling[['fill']]
     stroke <- styling[['stroke']]
   }
+  if (width < 0) {
+    x <- x + width
+    width <- -1 * width
+  }
+  if (height < 0) {
+    y <- y + height
+    height <- -1 * height
+  }
   return(paste0('<rect x="',
                 x,
                 '" y="',
@@ -96,15 +104,15 @@ draw_quadrangle <- function(x1,y1,x2,y2,x3,y3,x4,y4, color){
 }
 
 
-add_index <- function(x, y){ #x defines how long the line is
+add_index <- function(x, y, text="100"){ #x defines how long the line is
   return(paste(
     paste0('<line x1="80" x2="',
            x,
            '" y1="',
-           y-0.8,
+           y - 0.8,
            '" y2="',
            y,
-           '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
+           '" stroke="rgb(64,64,64)" stroke-width="1.6"/>'),
     #drawing a triangle
     paste0(
       '<polygon points="',
@@ -122,10 +130,12 @@ add_index <- function(x, y){ #x defines how long the line is
       '" stroke="black" fill="black"/> '),
     paste0(
       '<text x="',
-      x+16+4.8,
+      x + 16 + 4.8,
       '" y="',
-      y,
-      '" font-family="Arial" text-anchor="start" font-size="1em" >100</text>'),
+      y + 4.8,
+      '" font-family="Arial" text-anchor="start" font-size="12" >',
+      text,
+      '</text>'),
     sep='\n'
 
 
@@ -149,7 +159,7 @@ draw_circle <- function(x,y, color, radius=2.4, opacity = 1){
                 opacity,
                 '" />'))}
 
-add_vertical_index <- function(x, y){ #y defines how long the index line will be
+add_vertical_index <- function(x, y, text="100"){ #y defines how long the index line will be
   return(paste(
     paste0(
       '<polygon points="',
@@ -163,7 +173,9 @@ add_vertical_index <- function(x, y){ #y defines how long the index line will be
     paste0(
       '<text x="',
       x + 6.4,
-      '" y="45" font-family="Arial" text-anchor="start" font-size="1em" >100</text>'
+      '" y="45" font-family="Arial" text-anchor="start" font-size="12" >',
+      text,
+      '</text>'
     ),
     paste0('<line x1="',
            x,
@@ -171,7 +183,7 @@ add_vertical_index <- function(x, y){ #y defines how long the index line will be
            x,
            '" y1="50" y2="',
            y,
-           '" stroke="rgb(166,166,166)" stroke-width="1.6"/>'),
+           '" stroke="black" stroke-width="1.6"/>'),
     sep='\n'
   ))
 }

@@ -33,7 +33,7 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
 
   labels <-""
   lines <- svg_string
-  colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
+  #colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
   x = 80
   maxes <- c()
   neg <- c()
@@ -49,7 +49,8 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
   if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
   for(k in 1:(length(series))){ #going through series
-    color <- colors[k]
+    #color <- colors[k]
+    color <- get_gray_color_stacked(k)$bar_color
     values <- data[, series[k]]
     labels <- paste(labels,
                     add_label(75.2, 250- height_of_one*values[1] +6, series_labels[k],anchor="end"),
@@ -74,19 +75,20 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
     x <- 80
   }
 
-  chosen_points <- draw_chosen_points(data, series, height_of_one, ser_names, point_cords, colors, cat_width)
+  chosen_points <- draw_chosen_points(data, series, height_of_one, ser_names, point_cords, cat_width)
   return (paste(lines, labels, chosen_points, sep='\n'))
 }
 
 
 #drawing the point we have to have highlighted on the plot
-draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cords, colors, cat_width){
+draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cords, cat_width){
   chosen_points <- ""
   for(i in 1:length(ser_names)){
     #calculating the x cordinates
     x <- 80 + cat_width*(point_cords[i]-1)
     y <- 250 - height_of_one*data[, ser_names[i]][point_cords[i]]
-    circle_color <- colors[match(ser_names[i], series)[1]]
+    #circle_color <- colors[match(ser_names[i], series)[1]]
+    circle_color <- get_gray_color_stacked(match(ser_names[i], series)[1])$bar_color
     chosen_points <- paste(chosen_points,
                            draw_circle_lineplot(x,y,circle_color),
                            #label
@@ -111,24 +113,29 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' @export
 #'
 #' @examples
+#'
+#' #preparing the data frame
+#' data <- data.frame(
+#' time = c(2015, 2016, 2017, 2018, 2019, 2020),
+#' Gamma = c(98, 80, 16, 25, 55, 48),
+#'Delta = c(22, 25, 67, 73, 102, 98)
+#')
+#'
+#' #defining rest of arguments
+#' names <- c("Gamma", "Gamma", "Gamma","Gamma","Delta", "Delta")
+#' cords <- c(1, 4,5,2, 5,4)
+#'
+#' #generating SVG string
+#' line_plot_many_points  <- line_plot_many_points(data, data$time, c("Gamma", "Delta"), c("Gamma inc.", "Delta inc."), names, cords, "years")
+#'
+#' #showing the plot
+#' line_plot_many_points %>% SVGrenderer
+#'
 line_plot_many_points <- function(data, cat, series, series_labels, ser_names, point_cords, interval="months"){
 
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-  draw_lines(.,data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
+  draw_lines(., data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
   finalize()
 }
-
-
-#tests
-data <- data.frame(
-  months = c("Jan", "Feb", "Mar", "Apr"),
-  cos = c(4,5,4,6),
-  cosiek = c(2, 3, 3.5, 1)
-)
-series <- c("cos", "cosiek")
-
-line_plot_normalized(data, data$months, series, series ,c(NA,1,1,NA),"years") %>% SVGrenderer()
-
-
 

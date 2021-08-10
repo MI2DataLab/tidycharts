@@ -25,3 +25,25 @@ SVG string containing chart
 \description{
 Generates line plot with markers on every value.
 }
+\examples{
+
+#preparing a data frame
+data <- data.frame(
+time = c("Jan", "Feb", "Mar", "Apr", "May", "Jun"),
+PL = (c(51, 42, 50, 58, 78, 79) - 30),
+AC = (c(62, 70, 67, 77, 63, 62) - 30)
+)
+#preparing the styles data frame
+styles <- data.frame(
+ PL = c("plan", "plan", "plan", "plan", "plan", "plan"),
+ AC = c("actual", "actual", "actual", "forecast", "forecast", "forecast")
+)
+
+#generating svg string
+line_plot <- line_plot(data, data$time, c("PL", "AC"), c("PL", "AC"),"months", styles)
+
+#show the plot
+line_plot \%>\% SVGrenderer()
+
+
+}

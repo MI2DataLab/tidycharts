@@ -23,3 +23,26 @@ SVG string containing chart
 \description{
 Generates grouped horizontal barchart with scenario triangles.
 }
+\examples{
+
+#preparing data frames
+data <- data.frame(
+city = c("Berlin", "Paris", "London", "Munich", "Vienna"),
+AC = c(592, 1166, 618, 795, 538),
+PL = c(570, 950, 800, 780, 460),
+triangles = c(545, 800, 900, 600, 538) #AC toten bardziej na wierzchu
+)
+
+#preparing the styles data frame
+df_styles <- data.frame(
+ AC = c("actual","actual","actual","actual","actual"),
+ PL = c("plan","plan","plan","plan","plan"),
+ triangles = c("previous", "previous","previous","previous","previous"))
+
+#creating the svg string
+barchart_grouped <- barchart_plot_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
+
+#showing the plot
+barchart_grouped \%>\% SVGrenderer()
+
+}

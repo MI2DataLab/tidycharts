@@ -440,7 +440,8 @@ add_abs_variance_bars <-
            real,
            colors,
            bar_width,
-           x_title) {
+           x_title,
+           x_style) {
     x_pos <- 80
 
     color <- choose_variance_colors(colors)
@@ -467,7 +468,8 @@ add_abs_variance_bars <-
         y = x_axis_pos,
         height = 4.8,
         width = 1.5 * bar_width,
-        color = "rgb(166,166,166)"
+        color = "rgb(166,166,166)",
+        style = x_style
       )
 
       bar_h <- abs(variance[i] / max_val * 200)
@@ -530,6 +532,7 @@ add_relative_variance_pins <-
            colors,
            bar_width,
            x_title,
+           x_style,
            translate = c(0,0),
            styles = NULL) {
     x_axis_pos <- 200
@@ -556,7 +559,8 @@ add_relative_variance_pins <-
         height = 4.8,
         width = 1.5 * bar_width,
         color = "rgb(166,166,166)",
-        translate_vec = translate
+        translate_vec = translate,
+        style = x_style
       )
 
       bar_h <- abs(values[i] / max_val * 100)
@@ -949,6 +953,7 @@ column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'mon
 #' @param real vector containing values that will be compared to baseline
 #' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
+#' @param x_style style of the x axis to indicate baseline scenario. The default is 'prevoius'.
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #' @return SVG string containing chart
@@ -961,7 +966,7 @@ column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'mon
 #' column_chart_absolute_variance(x, baseline, real, x_title = 'profit') %>%
 #'   SVGrenderer()
 column_chart_absolute_variance <-
-  function(x, baseline, real, colors = 1, x_title = "PY", interval = 'months') {
+  function(x, baseline, real, colors = 1, x_title = "PY", x_style = 'previous', interval = 'months') {
 
     bar_width <- get_interval_width(interval)$bar_width
     stop_if_variance_colors(colors)
@@ -969,7 +974,7 @@ column_chart_absolute_variance <-
 
     initialize(x_vector = x, bar_width = bar_width,
                height = get_plot_height_abs_var(real, baseline)) %>%
-      add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title) %>%
+      add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title, x_style) %>%
       finalize()
   }
 
@@ -1083,7 +1088,6 @@ column_chart_grouped <-
 #' Generate column chart with relative variance (in percents)
 #'
 #' @inheritParams column_chart_absolute_variance
-#' @param x_title the title of the plot
 #' @param styles optional vector with styles of the pin heads
 #'
 #' @return SVG string containing chart
@@ -1096,14 +1100,14 @@ column_chart_grouped <-
 #' column_chart_relative_variance(x, baseline, real, x_title = 'profit %') %>%
 #'   SVGrenderer()
 column_chart_relative_variance <-
-  function(x, baseline, real, colors = 1, x_title, styles = NULL, interval = 'months') {
+  function(x, baseline, real, colors = 1, x_title, x_style = 'previous', styles = NULL, interval = 'months') {
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec = c(str_width(x_title), 0)
     initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
-      add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, translate = translation_vec, styles = styles) %>%
+      add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, x_style, translate = translation_vec, styles = styles) %>%
       finalize()
   }
 

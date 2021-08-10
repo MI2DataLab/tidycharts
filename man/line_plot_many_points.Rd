@@ -35,3 +35,23 @@ SVG string containing chart
 \description{
 Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().
 }
+\examples{
+
+#preparing the data frame
+data <- data.frame(
+time = c(2015, 2016, 2017, 2018, 2019, 2020),
+Gamma = c(98, 80, 16, 25, 55, 48),
+Delta = c(22, 25, 67, 73, 102, 98)
+)
+
+#defining rest of arguments
+names <- c("Gamma", "Gamma", "Gamma","Gamma","Delta", "Delta")
+cords <- c(1, 4,5,2, 5,4)
+
+#generating SVG string
+line_plot_many_points  <- line_plot_many_points(data, data$time, c("Gamma", "Delta"), c("Gamma inc.", "Delta inc."), names, cords, "years")
+
+#showing the plot
+line_plot_many_points \%>\% SVGrenderer
+
+}

@@ -77,13 +77,13 @@ draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, y_end, mini
 }
 
 #---
-add_scatter_legend <- function(shift_x, title, categories, colors){
+add_scatter_legend <- function(shift_x, title, categories){
   legend <- add_label(334.8+4.8 + shift_x, 56, title, anchor="start")
   y <- 50+4.8+12
   for(i in 1:length(categories)){
     legend <- paste(
       legend,
-      draw_circle(343.6 + shift_x, y, colors[i]),
+      draw_circle(343.6 + shift_x, y, get_scatter_colors(i)),
       add_label(343.6+4.8+2.4 + shift_x, y+6, categories[i], anchor="start"),
       sep='\n'
     )
@@ -95,7 +95,7 @@ add_scatter_legend <- function(shift_x, title, categories, colors){
 #---
 draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value, shift_y, shift_x, width_of_one, height_of_one, x_start, x_end, y_start, y_end){ #labels_vector - x axis name, y axis name
   points <- ""
-  colors <- c("rgb(89,79,223)", "rgb(158,144,197)", "rgb(104,186,165)","rgb(246, 235, 255)", "rgb(30,69,148)", "rgb(64,64,64)")
+  #colors <- c("rgb(89,79,223)", "rgb(158,144,197)", "rgb(104,186,165)","rgb(246, 235, 255)", "rgb(30,69,148)", "rgb(64,64,64)")
   categories <- unique(cat)
 
   if(is.null(bubble_value)== FALSE){
@@ -105,7 +105,8 @@ draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_spac
 
   for (i in 1:length(x)){
     cat_index <- match(cat[i],categories)[1]
-    color <- colors[cat_index]
+    #color <- colors[cat_index]
+    color <- get_scatter_colors(cat_index)
     if(is.null(bubble_value)== FALSE){
       stop_if_bubble_negative(bubble_value)
       points <- paste(points, draw_circle(80 + width_of_one*(x[i] - x_start) + shift_x, 250 - height_of_one*(y[i] - y_start), color, r_of_one*bubble_value[i], opacity=0.55), sep='\n')
@@ -122,7 +123,7 @@ draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_spac
                add_label( 334.8+4.8 + shift_x, 250+4.8+12, x_names[2], anchor="start"),
                add_label( 80-4.8 + shift_x, 50 - 4.8 - 6 - 6 -4.8, y_names[1], anchor="end"),
                add_label( 80-4.8 + shift_x, 50 -6 -4.8, y_names[2], anchor="end"),
-               add_scatter_legend(shift_x, legend_title, categories, colors),
+               add_scatter_legend(shift_x, legend_title, categories),
                points,
                sep='\n'))
 }
