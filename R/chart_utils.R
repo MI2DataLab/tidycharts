@@ -21,31 +21,30 @@ initialize <-
     if (!is.null(y_vector) & ! is.null(bar_width)) {
       height <- length(y_vector) * 1.5 * bar_width + y_margin
     }
-    return(
-      paste(
-        svg_string,
-        paste0(
-          '<svg  version="1.1"
+    svg_string <- paste(
+      svg_string,
+      paste0(
+        '<svg  version="1.1"
           baseProfile="full"
           width="',
-          width,
-          '" height="',
-          height,
-          '" transform="',
-          transformation,
-          '" >'
-        ),
-        '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+        width,
+        '" height="',
+        height,
+        '" transform="',
+        transformation,
+        '" >'
+      ),
+      '<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
             <rect x="0" y="0" width="4" height="4" fill="white"/>
             <path d="M-1,1 l2,-2
                      M0,4 l4,-4
                      M3,5 l2,-2"
             style="stroke:rgb(64,64,64); stroke-width:1" />
             </pattern>',
-        svg_string_append,
-        sep = "\n"
-      )
+      svg_string_append,
+      sep = "\n"
     )
+    return(svg_string)
   }
 
 
@@ -87,8 +86,8 @@ add_title <- function(svg_string, line1, line2_measure, line2_rest, line3=""){
 
 get_svg_size <- function(svg_string){
   size <- numeric()
-  size[1] <- str_extract(svg_string, 'width="\\d+"') %>% str_extract("\\d+") %>% as.numeric()
-  size[2] <- str_extract(svg_string, 'height="\\d+"') %>% str_extract("\\d+") %>% as.numeric()
+  size[1] <- str_extract(svg_string, 'width="\\d+\\.?\\d*"') %>% str_extract("\\d+\\.?\\d*") %>% as.numeric()
+  size[2] <- str_extract(svg_string, 'height="\\d+\\.?\\d*"') %>% str_extract("\\d+\\.?\\d*") %>% as.numeric()
   return(size)
 }
 
