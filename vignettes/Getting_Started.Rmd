@@ -42,9 +42,14 @@ Bar charts shoud be used to show structure in one moment of time. One of typical
 ```{r data}
 data_barchart <- data.frame(
   dep = c('Services', 'Production', 'Marketing', 'Purchasing'),
-  profit = c(12, 15, 2, -3)
+  profit = c(12, 15, 2, -3),
+  operational = c(9, 7, 1.5, -0.4),
+  property = c(2, 4, 0.5, -0.6),
+  bonus = c(1, 4, 0, -2)
 )
 ```
+
+In the example data `operational`, `property` and `bonus` are parts of `profit` and sum up to it.
 
 Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function, `SVGrenderer()` should be used to render the plot as HTML content. Otherwise one element character vector with SVG content is returned. We can chain the commands by pipe operator (`%>%`).
 
@@ -63,6 +68,25 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') 
   SVGrenderer()
 ```
 
+We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
+
+```{r barchart-stacked}
+barchart_plot(data = data_barchart, cat = data_barchart$dep, 
+              series = c('operational', 'property', 'bonus')) %>%  
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
+  SVGrenderer()
+```
+
+## Normalized
+
+Normalized barplot should be used to show the proportions of parts in each category. Typical intention of using this kind of plot could be to visualize the percentage structure of profit among different departments in a company.
+
+```{r barchart-normalized}
+barchart_plot_normalized(data = data_barchart, cat = data_barchart$dep,
+                         series = c('operational', 'property', 'bonus')) %>% 
+  SVGrenderer()
+```
+
 ## Indexed
 
 We use indecies to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
@@ -73,4 +97,3 @@ barchart_plot_index(data = data_barchart,
                     index_val = 10, index_label = 'PY best result') %>% 
   SVGrenderer()
 ```
-
