@@ -54,6 +54,7 @@ join_plots <- function(..., nrows = length(list(...)), ncols = 1){
   return(result_string)
 }
 
+
 translate_svg<- function(svg_string, x, y){
   return(paste('<g transform="translate(',
         x,
