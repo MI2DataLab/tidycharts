@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  EDA_Example: EDA_Example.html
+  EDA for palmer penguins data set: EDA for palmer penguins data set.html
   Getting_Started: Getting_Started.html
   test-vignette: test-vignette.html
-last_built: 2021-08-10T12:08Z
+last_built: 2021-08-10T12:09Z
 
