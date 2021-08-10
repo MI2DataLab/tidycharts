@@ -11,7 +11,7 @@ join_plots(..., nrows = length(list(...)), ncols = 1)
 
 \item{nrows}{number of rows of plots in joint plot, default is set to number of plots}
 
-\item{nclos}{number of columns of plots in joint plot, default is set to 1}
+\item{ncols}{number of columns of plots in joint plot, default is set to 1}
 }
 \value{
 Character vector with SVG content

@@ -2,7 +2,7 @@
 #'
 #' @param ... mumltiple character vectors with SVG content
 #' @param nrows number of rows of plots in joint plot, default is set to number of plots
-#' @param nclos number of columns of plots in joint plot, default is set to 1
+#' @param ncols number of columns of plots in joint plot, default is set to 1
 #'
 #' @return Character vector with SVG content
 #' @export
