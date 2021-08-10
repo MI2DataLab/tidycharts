@@ -62,6 +62,22 @@ test_that("Scatterplot with negative x and y value works without errors", {
   )
 })
 
+test_that("Simple scatterplot", {
+  expect_magick(
+    scatter_plot(
+      data2,
+      data2$x,
+      data2$value,
+      data2$cat,
+      2,
+      1,
+      c("time", "in s"),
+      c("distance", "in km"),
+      "Legenda"
+    ) %>% show()
+  )
+})
+
 test_that("Scatterplot with negative bubble value throws error", {
   expect_error(
     scatter_plot(
