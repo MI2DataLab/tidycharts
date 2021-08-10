@@ -10,6 +10,8 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: r-lib/actions/setup-r@master
 
@@ -36,6 +38,8 @@ jobs:
           remotes::install_github("ModelOriented/DrWhyTemplate")
           install.packages("textshaping")
         shell: Rscript {0}
+       
+
 
       - name: Install package
         run: R CMD INSTALL .
