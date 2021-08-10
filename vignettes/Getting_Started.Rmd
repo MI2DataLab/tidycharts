@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(dplyr)
 ```
 
 This vignette shows the usage of the ibcsplot package. It contains different chart types examples and tips for proper data visualization.
@@ -33,18 +34,27 @@ library(ibcsplot)
 
 ```
 
-# Bar charts
+# Bar charts<a name="barcharts"></a>
 
-## Basic
+## Data
 
 Bar charts shoud be used to show structure in one moment of time. One of typical usecase of the barchart is to visualize profit of a company in a division by departments. The data structure could look the following:
 
 ```{r data}
 data_barchart <- data.frame(
   dep = c('Services', 'Production', 'Marketing', 'Purchasing'),
-  profit = c(12, 15, 2, -3)
+  profit = c(12, 15, 2, -3),
+  operational = c(9, 7, 1.5, -0.4),
+  property = c(2, 4, 0.5, -0.6),
+  bonus = c(1, 4, 0, -2),
+  prev_year = c(10, 16, 4, -1),
+  plan = c(11, 13, 2, -2.5)
 )
 ```
+
+In the example data `operational`, `property` and `bonus` are parts of `profit` and sum up to it.
+
+## Basic
 
 Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function, `SVGrenderer()` should be used to render the plot as HTML content. Otherwise one element character vector with SVG content is returned. We can chain the commands by pipe operator (`%>%`).
 
@@ -63,6 +73,25 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') 
   SVGrenderer()
 ```
 
+We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
+
+```{r barchart-stacked}
+barchart_plot(data = data_barchart, cat = data_barchart$dep, 
+              series = c('operational', 'property', 'bonus')) %>%  
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
+  SVGrenderer()
+```
+
+## Normalized
+
+Normalized barplot should be used to show the proportions of parts in each category. Typical intention of using this kind of plot could be to visualize the percentage structure of profit among different departments in a company.
+
+```{r barchart-normalized}
+barchart_plot_normalized(data = data_barchart, cat = data_barchart$dep,
+                         series = c('operational', 'property', 'bonus')) %>% 
+  SVGrenderer()
+```
+
 ## Indexed
 
 We use indecies to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
@@ -73,4 +102,126 @@ barchart_plot_index(data = data_barchart,
                     index_val = 10, index_label = 'PY best result') %>% 
   SVGrenderer()
 ```
+
+## Grouped
+
+To visualize 2 or 3 series of data, which **do not** sum up to some value, grouped barchart should be used. First series is visualized by bars in the foreground, second by bars in the background and third in the form of triangles. Style of the bars and triangles indicates type of data, so called scenerios. 
+
+The most typical usecase of this chart is to visualize profit of different departments in a company with comparison to bugdet and previous year data.
+
+```{r barchart-grouped}
+
+styles <- data.frame(profit = rep('actual', 4),
+                     plan = rep('plan', 4),
+                     prev_year = rep('previous',4))
+
+barchart_plot_grouped(data = data_barchart,
+                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
+                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles) %>% 
+  SVGrenderer()
+```
+
+## Variances
+
+Show variance in data using relative variance plots or absolute variance plots. Define the baseline and the real values. Axis on variance plots use styles to scenario of baseline data. Relative variance plot shows difference in percents and absolute variance plot shows it in base units.
+
+Example usage: Visualize difference between two scenarios in division by departments.
+
+```{r barchart-abs-variance}
+barchart_plot_absolute_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan') %>% 
+  SVGrenderer()
+```
+
+```{r barchart-rel-variance}
+barchart_plot_relative_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan') %>% 
+  SVGrenderer()
+
+```
+
+## Join plots
+
+Combining plots in one grid is useful and easy by using the function `join_plots`.
+
+```{r barchart-join}
+
+join_plots(
+  barchart_plot_grouped(data = data_barchart,
+                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
+                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles),
+  barchart_plot_absolute_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan'),
+  barchart_plot_relative_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan'),
+  nrows = 1,
+  ncols = 3
+) %>% SVGrenderer()
+```
+
+# Column charts
+
+Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts) 
+
+## Data 
+
+Here is how an example column chart data frame could look like: 
+
+```{r}
+data_time_series <- data.frame(
+  time = month.abb,
+  Poland = 2 + 0.5 * sin(1:12),
+  Germany = 3 + sin(3:14),
+  Slovakia = 2 + 2 * cos(1:12)
+)
+```
+
+The `time` column consists of the three-letter abbreviations for the English month names and other columns constit of some artificial data, it could be for example sales in different countries.
+
+## Basic
+
+Use basic column chart to make a simple visualization of a time series. Pass `interval` parameter to change the width of columns.
+
+Typical task related to this kind of plot could be the following: Show sales from different countries over the months. 
+
+```{r columnchart-basic}
+column_chart(data_time_series, x = 'time', 
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% 
+  SVGrenderer()
+```
+
+## Waterfall
+
+To visualize contribution waterfall charts can be used. We need to transform the data a little bit to before passing it into the plotting function. 
+
+Example usage: visualize contribution of monthly sales as a part of year sales.
+
+```{r columnchart-waterfall}
+data_time_series %>% group_by(time) %>%
+  summarise(Sales = sum(Poland, Germany, Slovakia)) %>%
+  arrange(match(time, month.abb)) %>% 
+  mutate(Sales = round(cumsum(Sales), 2)) -> df_summarized
+
+column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') %>% 
+  SVGrenderer()
+```
+
+## Other column charts
+
+Other types of column charts are available, ie. `column_chart_grouped` or `column_chart_normalized`. When using them similar data visualization rules apply as for [bar charts](#barcharts). Feel free to explore them and see [reference page](https://sawickibartosz.github.io/ibcsplot/reference/index.html) if need help.
+
+# Line charts <a name="linecharts"></a>
+
 

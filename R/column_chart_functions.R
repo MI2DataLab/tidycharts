@@ -545,7 +545,7 @@ add_relative_variance_pins <-
 
     svg_string <- draw_text(
       svg_string,
-      text = paste0("\u0394 ", x_title), # Δ = \u0394
+      text = paste0("\u0394 ", x_title), # delta sign = \u0394
       x = x_pos + translate[1] + bar_width * 0.5,
       y = x_axis_pos - first_bar_h / 2 + 6,
       text_anchor = "end"

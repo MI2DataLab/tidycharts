@@ -1,8 +1,8 @@
 ---
-title: "EDA for palmer penguins data set"
+title: "EDA-for-palmer-penguins-data-set"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{EDA-Example}
+  %\VignetteIndexEntry{EDA-for-palmer-penguins-data-set}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

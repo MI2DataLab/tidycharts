@@ -98,10 +98,6 @@ draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_spac
   #colors <- c("rgb(89,79,223)", "rgb(158,144,197)", "rgb(104,186,165)","rgb(246, 235, 255)", "rgb(30,69,148)", "rgb(64,64,64)")
   categories <- unique(cat)
 
-  if(is.null(bubble_value)== FALSE){
-    bubble_min <- min(bubble_value)
-    r_of_one <- 2.4/sqrt(bubble_min)
-  }
 
   for (i in 1:length(x)){
     cat_index <- match(cat[i],categories)[1]
@@ -109,6 +105,8 @@ draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_spac
     color <- get_scatter_colors(cat_index)
     if(is.null(bubble_value)== FALSE){
       stop_if_bubble_negative(bubble_value)
+      bubble_min <- min(bubble_value)
+      r_of_one <- 2.4/sqrt(bubble_min)
       points <- paste(points, draw_circle(80 + width_of_one*(x[i] - x_start) + shift_x, 250 - height_of_one*(y[i] - y_start), color, r_of_one*bubble_value[i], opacity=0.55), sep='\n')
     }else{
       points <- paste(points, draw_circle(80 + width_of_one*(x[i] - x_start) + shift_x, 250 - height_of_one*(y[i] - y_start), color), sep='\n')

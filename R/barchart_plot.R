@@ -268,7 +268,7 @@ barchart_plot_index <- function(data, cat, series, index_val,series_labels = ser
 #' #show the plot
 #' barchart_normalized %>% SVGrenderer()
 #'
-barchart_plot_normalized <- function(data, cat, series, series_labels){
+barchart_plot_normalized <- function(data, cat, series, series_labels = series){
   df <- normalize_rows(data, cat, series)
   y_end <- 50 + 24*length(cat)
   initialize(y_vector = cat,
