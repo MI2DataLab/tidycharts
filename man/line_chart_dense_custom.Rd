@@ -32,6 +32,8 @@ line_chart_dense_custom(
 \item{df_numbers}{vector containing index of data frame in the list of a value to be marked}
 
 \item{point_cords}{vector of the same length as df_numbers containing numerical values of indexes in data frame of values to be marked}
+
+\item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
 SVG string containing chart
