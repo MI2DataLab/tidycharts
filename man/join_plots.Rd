@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_plots.R
 \name{join_plots}
 \alias{join_plots}
-\title{Join SVG plots. This function first populates each place in the first column, then rows in the seccond column}
+\title{Join SVG plots. This function first populates each place in the first row, then columns in the second row}
 \usage{
 join_plots(..., nrows = length(list(...)), ncols = 1)
 }
@@ -17,7 +17,7 @@ join_plots(..., nrows = length(list(...)), ncols = 1)
 Character vector with SVG content
 }
 \description{
-Join SVG plots. This function first populates each place in the first column, then rows in the seccond column
+Join SVG plots. This function first populates each place in the first row, then columns in the second row
 }
 \examples{
   df <- data.frame(
