@@ -131,14 +131,14 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' #showing the plot
 #' line_chart %>% SVGrenderer
 #'
-line_chart <- function(data, cat, series, series_labels, ser_names, point_cords, interval="months"){
+line_chart <- function(data, x, series, series_labels, ser_names, point_cords, interval="months"){
 
   if(length(x) == 1){
     x <- data[,x]
   }
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-  draw_lines(., data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
+  draw_lines(., data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
   finalize()
 }
 

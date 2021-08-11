@@ -141,7 +141,7 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
 #' line_plot_stacked %>% SVGrenderer()
 #'
 #'
-line_plot_stacked <- function(data, cat, series, series_labels, show_labels, interval = "months"){
+line_chart_stacked <- function(data, cat, series, series_labels, show_labels, interval = "months"){
 
   cat_width <- get_interval_width(interval)$category_width
   initialize(width = 80 + cat_width*length(cat) +80, height = 300) %>%
