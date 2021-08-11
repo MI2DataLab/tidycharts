@@ -8,24 +8,25 @@
 #---
 #musi byc osobny data frame dla kazdej serii
 
-add_category_complex <- function(shift, data, cat, x, k){ #cat jest calym wektorem
+add_category_complex <- function(shift, data, cat, x, k, interval){ #cat jest calym wektorem
+  cat_width <- get_interval_width(interval)$category_width
   return(paste(
     #linia
-    draw_line(x - 24, x + 24, 250, 250),
+    draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
     #label with the value
-    add_label(x, 268.4+shift, cat[k]),
+    add_label(x, 268.4 + shift, cat[k]),
     #asisting line
-    draw_line(x-24, x-24, 50, 250+shift, "black", 0.1),
+    draw_line(x - cat_width/2, x - cat_width/2, 50, 250 + shift, "black", 0.1),
     sep="\n"
   ))
 }
 
 #----
-draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat, series_labels, df_numbers, point_cords){ #x,y,cat to string z nazwa kolumny
+draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat, series_labels, interval,df_numbers, point_cords){ #x,y,cat to string z nazwa kolumny
   maxes<-c()
   neg<-c()
   labels<-""
-  #colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
+  cat_width <- get_interval_width(interval)$category_width
 
   for(k in 1:length(list)){
     maxes <- c(maxes, max(abs(list[[k]][,vector_y[k]])))
@@ -36,8 +37,6 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
   if(length(neg) == 0){shift <- 0}
   else{shift <- height_of_one*abs(min(neg))}
 
-  #shift <- height_of_one*abs(min(neg))
-  #if(is.finite(shift)==FALSE){shift <- 0} #in case there are no negative values
 
   lines<-""
   x_start <- 80
@@ -64,32 +63,33 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
       if( i!= 1){
         lines <- paste(
           lines,
-          draw_line(x_to_connect, x_start + 48*filtered[,x][1]/100, y_to_connect, 250-(height_of_one*filtered[,y][1]), color),
+          draw_line(x_to_connect, x_start + cat_width*filtered[,x][1]/100, y_to_connect, 250-(height_of_one*filtered[,y][1]), color),
           sep='\n')
       }
       for(j in 1:(length(filtered[,x])-1)){ #going through points in one category/ time series
         lines <- paste(lines,
                        #linia
-                       draw_line(x_start + 48*filtered[,x][j]/100, x_start + 48*filtered[,x][j+1]/100, 250-(height_of_one*filtered[,y][j]), 250-(height_of_one*filtered[,y][j+1]), color),
+                       draw_line(x_start + cat_width*filtered[,x][j]/100, x_start + cat_width*filtered[,x][j+1]/100, 250-(height_of_one*filtered[,y][j]), 250-(height_of_one*filtered[,y][j+1]), color),
                        sep='\n')
       }
-      lines <- paste(lines, add_category_complex(shift ,data, categories[,cat], x_start+24, i),sep='\n')
-      x_to_connect <- x_start + 48*filtered[,x][j+1]/100
-      x_start <- x_start+48
+      lines <- paste(lines, add_category_complex(shift ,data, categories[,cat], x_start + cat_width/2, i, interval),sep='\n')
+      x_to_connect <- x_start + cat_width*filtered[,x][j+1]/100
+      x_start <- x_start + cat_width
       y_to_connect <- 250-(height_of_one*filtered[,y][j+1])
     }
   }
   #adding last assisting line
   lines <- paste(lines,
-                 draw_line(80+48*length(categories[,cat]), 80+48*length(categories[,cat]), 50, 250+shift, "black", 0.1),
+                 draw_line(80 + cat_width*length(categories[,cat]), 80 + cat_width*length(categories[,cat]), 50, 250+shift, "black", 0.1),
                  sep='\n')
-  chosen_points <- draw_chosen_points_complex(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords, categories)
+  chosen_points <- draw_chosen_points_complex(list, vector_x, vector_y, vector_cat, interval, df_numbers, height_of_one, point_cords, categories)
   return(paste(svg_string, lines, labels, chosen_points ,sep='\n'))
 }
 
 #---
-draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_numbers, height_of_one, point_cords,categories){
+draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, interval,df_numbers, height_of_one, point_cords,categories){
   chosen_points <- ""
+  cat_width <- get_interval_width(interval)$category_width
 
   if(is.null(df_numbers)==FALSE){
   for(i in 1:length(df_numbers)){ #going through all chosen points
@@ -104,8 +104,8 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
     #calculating x coordinate
     p_cat <- data[,cat][point_cords[i]]
     cat_index <- match(p_cat, categories[,vector_cat[length(list)]])[1] #which category it is
-    x_start <- 80 + 48*(cat_index-1)
-    x_cir <- x_start + 48*data[,x][point_cords[i]]/100
+    x_start <- 80 + cat_width*(cat_index-1)
+    x_cir <- x_start + cat_width*data[,x][point_cords[i]]/100
 
     y_cir <- 250 - height_of_one*data[, y][point_cords[i]]
     circle_color <- color
@@ -166,9 +166,9 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, df_
 #' line_plot_complex %>% SVGrenderer()
 #'
 #'
-line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels, df_numbers=NULL, point_cords=NULL){
+line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels, interval="months",df_numbers=NULL, point_cords=NULL){
   initialize() %>%
-    draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels, df_numbers, point_cords) %>%
+    draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels, interval,df_numbers, point_cords) %>%
     finalize()
 }
 
