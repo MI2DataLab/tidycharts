@@ -1,24 +1,24 @@
 
 
 #adding a rectangle marker with label above or under + categories labels
-add_point <- function(shift ,data, cat, value, x, height_of_one, color, k, minimal, cat_width, style = NULL){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
+add_point <- function(shift ,data, cat, value, x_pos, height_of_one, color, k, minimal, cat_width, style = NULL){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
 
   label<-""
   if(value > 0){
-    rect <- draw_rect(x-5.6, (244.4-(height_of_one*value)), color, 11.2, 11.2, style = style)
+    rect <- draw_rect(x_pos-5.6, (244.4-(height_of_one*value)), color, 11.2, 11.2, style = style)
     y_label <- (250-(height_of_one*value))
     }
   else{
-    rect <- draw_rect(x-5.6, (250-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2, style = style)
+    rect <- draw_rect(x_pos-5.6, (250-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2, style = style)
     y_label <- (250 + (height_of_one*abs(value)))
     }
 
   if(minimal==1){ #ostatni podpis pod spodem
     #label under
-    label <- add_label(x, y_label + 5.6 + 4.8 +9, value, color) #?
+    label <- add_label(x_pos, y_label + 5.6 + 4.8 +9, value, color) #?
   }else{
     #label above
-    label <- add_label(x, y_label -5.6 - 4.8, value, color)
+    label <- add_label(x_pos, y_label -5.6 - 4.8, value, color)
   }
 
   return(paste(
@@ -49,7 +49,7 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width,
   points <- svg_string
   labels <- ""
   #colors <- c("rgb(64,64,64)","rgb(166,166,166)","rgb(70,70,70)","rgb(90,90,90)" , "rgb(110,110,110)","rgb(127,127,127)" )
-  x <- 80
+  x_pos <- 80
 
   for(k in 1:(length(series))){ #going through series
 
@@ -68,37 +68,37 @@ draw_points <- function(svg_string, data, cat, series, series_labels, cat_width,
       if (k == 1) {
         points <- paste(points,
                         #category label
-                        add_label(x, 268.4 + shift, cat[i], "black"),
+                        add_label(x_pos, 268.4 + shift, cat[i], "black"),
                         #ticks
-                        draw_line(x, x, 250,251.6),
+                        draw_line(x_pos, x_pos, 250,251.6),
                         #x-axis line
-                        draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+                        draw_line(x_pos - cat_width/2, x_pos + cat_width/2, 250, 250),
                         sep = '\n')
       }
       points <- paste(points,
-                      add_point(shift, data, cat[i], values[i], x, height_of_one, color,k, minimal, cat_width, style = style),
+                      add_point(shift, data, cat[i], values[i], x_pos, height_of_one, color,k, minimal, cat_width, style = style),
                       #line between two points
-                      draw_line(x+5.6, x + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
+                      draw_line(x_pos+5.6, x_pos + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
                       sep='\n')
 
-      x <- x + cat_width
+      x_pos <- x_pos + cat_width
     }
     i <- length(cat)
     style <- tail(styles, n=1)[[k]]
     if(k == 1){
       points <- paste(points,
                       #category label
-                      add_label(x, 268.4 + shift, cat[i], "black"),
+                      add_label(x_pos, 268.4 + shift, cat[i], "black"),
                       #ticks
-                      draw_line(x, x, 250,251.6),
+                      draw_line(x_pos, x_pos, 250,251.6),
                       #x-axis line
-                      draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+                      draw_line(x_pos - cat_width/2, x_pos + cat_width/2, 250, 250),
                       sep = "\n")
     }
     points <- paste(points,
-                    add_point(shift, data, cat[i], values[i], x, height_of_one, color, k, minimal, cat_width, style = style ),
+                    add_point(shift, data, cat[i], values[i], x_pos, height_of_one, color, k, minimal, cat_width, style = style ),
                     sep='\n')
-    x <-80
+    x_pos <-80
   }
 
 
