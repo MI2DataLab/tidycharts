@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate horizontal waterfall chart — bar_chart_waterfall • ibcsplot</title>
+<title>Draw triangle and append it to svg string — draw_triangle • ibcsplot</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Generate horizontal waterfall chart — bar_chart_waterfall" />
-<meta property="og:description" content="Generate horizontal waterfall chart" />
+<meta property="og:title" content="Draw triangle and append it to svg string — draw_triangle" />
+<meta property="og:description" content="Draw triangle and append it to svg string" />
 
 
 
@@ -137,60 +137,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate horizontal waterfall chart</h1>
+    <h1>Draw triangle and append it to svg string</h1>
     
-    <div class="hidden name"><code>bar_chart_waterfall.Rd</code></div>
+    <div class="hidden name"><code>draw_triangle.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate horizontal waterfall chart</p>
+    <p>Draw triangle and append it to svg string</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bar_chart_waterfall</span><span class='op'>(</span>
-  <span class='va'>cat</span>,
-  <span class='va'>series</span>,
-  data <span class='op'>=</span> <span class='cn'>NULL</span>,
-  add_result <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  result_title <span class='op'>=</span> <span class='cn'>NULL</span>
+    <pre class="usage"><span class='fu'>draw_triangle</span><span class='op'>(</span>
+  <span class='va'>svg_string</span>,
+  <span class='va'>tip_position_x</span>,
+  <span class='va'>tip_position_y</span>,
+  orientation <span class='op'>=</span> <span class='st'>"left"</span>,
+  style <span class='op'>=</span> <span class='cn'>NULL</span>,
+  translate_vec <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cat</th>
-      <td><p>vector containing category names of values</p></td>
+      <th>svg_string</th>
+      <td><p>svg string to paste a trinagle</p></td>
     </tr>
     <tr>
-      <th>series</th>
-      <td><p>vector containing names of columns in data with values to plot</p></td>
+      <th>tip_position_x, tip_position_y</th>
+      <td><p>x, y position of tip of the triangle</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>data frame containing data to be plotted</p></td>
+      <th>orientation</th>
+      <td><p>where the triangle should be pointing. One of c('top', 'right', 'bottom', 'left').</p></td>
     </tr>
     <tr>
-      <th>add_result</th>
-      <td><p>boolean value if result bar should be plotted</p></td>
+      <th>style</th>
+      <td><p>style of the triangle</p></td>
     </tr>
     <tr>
-      <th>result_title</th>
-      <td><p>the title for the result bar. Ignored if add_result is false</p></td>
+      <th>translate_vec</th>
+      <td><p>the transaltion vector</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>SVG string containing chart</p>
+    <p>svg string</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  city <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Berlin"</span>, <span class='st'>"Munich"</span>, <span class='st'>"Cologne"</span>, <span class='st'>"London"</span>, <span class='st'>"Vienna"</span>, <span class='st'>"Paris"</span>, <span class='st'>"Zurich"</span><span class='op'>)</span>,
-  profit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>bar_chart_waterfall</span><span class='op'>(</span>cat <span class='op'>=</span> <span class='st'>'city'</span>, series <span class='op'>=</span> <span class='st'>'profit'</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
