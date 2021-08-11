@@ -172,32 +172,33 @@ add_result_bar <- function(svg_string,
 
 #' Generate horizontal waterfall chart
 #'
-#' @param y vector containing labels for y axis
-#' @param values vector containing values that will be plotted
 #' @param add_result boolean value if result bar should be plotted
 #' @param result_title the title for the result bar. Ignored if add_result is false
+#'
+#' @inheritParams bar_chart
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-barchart_plot_waterfall <-
-  function(y,
-           values,
+bar_chart_waterfall <-
+  function(cat,
+           series,
+           data = NULL,
            add_result = FALSE,
            result_title = NULL) {
-    stopifnot(length(y) == length(values))
+    stopifnot(length(cat) == length(series))
     if (add_result) {
-      labels <- c(y,result_title)
-    }else{
-      labels <- y
+      labels <- c(cat, result_title)
+    } else{
+      labels <- cat
     }
     initialize(y_vector = labels,
                bar_width = 16) %>%
-      add_horiz_waterfall_bars(., y, values) %>%
+      add_horiz_waterfall_bars(., cat, series) %>%
       {
         ifelse(add_result,
-               add_result_bar(., y, values, result_title),
+               add_result_bar(., cat, series, result_title),
                .)
       } %>%
       finalize()
