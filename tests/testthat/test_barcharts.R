@@ -48,11 +48,11 @@ df_waterfall <- data.frame(
 )
 
 test_that("Basic barchart is working", {
-  expect_magick(barchart_plot(data, data$city, groups, groups, styles = styles) %>% show())
+  expect_magick(bar_chart(data, data$city, groups, groups, styles = styles) %>% show())
 })
 
 test_that('Only positive values on a barchart_index don\'t throw warnings', {
-  expect_magick(barchart_plot_index(df, df$animal, series = srs, index_val = 3, series_labels = srs) %>% show())
+  expect_magick(bar_chart_reference(df, df$animal, series = srs, ref_val = 3, series_labels = srs) %>% show())
 })
 
 
@@ -62,7 +62,7 @@ test_that('Absolute variance barplot works', {
   cat <- letters[1:5]
 
   expect_magick(
-  barchart_plot_absolute_variance(
+    bar_chart_absolute_variance(
     cat = cat,
     baseline = baseline,
     real = real,
@@ -77,7 +77,7 @@ test_that('Relative variance barplot works', {
   cat <- letters[1:5]
 
   expect_magick(
-    barchart_plot_relative_variance(
+    bar_chart_relative_variance(
       cat = cat,
       baseline = baseline,
       real = real,
@@ -90,11 +90,11 @@ test_that('Relative variance barplot works', {
 
 test_that("Barchart with index line is working", {
   expect_magick(
-    barchart_plot_index(
+    bar_chart_reference(
       data,
       cat = data$city,
       groups,
-      index_val = 602,
+      ref_val = 602,
       series_labels = groups
     ) %>% show()
   )
@@ -102,24 +102,24 @@ test_that("Barchart with index line is working", {
 
 test_that("Normalized horizontal barcharts work", {
   groups2 <- c(groups, 'services')
-  expect_magick(barchart_plot_normalized(data, data$city, groups2, groups2) %>% show())
+  expect_magick(bar_chart_normalized(data, data$city, groups2, groups2) %>% show())
 })
 
 test_that("Grouped horizontal barcharts work", {
   expect_magick(
-    barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% show()
+    bar_chart_grouped(data, data$city, series, series, df_styles = df_styles) %>% show()
   )
 })
 
 test_that("Grouped horizontal barcharts work with only positive velues", {
   expect_magick(
-    barchart_plot_grouped(df, df$animal, srs, srs) %>% show()
+    bar_chart_grouped(df, df$animal, srs, srs) %>% show()
   )
 })
 
 test_that("Waterfall horizontal barchart works", {
   expect_magick(
-    barchart_plot_waterfall(
+    bar_chart_waterfall(
       df_waterfall$category,
       df_waterfall$values,
       add_result = TRUE,
