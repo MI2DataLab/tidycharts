@@ -166,11 +166,29 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 #' line_plot_complex %>% SVGrenderer()
 #'
 #'
-line_plot_many_points_complex <- function(list, vector_x, vector_y, vector_cat, series_labels, interval="months",df_numbers=NULL, point_cords=NULL){
-  initialize() %>%
-    draw_lines_complex(.,list, vector_x, vector_y, vector_cat, series_labels, interval,df_numbers, point_cords) %>%
-    finalize()
-}
+line_plot_many_points_complex <-
+  function(list,
+           vector_x,
+           vector_y,
+           vector_cat,
+           series_labels,
+           df_numbers = NULL,
+           point_cords = NULL,
+           interval = "months") {
+    initialize() %>%
+      draw_lines_complex(
+        .,
+        list,
+        vector_x,
+        vector_y,
+        vector_cat,
+        series_labels,
+        interval,
+        df_numbers,
+        point_cords
+      ) %>%
+      finalize()
+  }
 
 #' Wrapper for complex lineplot
 #'
