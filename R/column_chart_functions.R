@@ -808,6 +808,7 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' @param data data frame in wide format containing data to be plotted
 #' @param x vector containing labels for x axis or name of column in df with values of x axis labels
 #' @param series vector containing names of columns in df with values to plot
+#' @param series_labels optional vector with labels for series to be plotted as legend. The default is the same as series.
 #' @param styles optional vector with styles of bars
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
@@ -828,7 +829,7 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' # show the plot
 #' svg1 %>% SVGrenderer()
 #'
-column_chart <- function(data, x, series = NULL, styles = NULL, interval = 'months') {
+column_chart <- function(data, x, series = NULL, series_labels = series, styles = NULL, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
   stop_if_many_series(series, max_series = 6) # maximum 6 series
   stop_if_pos_neg_values(data, series) # signum of values in one bar is the same for every bar
@@ -836,7 +837,7 @@ column_chart <- function(data, x, series = NULL, styles = NULL, interval = 'mont
   stop_if_many_categories(x, max_categories = 24)
   initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(data[series])) %>%
     add_bars(data, x, series, bar_width = bar_width, styles) %>%
-    add_legend(data, x, series, bar_width = bar_width) %>%
+    add_legend(data, x, series_labels, bar_width = bar_width) %>%
     add_top_values(data, x, series, bar_width = bar_width) %>%
     finalize()
 }
@@ -859,7 +860,7 @@ column_chart <- function(data, x, series = NULL, styles = NULL, interval = 'mont
 #'
 #' # show the plot
 #' svg %>% SVGrenderer()
-column_chart_normalized <- function(data, x, series = NULL, interval = 'months') {
+column_chart_normalized <- function(data, x, series = NULL, series_labels = series, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
 
   x <- get_vector(data, x)
@@ -870,7 +871,7 @@ column_chart_normalized <- function(data, x, series = NULL, interval = 'months')
 
   initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
-    add_legend(normalized_df, x, series, bar_width = bar_width) %>%
+    add_legend(normalized_df, x, series_labels, bar_width = bar_width) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 75, label = "100") %>%
     finalize()
 }
@@ -1026,7 +1027,7 @@ column_chart_absolute_variance <-
 #' @param foreground vector representing heights of bars visible in the foreground
 #' @param background vector representing heights of bars visible in the background
 #' @param triangles optional vector representing position of triangles
-#' @param titles vector of series titles. Consists of 2 or 3 elements
+#' @param series_labels vector of series titles. Consists of 2 or 3 elements
 #' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
@@ -1043,40 +1044,40 @@ column_chart_absolute_variance <-
 #                      foreground = df$actual,
 #                      background = df$budget,
 #                      triangles = df$prev_year,
-#                      titles = c('AC', 'BU', 'PY')) %>% SVGrenderer()
+#                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
 
 column_chart_grouped <-
   function(x,
            foreground,
            background,
            triangles = NULL,
-           titles,
+           series_labels,
            styles = NULL,
            interval = 'months') {
 
     bar_width <- get_interval_width(interval)$bar_width
-    translation_vec <- c(0,0) # c(max(str_width(titles)) + 10, 0)
+    translation_vec <- c(0,0) # c(max(str_width(series_labels)) + 10, 0)
 
-    stopifnot(length(titles) >= 2)
+    stopifnot(length(series_labels) >= 2)
     stop_if_many_categories(x, max_categories = 24)
 
     df <- data.frame(foreground, background)
-    colnames(df) <- titles[1:2]
+    colnames(df) <- series_labels[1:2]
 
     if (!is.null(triangles)) {
-      stopifnot(length(titles) == 3)
+      stopifnot(length(series_labels) == 3)
       triangles_df <-  data.frame(triangles)
       df <- cbind(df, triangles_df)
-      colnames(df) <- titles
+      colnames(df) <- series_labels
     }
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[titles])) %>%
+    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series_labels])) %>%
       add_bars(
-        df[, titles[2], drop = FALSE],
+        df[, series_labels[2], drop = FALSE],
         x = x,
         bar_width = bar_width,
-        series = titles[2],
+        series = series_labels[2],
         x_offset = -(bar_width / 6),
         add_x_axis = FALSE,
         color = "rgb(166,166,166)",
@@ -1086,10 +1087,10 @@ column_chart_grouped <-
         styles = styles[[2]]
       ) %>%
       add_bars(
-        df[, titles[1], drop = FALSE],
+        df[, series_labels[1], drop = FALSE],
         x = x,
         bar_width = bar_width,
-        series = titles[1],
+        series = series_labels[1],
         translate = translation_vec,
         add_legend = TRUE,
         max_val = max_bar_height,
@@ -1103,10 +1104,10 @@ column_chart_grouped <-
           add_triangles(
             # or add triangles
             .,
-            df[, titles[3], drop = FALSE],
+            df[, series_labels[3], drop = FALSE],
             x = x,
             bar_width = bar_width,
-            series = titles[3],
+            series = series_labels[3],
             translate = translation_vec,
             max_val = max_bar_height,
             add_legend = TRUE,
@@ -1118,7 +1119,7 @@ column_chart_grouped <-
         df,
         labels = foreground,
         x = x,
-        series = titles[1],
+        series = series_labels[1],
         bar_width = bar_width,
         translate = translation_vec,
         max_val = max_bar_height

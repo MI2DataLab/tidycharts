@@ -9,7 +9,7 @@ column_chart_grouped(
   foreground,
   background,
   triangles = NULL,
-  titles,
+  series_labels,
   styles = NULL,
   interval = "months"
 )
@@ -23,7 +23,7 @@ column_chart_grouped(
 
 \item{triangles}{optional vector representing position of triangles}
 
-\item{titles}{vector of series titles. Consists of 2 or 3 elements}
+\item{series_labels}{vector of series titles. Consists of 2 or 3 elements}
 
 \item{styles}{optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)}
 

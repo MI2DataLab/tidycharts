@@ -240,5 +240,3 @@ line_chart_dense <- function(df, dates, series, scale = 'months'){
       interval = scale
     )
 }
-
-

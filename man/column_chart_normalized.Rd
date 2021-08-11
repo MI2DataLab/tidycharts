@@ -4,7 +4,13 @@
 \alias{column_chart_normalized}
 \title{Generate column chart with normalization. Every column will be rescaled, so columns have the same height.}
 \usage{
-column_chart_normalized(data, x, series = NULL, interval = "months")
+column_chart_normalized(
+  data,
+  x,
+  series = NULL,
+  series_labels = series,
+  interval = "months"
+)
 }
 \arguments{
 \item{data}{data frame in wide format containing data to be plotted}
@@ -12,6 +18,8 @@ column_chart_normalized(data, x, series = NULL, interval = "months")
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
 \item{series}{vector containing names of columns in df with values to plot}
+
+\item{series_labels}{optional vector with labels for series to be plotted as legend. The default is the same as series.}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }

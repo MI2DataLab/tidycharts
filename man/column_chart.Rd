@@ -4,7 +4,14 @@
 \alias{column_chart}
 \title{Generate basic column chart. If more than one series is supplied, stacked column plot is generated}
 \usage{
-column_chart(data, x, series = NULL, styles = NULL, interval = "months")
+column_chart(
+  data,
+  x,
+  series = NULL,
+  series_labels = series,
+  styles = NULL,
+  interval = "months"
+)
 }
 \arguments{
 \item{data}{data frame in wide format containing data to be plotted}
@@ -12,6 +19,8 @@ column_chart(data, x, series = NULL, styles = NULL, interval = "months")
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
 \item{series}{vector containing names of columns in df with values to plot}
+
+\item{series_labels}{optional vector with labels for series to be plotted as legend. The default is the same as series.}
 
 \item{styles}{optional vector with styles of bars}
 
