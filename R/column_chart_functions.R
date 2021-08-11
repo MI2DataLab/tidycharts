@@ -1061,12 +1061,19 @@ column_chart_grouped <-
            foreground,
            background,
            triangles = NULL,
+           data = NULL,
            series_labels,
            styles = NULL,
            interval = 'months') {
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec <- c(0,0) # c(max(str_width(series_labels)) + 10, 0)
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      foreground <- get_vector(data, foreground)
+      background <- get_vector(data, background)
+    }
 
     stopifnot(length(series_labels) >= 2)
     stop_if_many_categories(x, max_categories = 24)
@@ -1075,6 +1082,7 @@ column_chart_grouped <-
     colnames(df) <- series_labels[1:2]
 
     if (!is.null(triangles)) {
+      triangles <- get_vector(data, triangles)
       stopifnot(length(series_labels) == 3)
       triangles_df <-  data.frame(triangles)
       df <- cbind(df, triangles_df)
