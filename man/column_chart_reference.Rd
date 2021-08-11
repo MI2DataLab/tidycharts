@@ -5,7 +5,7 @@
 \title{Generate column chart with reference line.}
 \usage{
 column_chart_reference(
-  df,
+  data,
   x,
   series,
   ref_value,
@@ -15,7 +15,7 @@ column_chart_reference(
 )
 }
 \arguments{
-\item{df}{data frame in wide format containing data to be plotted}
+\item{data}{data frame in wide format containing data to be plotted}
 
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 

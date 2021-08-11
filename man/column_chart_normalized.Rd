@@ -4,10 +4,10 @@
 \alias{column_chart_normalized}
 \title{Generate column chart with normalization. Every column will be rescaled, so columns have the same height.}
 \usage{
-column_chart_normalized(df, x, series = NULL, interval = "months")
+column_chart_normalized(data, x, series = NULL, interval = "months")
 }
 \arguments{
-\item{df}{data frame in wide format containing data to be plotted}
+\item{data}{data frame in wide format containing data to be plotted}
 
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 

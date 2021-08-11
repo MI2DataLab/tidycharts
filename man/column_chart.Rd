@@ -4,10 +4,10 @@
 \alias{column_chart}
 \title{Generate basic column chart. If more than one series is supplied, stacked column plot is generated}
 \usage{
-column_chart(df, x, series = NULL, styles = NULL, interval = "months")
+column_chart(data, x, series = NULL, styles = NULL, interval = "months")
 }
 \arguments{
-\item{df}{data frame in wide format containing data to be plotted}
+\item{data}{data frame in wide format containing data to be plotted}
 
 \item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
 
