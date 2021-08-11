@@ -9,21 +9,24 @@ column_chart_grouped(
   foreground,
   background,
   triangles = NULL,
-  titles,
+  data = NULL,
+  series_labels,
   styles = NULL,
   interval = "months"
 )
 }
 \arguments{
-\item{x}{vector containing labels for x axis}
+\item{x}{vector containing labels for x axis or name of column in data with values of x axis labels}
 
-\item{foreground}{vector representing heights of bars visible in the foreground}
+\item{foreground}{vector or name of column in data representing heights of bars visible in the foreground}
 
-\item{background}{vector representing heights of bars visible in the background}
+\item{background}{vector or name of column in data representing heights of bars visible in the background}
 
 \item{triangles}{optional vector representing position of triangles}
 
-\item{titles}{vector of series titles. Consists of 2 or 3 elements}
+\item{data}{data frame in wide format containing data to be plotted}
+
+\item{series_labels}{vector of series titles. Consists of 2 or 3 elements}
 
 \item{styles}{optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)}
 

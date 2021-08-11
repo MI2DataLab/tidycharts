@@ -120,7 +120,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 
 
 #----
-#' Generates a line plot with markers on chosen points, many points within one time interval allowed.
+#' More customizable version of `line_chart_dense`. User can choose the points to highlight.
 #'
 #' @param list list of data frames, each representing one series. Data frame should consist of columns:
 #' * containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinates of the point)
@@ -132,6 +132,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param df_numbers vector containing index of data frame in the list of a value to be marked
 #' @param point_cords vector of the same length as df_numbers containing numerical values of indexes in data frame of values to be marked
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
@@ -160,13 +161,13 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 #' point_cords <- c(1, 3, 4, 10)
 #'
 #' #generating the svg string
-#' line_plot_complex <- line_plot_many_points_complex(list, c("xdata", "xdf"), c("ydata", "ydf"), c("catdata", "catdf"), c("Gamma inc.", "Delta inc."), df_numbers, point_cords)
+#' plot<- line_chart_dense_custom(list, c("xdata", "xdf"), c("ydata", "ydf"), c("catdata", "catdf"), c("Gamma inc.", "Delta inc."), df_numbers, point_cords)
 #'
 #' #showing the plot
-#' line_plot_complex %>% SVGrenderer()
+#' plot %>% SVGrenderer()
 #'
 #'
-line_plot_many_points_complex <-
+line_chart_dense_custom <-
   function(list,
            vector_x,
            vector_y,
@@ -190,9 +191,8 @@ line_plot_many_points_complex <-
       finalize()
   }
 
-#' Wrapper for complex lineplot
+#' Line chart with more points then categories on x-axis.
 #'
-#' Easier to use version of `line_plot_many_points_complex`.
 #'
 #' @param df Date frame with data in wide format.
 #' @param dates Name of column in `df` which contains dates.
@@ -219,23 +219,24 @@ line_plot_many_points_complex <-
 #'
 #' df <- head(df, n = 199)
 #'
-#' line_plot_many_points_wrapper(
+#' line_chart_dense(
 #'   df,
 #'   dates = 'x',
 #'   series = c('Company_sin', 'Company_cos')) %>%
 #'   SVGrenderer()
 #'
-line_plot_many_points_wrapper <- function(df, dates, series, scale = 'months'){
+line_chart_dense <- function(df, dates, series, scale = 'months'){
   stopifnot(scale %in% c('weeks', 'months', 'quarters', 'years'))
 
   parse_time_series(df, dates, series, scale) %>%
-    line_plot_many_points_complex(list = .,
-                                  vector_x = rep('x', length(series)),
-                                  vector_y = rep('y', length(series)),
-                                  vector_cat = rep('cat', length(series)),
-                                  series_labels = series,
-                                  df_numbers = 1,
-                                  point_cords = NULL)
+    line_chart_dense_custom(
+      list = .,
+      vector_x = rep('x', length(series)),
+      vector_y = rep('y', length(series)),
+      vector_cat = rep('cat', length(series)),
+      series_labels = series,
+      df_numbers = 1,
+      point_cords = NULL,
+      interval = scale
+    )
 }
-
-

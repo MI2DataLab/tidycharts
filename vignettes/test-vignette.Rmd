@@ -63,7 +63,7 @@ df <- data.frame(
 )
 df <- head(df, n = 199)
 l <- df %>% parse_time_series(., dates = 'x', series = c('Company_sin', 'Company_cos'))
-line_plot_many_points_complex(
+line_chart_dense_custom(
   list = l,
   vector_x = c('x', 'x'),
   vector_y = c('y', 'y'),
@@ -77,7 +77,7 @@ line_plot_many_points_complex(
 ## the same but using lineplot wrapper
 
 ```{r}
-line_plot_many_points_wrapper(df, dates = 'x', series = c('Company_sin', 'Company_cos')) %>% SVGrenderer()
+line_chart_dense(df, dates = 'x', series = c('Company_sin', 'Company_cos')) %>% SVGrenderer()
 ```
 
 ## Barcharts 
@@ -228,7 +228,7 @@ column_chart_grouped(
       foreground = df4$s1,
       background = df4$s2,
       triangles = df4$s3,
-      titles = c("Actual", "Looooooooong series name", "Previous year"),
+      series_labels = c("Actual", "Looooooooong series name", "Previous year"),
       styles = styles
     ) %>% SVGrenderer()
 
@@ -321,7 +321,7 @@ xes <- c("x", "xdf")
 yes <- c("y", "ydf")
 cats <- c("cat", "cat")
 
-line_plot_many_points_complex(lista,
+line_chart_dense_custom(lista,
                               xes,
                               yes,
                               cats,
@@ -439,7 +439,7 @@ df <- data.frame(
   y = seq(8, 8, along.with = dates) + rnorm(length(dates), sd = 0.5),
   z = seq(6, 6, along.with = dates) + rcauchy(length(dates), scale = 0.5)
 )
-line_plot_many_points_wrapper(df,
+line_chart_dense(df,
                               dates = 'dates',
                               series = c('y', 'z'),
                               scale = 'weeks') %>%

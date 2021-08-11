@@ -93,15 +93,13 @@ add_scatter_legend <- function(shift_x, title, categories){
 }
 
 #---
-draw_scatter_points <- function(svg_string, data, x, y,cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value, shift_y, shift_x, width_of_one, height_of_one, x_start, x_end, y_start, y_end){ #labels_vector - x axis name, y axis name
-  points <- ""
-  #colors <- c("rgb(89,79,223)", "rgb(158,144,197)", "rgb(104,186,165)","rgb(246, 235, 255)", "rgb(30,69,148)", "rgb(64,64,64)")
-  categories <- unique(cat)
+draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value, shift_y, shift_x, width_of_one, height_of_one, x_start, x_end, y_start, y_end){ #labels_vector - x axis name, y axis name
 
+  points <- ""
+  categories <- unique(cat)
 
   for (i in 1:length(x)){
     cat_index <- match(cat[i],categories)[1]
-    #color <- colors[cat_index]
     color <- get_scatter_colors(cat_index)
     if(is.null(bubble_value)== FALSE){
       stop_if_bubble_negative(bubble_value)

@@ -7,7 +7,7 @@ reference:
   desc: >
     Functions generating linecharts. Use them to visualize time series data.
 - contents:
-  - starts_with("line_plot")
+  - starts_with("line_chart")
 
 - title: "Horizontal barcharts"
   desc: "Functions generating bracharts. Use them to visualize structure."

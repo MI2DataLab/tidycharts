@@ -4,14 +4,14 @@
 \alias{column_chart_waterfall}
 \title{Generate column waterfall chart for visualizing contribution.}
 \usage{
-column_chart_waterfall(df, x, series, styles = NULL, interval = "months")
+column_chart_waterfall(data, x, series, styles = NULL, interval = "months")
 }
 \arguments{
-\item{df}{data frame in wide format containing data to be plotted}
+\item{data}{data frame in wide format containing data to be plotted}
 
-\item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
+\item{x}{vector containing labels for x axis or name of column in data with values of x axis labels}
 
-\item{series}{vector containing names of columns in df with values to plot}
+\item{series}{vector containing names of columns in data with values to plot}
 
 \item{styles}{optional vector with styles of bars}
 
