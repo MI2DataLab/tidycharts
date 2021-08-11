@@ -67,7 +67,7 @@ test_that("Line plot with many points is working without errors", {
   yes <- c("y", "ydf")
   cats <- c("cat", "cat")
   expect_magick(
-    line_plot_many_points_complex(
+    line_chart_dense_custom(
       lista,
       xes,
       yes,
@@ -166,7 +166,7 @@ test_that('Lineplot complex with with only positive values doesn\'t give warning
   df <- df[df$x < as.Date('2021-02-28'),]
   l <- df %>% parse_time_series_column(df = ., x = 'x', y = 'y') %>% list()
   expect_magick(
-    line_plot_many_points_complex(list = l, vector_x = 'x', vector_y = 'y',
+    line_chart_dense_custom(list = l, vector_x = 'x', vector_y = 'y',
                                   vector_cat = 'cat', series_labels = 'test_data',
                                   df_numbers = 1, point_cords = NULL) %>% show())
   })
@@ -180,7 +180,7 @@ test_that('Lineplot wrapper works', {
     z = seq(6, 6, along.with = dates) + rcauchy(length(dates), scale = 0.5)
   )
   expect_magick(
-    line_plot_many_points_wrapper(
+    line_chart_dense(
       df,
       dates = 'dates',
       series = c('y', 'z'),
