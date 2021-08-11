@@ -151,6 +151,7 @@
   <span class='va'>foreground</span>,
   <span class='va'>background</span>,
   triangles <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>series_labels</span>,
   styles <span class='op'>=</span> <span class='cn'>NULL</span>,
   interval <span class='op'>=</span> <span class='st'>"months"</span>
@@ -161,19 +162,23 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>vector containing labels for x axis</p></td>
+      <td><p>vector containing labels for x axis or name of column in data with values of x axis labels</p></td>
     </tr>
     <tr>
       <th>foreground</th>
-      <td><p>vector representing heights of bars visible in the foreground</p></td>
+      <td><p>vector or name of column in data representing heights of bars visible in the foreground</p></td>
     </tr>
     <tr>
       <th>background</th>
-      <td><p>vector representing heights of bars visible in the background</p></td>
+      <td><p>vector or name of column in data representing heights of bars visible in the background</p></td>
     </tr>
     <tr>
       <th>triangles</th>
       <td><p>optional vector representing position of triangles</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>data frame in wide format containing data to be plotted</p></td>
     </tr>
     <tr>
       <th>series_labels</th>
