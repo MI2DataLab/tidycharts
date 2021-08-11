@@ -151,6 +151,7 @@
   <span class='va'>baseline</span>,
   <span class='va'>real</span>,
   colors <span class='op'>=</span> <span class='fl'>1</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
   x_title <span class='op'>=</span> <span class='st'>"PY"</span>,
   x_style <span class='op'>=</span> <span class='st'>"previous"</span>,
   interval <span class='op'>=</span> <span class='st'>"months"</span>
@@ -161,19 +162,23 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>vector containing labels for x axis</p></td>
+      <td><p>vector containing labels for x axis or name of column in data with labels</p></td>
     </tr>
     <tr>
       <th>baseline</th>
-      <td><p>vector containing base values</p></td>
+      <td><p>vector containing base values or name of column in data with base values</p></td>
     </tr>
     <tr>
       <th>real</th>
-      <td><p>vector containing values that will be compared to baseline</p></td>
+      <td><p>vector containing values that will be compared to baseline  or name of column in data with that values</p></td>
     </tr>
     <tr>
       <th>colors</th>
       <td><p>1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>data frame with columns containing data for x, baseline or real series</p></td>
     </tr>
     <tr>
       <th>x_title</th>
