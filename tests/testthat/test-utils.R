@@ -7,6 +7,13 @@ test_that('SVGrenderer works', {
             "htmlwidget")
 })
 
+
+
+test_that("get_style function works ok", {
+  expect_equal(get_style("actual")[['fill']], "rgb(64,64,64)")
+})
+
+
 test_that('Setting colors works', {
   expect_error(set_colors(data.frame(
     'bar_colors' = rep('white', 5),
