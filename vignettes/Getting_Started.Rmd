@@ -171,7 +171,7 @@ join_plots(
 ) %>% SVGrenderer()
 ```
 
-# Column charts
+# Column charts <a name="columncharts"></a>
 
 Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts) 
 
@@ -224,4 +224,29 @@ Other types of column charts are available, ie. `column_chart_grouped` or `colum
 
 # Line charts <a name="linecharts"></a>
 
+Line charts, as [column charts](#columncharts), should be used to show time series data. Some lineplots however require more complicated data structure.
 
+## Basic
+
+The basic lineplot uses lines with markers to show the data. Typical usage is to visualize several data series, which do not sum up, for example the market value of different companies among the years. 
+
+```{r linechart-basic}
+set.seed(123)
+data_companies <- data.frame(
+  time = 2010:2020,
+  Alpha.inc = 40 + 1:11,
+  Beta.inc = 55 - 1:11,
+  Gamma.inc = round(50 + rnorm(11, sd = 5))
+)
+
+line_plot(data_companies, cat = data_companies$time,
+          series = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
+          series_labels = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
+          interval = 'years') %>% 
+  SVGrenderer()
+```
+
+
+# Columns vs lines
+
+One can wonder what type of plot choose: line chart or column chart. The answer depends on the data. If you want to visualize only one series, both line and column chart are appropriate. More differences occur when number of series increases. If the sum of series means something reasonable, use stacked columns, optionally stacked lines. If not, use line plot.
