@@ -289,7 +289,6 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
     finalize()
 }
 
-
 #' Generate bar chart with absolute variance
 #'
 #' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
@@ -320,8 +319,15 @@ bar_chart_absolute_variance <-
            baseline,
            real,
            colors = 1,
+           data = NULL,
            y_title,
            y_style = 'previous') {
+
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
 
     initialize(y_vector = cat, bar_width = 16) %>%
       draw_bars_variance(., cat, baseline, real, colors, y_title, y_style) %>%
@@ -405,7 +411,7 @@ draw_bars_variance <-
 
 #' Generate bar chart with relative variance (in percents)
 #'
-#' @inheritParams barchart_plot_absolute_variance
+#' @inheritParams bar_chart_absolute_variance
 #'
 #' @return SVG string containing chart
 #' @export
@@ -416,8 +422,15 @@ bar_chart_relative_variance <-
            baseline,
            real,
            colors = 1,
+           data = NULL,
            y_title,
            y_style = 'previous') {
+
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
 
   initialize(y_vector = cat, bar_width = 16) %>%
     draw_pins_variance(., cat, baseline, real, colors, y_title, y_style) %>%
