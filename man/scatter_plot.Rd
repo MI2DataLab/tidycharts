@@ -63,7 +63,7 @@ data <- data.frame(
     x = c(2, -3, -5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
     value = c(5,-3,2,6, 7, 3, -2, 1,7,8,3, -5),
     cat = c("val1","val1","val2","val2","val2", "val3","val3","val3", "val4","val4","val4","val4"),
-    bubble = c (1,2,3,4,5,4,6,2,1,3, 3.5, 4.5 )
+    bubble = c (1,2,12,4,5,4,8,2,1,9, 8, 4.5 )
 )
 
 # generate character vectors with svg data
