@@ -112,16 +112,22 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 
 
   }
-  return(paste(svg_string,
-               draw_x_axis_scatter(shift_x, shift_y,x_space_size, width_of_one, x_end, min(x), x_start),
-               draw_y_axis(shift_x, shift_y,y_space_size, height_of_one, y_end, min(y), y_start),
-               add_label( 334.8+4.8 + shift_x, 250+6, x_names[1], anchor="start"),
-               add_label( 334.8+4.8 + shift_x, 250+4.8+12, x_names[2], anchor="start"),
-               add_label( 80-4.8 + shift_x, 50 - 4.8 - 6 - 6 -4.8, y_names[1], anchor="end"),
-               add_label( 80-4.8 + shift_x, 50 -6 -4.8, y_names[2], anchor="end"),
-               add_scatter_legend(shift_x, legend_title, categories),
-               points,
-               sep='\n'))
+  svg_string <- paste(svg_string,
+        draw_x_axis_scatter(shift_x, shift_y,x_space_size, width_of_one, x_end, min(x), x_start),
+        draw_y_axis(shift_x, shift_y,y_space_size, height_of_one, y_end, min(y), y_start),
+        add_label( 334.8+4.8 + shift_x, 250+6, x_names[1], anchor="start"),
+        add_label( 334.8+4.8 + shift_x, 250+4.8+12, x_names[2], anchor="start"),
+        add_label( 80-4.8 + shift_x, 50 - 4.8 - 6 - 6 -4.8, y_names[1], anchor="end"),
+        add_label( 80-4.8 + shift_x, 50 -6 -4.8, y_names[2], anchor="end"),
+        points,
+        sep='\n')
+  if(length(categories) > 1){
+    svg_string <- paste(svg_string,
+                        add_scatter_legend(shift_x, legend_title, categories),
+                        sep = '\n')
+    }
+
+  return(svg_string)
 }
 
 
@@ -168,21 +174,68 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' scatter %>% SVGrenderer()
 #' bubble %>% SVGrenderer()
 #'
-scatter_plot <- function(data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value=NULL, x_start=0, x_end=max(x), y_start=0, y_end=max(y)){
-  height_of_one <- 200/(y_end - y_start)
-  width_of_one <- 250/(x_end - x_start)
+scatter_plot <-
+  function(data,
+           x,
+           y,
+           cat = NULL,
+           x_space_size,
+           y_space_size,
+           x_names,
+           y_names,
+           legend_title,
+           bubble_value = NULL,
+           x_start = 0,
+           x_end = max(x),
+           y_start = 0,
+           y_end = max(y)) {
+    height_of_one <- 200 / (y_end - y_start)
+    width_of_one <- 250 / (x_end - x_start)
 
-  #dealing with negative values
-  neg_x <-x[x<0]
-  neg_y <- y[y<0]
-  #calculating the shifts
-  if(length(neg_y) == 0){shift_y <- 0}
-  else{shift_y <- height_of_one*abs(min(neg_y))}
-  if(length(neg_x) == 0){shift_x <- 0}
-  else{shift_x <- height_of_one*abs(min(neg_x))}
+    if (is.null(cat)) {
+      cat <- rep("", length(x))
+    }
 
-  initialize(width = 80 + shift_x + 250 + 80, height= 250 + shift_y + 20) %>%
-    draw_scatter_points(.,data, x, y, cat, x_space_size, y_space_size, x_names, y_names, legend_title, bubble_value, shift_y, shift_x, width_of_one, height_of_one, x_start, x_end, y_start, y_end) %>%
-    finalize()
-}
+    #dealing with negative values
+    neg_x <- x[x < 0]
+    neg_y <- y[y < 0]
+    #calculating the shifts
+    if (length(neg_y) == 0) {
+      shift_y <- 0
+    }
+    else{
+      shift_y <- height_of_one * abs(min(neg_y))
+    }
+    if (length(neg_x) == 0) {
+      shift_x <- 0
+    }
+    else{
+      shift_x <- height_of_one * abs(min(neg_x))
+    }
+
+    initialize(width = 80 + shift_x + 250 + 80,
+               height = 250 + shift_y + 20) %>%
+      draw_scatter_points(
+        .,
+        data,
+        x,
+        y,
+        cat,
+        x_space_size,
+        y_space_size,
+        x_names,
+        y_names,
+        legend_title,
+        bubble_value,
+        shift_y,
+        shift_x,
+        width_of_one,
+        height_of_one,
+        x_start,
+        x_end,
+        y_start,
+        y_end
+      ) %>%
+      finalize()
+  }
 

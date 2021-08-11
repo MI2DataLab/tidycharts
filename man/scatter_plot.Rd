@@ -8,7 +8,7 @@ scatter_plot(
   data,
   x,
   y,
-  cat,
+  cat = NULL,
   x_space_size,
   y_space_size,
   x_names,
