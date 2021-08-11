@@ -138,7 +138,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #'
 #' #show the plot
 #' line_plot_normalized %>% SVGrenderer()
-line_plot_normalized <- function( data, cat, series, series_labels, show_labels, interval="months"){
+line_chart_normalized <- function( data, cat, series, series_labels, show_labels, interval="months"){
 
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
