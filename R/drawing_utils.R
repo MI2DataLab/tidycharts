@@ -224,3 +224,17 @@ normalize_rows <- function(df, x, series) {
   new_df[series] <- new_df[series] / rowSums(new_df[series]) * 100
   return(new_df)
 }
+
+
+#' Helper function to get the vector or column form df. If vector is passed it returns it.
+#' If name of column is passed, it returns the column as a vector.
+#'
+#' @param df data frame with a column
+#' @param vec name of the column in df or vector of values
+#'
+#' @return vector
+#'
+get_vector <- function(df, vec){
+  if(length(vec) == 1) df[[vec]]
+  else vec
+}
