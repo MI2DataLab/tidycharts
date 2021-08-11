@@ -148,7 +148,7 @@
 
     <pre class="usage"><span class='fu'>line_chart_normalized</span><span class='op'>(</span>
   <span class='va'>data</span>,
-  <span class='va'>cat</span>,
+  <span class='va'>x</span>,
   <span class='va'>series</span>,
   <span class='va'>series_labels</span>,
   <span class='va'>show_labels</span>,
@@ -163,7 +163,7 @@
       <td><p>data frame containing data to be plotted</p></td>
     </tr>
     <tr>
-      <th>cat</th>
+      <th>x</th>
       <td><p>vector cointaining time interwals of the values</p></td>
     </tr>
     <tr>
@@ -204,11 +204,11 @@ Products <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/b
 <span class='va'>labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='cn'>NA</span><span class='op'>)</span>
 
 <span class='co'>#generating the SVG string</span>
-<span class='va'>line_plot_normalized</span> <span class='op'>&lt;-</span> <span class='fu'>line_plot_normalized</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>weeks</span>, <span class='va'>series</span>, <span class='va'>series</span>, <span class='va'>labels</span>, <span class='st'>"weeks"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in line_plot_normalized(data, data$weeks, series, series, labels,     "weeks"): could not find function "line_plot_normalized"</span></div><div class='input'>
+<span class='va'>line_chart_normalized</span> <span class='op'>&lt;-</span> <span class='fu'>line_chart_normalized</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>weeks</span>, <span class='va'>series</span>, <span class='va'>series</span>, <span class='va'>labels</span>, <span class='st'>"weeks"</span><span class='op'>)</span>
+
 <span class='co'>#show the plot</span>
-<span class='va'>line_plot_normalized</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in SVGrenderer(.): object 'line_plot_normalized' not found</span></div></pre>
+<span class='va'>line_chart_normalized</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
