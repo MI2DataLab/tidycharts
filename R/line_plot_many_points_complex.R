@@ -132,6 +132,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param df_numbers vector containing index of data frame in the list of a value to be marked
 #' @param point_cords vector of the same length as df_numbers containing numerical values of indexes in data frame of values to be marked
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
@@ -235,7 +236,8 @@ line_chart_dense <- function(df, dates, series, scale = 'months'){
       vector_cat = rep('cat', length(series)),
       series_labels = series,
       df_numbers = 1,
-      point_cords = NULL
+      point_cords = NULL,
+      interval = scale
     )
 }
 
