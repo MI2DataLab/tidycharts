@@ -60,7 +60,7 @@ Creation of the barchart is simple. We use `barchart_plot` function to do that. 
 
 ```{r base-barchart}
 
-barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
   SVGrenderer()
 
 ```
@@ -68,7 +68,7 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') 
 A plot should contain an informative title. We can use `add_title` function to make one. As with `SVGRenderer`, we chain the commands. 
 
 ```{r barchart-title}
-barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
   SVGrenderer()
 ```
@@ -76,7 +76,7 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') 
 We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
 
 ```{r barchart-stacked}
-barchart_plot(data = data_barchart, cat = data_barchart$dep, 
+bar_chart(data = data_barchart, cat = data_barchart$dep, 
               series = c('operational', 'property', 'bonus')) %>%  
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
   SVGrenderer()
@@ -87,7 +87,7 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep,
 Normalized barplot should be used to show the proportions of parts in each category. Typical intention of using this kind of plot could be to visualize the percentage structure of profit among different departments in a company.
 
 ```{r barchart-normalized}
-barchart_plot_normalized(data = data_barchart, cat = data_barchart$dep,
+bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
                          series = c('operational', 'property', 'bonus')) %>% 
   SVGrenderer()
 ```
@@ -97,9 +97,9 @@ barchart_plot_normalized(data = data_barchart, cat = data_barchart$dep,
 We use indecies to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
 
 ```{r barchart-index}
-barchart_plot_index(data = data_barchart,
+bar_chart_reference(data = data_barchart,
                     cat = data_barchart$dep, series = 'profit', 
-                    index_val = 10, index_label = 'PY best result') %>% 
+                    ref_val = 10, ref_label = 'PY best result') %>% 
   SVGrenderer()
 ```
 
@@ -128,7 +128,7 @@ Show variance in data using relative variance plots or absolute variance plots. 
 Example usage: Visualize difference between two scenarios in division by departments.
 
 ```{r barchart-abs-variance}
-barchart_plot_absolute_variance(cat = data_barchart$dep, 
+bar_chart_absolute_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
@@ -137,7 +137,7 @@ barchart_plot_absolute_variance(cat = data_barchart$dep,
 ```
 
 ```{r barchart-rel-variance}
-barchart_plot_relative_variance(cat = data_barchart$dep, 
+bar_chart_relative_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
@@ -156,12 +156,12 @@ join_plots(
   barchart_plot_grouped(data = data_barchart,
                       cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
                       series_labels = c('PY', 'AC', 'PL'), df_styles = styles),
-  barchart_plot_absolute_variance(cat = data_barchart$dep, 
+  bar_chart_absolute_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
                                 y_style = 'plan'),
-  barchart_plot_relative_variance(cat = data_barchart$dep, 
+  bar_chart_relative_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
@@ -170,6 +170,11 @@ join_plots(
   ncols = 3
 ) %>% SVGrenderer()
 ```
+
+
+# Scatter plots
+
+Scatter plots, also known as point plots, are used to visualize mulitidimensional relationships between variables. 
 
 # Column charts <a name="columncharts"></a>
 
@@ -239,14 +244,19 @@ data_companies <- data.frame(
   Gamma.inc = round(50 + rnorm(11, sd = 5))
 )
 
-line_plot(data_companies, cat = data_companies$time,
+line_chart_markers(data_companies, x = data_companies$time,
           series = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           series_labels = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           interval = 'years') %>% 
   SVGrenderer()
 ```
 
+## Complex
+
+Use complex line plot to visualize up to 6 time series with many points. The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
 
 # Columns vs lines
 
 One can wonder what type of plot choose: line chart or column chart. The answer depends on the data. If you want to visualize only one series, both line and column chart are appropriate. More differences occur when number of series increases. If the sum of series means something reasonable, use stacked columns, optionally stacked lines. If not, use line plot.
+
+

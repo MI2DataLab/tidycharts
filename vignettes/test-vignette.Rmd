@@ -132,23 +132,23 @@ df_waterfall <- data.frame(
 ```
 
 ```{r barcharts}
-barchart_plot(data, data$city, groups, groups, styles = styles) %>% SVGrenderer()
-barchart_plot_index(df, df$animal, series = srs, index_val = 3, series_labels = srs) %>% SVGrenderer()
-barchart_plot_index(
+bar_chart(data, data$city, groups, groups, styles = styles) %>% SVGrenderer()
+bar_chart_reference(df, df$animal, series = srs, ref_val = 3, series_labels = srs) %>% SVGrenderer()
+bar_chart_reference(
       data,
       cat = data$city,
       groups,
-      index_val = 602,
+      ref_val = 602,
       series_labels = groups
     ) %>% SVGrenderer()
 
 groups2 <- c(groups, 'services')
 
-barchart_plot_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
+bar_chart_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
 barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% SVGrenderer()
-barchart_plot_absolute_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
-barchart_plot_relative_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
-barchart_plot_waterfall(
+bar_chart_absolute_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
+bar_chart_relative_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
+bar_chart_waterfall(
       df_waterfall$category,
       df_waterfall$values,
       add_result = TRUE,
@@ -265,8 +265,8 @@ data <- data.frame(
 )
 groups <- c("val1", "val2", "val3")
 
-line_plot_index(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% SVGrenderer()
-line_plot(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% SVGrenderer()
+line_chart_markers_reference(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% SVGrenderer()
+line_chart_markers(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% SVGrenderer()
 
 
 data <- data.frame(
@@ -338,7 +338,7 @@ df <- data.frame(
   wounded = c(1, 8, 5)
 )
 srs <- c("hungry", "relaxed", "wounded")
-line_plot(df, df$animal, srs, srs) %>% SVGrenderer()
+line_chart_markers(df, df$animal, srs, srs) %>% SVGrenderer()
 
 data <- data.frame(
   cat = c("blop", "mlem", "kwak", "beep", "moo"),
@@ -350,7 +350,7 @@ data <- data.frame(
 groups <- c("val1", "val2", "val3")
 series_labels <- c("speed", "mlemler", "defence")
 
-line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% SVGrenderer()
+line_chart_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% SVGrenderer()
 
 data <- data.frame(
   city = c(
@@ -369,7 +369,7 @@ data <- data.frame(
 )
 groups <- c("products", "services")
 series_labels <- groups
-line_plot_stacked(data, data$city, groups, series_labels, T) %>% SVGrenderer()
+line_chart_stacked(data, data$city, groups, series_labels, T) %>% SVGrenderer()
 
 data <- data.frame(
   cat = c("blop", "mlem", "kwak", "beep", "moo"),
@@ -380,7 +380,7 @@ data <- data.frame(
 )
 groups <- c("val1", "val2", "val3")
 labels <- groups
-line_plot_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% SVGrenderer()
+line_chart_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% SVGrenderer()
 
 data <- data.frame(
   city = c(
@@ -414,7 +414,7 @@ df <- data.frame(
   point_coordinates = c(1, 2, 3, 4, 5, 6, 7, 8)
 )
 series_labels <- groups
-line_plot_many_points(data,
+line_chart(data,
                       data$city,
                       groups,
                       series_labels,

@@ -81,17 +81,17 @@ scatter_plot(p, p$body_mass_g, p$flipper_length_mm, p$species, 1000, 50, c("body
 
 ```{r histograms, echo=FALSE, warning = FALSE}
 p<- penguins %>% count(species)
-barchart_plot(p, p$species, series=c("n"), c("")) %>% 
+bar_chart(p, p$species, series=c("n"), c("")) %>% 
   add_title("Histogram of penguin species", "","") %>%
   SVGrenderer(height= 50 + 24*length(p$species))
 p<- penguins %>% count(island)
-barchart_plot(p, p$island, series=c("n"), c("")) %>% 
+bar_chart(p, p$island, series=c("n"), c("")) %>% 
   add_title("Histogram of islands","", "") %>%
   SVGrenderer(height=50+24*length(p$island))
 p<- penguins %>% 
   drop_na(sex) %>%
   count(sex)
-barchart_plot(p, p$sex, series=c("n"), c("")) %>% 
+bar_chart(p, p$sex, series=c("n"), c("")) %>% 
   add_title("Histogram of penguin sex", "","") %>%
   SVGrenderer(height=50+24*length(p$sex))
 p<- penguins %>% count(year)
@@ -152,7 +152,7 @@ column_chart(df, breaks, series=c("counts")) %>%
 #df$Chinstrap <- as.numeric(df$Chinstrap)
 #df$Gentoo <- as.numeric(df$Gentoo)
 #tu wycodzi niestety brzydki wykres
-#barchart_plot_normalized(df, unique(p$island), c("Adelie", "Chinstrap", "Gentoo"),  c("Adelie", "Chinstrap", "Gentoo" )) %>% #SVGrenderer()
+#bar_chart_normalized(df, unique(p$island), c("Adelie", "Chinstrap", "Gentoo"),  c("Adelie", "Chinstrap", "Gentoo" )) %>% #SVGrenderer()
 #island columns normalized
 p<- penguins %>% count(island, year)
 Biscoe <- p %>% filter(island =="Biscoe")
@@ -198,7 +198,7 @@ p <- penguins_raw %>%
   as.data.frame()
 
 
-line_plot_stacked(p, p$date, 
+line_chart_stacked(p, p$date, 
                   series = c('Adelie', 'Gentoo', 'Chinstrap'), 
                   series_labels = c('Adelie', 'Gentoo', 'Chinstrap'), 
                   show_labels = rep(NA, length.out = 14),
