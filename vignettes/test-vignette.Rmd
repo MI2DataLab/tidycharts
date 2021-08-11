@@ -470,3 +470,28 @@ join_plots(
 ) %>% SVGrenderer()
 ```
 
+
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+p <- penguins %>%
+  drop_na(bill_length_mm, flipper_length_mm, bill_length_mm, body_mass_g)
+#--- bill length on the x-axis ---
+scatter1 <- scatter_plot(p, p$bill_length_mm, p$bill_depth_mm, p$species, 10, 5, c("bill length", "in mm"), c("bill depht", "in mm"), "Legend") %>%
+  add_title("Relationship between bill length and bill depth","","")
+scatter2 <- scatter_plot(p, p$bill_length_mm, p$flipper_length_mm, p$species, 10, 50, c("bill length", "in mm"), c("flipper length", "in mm"), "Legend") %>%
+  add_title("Relationship between bill length and flipper length","","")
+scatter3 <- scatter_plot(p, p$bill_length_mm, p$body_mass_g, p$species, 10, 1000, c("bill length", "in mm"), c("body mass", "in g"), "Legend") %>%
+  add_title("Relationship between bill length and body mass","","")
+#--- bill depht on the x -axis ---
+scatter4 <- scatter_plot(p, p$bill_depth_mm, p$bill_length_mm, p$species, 5, 10, c("bill depht", "in mm"), c("bill length", "in mm"), "Legend") %>%
+  add_title("Relationship between bill depth and bill length","","")
+scatter5 <- scatter_plot(p, p$bill_depth_mm, p$flipper_length_mm, p$species, 5, 50, c("bill depht", "in mm"), c("flipper length", "in mm"), "Legend") %>% add_title("Relationship between bill depth and flipper length","","")
+scatter6 <- scatter_plot(p, p$bill_depth_mm, p$body_mass_g, p$species, 5, 1000, c("bill depht", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between bill length and body mass","","")
+
+
+join_plots(scatter1, scatter2, scatter3,
+           scatter4, scatter5,
+           nrows=2, ncols=3) %>% SVGrenderer()
+```
+
