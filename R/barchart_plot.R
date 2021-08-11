@@ -312,8 +312,15 @@ barchart_plot_absolute_variance <-
            baseline,
            real,
            colors = 1,
+           data = NULL,
            y_title,
            y_style = 'previous') {
+
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
 
     initialize(y_vector = cat, bar_width = 16) %>%
       draw_bars_variance(., cat, baseline, real, colors, y_title, y_style) %>%
@@ -408,12 +415,19 @@ barchart_plot_relative_variance <-
            baseline,
            real,
            colors = 1,
+           data = NULL,
            y_title,
            y_style = 'previous') {
 
-  initialize(y_vector = cat, bar_width = 16) %>%
-    draw_pins_variance(., cat, baseline, real, colors, y_title, y_style) %>%
-    finalize()
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
+    initialize(y_vector = cat, bar_width = 16) %>%
+      draw_pins_variance(., cat, baseline, real, colors, y_title, y_style) %>%
+      finalize()
   }
 
 

@@ -9,18 +9,21 @@ column_chart_waterfall_variance(
   baseline,
   real,
   colors = 1,
+  data = NULL,
   result_title,
   interval = "months"
 )
 }
 \arguments{
-\item{x}{vector containing labels for x axis}
+\item{x}{vector containing labels for x axis or name of column in data with labels}
 
-\item{baseline}{vector containing base values}
+\item{baseline}{vector containing base values or name of column in data with base values}
 
-\item{real}{vector containing values that will be compared to baseline}
+\item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}
 
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
+
+\item{data}{data frame with columns containing data for x, baseline or real series}
 
 \item{result_title}{title for the result bar}
 

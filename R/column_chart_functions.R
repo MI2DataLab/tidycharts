@@ -983,9 +983,10 @@ column_chart_waterfall <-
 #'
 #' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
-#' @param x vector containing labels for x axis
-#' @param baseline vector containing base values
-#' @param real vector containing values that will be compared to baseline
+#' @param data data frame with columns containing data for x, baseline or real series
+#' @param x vector containing labels for x axis or name of column in data with labels
+#' @param baseline vector containing base values or name of column in data with base values
+#' @param real vector containing values that will be compared to baseline  or name of column in data with that values
 #' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
 #' @param x_style style of the x axis to indicate baseline scenario. The default is 'prevoius'.
@@ -1005,10 +1006,19 @@ column_chart_absolute_variance <-
            baseline,
            real,
            colors = 1,
+           data = NULL,
            x_title = "PY",
            x_style = 'previous',
            interval = 'months') {
+
     bar_width <- get_interval_width(interval)$bar_width
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
@@ -1147,11 +1157,19 @@ column_chart_relative_variance <-
            baseline,
            real,
            colors = 1,
+           data = NULL,
            x_title,
            x_style = 'previous',
            styles = NULL,
            interval = 'months') {
     stop_if_variance_colors(colors)
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
     stop_if_many_categories(x, max_categories = 24)
 
     bar_width <- get_interval_width(interval)$bar_width
@@ -1189,7 +1207,14 @@ column_chart_relative_variance <-
 #' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') %>%
 #'   SVGrenderer()
 column_chart_waterfall_variance <-
-  function(x, baseline, real, colors = 1, result_title, interval = 'months') {
+  function(x, baseline, real, colors = 1, data = NULL, result_title, interval = 'months') {
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
     bar_width <- get_interval_width(interval)$bar_width
     stop_if_many_categories(x, max_categories = 24)
 
