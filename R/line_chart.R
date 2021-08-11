@@ -102,7 +102,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining time interwals of the values
+#' @param x vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param ser_names vector containing column names of a value to be marked

@@ -6,7 +6,7 @@
 \usage{
 line_chart_normalized(
   data,
-  cat,
+  x,
   series,
   series_labels,
   show_labels,
@@ -16,7 +16,7 @@ line_chart_normalized(
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{cat}{vector cointaining time interwals of the values}
+\item{x}{vector cointaining time interwals of the values}
 
 \item{series}{vector containing names of columns in data with values to plot}
 
@@ -48,8 +48,8 @@ series <- c("Software", "Services", "Products")
 labels <- c(NA, 1, NA, 1, NA, NA, 1, NA, 1, NA)
 
 #generating the SVG string
-line_plot_normalized <- line_plot_normalized(data, data$weeks, series, series, labels, "weeks")
+line_chart_normalized <- line_chart_normalized(data, data$weeks, series, series, labels, "weeks")
 
 #show the plot
-line_plot_normalized \%>\% SVGrenderer()
+line_chart_normalized \%>\% SVGrenderer()
 }

@@ -204,10 +204,10 @@ bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
 #' @param data data frame containing data to be plotted
 #' @param cat vector containing category names of values
 #' @param series vector containing names of columns in data with values to plot
-#' @param index_val numeric value of the index
+#' @param ref_val numeric value of the index
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param styles optional vector with styles of bars
-#' @param index_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
+#' @param ref_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
 #'
 #' @return SVG string containing chart
 #' @export
@@ -294,7 +294,7 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
 #' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
 #' @inheritParams column_chart_absolute_variance
-#' @inheritParams barchart_plot
+#' @inheritParams bar_chart
 #' @param y_title title of the series values
 #' @param y_style style of y axis to indicate baseline scenario
 #'

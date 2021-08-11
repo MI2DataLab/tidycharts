@@ -17,6 +17,8 @@ line_chart(
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
+\item{x}{vector cointaining time interwals of the values}
+
 \item{series}{vector containing names of columns in data with values to plot}
 
 \item{series_labels}{vector containing names of series to be shown on the plot}
@@ -26,8 +28,6 @@ line_chart(
 \item{point_cords}{vector of the same length as ser_names containing numerical values of indexes in data of values to be marked}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
-
-\item{cat}{vector cointaining time interwals of the values}
 }
 \value{
 SVG string containing chart

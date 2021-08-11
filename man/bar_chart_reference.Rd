@@ -21,13 +21,13 @@ bar_chart_reference(
 
 \item{series}{vector containing names of columns in data with values to plot}
 
+\item{ref_val}{numeric value of the index}
+
 \item{series_labels}{vector containing names of series to be shown on the plot}
 
 \item{styles}{optional vector with styles of bars}
 
-\item{index_val}{numeric value of the index}
-
-\item{index_label}{string defining a text that should be displayed in the referencing line. Set by default to index_val.}
+\item{ref_label}{string defining a text that should be displayed in the referencing line. Set by default to index_val.}
 }
 \value{
 SVG string containing chart

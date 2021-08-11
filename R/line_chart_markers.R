@@ -110,7 +110,7 @@ draw_points <- function(svg_string, data, x, series, series_labels, cat_width, s
 #' Generates line plot with markers on every value.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining time interwals of the values
+#' @param x vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
@@ -165,12 +165,12 @@ line_chart_markers <- function(data, x, series, series_labels, interval="months"
 #' Generates line plot with markers on every value with index on a given value.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector containing time intervals of the values
+#' @param x vector containing time intervals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
-#' @param index_val numeric value of the index
-#' @param index_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
+#' @param ref_val numeric value of the index
+#' @param ref_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #' @param styles optional data frame with style names. Styles of the markers will be plotted accordingly.
 #'

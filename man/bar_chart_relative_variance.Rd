@@ -15,6 +15,8 @@ bar_chart_relative_variance(
 )
 }
 \arguments{
+\item{cat}{vector containing category names of values}
+
 \item{baseline}{vector containing base values or name of column in data with base values}
 
 \item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}

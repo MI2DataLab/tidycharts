@@ -47,10 +47,10 @@ series <- c("Software", "Services", "Products")
 labels <- c(NA, 1, NA, 1, NA, NA, 1, NA, 1, NA)
 
 #generating the SVG string
-line_plot_stacked <- line_plot_stacked(data, data$weeks, series, series, labels, "weeks")
+line_chart_stacked <- line_chart_stacked(data, data$weeks, series, series, labels, "weeks")
 
 #show the plot
-line_plot_stacked \%>\% SVGrenderer()
+line_chart_stacked \%>\% SVGrenderer()
 
 
 }

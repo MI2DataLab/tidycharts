@@ -12,7 +12,7 @@ reference:
 - title: "Horizontal barcharts"
   desc: "Functions generating bracharts. Use them to visualize structure."
 - contents:
-  - starts_with("barchart_plot")
+  - starts_with("bar_chart")
 
 - title: "Columncharts"
   desc: "Functions generating columncharts. Use them to visualize time series data"

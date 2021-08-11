@@ -154,7 +154,7 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' @param y_start numeric value defining where the y axis should start at. Set by default to 0.
 #' @param y_end numeric value defining where the y axis should end at. Set by default to max(y).
 #'
-#' @returnSVG SVG string containing chart
+#' @return SVG string containing chart
 #' @export
 #'
 #' @examples

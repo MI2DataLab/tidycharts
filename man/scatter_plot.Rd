@@ -54,6 +54,9 @@ scatter_plot(
 
 \item{y_end}{numeric value defining where the y axis should end at. Set by default to max(y).}
 }
+\value{
+SVG string containing chart
+}
 \description{
 Generates a scatter plot. If additional argument added, a bubble plot is generated.
 }

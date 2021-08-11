@@ -107,13 +107,13 @@ test_that("Normalized horizontal barcharts work", {
 
 test_that("Grouped horizontal barcharts work", {
   expect_magick(
-    bar_chart_grouped(data, data$city, series, series, df_styles = df_styles) %>% show()
+    barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% show()
   )
 })
 
 test_that("Grouped horizontal barcharts work with only positive velues", {
   expect_magick(
-    bar_chart_grouped(df, df$animal, srs, srs) %>% show()
+    barchart_plot_grouped(df, df$animal, srs, srs) %>% show()
   )
 })
 
