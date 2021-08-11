@@ -24,7 +24,8 @@ join_plots <- function(..., nrows = length(list(...)), ncols = 1){
   # check if there are enough rows and cols to show all plots
   stopifnot(n_plots <= nrows * ncols)
 
-  plots <- tryCatch(
+  plots <- tryCatch( # if we pass not full matrix(5 elements to 3x2 matrix) we get warning
+                     # so we use tryCatch to ensure no warnings are displayed
     matrix(data = list(...), nrow = nrows, ncol = ncols, byrow = T),
     warning = function(cond){
       data = list(...)
