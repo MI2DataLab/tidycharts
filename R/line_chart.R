@@ -141,4 +141,3 @@ line_chart <- function(data, x, series, series_labels, ser_names, point_cords, i
   draw_lines(., data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
   finalize()
 }
-

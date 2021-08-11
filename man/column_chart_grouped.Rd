@@ -38,3 +38,15 @@ SVG string containing chart
 \description{
 Generate grouped column chart for visualizing up to 3 data series
 }
+\examples{
+df <- data.frame(x = month.abb[7:12],
+                 actual = rnorm(6, mean = 5, sd = 0.3),
+                 budget = rnorm(6, mean = 4.5, sd = 0.7),
+                 prev_year = rnorm(6, mean = 4))
+
+column_chart_grouped(x = df$x,
+                     foreground = df$actual,
+                     background = df$budget,
+                     triangles = df$prev_year,
+                     series_labels = c('AC', 'BU', 'PY')) \%>\% SVGrenderer()
+}

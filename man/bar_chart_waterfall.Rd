@@ -29,3 +29,11 @@ SVG string containing chart
 \description{
 Generate horizontal waterfall chart
 }
+\examples{
+df <- data.frame(
+  city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+  profit = sin(1:7)
+)
+
+bar_chart_waterfall(cat = 'city', series = 'profit', data = df) \%>\% SVGrenderer()
+}

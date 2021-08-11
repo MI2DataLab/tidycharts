@@ -57,7 +57,7 @@ add_horiz_waterfall_bars <-
 
       svg_string <- draw_text(
         svg_string,
-        text = format(abs(values[i]), 3),
+        text = round(abs(values[i]), 3),
         x = text_x,
         y = y_pos + 8 + 4,
         text_anchor = text_aligment
@@ -181,6 +181,12 @@ add_result_bar <- function(svg_string,
 #' @export
 #'
 #' @examples
+#' df <- data.frame(
+#'   city = c("Berlin", "Munich", "Cologne", "London", "Vienna", "Paris", "Zurich"),
+#'   profit = sin(1:7)
+#' )
+#'
+#' bar_chart_waterfall(cat = 'city', series = 'profit', data = df) %>% SVGrenderer()
 bar_chart_waterfall <-
   function(cat,
            series,
@@ -188,6 +194,10 @@ bar_chart_waterfall <-
            add_result = FALSE,
            result_title = NULL) {
     stopifnot(length(cat) == length(series))
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      series <- get_vector(data, series)
+    }
     if (add_result) {
       labels <- c(cat, result_title)
     } else{

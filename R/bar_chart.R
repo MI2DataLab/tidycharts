@@ -417,6 +417,17 @@ draw_bars_variance <-
 #' @export
 #'
 #' @examples
+#' # get some data
+#' real <- sin(1:5)
+#' baseline <- cos(1:5)
+#' cat <- letters[1:5]
+#'
+#' bar_chart_relative_variance(
+#'   cat = cat,
+#'   baseline = baseline,
+#'   real = real,
+#'   y_title = 'a title') %>%
+#'  SVGrenderer() # show the plot
 bar_chart_relative_variance <-
   function(cat,
            baseline,

@@ -76,7 +76,6 @@ add_column_bar <-
 #'
 #' @return svg string with added bars
 #'
-#' @examples
 add_bars <-
   function(svg_string,
            df,
@@ -252,7 +251,6 @@ add_first_bar <- function(svg_string,
 #'
 #' @return svg string with appended waterfall bars
 #'
-#' @examples
 add_waterfall_bars <-
   function(svg_string,
            df,
@@ -1045,17 +1043,16 @@ column_chart_absolute_variance <-
 #' @export
 #'
 #' @examples
-# df <- data.frame(x = month.abb[7:12],
-#                  actual = rnorm(6, mean = 5, sd = 0.3),
-#                  budget = rnorm(6, mean = 4.5, sd = 0.7),
-#                  prev_year = rnorm(6, mean = 4))
-#
-# column_chart_grouped(x = df$x,
-#                      foreground = df$actual,
-#                      background = df$budget,
-#                      triangles = df$prev_year,
-#                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
-
+#' df <- data.frame(x = month.abb[7:12],
+#'                  actual = rnorm(6, mean = 5, sd = 0.3),
+#'                  budget = rnorm(6, mean = 4.5, sd = 0.7),
+#'                  prev_year = rnorm(6, mean = 4))
+#'
+#' column_chart_grouped(x = df$x,
+#'                      foreground = df$actual,
+#'                      background = df$budget,
+#'                      triangles = df$prev_year,
+#'                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
 column_chart_grouped <-
   function(x,
            foreground,

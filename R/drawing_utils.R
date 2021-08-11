@@ -112,9 +112,18 @@ choose_variance_colors <- function(colors){
 }
 
 
+#' Draw triangle and append it to svg string
+#'
+#' @param svg_string svg string to paste a trinagle
+#' @param tip_position_x,tip_position_y  x, y position of tip of the triangle
+#' @param style style of the triangle
+#' @param translate_vec the transaltion vector
+#' @param orientation where the triangle should be pointing. One of c('top', 'right', 'bottom', 'left').
+#'
+#' @return svg string
+#'
 draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientation = "left", style=NULL, translate_vec = c(0,0)){
-  #' @param orientation where the triangle should be pointing. One of c('top', 'right', 'bottom', 'left').
-  #'
+
   stopifnot(orientation %in% c('top', 'right', 'bottom', 'left'))
   transformation <- switch(orientation,
                            "left" = "rotate(0,",
@@ -207,7 +216,6 @@ draw_ref_line_horizontal <- function(svg_string, x, bar_width, line_y, label) {
 #'
 #' @return string width in pixels
 #'
-#' @examples
 str_width <- function(string, bold = FALSE){
   font <- ifelse(bold, 2, 1)
   graphics::strwidth(string, units = "inches", font = font, cex = 0.75) %>%
