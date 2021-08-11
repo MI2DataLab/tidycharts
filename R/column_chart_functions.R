@@ -806,8 +806,8 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' Generate basic column chart. If more than one series is supplied, stacked column plot is generated
 #'
 #' @param data data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing names of columns in df with values to plot
+#' @param x vector containing labels for x axis or name of column in data with values of x axis labels
+#' @param series vector containing names of columns in data with values to plot
 #' @param series_labels optional vector with labels for series to be plotted as legend. The default is the same as series.
 #' @param styles optional vector with styles of bars
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
@@ -984,13 +984,13 @@ column_chart_waterfall <-
 #' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
 #' @param data data frame with columns containing data for x, baseline or real series
-#' @param x vector containing labels for x axis or name of column in data with labels
 #' @param baseline vector containing base values or name of column in data with base values
 #' @param real vector containing values that will be compared to baseline  or name of column in data with that values
 #' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
 #' @param x_style style of the x axis to indicate baseline scenario. The default is 'prevoius'.
-#' @param interval intervals on x axis. The width of the bars depends on this parameter
+#'
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
@@ -1033,13 +1033,13 @@ column_chart_absolute_variance <-
 
 #' Generate grouped column chart for visualizing up to 3 data series
 #'
-#' @param x vector containing labels for x axis
-#' @param foreground vector representing heights of bars visible in the foreground
-#' @param background vector representing heights of bars visible in the background
+#' @param foreground vector or name of column in data representing heights of bars visible in the foreground
+#' @param background vector or name of column in data representing heights of bars visible in the background
 #' @param triangles optional vector representing position of triangles
 #' @param series_labels vector of series titles. Consists of 2 or 3 elements
 #' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
-#' @param interval intervals on x axis. The width of the bars depends on this parameter
+#'
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export

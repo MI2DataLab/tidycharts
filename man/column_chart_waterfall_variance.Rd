@@ -15,7 +15,7 @@ column_chart_waterfall_variance(
 )
 }
 \arguments{
-\item{x}{vector containing labels for x axis or name of column in data with labels}
+\item{x}{vector containing labels for x axis or name of column in data with values of x axis labels}
 
 \item{baseline}{vector containing base values or name of column in data with base values}
 

@@ -15,9 +15,9 @@ column_chart_normalized(
 \arguments{
 \item{data}{data frame in wide format containing data to be plotted}
 
-\item{x}{vector containing labels for x axis or name of column in df with values of x axis labels}
+\item{x}{vector containing labels for x axis or name of column in data with values of x axis labels}
 
-\item{series}{vector containing names of columns in df with values to plot}
+\item{series}{vector containing names of columns in data with values to plot}
 
 \item{series_labels}{optional vector with labels for series to be plotted as legend. The default is the same as series.}
 
