@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generate plots in IBCS-like style • ibcsplot</title>
+<title>Generate plots in IBCS-like style • tidycharts</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -14,7 +14,7 @@
 <link href="dalexverse-2.css" rel="stylesheet">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Generate plots in IBCS-like style">
-<meta property="og:description" content="The ibcsplot package enables user to generate charts compliant with IBCS.
+<meta property="og:description" content="The tidycharts package enables user to generate charts compliant with IBCS.
     All charts are generated in SVG format and can be shown in RStudio viewer pane or can be exported to HTML output of knitr/markdown.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -40,7 +40,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="navbar-brand" href="index.html">ibcsplot</a>
+        <a class="navbar-brand" href="index.html">tidycharts</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
@@ -90,29 +90,29 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ibcsplot" class="section level1">
+<div id="tidycharts" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ibcsplot" class="anchor"></a>ibcsplot</h1></div>
+<a href="#tidycharts" class="anchor"></a>tidycharts</h1></div>
 <!-- badges: start -->
 
-<p>The goal of ibcsplot is to enable R users to create charts inspired by <a href="https://www.ibcs.com/">International Business Communication Standards (IBCS)</a>. The plots are generated in SVG format, so embedding them in HTML documents is straight forward.</p>
+<p>The goal of tidycharts is to enable R users to create charts inspired by <a href="https://www.ibcs.com/">International Business Communication Standards (IBCS)</a>. The plots are generated in SVG format, so embedding them in HTML documents is straight forward.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p><del>You can install the released version of ibcsplot from <a href="https://CRAN.R-project.org">CRAN</a> with:</del> The package is going to be deployed to CRAN, so that the installation process will look like:</p>
+<p><del>You can install the released version of tidycharts from <a href="https://CRAN.R-project.org">CRAN</a> with:</del> The package is going to be deployed to CRAN, so that the installation process will look like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ibcsplot"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidycharts"</span><span class="op">)</span></code></pre></div>
 <p>But for now only development version from <a href="https://github.com/">GitHub</a> can be installed with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SawickiBartosz/ibcsplot"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SawickiBartosz/tidycharts"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>How to create IBCS inspired charts using ibcsplot?</p>
+<p>How to create IBCS inspired charts using tidycharts?</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ibcsplot</span><span class="op">)</span> <span class="co"># load the package</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidycharts</span><span class="op">)</span> <span class="co"># load the package</span>
 
 <span class="co"># create some data to visualize</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>months <span class="op">=</span> <span class="va">month.abb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,
@@ -121,7 +121,7 @@
 <span class="fu"><a href="reference/column_chart.html">column_chart</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="st">'months'</span>, series <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># create chart in a form of character vector containing SVG content</span>
   <span class="fu"><a href="reference/SVGrenderer.html">SVGrenderer</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># render and show the SVG </span></code></pre></div>
-<p><img src="https://raw.githubusercontent.com/SawickiBartosz/ibcsplot/main/man/figures/README-example-columns-1.svg" alt="example column chart"></p>
+<p><img src="https://raw.githubusercontent.com/SawickiBartosz/tidycharts/main/man/figures/README-example-columns-1.svg" alt="example column chart"></p>
 <p>You can easily create other type of plots, ie. lineplots:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">line_plot</span><span class="op">(</span><span class="va">df</span>, cat <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">months</span>, series <span class="op">=</span> <span class="st">'values'</span>, series_labels <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -152,7 +152,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://codecov.io/gh/SawickiBartosz/ibcsplot?branch=main"><img src="https://codecov.io/gh/SawickiBartosz/ibcsplot/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://codecov.io/gh/SawickiBartosz/tidycharts?branch=main"><img src="https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>
