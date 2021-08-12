@@ -31,5 +31,4 @@ reference:
   - starts_with('set')
   - add_title
   - parse_time_series
-  - renderSVGrenderer
   - join_plots
