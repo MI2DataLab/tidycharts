@@ -55,6 +55,25 @@ test_that("Simple 3x2 joining works",{
   )
 })
 
+test_that("3x2 joining works with only 5 plots",{
+  set.seed(123)
+  df <- data.frame(
+    mon = month.abb[1:6],
+    values = rnorm(6)
+  )
+  expect_magick(
+    join_charts(
+      column_chart(df, x = 'mon', series = 'values'),
+      column_chart(df, x = 'mon', series = 'values'),
+      column_chart(df, x = 'mon', series = 'values'),
+      column_chart(df, x = 'mon', series = 'values'),
+      column_chart(df, x = 'mon', series = 'values'),
+      nrows = 3,
+      ncols = 2
+    ) %>% show()
+  )
+})
+
 test_that('facetting works',{
   expect_magick(
     facet_chart(
