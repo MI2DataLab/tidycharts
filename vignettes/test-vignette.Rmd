@@ -1,10 +1,11 @@
 ---
 title: "test-vignette"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{test-vignette}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+# output: rmarkdown::html_vignette
+# vignette: >
+#   %\VignetteIndexEntry{test-vignette}
+#   %\VignetteEngine{knitr::rmarkdown}
+#   %\VignetteEncoding{UTF-8}
+# ---
 ---
 
 ```{css, echo=FALSE}
@@ -493,6 +494,5 @@ scatter6 <- scatter_plot(p, p$bill_depth_mm, p$body_mass_g, p$species, 5, 1000, 
 join_charts(scatter1, scatter2, scatter3,
            scatter4, scatter5,
            nrows=2, ncols=3) %>% SVGrenderer()
-dont compile
 ```
 
