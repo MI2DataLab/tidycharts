@@ -9,8 +9,8 @@ scatter_plot(
   x,
   y,
   cat = NULL,
-  x_space_size = (x_end - x_start)/10,
-  y_space_size = (y_end - y_start)/10,
+  x_space_size = (x_end - x_start)/8,
+  y_space_size = (y_end - y_start)/8,
   x_names = c("x", ""),
   y_names = c("y", ""),
   legend_title,
@@ -30,7 +30,7 @@ scatter_plot(
 
 \item{cat}{vector containing categories of the values}
 
-\item{x_space_size, y_space_size}{numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 10 sections}
+\item{x_space_size, y_space_size}{numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 8 sections}
 
 \item{x_names}{vector containing two values:
 * name of the value presented on the x - axis
