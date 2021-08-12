@@ -146,7 +146,8 @@ bar_chart_reference(
 groups2 <- c(groups, 'services')
 
 bar_chart_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
-barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% SVGrenderer()
+bar_chart_grouped(data, 
+                  data$city, series[2], series[3], series[1], series, styles = df_styles) %>% SVGrenderer()
 bar_chart_absolute_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
 bar_chart_relative_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
 bar_chart_waterfall(
