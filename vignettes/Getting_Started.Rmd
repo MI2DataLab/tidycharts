@@ -1,8 +1,8 @@
 ---
-title: "Getting_Started"
+title: "Getting Started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting_Started}
+  %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -92,9 +92,9 @@ bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
   SVGrenderer()
 ```
 
-## Indexed
+## Referenced
 
-We use indecies to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
+We use reference values (indecies) to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
 
 ```{r barchart-index}
 bar_chart_reference(data = data_barchart,
@@ -146,33 +146,9 @@ bar_chart_relative_variance(cat = data_barchart$dep,
 
 ```
 
-## Join plots
-
-Combining plots in one grid is useful and easy by using the function `join_plots`.
-
-```{r barchart-join}
-
-join_plots(
-  barchart_plot_grouped(data = data_barchart,
-                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
-                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles),
-  bar_chart_absolute_variance(cat = data_barchart$dep, 
-                                baseline = data_barchart$plan,
-                                real = data_barchart$profit,
-                                y_title = 'Plan vs. actual',
-                                y_style = 'plan'),
-  bar_chart_relative_variance(cat = data_barchart$dep, 
-                                baseline = data_barchart$plan,
-                                real = data_barchart$profit,
-                                y_title = 'Plan vs. actual',
-                                y_style = 'plan'),
-  nrows = 1,
-  ncols = 3
-) %>% SVGrenderer()
-```
-
-
 # Scatter plots
+
+For demonstration we will use `mtcars` dataset available in R as built-in.
 
 ```{r scatter-data}
 scatter_data <- mtcars[c('hp','qsec','cyl', 'wt')]
@@ -215,7 +191,7 @@ scatter_plot(scatter_data, x = scatter_data$hp,
 
 # Column charts <a name="columncharts"></a>
 
-Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts) 
+Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts).
 
 ## Data 
 
@@ -276,8 +252,8 @@ The basic lineplot uses lines with markers to show the data. Typical usage is to
 set.seed(123)
 data_companies <- data.frame(
   time = 2010:2020,
-  Alpha.inc = 40 + 1:11,
-  Beta.inc = 55 - 1:11,
+  Alpha.inc = 25 + round(1:11 + rnorm(11)),
+  Beta.inc = round(40 + rnorm(11, sd = 2)),
   Gamma.inc = round(50 + rnorm(11, sd = 5))
 )
 
