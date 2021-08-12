@@ -187,7 +187,7 @@ In scatter plot 2 numerical dimensions are visualized by position of a point on 
 
 ```{r scatter}
 scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec, 
-             legend_title = 'HorsePower vs agility') %>% SVGrenderer()
+             legend_title = '') %>% SVGrenderer()
 
 ```
 
@@ -197,7 +197,7 @@ Optionally, categorical dimension can be added in a form of a point color.
 scatter_plot(scatter_data, x = scatter_data$hp,
              y = scatter_data$qsec, 
              cat = scatter_data$cyl, 
-             legend_title = 'HorsePower vs agility') %>% SVGrenderer()
+             legend_title = 'No. cylinder') %>% SVGrenderer()
 
 ```
 
@@ -210,7 +210,7 @@ scatter_plot(scatter_data, x = scatter_data$hp,
              y = scatter_data$qsec, 
              cat = scatter_data$cyl, 
              bubble_value = scatter_data$wt,
-             legend_title = 'HorsePower vs agility') %>% SVGrenderer()
+             legend_title = 'No. cylinders') %>% SVGrenderer()
 ```
 
 # Column charts <a name="columncharts"></a>
