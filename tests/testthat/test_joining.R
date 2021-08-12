@@ -54,3 +54,16 @@ test_that("Simple 3x2 joining works",{
     ) %>% show()
   )
 })
+
+test_that('facetting works',{
+  expect_magick(
+    facet_chart(
+      data = mtcars,
+      facet_by = 'cyl',
+      chart_type = scatter_plot,
+      x = 'hp',
+      y = 'qsec',
+      legend_title = ''
+    ) %>% show()
+  )
+})

@@ -64,3 +64,13 @@ translate_svg<- function(svg_string, x, y){
         svg_string,
         '</g>'))
 }
+
+
+facet_chart <- function(data, facet_by, chart_type, ...){
+  categories <- unique(data[[facet_by]])
+  for(category in categories){
+    filtered <- data[data[facet_by] == category]
+    print(category)
+    print(filtered)
+  }
+}
