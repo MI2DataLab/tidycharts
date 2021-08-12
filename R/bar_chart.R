@@ -329,27 +329,11 @@ bar_chart_absolute_variance <-
       real <- get_vector(data, real)
     }
 
-    initialize(y_vector = cat, bar_width = 16) %>%
-      draw_bars_variance(., cat, baseline, real, colors, y_title, y_style) %>%
-      finalize()
-  }
-
-
-draw_bars_variance <-
-  function(svg_string,
-           cat,
-           baseline,
-           real,
-           colors,
-           y_title,
-           y_style) {
-
     variance <- real - baseline
 
     width_of_one <-
       200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
 
-    y <- 50
 
     #dealing with negative values
     neg <- variance[variance < 0]
@@ -357,6 +341,27 @@ draw_bars_variance <-
       shift <- 0
     else
       shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
+
+
+    initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+      draw_bars_variance(., cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
+      finalize()
+  }
+
+
+draw_bars_variance <-
+  function(svg_string,
+           cat,
+           variance,
+           width_of_one,
+           shift,
+           colors,
+           y_title,
+           y_style) {
+
+
+    y <- 50
+
 
     data <- data.frame(variance)
     colnames(data) <- y_title
@@ -443,26 +448,26 @@ bar_chart_relative_variance <-
       real <- get_vector(data, real)
     }
 
-  initialize(y_vector = cat, bar_width = 16) %>%
-    draw_pins_variance(., cat, baseline, real, colors, y_title, y_style) %>%
+    values <- real / baseline * 100 - 100
+    width_of_one <- 2 # units in relative variance plot must be the same in all variance plots
+
+    #dealing with negative values
+    neg <- values[values < 0]
+    if (length(neg) == 0)
+      shift <- 0
+    else
+      shift <- width_of_one * abs(min(neg)) + 25 # 25 px for value labels
+
+
+  initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    draw_pins_variance(., cat, values, width_of_one, shift, colors, y_title, y_style) %>%
     finalize()
   }
 
 
-draw_pins_variance <- function(svg_string, cat, baseline, real, colors, y_title, y_style){
-
-  values <- real / baseline * 100 - 100
+draw_pins_variance <- function(svg_string, cat, values, width_of_one, shift, colors, y_title, y_style){
 
   y <- 50
-
-  width_of_one <- 2 # units in relative variance plot must be the same in all variance plots
-
-  #dealing with negative values
-  neg <- values[values < 0]
-  if (length(neg) == 0)
-    shift <- 0
-  else
-    shift <- width_of_one * abs(min(neg)) + 25 # 20 px for value labels
 
   data <- data.frame(values)
   colnames(data) <- y_title
