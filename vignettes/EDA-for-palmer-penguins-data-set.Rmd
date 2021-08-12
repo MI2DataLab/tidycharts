@@ -9,7 +9,7 @@ vignette: >
 ```{r data, echo=FALSE, results="hide", warning = FALSE, message = FALSE}
 library(palmerpenguins)
 library(tidyverse)
-library(ibcsplot)
+library(tidycharts)
 
 penguins <- as.data.frame(penguins)
 ```

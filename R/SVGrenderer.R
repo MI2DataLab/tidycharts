@@ -22,7 +22,7 @@ SVGrenderer <- function(svg_string, width = NULL, height = NULL, elementId = NUL
     x,
     width = width,
     height = height,
-    package = 'ibcsplot',
+    package = 'tidycharts',
     elementId = elementId
   )
 }

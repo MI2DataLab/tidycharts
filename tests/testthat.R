@@ -1,4 +1,4 @@
 library(testthat)
-library(ibcsplot)
+library(tidycharts)
 
-test_check("ibcsplot")
+test_check("tidycharts")

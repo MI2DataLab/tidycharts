@@ -1,27 +1,27 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ibcsplot
+# tidycharts
 
 <!-- badges: start -->
 
 [![Codecov test
-coverage](https://codecov.io/gh/SawickiBartosz/ibcsplot/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/ibcsplot?branch=main)
+coverage](https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/tidycharts?branch=main)
 <!-- badges: end -->
 
-The goal of ibcsplot is to enable R users to create charts inspired by
+The goal of tidycharts is to enable R users to create charts inspired by
 [International Business Communication Standards
 (IBCS)](https://www.ibcs.com/). The plots are generated in SVG format,
 so embedding them in HTML documents is straight forward.
 
 ## Installation
 
-~~You can install the released version of ibcsplot from
+~~You can install the released version of tidycharts from
 [CRAN](https://CRAN.R-project.org) with:~~ The package is going to be
 deployed to CRAN, so that the installation process will look like:
 
 ``` r
-install.packages("ibcsplot")
+install.packages("tidycharts")
 ```
 
 But for now only development version from [GitHub](https://github.com/)
@@ -29,15 +29,15 @@ can be installed with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("SawickiBartosz/ibcsplot")
+devtools::install_github("SawickiBartosz/tidycharts")
 ```
 
 ## Example
 
-How to create IBCS inspired charts using ibcsplot?
+How to create IBCS inspired charts using tidycharts?
 
 ``` r
-library(ibcsplot) # load the package
+library(tidycharts) # load the package
 
 # create some data to visualize
 df <- data.frame(months = month.abb[1:6],
@@ -49,7 +49,7 @@ column_chart(df, x = 'months', series = 'values') %>%
 ```
 
 ![example column
-chart](https://raw.githubusercontent.com/SawickiBartosz/ibcsplot/main/man/figures/README-example-columns-1.svg)
+chart](https://raw.githubusercontent.com/SawickiBartosz/tidycharts/main/man/figures/README-example-columns-1.svg)
 
 You can easily create other type of plots, ie. lineplots:
 
