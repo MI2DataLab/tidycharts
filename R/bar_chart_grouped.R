@@ -20,7 +20,12 @@ add_bar_grouped <-
     for (i in length(series):1){ #going through series
       value <- data[,series[i]] #a vector
       color <- get_gray_color_stacked(i)
-      styles <- df_styles[,series[i]]
+      if(length(series) == 2 || i == 1){
+        styles <- df_styles[,length(series)-i+1]
+      }else{
+        styles <- df_styles[,i - 1]
+      }
+
 
       if(i != 1 && value[k] < 0){
           x <- x - (width_of_one*abs(value[k]))
@@ -58,10 +63,29 @@ add_bar_grouped <-
   }
 
 #---
-draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_with_real_values=NULL, df_styles = NULL){
+draw_bars_grouped <- function(svg_string, data, cat, foreground, background, markers, series_labels, df_with_real_values=NULL, df_styles = NULL){
   bars <- svg_string
   y = 50
-  #maxes <- c()
+  #series <- c(markers, foreground, background)
+  if(length(foreground) == 1){forg <- data[ ,foreground]
+  }else{
+    forg <- foreground
+    foreground <- "foreground"}
+  if(length(background) == 1){backg <- data[ ,background]
+  }else{
+    backg <- background
+    background <- "background"}
+  if(length(markers) == 1){mark <- data[ ,markers]
+  }else{
+    mark <- markers
+    markers <- "markers"}
+  if(length(cat) == 1){cat <- data[ ,cat]
+  }
+  series <- c(markers, foreground, background)
+
+  data <- cbind(mark, forg, backg)
+  colnames(data) <- series
+  data <- as.data.frame(data)
   neg <- data[, series][data[,series] < 0]
   #looking for the maximum value
 
@@ -73,8 +97,9 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
   width_of_one <- 200/maximum
 
   #dealing with negative values
-  if(length(neg) == 0){shift <- 0}
-  else{shift <- width_of_one*abs(min(neg))}
+  if(length(neg) == 0){shift <- 0
+  }else{
+    shift <- width_of_one*abs(min(neg))}
 
   #adding series labels
   #zakladamy sie że w series sa dwa albo trzy elementy
@@ -86,10 +111,9 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
     )
   }
 
-
   bars <- paste(bars,
                 add_label(80 + shift + data[,series[2]][length(cat)]*width_of_one/2, 50 + 24 * length(cat) + 4.8, series_labels[2]),
-                add_bar_grouped(shift, data,cat, series,1, y, width_of_one, series_labels, df_styles=df_styles),
+                add_bar_grouped(shift, data, cat, series, 1, y, width_of_one, series_labels, df_styles=df_styles),
                 sep='\n')
   y <- y + 24
   for(i in 2:length(cat)){
@@ -104,11 +128,8 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
 
 #' Generates grouped horizontal barchart with scenario triangles.
 #'
-#' @param data data frame containing data to be plotted
 #' @param cat vector cointaining category names of values
-#' @param series vector containing names of columns in data with values to plot
-#' @param series_labels vector containing names of series to be shown on the plot
-#' @param df_styles optional data frame containing styles of bars. It is necessary that df_style has the same column names as defined in series vector.
+#' @inheritParams column_chart_grouped
 #'
 #' @return SVG string containing chart
 #' @export
@@ -130,14 +151,15 @@ draw_bars_grouped <- function(svg_string, data, cat, series, series_labels, df_w
 #'  triangles = c("previous", "previous","previous","previous","previous"))
 #'
 #' #creating the svg string
-#' barchart_grouped <- barchart_plot_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
+#' barchart_grouped <- bar_chart_grouped(data,
+#'  data$city,  "AC", "PL","triangles", c("triangles", "AC", "PL"), df_styles)
 #'
 #' #showing the plot
 #' barchart_grouped %>% SVGrenderer()
 #'
-barchart_plot_grouped <- function(data, cat, series, series_labels, df_styles = NULL){
+bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, styles = NULL){
   initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
-    draw_bars_grouped(.,data, cat, series, series_labels, df_styles = df_styles) %>%
+    draw_bars_grouped(.,data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
     finalize()
 }
 

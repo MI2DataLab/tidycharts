@@ -102,7 +102,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining time interwals of the values
+#' @param x vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param ser_names vector containing column names of a value to be marked
@@ -126,16 +126,18 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' cords <- c(1, 4,5,2, 5,4)
 #'
 #' #generating SVG string
-#' line_plot_many_points  <- line_plot_many_points(data, data$time, c("Gamma", "Delta"), c("Gamma inc.", "Delta inc."), names, cords, "years")
+#' line_chart  <- line_chart(data, data$time, c("Gamma", "Delta"), c("Gamma inc.", "Delta inc."), names, cords, "years")
 #'
 #' #showing the plot
-#' line_plot_many_points %>% SVGrenderer
+#' line_chart %>% SVGrenderer
 #'
-line_plot_many_points <- function(data, cat, series, series_labels, ser_names, point_cords, interval="months"){
+line_chart <- function(data, x, series, series_labels, ser_names, point_cords, interval="months"){
 
+  if(length(x) == 1){
+    x <- data[,x]
+  }
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-  draw_lines(., data, cat, series, series_labels, ser_names, point_cords, cat_width) %>%
+  draw_lines(., data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
   finalize()
 }
-

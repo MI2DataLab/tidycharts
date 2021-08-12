@@ -1,7 +1,7 @@
 
 parse_time_series_column <- function(y, df, x, convert.to = 'months') {
   stopifnot(convert.to %in% c('weeks', 'months', 'quarters', 'years'))
-  x <- df[[x]]
+  x <- get_vector(df, x)
   result.y <- df[[y]]
 
   if (convert.to == 'weeks') {

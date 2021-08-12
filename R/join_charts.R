@@ -1,4 +1,4 @@
-#' Join SVG plots. This function first populates each row in the first column, then rows in the seccond column
+#' Join SVG charts This function first populates each place in the first row, then columns in the second row
 #'
 #' @param ... mumltiple character vectors with SVG content
 #' @param nrows number of rows of plots in joint plot, default is set to number of plots
@@ -13,18 +13,26 @@
 #'    values = rnorm(6)
 #'   )
 #'
-#' join_plots(
+#' join_charts(
 #'   column_chart(df, x = 'mon', series = 'values'),
 #'   column_chart(df, x = 'mon', series = 'values')
 #' ) %>% SVGrenderer()
-join_plots <- function(..., nrows = length(list(...)), ncols = 1){
+join_charts <- function(..., nrows = length(list(...)), ncols = 1){
 
   n_plots <-length(list(...))
 
   # check if there are enough rows and cols to show all plots
   stopifnot(n_plots <= nrows * ncols)
 
-  plots <- array(data = list(...), dim = c(nrows, ncols))
+  plots <- tryCatch( # if we pass not full matrix(5 elements to 3x2 matrix) we get warning
+                     # so we use tryCatch to ensure no warnings are displayed
+    matrix(data = list(...), nrow = nrows, ncol = ncols, byrow = T),
+    warning = function(cond){
+      data = list(...)
+      for(i in (n_plots+1):nrows * ncols) data[[i]] <- '<svg height="0" width="0"></svg>'
+      matrix(data = data, nrow = nrows, ncol = ncols, byrow = T)
+    }
+  )
   widths <- matrix(apply(plots, c(1,2), function(svg_string) get_svg_size(svg_string)[1]), nrow = nrows, ncol = ncols)
   heights <- matrix(apply(plots, c(1,2), function(svg_string) get_svg_size(svg_string)[2]), nrow = nrows, ncol = ncols)
   cumulated_widths <- matrix(apply(widths, 1, cumsum), nrow = nrows, ncol = ncols, byrow = T)
@@ -36,9 +44,9 @@ join_plots <- function(..., nrows = length(list(...)), ncols = 1){
 
   result_string <- initialize(height = joint_height, width = joint_width)
 
-  for(j in 1:ncols){
-    for(i in 1:nrows){
-      if ((j-1) * nrows  + i > n_plots) {
+  for(i in 1:nrows){
+    for(j in 1:ncols){
+      if ((i-1) * ncols  + j > n_plots) {
         break()
       }
       translate_x <- cumulated_widths[i,j] - widths[i,j]

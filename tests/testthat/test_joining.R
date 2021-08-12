@@ -7,7 +7,7 @@ test_that("Simple joining works",{
     values = rnorm(6)
   )
   expect_magick(
-    join_plots(
+    join_charts(
       column_chart(df, x = 'mon', series = 'values'),
       column_chart(df, x = 'mon', series = 'values')
     ) %>% show()
@@ -23,7 +23,7 @@ test_that("Simple 2x2 joining works",{
     values = rnorm(6)
   )
   expect_magick(
-    join_plots(
+    join_charts(
       column_chart(df, x = 'mon', series = 'values'),
       column_chart(df, x = 'mon', series = 'values'),
       column_chart(df, x = 'mon', series = 'values'),
@@ -42,7 +42,7 @@ test_that("Simple 3x2 joining works",{
     values = rnorm(6)
   )
   expect_magick(
-    join_plots(
+    join_charts(
       column_chart(df, x = 'mon', series = 'values'),
       column_chart(df, x = 'mon', series = 'values'),
       column_chart(df, x = 'mon', series = 'values'),

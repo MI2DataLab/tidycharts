@@ -8,11 +8,11 @@ scatter_plot(
   data,
   x,
   y,
-  cat,
-  x_space_size,
-  y_space_size,
-  x_names,
-  y_names,
+  cat = NULL,
+  x_space_size = (x_end - x_start)/8,
+  y_space_size = (y_end - y_start)/8,
+  x_names = c("x", ""),
+  y_names = c("y", ""),
   legend_title,
   bubble_value = NULL,
   x_start = 0,
@@ -30,9 +30,7 @@ scatter_plot(
 
 \item{cat}{vector containing categories of the values}
 
-\item{x_space_size}{numeric value of the space between the ticks on the x- axis}
-
-\item{y_space_size}{numeric value of the space between the ticks on the y- axis}
+\item{x_space_size, y_space_size}{numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 8 sections}
 
 \item{x_names}{vector containing two values:
 * name of the value presented on the x - axis
@@ -54,6 +52,9 @@ scatter_plot(
 
 \item{y_end}{numeric value defining where the y axis should end at. Set by default to max(y).}
 }
+\value{
+SVG string containing chart
+}
 \description{
 Generates a scatter plot. If additional argument added, a bubble plot is generated.
 }
@@ -63,7 +64,7 @@ data <- data.frame(
     x = c(2, -3, -5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
     value = c(5,-3,2,6, 7, 3, -2, 1,7,8,3, -5),
     cat = c("val1","val1","val2","val2","val2", "val3","val3","val3", "val4","val4","val4","val4"),
-    bubble = c (1,2,3,4,5,4,6,2,1,3, 3.5, 4.5 )
+    bubble = c (1,2,12,4,5,4,8,2,1,9, 8, 4.5 )
 )
 
 # generate character vectors with svg data

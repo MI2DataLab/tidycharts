@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 
 
 ```{r setup}
-library(ibcsplot)
+library(tidycharts)
 df <- data.frame(x = letters[1:20],
                  val = rnorm(20, mean = 5),
                  style = rep('actual',20))
@@ -64,7 +64,7 @@ df <- data.frame(
 )
 df <- head(df, n = 199)
 l <- df %>% parse_time_series(., dates = 'x', series = c('Company_sin', 'Company_cos'))
-line_plot_many_points_complex(
+line_chart_dense_custom(
   list = l,
   vector_x = c('x', 'x'),
   vector_y = c('y', 'y'),
@@ -78,7 +78,7 @@ line_plot_many_points_complex(
 ## the same but using lineplot wrapper
 
 ```{r}
-line_plot_many_points_wrapper(df, dates = 'x', series = c('Company_sin', 'Company_cos')) %>% SVGrenderer()
+line_chart_dense(df, dates = 'x', series = c('Company_sin', 'Company_cos')) %>% SVGrenderer()
 ```
 
 ## Barcharts 
@@ -133,23 +133,23 @@ df_waterfall <- data.frame(
 ```
 
 ```{r barcharts}
-barchart_plot(data, data$city, groups, groups, styles = styles) %>% SVGrenderer()
-barchart_plot_index(df, df$animal, series = srs, index_val = 3, series_labels = srs) %>% SVGrenderer()
-barchart_plot_index(
+bar_chart(data, data$city, groups, groups, styles = styles) %>% SVGrenderer()
+bar_chart_reference(df, df$animal, series = srs, ref_val = 3, series_labels = srs) %>% SVGrenderer()
+bar_chart_reference(
       data,
       cat = data$city,
       groups,
-      index_val = 602,
+      ref_val = 602,
       series_labels = groups
     ) %>% SVGrenderer()
 
 groups2 <- c(groups, 'services')
 
-barchart_plot_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
+bar_chart_normalized(data, data$city, groups2, groups2) %>% SVGrenderer()
 barchart_plot_grouped(data, data$city, series, series, df_styles = df_styles) %>% SVGrenderer()
-barchart_plot_absolute_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
-barchart_plot_relative_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
-barchart_plot_waterfall(
+bar_chart_absolute_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
+bar_chart_relative_variance(data$city, baseline = data$products, real = data$services, y_title = 'profit') %>% SVGrenderer()
+bar_chart_waterfall(
       df_waterfall$category,
       df_waterfall$values,
       add_result = TRUE,
@@ -228,8 +228,8 @@ column_chart_grouped(
       df4$month,
       foreground = df4$s1,
       background = df4$s2,
-      triangles = df4$s3,
-      titles = c("Actual", "Looooooooong series name", "Previous year"),
+      markers = df4$s3,
+      series_labels = c("Actual", "Looooooooong series name", "Previous year"),
       styles = styles
     ) %>% SVGrenderer()
 
@@ -266,8 +266,8 @@ data <- data.frame(
 )
 groups <- c("val1", "val2", "val3")
 
-line_plot_index(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% SVGrenderer()
-line_plot(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% SVGrenderer()
+line_chart_markers_reference(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% SVGrenderer()
+line_chart_markers(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% SVGrenderer()
 
 
 data <- data.frame(
@@ -322,7 +322,7 @@ xes <- c("x", "xdf")
 yes <- c("y", "ydf")
 cats <- c("cat", "cat")
 
-line_plot_many_points_complex(lista,
+line_chart_dense_custom(lista,
                               xes,
                               yes,
                               cats,
@@ -339,7 +339,7 @@ df <- data.frame(
   wounded = c(1, 8, 5)
 )
 srs <- c("hungry", "relaxed", "wounded")
-line_plot(df, df$animal, srs, srs) %>% SVGrenderer()
+line_chart_markers(df, df$animal, srs, srs) %>% SVGrenderer()
 
 data <- data.frame(
   cat = c("blop", "mlem", "kwak", "beep", "moo"),
@@ -351,7 +351,7 @@ data <- data.frame(
 groups <- c("val1", "val2", "val3")
 series_labels <- c("speed", "mlemler", "defence")
 
-line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% SVGrenderer()
+line_chart_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% SVGrenderer()
 
 data <- data.frame(
   city = c(
@@ -370,7 +370,7 @@ data <- data.frame(
 )
 groups <- c("products", "services")
 series_labels <- groups
-line_plot_stacked(data, data$city, groups, series_labels, T) %>% SVGrenderer()
+line_chart_stacked(data, data$city, groups, series_labels, T) %>% SVGrenderer()
 
 data <- data.frame(
   cat = c("blop", "mlem", "kwak", "beep", "moo"),
@@ -381,7 +381,7 @@ data <- data.frame(
 )
 groups <- c("val1", "val2", "val3")
 labels <- groups
-line_plot_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% SVGrenderer()
+line_chart_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% SVGrenderer()
 
 data <- data.frame(
   city = c(
@@ -415,7 +415,7 @@ df <- data.frame(
   point_coordinates = c(1, 2, 3, 4, 5, 6, 7, 8)
 )
 series_labels <- groups
-line_plot_many_points(data,
+line_chart(data,
                       data$city,
                       groups,
                       series_labels,
@@ -440,10 +440,10 @@ df <- data.frame(
   y = seq(8, 8, along.with = dates) + rnorm(length(dates), sd = 0.5),
   z = seq(6, 6, along.with = dates) + rcauchy(length(dates), scale = 0.5)
 )
-line_plot_many_points_wrapper(df,
+line_chart_dense(df,
                               dates = 'dates',
                               series = c('y', 'z'),
-                              scale = 'weeks') %>%
+                              interval = 'weeks') %>%
   SVGrenderer()
 
 ```
@@ -455,19 +455,44 @@ df <- data.frame(x = letters[1:20],
                  val = rnorm(20, mean = 5),
                  style = rep('actual',20))
 
-join_plots(column_chart(df, 'x', 'val'),
+join_charts(column_chart(df, 'x', 'val'),
            column_chart(df, 'x', 'val')) %>% SVGrenderer()
 
 df2 <- data.frame(x = month.abb[1:6],
                   y = rnorm(6, mean = 3),
                   z = rnorm(6, mean = 4))
 
-join_plots(
+join_charts(
   column_chart(df2, x = 'x', series = 'y'),
   column_chart(df2, x = 'x', series = 'z'),
   column_chart(df2, x = 'x', series = c('y', 'z')),
   nrows = 2,
   ncols = 2
 ) %>% SVGrenderer()
+```
+
+
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+p <- penguins %>%
+  drop_na(bill_length_mm, flipper_length_mm, bill_length_mm, body_mass_g)
+#--- bill length on the x-axis ---
+scatter1 <- scatter_plot(p, p$bill_length_mm, p$bill_depth_mm, p$species, 10, 5, c("bill length", "in mm"), c("bill depht", "in mm"), "Legend") %>%
+  add_title("Relationship between bill length and bill depth","","")
+scatter2 <- scatter_plot(p, p$bill_length_mm, p$flipper_length_mm, p$species, 10, 50, c("bill length", "in mm"), c("flipper length", "in mm"), "Legend") %>%
+  add_title("Relationship between bill length and flipper length","","")
+scatter3 <- scatter_plot(p, p$bill_length_mm, p$body_mass_g, p$species, 10, 1000, c("bill length", "in mm"), c("body mass", "in g"), "Legend") %>%
+  add_title("Relationship between bill length and body mass","","")
+#--- bill depht on the x -axis ---
+scatter4 <- scatter_plot(p, p$bill_depth_mm, p$bill_length_mm, x_space_size = 5, y_space_size = 10, x_names = c("bill depht", "in mm"), y_names = c("bill length", "in mm"), legend_title = "Legend") %>%
+  add_title("Relationship between bill depth and bill length","","")
+scatter5 <- scatter_plot(p, p$bill_depth_mm, p$flipper_length_mm, p$species, 5, 50, c("bill depht", "in mm"), c("flipper length", "in mm"), "Legend") %>% add_title("Relationship between bill depth and flipper length","","")
+scatter6 <- scatter_plot(p, p$bill_depth_mm, p$body_mass_g, p$species, 5, 1000, c("bill depht", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between bill length and body mass","","")
+
+
+join_charts(scatter1, scatter2, scatter3,
+           scatter4, scatter5,
+           nrows=2, ncols=3) %>% SVGrenderer()
 ```
 

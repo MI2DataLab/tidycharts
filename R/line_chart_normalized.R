@@ -108,7 +108,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' Generates normalized areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining time interwals of the values
+#' @param x vector cointaining time interwals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param show_labels vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed
@@ -134,15 +134,15 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' labels <- c(NA, 1, NA, 1, NA, NA, 1, NA, 1, NA)
 #'
 #' #generating the SVG string
-#' line_plot_normalized <- line_plot_normalized(data, data$weeks, series, series, labels, "weeks")
+#' line_chart_normalized <- line_chart_normalized(data, data$weeks, series, series, labels, "weeks")
 #'
 #' #show the plot
-#' line_plot_normalized %>% SVGrenderer()
-line_plot_normalized <- function( data, cat, series, series_labels, show_labels, interval="months"){
+#' line_chart_normalized %>% SVGrenderer()
+line_chart_normalized <- function( data, x, series, series_labels, show_labels, interval="months"){
 
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-    draw_polygons_normalized(.,data, cat, series, series_labels,show_labels, cat_width) %>%
+    draw_polygons_normalized(.,data, x, series, series_labels,show_labels, cat_width) %>%
     finalize()
 }
 

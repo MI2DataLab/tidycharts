@@ -39,12 +39,12 @@ get_style <- function(style, styles_df = pkg.env$styles_df){
 
 #colors for scatter plots
 pkg.env$scatter_colors <-c(
-    "rgb(162, 136, 227)",
-    "rgb(187, 213, 237)",
-    "rgb(204, 255, 203)",
-    "rgb(206, 253, 255)" ,
-    "rgb(56, 2, 59)",
-    "rgb(149, 129, 141)"
+    "rgb(61, 56, 124)",
+    "rgb(0, 200, 154)",
+    "rgb(113, 103, 177)",
+    "rgb(0, 150, 193)" ,
+    "rgb(249, 248, 113)",
+    "rgb(147, 67, 134)"
   )
 get_scatter_colors <- function(series_number, scatter_colors = pkg.env$scatter_colors){
 
@@ -63,7 +63,6 @@ get_scatter_colors <- function(series_number, scatter_colors = pkg.env$scatter_c
 #'
 #' @return list with bar_color and text_color
 #'
-#' @examples
 get_gray_color_stacked <- function(series_number, colors_df = pkg.env$colors_df){
 
   stopifnot(series_number %in% 1:6)

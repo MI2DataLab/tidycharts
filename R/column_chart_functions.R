@@ -76,7 +76,6 @@ add_column_bar <-
 #'
 #' @return svg string with added bars
 #'
-#' @examples
 add_bars <-
   function(svg_string,
            df,
@@ -252,7 +251,6 @@ add_first_bar <- function(svg_string,
 #'
 #' @return svg string with appended waterfall bars
 #'
-#' @examples
 add_waterfall_bars <-
   function(svg_string,
            df,
@@ -805,9 +803,10 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 
 #' Generate basic column chart. If more than one series is supplied, stacked column plot is generated
 #'
-#' @param df data frame in wide format containing data to be plotted
-#' @param x vector containing labels for x axis or name of column in df with values of x axis labels
-#' @param series vector containing names of columns in df with values to plot
+#' @param data data frame in wide format containing data to be plotted
+#' @param x vector containing labels for x axis or name of column in data with values of x axis labels
+#' @param series vector containing names of columns in data with values to plot
+#' @param series_labels optional vector with labels for series to be plotted as legend. The default is the same as series.
 #' @param styles optional vector with styles of bars
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
@@ -828,16 +827,16 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' # show the plot
 #' svg1 %>% SVGrenderer()
 #'
-column_chart <- function(df, x, series = NULL, styles = NULL, interval = 'months') {
+column_chart <- function(data, x, series = NULL, series_labels = series, styles = NULL, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
   stop_if_many_series(series, max_series = 6) # maximum 6 series
-  stop_if_pos_neg_values(df, series) # signum of values in one bar is the same for every bar
-  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+  stop_if_pos_neg_values(data, series) # signum of values in one bar is the same for every bar
+  x <- get_vector(data, x)
   stop_if_many_categories(x, max_categories = 24)
-  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series])) %>%
-    add_bars(df, x, series, bar_width = bar_width, styles) %>%
-    add_legend(df, x, series, bar_width = bar_width) %>%
-    add_top_values(df, x, series, bar_width = bar_width) %>%
+  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(data[series])) %>%
+    add_bars(data, x, series, bar_width = bar_width, styles) %>%
+    add_legend(data, x, series_labels, bar_width = bar_width) %>%
+    add_top_values(data, x, series, bar_width = bar_width) %>%
     finalize()
 }
 
@@ -859,18 +858,18 @@ column_chart <- function(df, x, series = NULL, styles = NULL, interval = 'months
 #'
 #' # show the plot
 #' svg %>% SVGrenderer()
-column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
+column_chart_normalized <- function(data, x, series = NULL, series_labels = series, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
 
-  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+  x <- get_vector(data, x)
   stop_if_many_series(series, max_series = 6) # maximum 6 series
   stop_if_many_categories(x, max_categories = 24)
 
-  normalized_df <- normalize_rows(df, x, series)
+  normalized_df <- normalize_rows(data, x, series)
 
   initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
-    add_legend(normalized_df, x, series, bar_width = bar_width) %>%
+    add_legend(normalized_df, x, series_labels, bar_width = bar_width) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 75, label = "100") %>%
     finalize()
 }
@@ -899,26 +898,51 @@ column_chart_normalized <- function(df, x, series = NULL, interval = 'months') {
 #'
 #' # show the plot
 #' svg %>% SVGrenderer()
-column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, styles = NULL, interval = 'months') {
-  bar_width <- get_interval_width(interval)$bar_width
+column_chart_reference <-
+  function(data,
+           x,
+           series,
+           ref_value,
+           ref_label = NULL,
+           styles = NULL,
+           interval = 'months') {
+    bar_width <- get_interval_width(interval)$bar_width
 
 
-  stop_if_many_series(series, max_series = 1) # maximum 1 series
-  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
-  stop_if_many_categories(x, max_categories = 24)
+    stop_if_many_series(series, max_series = 1) # maximum 1 series
+    x <- get_vector(data, x)
+    stop_if_many_categories(x, max_categories = 24)
 
-  x_axis_pos <- get_x_axis_pos(df[series])
+    x_axis_pos <- get_x_axis_pos(data[series])
 
-  ref_label <-ifelse(is.null(ref_label), ref_value, ref_label)
-  referenced_df <- reference(df, x, series, ref_value)
-  index_level <-
-    ref_value / max(df[series]) * 200
-  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(referenced_df[series], x_axis_pos = x_axis_pos)) %>%
-    add_bars(referenced_df, x, series, bar_width = bar_width, styles = styles) %>%
-    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = x_axis_pos - index_level, label = ref_label) %>%
-    add_top_values(df, x, series, bar_width, labels = "percent", ref_value = ref_value) %>%
-    finalize()
-}
+    ref_label <- ifelse(is.null(ref_label), ref_value, ref_label)
+    referenced_df <- reference(data, x, series, ref_value)
+    index_level <-
+      ref_value / max(data[series]) * 200
+    initialize(
+      x_vector = x,
+      bar_width = bar_width,
+      height = get_plot_height(referenced_df[series], x_axis_pos = x_axis_pos)
+    ) %>%
+      add_bars(referenced_df,
+               x,
+               series,
+               bar_width = bar_width,
+               styles = styles) %>%
+      draw_ref_line_horizontal(
+        x,
+        bar_width = bar_width,
+        line_y = x_axis_pos - index_level,
+        label = ref_label
+      ) %>%
+      add_top_values(data,
+                     x,
+                     series,
+                     bar_width,
+                     labels = "percent",
+                     ref_value = ref_value) %>%
+      finalize()
+  }
 
 #' Generate column waterfall chart for visualizing contribution.
 #'
@@ -931,30 +955,40 @@ column_chart_reference <- function(df, x, series, ref_value, ref_label = NULL, s
 #' df <- data.frame(x = 10:18,
 #'                  y = rnorm(9))
 #' column_chart_waterfall(df, 'x', 'y') %>% SVGrenderer()
-column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'months') {
-  bar_width <- get_interval_width(interval)$bar_width
+column_chart_waterfall <-
+  function(data,
+           x,
+           series,
+           styles = NULL,
+           interval = 'months') {
+    bar_width <- get_interval_width(interval)$bar_width
 
-  if(length(x) == 1) x <- df[[x]] # if x is column name, get the column
+    x <- get_vector(data, x)
 
-  stop_if_many_categories(x, max_categories = 24)
-  stop_if_many_series(series, max_series = 1) # maximum 1 series
+    stop_if_many_categories(x, max_categories = 24)
+    stop_if_many_series(series, max_series = 1) # maximum 1 series
 
-  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series], x_axis_pos = 250)) %>%
-    add_waterfall_bars(df, x, series, bar_width, styles) %>%
-    finalize()
-}
+    initialize(
+      x_vector = x,
+      bar_width = bar_width,
+      height = get_plot_height(data[series], x_axis_pos = 250)
+    ) %>%
+      add_waterfall_bars(data, x, series, bar_width, styles) %>%
+      finalize()
+  }
 
 #' Generate column chart with absolute variance
 #'
 #' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
-#' @param x vector containing labels for x axis
-#' @param baseline vector containing base values
-#' @param real vector containing values that will be compared to baseline
+#' @param data data frame with columns containing data for x, baseline or real series
+#' @param baseline vector containing base values or name of column in data with base values
+#' @param real vector containing values that will be compared to baseline  or name of column in data with that values
 #' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
 #' @param x_style style of the x axis to indicate baseline scenario. The default is 'prevoius'.
-#' @param interval intervals on x axis. The width of the bars depends on this parameter
+#'
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
@@ -966,75 +1000,99 @@ column_chart_waterfall <- function(df, x, series, styles = NULL, interval = 'mon
 #' column_chart_absolute_variance(x, baseline, real, x_title = 'profit') %>%
 #'   SVGrenderer()
 column_chart_absolute_variance <-
-  function(x, baseline, real, colors = 1, x_title = "PY", x_style = 'previous', interval = 'months') {
+  function(x,
+           baseline,
+           real,
+           colors = 1,
+           data = NULL,
+           x_title = "PY",
+           x_style = 'previous',
+           interval = 'months') {
 
     bar_width <- get_interval_width(interval)$bar_width
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    initialize(x_vector = x, bar_width = bar_width,
-               height = get_plot_height_abs_var(real, baseline)) %>%
+    initialize(
+      x_vector = x,
+      bar_width = bar_width,
+      height = get_plot_height_abs_var(real, baseline)
+    ) %>%
       add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title, x_style) %>%
       finalize()
   }
 
 #' Generate grouped column chart for visualizing up to 3 data series
 #'
-#' @param x vector containing labels for x axis
-#' @param foreground vector representing heights of bars visible in the foreground
-#' @param background vector representing heights of bars visible in the background
-#' @param triangles optional vector representing position of triangles
-#' @param titles vector of series titles. Consists of 2 or 3 elements
+#' @param foreground vector or name of column in data representing heights of bars visible in the foreground
+#' @param background vector or name of column in data representing heights of bars visible in the background
+#' @param markers optional vector representing position of triangles
+#' @param series_labels vector of series titles. Consists of 2 or 3 elements
 #' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
-#' @param interval intervals on x axis. The width of the bars depends on this parameter
+#'
+#' @inheritParams column_chart
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-# df <- data.frame(x = month.abb[7:12],
-#                  actual = rnorm(6, mean = 5, sd = 0.3),
-#                  budget = rnorm(6, mean = 4.5, sd = 0.7),
-#                  prev_year = rnorm(6, mean = 4))
-#
-# column_chart_grouped(x = df$x,
-#                      foreground = df$actual,
-#                      background = df$budget,
-#                      triangles = df$prev_year,
-#                      titles = c('AC', 'BU', 'PY')) %>% SVGrenderer()
-
+#' df <- data.frame(x = month.abb[7:12],
+#'                  actual = rnorm(6, mean = 5, sd = 0.3),
+#'                  budget = rnorm(6, mean = 4.5, sd = 0.7),
+#'                  prev_year = rnorm(6, mean = 4))
+#'
+#' column_chart_grouped(x = df$x,
+#'                      foreground = df$actual,
+#'                      background = df$budget,
+#'                      markers = df$prev_year,
+#'                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
 column_chart_grouped <-
   function(x,
            foreground,
            background,
-           triangles = NULL,
-           titles,
+           markers = NULL,
+           data = NULL,
+           series_labels,
            styles = NULL,
            interval = 'months') {
 
     bar_width <- get_interval_width(interval)$bar_width
-    translation_vec <- c(0,0) # c(max(str_width(titles)) + 10, 0)
+    translation_vec <- c(0,0) # c(max(str_width(series_labels)) + 10, 0)
 
-    stopifnot(length(titles) >= 2)
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      foreground <- get_vector(data, foreground)
+      background <- get_vector(data, background)
+    }
+
+    stopifnot(length(series_labels) >= 2)
     stop_if_many_categories(x, max_categories = 24)
 
     df <- data.frame(foreground, background)
-    colnames(df) <- titles[1:2]
+    colnames(df) <- series_labels[1:2]
 
-    if (!is.null(triangles)) {
-      stopifnot(length(titles) == 3)
-      triangles_df <-  data.frame(triangles)
+    if (!is.null(markers)) {
+      markers <- get_vector(data, markers)
+      stopifnot(length(series_labels) == 3)
+      triangles_df <-  data.frame(markers)
       df <- cbind(df, triangles_df)
-      colnames(df) <- titles
+      colnames(df) <- series_labels
     }
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[titles])) %>%
+    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series_labels])) %>%
       add_bars(
-        df[, titles[2], drop = FALSE],
+        df[, series_labels[2], drop = FALSE],
         x = x,
         bar_width = bar_width,
-        series = titles[2],
+        series = series_labels[2],
         x_offset = -(bar_width / 6),
         add_x_axis = FALSE,
         color = "rgb(166,166,166)",
@@ -1044,10 +1102,10 @@ column_chart_grouped <-
         styles = styles[[2]]
       ) %>%
       add_bars(
-        df[, titles[1], drop = FALSE],
+        df[, series_labels[1], drop = FALSE],
         x = x,
         bar_width = bar_width,
-        series = titles[1],
+        series = series_labels[1],
         translate = translation_vec,
         add_legend = TRUE,
         max_val = max_bar_height,
@@ -1055,16 +1113,16 @@ column_chart_grouped <-
       ) %>%
       {
         ifelse(
-          is.null(triangles),
+          is.null(markers),
           . ,
           # pass svg_string if triangles is null
           add_triangles(
             # or add triangles
             .,
-            df[, titles[3], drop = FALSE],
+            df[, series_labels[3], drop = FALSE],
             x = x,
             bar_width = bar_width,
-            series = titles[3],
+            series = series_labels[3],
             translate = translation_vec,
             max_val = max_bar_height,
             add_legend = TRUE,
@@ -1076,7 +1134,7 @@ column_chart_grouped <-
         df,
         labels = foreground,
         x = x,
-        series = titles[1],
+        series = series_labels[1],
         bar_width = bar_width,
         translate = translation_vec,
         max_val = max_bar_height
@@ -1100,14 +1158,41 @@ column_chart_grouped <-
 #' column_chart_relative_variance(x, baseline, real, x_title = 'profit %') %>%
 #'   SVGrenderer()
 column_chart_relative_variance <-
-  function(x, baseline, real, colors = 1, x_title, x_style = 'previous', styles = NULL, interval = 'months') {
+  function(x,
+           baseline,
+           real,
+           colors = 1,
+           data = NULL,
+           x_title,
+           x_style = 'previous',
+           styles = NULL,
+           interval = 'months') {
     stop_if_variance_colors(colors)
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
     stop_if_many_categories(x, max_categories = 24)
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec = c(str_width(x_title), 0)
-    initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
-      add_relative_variance_pins(x, baseline, real, colors, bar_width, x_title, x_style, translate = translation_vec, styles = styles) %>%
+    initialize(x_vector = x,
+               bar_width = bar_width,
+               height = 300) %>%
+      add_relative_variance_pins(
+        x,
+        baseline,
+        real,
+        colors,
+        bar_width,
+        x_title,
+        x_style,
+        translate = translation_vec,
+        styles = styles
+      ) %>%
       finalize()
   }
 
@@ -1127,7 +1212,14 @@ column_chart_relative_variance <-
 #' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') %>%
 #'   SVGrenderer()
 column_chart_waterfall_variance <-
-  function(x, baseline, real, colors = 1, result_title, interval = 'months') {
+  function(x, baseline, real, colors = 1, data = NULL, result_title, interval = 'months') {
+
+    if (!is.null(data)) {
+      x <- get_vector(data, x)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
     bar_width <- get_interval_width(interval)$bar_width
     stop_if_many_categories(x, max_categories = 24)
 
@@ -1160,3 +1252,5 @@ column_chart_waterfall_variance <-
       ) %>%
       finalize()
   }
+
+

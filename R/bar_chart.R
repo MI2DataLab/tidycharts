@@ -171,7 +171,7 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #' Services = c(621, 545, 302, 44, 39, 20, 34)
 #')
 #' #generate svgstring
-#' barchart <- barchart_plot(data, data$city, c("Products", "Services"), c("Products", "Services"))
+#' barchart <- bar_chart(data, data$city, c("Products", "Services"), c("Products", "Services"))
 #'
 #' #show the plot
 #' barchart %>% SVGrenderer()
@@ -179,11 +179,13 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #'
 #' @importFrom magrittr "%>%"
 
-barchart_plot <- function(data, cat, series, series_labels = series, styles = NULL){
+bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
 
   all_sums <- rowSums(data[series])
   width_of_one <- 200/max(abs(all_sums))
-
+  if(length(cat) == 1){
+    cat <- data[,cat]
+  }
   #dealing with negative values
   neg <- all_sums[all_sums < 0]
   if(length(neg) == 0){shift <- 0}
@@ -202,10 +204,10 @@ barchart_plot <- function(data, cat, series, series_labels = series, styles = NU
 #' @param data data frame containing data to be plotted
 #' @param cat vector containing category names of values
 #' @param series vector containing names of columns in data with values to plot
-#' @param index_val numeric value of the index
+#' @param ref_val numeric value of the index
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param styles optional vector with styles of bars
-#' @param index_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
+#' @param ref_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
 #'
 #' @return SVG string containing chart
 #' @export
@@ -219,17 +221,20 @@ barchart_plot <- function(data, cat, series, series_labels = series, styles = NU
 #' Services = c(621, 545, 302, 44, 39, 20, 34)
 #')
 #' #create svg string
-#' barchart_index <- barchart_plot_index(data, data$city, c("Products"), 100, c("Products"))
+#' barchart_ref <- bar_chart_reference(data, data$city, c("Products"), 100, c("Products"))
 #'
 #' #show the plot
-#' barchart_index %>% SVGrenderer()
+#' barchart_ref %>% SVGrenderer()
 #'
 #'
 
-barchart_plot_index <- function(data, cat, series, index_val,series_labels = series, styles = NULL, index_label=index_val){
+bar_chart_reference <- function(data, cat, series, ref_val, series_labels = series, styles = NULL, ref_label=ref_val){
 
   all_sums <- rowSums(data[series])
   width_of_one <- 200/max(abs(all_sums))
+  if(length(cat) == 1){
+    cat <- data[,cat]
+  }
 
   #dealing with negative values
   neg <- all_sums[all_sums < 0]
@@ -239,7 +244,7 @@ barchart_plot_index <- function(data, cat, series, index_val,series_labels = ser
   initialize(width= 80 + shift + 250, height = 50 + 24*length(cat)) %>%
     paste(.,
           draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
-          add_vertical_index(80+(width_of_one*index_val)+shift, (66+24*(length(cat)-1)), index_label),
+          add_vertical_index(80+(width_of_one*ref_val)+shift, (66+24*(length(cat)-1)), ref_label),
           sep='\n') %>%
     finalize()
 }
@@ -263,12 +268,15 @@ barchart_plot_index <- function(data, cat, series, index_val,series_labels = ser
 #' Services = c(621, 545, 302, 44, 39, 20, 34)
 #')
 #' #create svg string
-#' barchart_normalized <- barchart_plot_normalized(data, data$city,c("Products", "Services"), c("Products", "Services") )
+#' barchart_normalized <- bar_chart_normalized(data, data$city,c("Products", "Services"), c("Products", "Services") )
 #'
 #' #show the plot
 #' barchart_normalized %>% SVGrenderer()
 #'
-barchart_plot_normalized <- function(data, cat, series, series_labels){
+bar_chart_normalized <- function(data, cat, series, series_labels = series){
+  if(length(cat) == 1){
+    cat <- data[,cat]
+  }
   df <- normalize_rows(data, cat, series)
   y_end <- 50 + 24*length(cat)
   initialize(y_vector = cat,
@@ -281,13 +289,12 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
     finalize()
 }
 
-
 #' Generate bar chart with absolute variance
 #'
 #' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
 #' @inheritParams column_chart_absolute_variance
-#' @inheritParams barchart_plot
+#' @inheritParams bar_chart
 #' @param y_title title of the series values
 #' @param y_style style of y axis to indicate baseline scenario
 #'
@@ -301,41 +308,32 @@ barchart_plot_normalized <- function(data, cat, series, series_labels){
 #' baseline <- cos(1:5)
 #' cat <- letters[1:5]
 #'
-#' barchart_plot_absolute_variance(
+#' bar_chart_absolute_variance(
 #'   cat = cat,
 #'   baseline = baseline,
 #'   real = real,
 #'   y_title = 'a title') %>%
 #'  SVGrenderer() # show the plot
-barchart_plot_absolute_variance <-
+bar_chart_absolute_variance <-
   function(cat,
            baseline,
            real,
            colors = 1,
+           data = NULL,
            y_title,
            y_style = 'previous') {
 
-    initialize(y_vector = cat, bar_width = 16) %>%
-      draw_bars_variance(., cat, baseline, real, colors, y_title, y_style) %>%
-      finalize()
-  }
-
-
-draw_bars_variance <-
-  function(svg_string,
-           cat,
-           baseline,
-           real,
-           colors,
-           y_title,
-           y_style) {
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
 
     variance <- real - baseline
 
     width_of_one <-
       200 / max(abs(real), abs(baseline)) # units in variance plot must be the same as in the normal plot
 
-    y <- 50
 
     #dealing with negative values
     neg <- variance[variance < 0]
@@ -343,6 +341,27 @@ draw_bars_variance <-
       shift <- 0
     else
       shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
+
+
+    initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+      draw_bars_variance(., cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
+      finalize()
+  }
+
+
+draw_bars_variance <-
+  function(svg_string,
+           cat,
+           variance,
+           width_of_one,
+           shift,
+           colors,
+           y_title,
+           y_style) {
+
+
+    y <- 50
+
 
     data <- data.frame(variance)
     colnames(data) <- y_title
@@ -397,40 +416,58 @@ draw_bars_variance <-
 
 #' Generate bar chart with relative variance (in percents)
 #'
-#' @inheritParams barchart_plot_absolute_variance
+#' @inheritParams bar_chart_absolute_variance
 #'
 #' @return SVG string containing chart
 #' @export
 #'
 #' @examples
-barchart_plot_relative_variance <-
+#' # get some data
+#' real <- sin(1:5)
+#' baseline <- cos(1:5)
+#' cat <- letters[1:5]
+#'
+#' bar_chart_relative_variance(
+#'   cat = cat,
+#'   baseline = baseline,
+#'   real = real,
+#'   y_title = 'a title') %>%
+#'  SVGrenderer() # show the plot
+bar_chart_relative_variance <-
   function(cat,
            baseline,
            real,
            colors = 1,
+           data = NULL,
            y_title,
            y_style = 'previous') {
 
-  initialize(y_vector = cat, bar_width = 16) %>%
-    draw_pins_variance(., cat, baseline, real, colors, y_title, y_style) %>%
+    if (!is.null(data)) {
+      cat <- get_vector(data, cat)
+      baseline <- get_vector(data, baseline)
+      real <- get_vector(data, real)
+    }
+
+    values <- real / baseline * 100 - 100
+    width_of_one <- 2 # units in relative variance plot must be the same in all variance plots
+
+    #dealing with negative values
+    neg <- values[values < 0]
+    if (length(neg) == 0)
+      shift <- 0
+    else
+      shift <- width_of_one * abs(min(neg)) + 25 # 25 px for value labels
+
+
+  initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    draw_pins_variance(., cat, values, width_of_one, shift, colors, y_title, y_style) %>%
     finalize()
   }
 
 
-draw_pins_variance <- function(svg_string, cat, baseline, real, colors, y_title, y_style){
-
-  values <- real / baseline * 100 - 100
+draw_pins_variance <- function(svg_string, cat, values, width_of_one, shift, colors, y_title, y_style){
 
   y <- 50
-
-  width_of_one <- 2 # units in relative variance plot must be the same in all variance plots
-
-  #dealing with negative values
-  neg <- values[values < 0]
-  if (length(neg) == 0)
-    shift <- 0
-  else
-    shift <- width_of_one * abs(min(neg)) + 25 # 20 px for value labels
 
   data <- data.frame(values)
   colnames(data) <- y_title
