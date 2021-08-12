@@ -251,9 +251,23 @@ line_chart_markers(data_companies, x = data_companies$time,
   SVGrenderer()
 ```
 
-## Complex
+## Dense
 
-Use complex line plot to visualize up to 6 time series with many points. The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
+Use desnse line plot to visualize up to 6 time series with more than one point in a category on x-axis. The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
+
+```{r linechart_dense}
+
+data_dense <- data.frame(
+  dates = seq.Date(as.Date('2019-01-01'), as.Date('2019-12-31'), by = 1),
+  Warsaw = 7 + 9 * sin((365:1 - 60)/ 365 * 2 * pi) + rnorm(365, sd = 2),
+  London = 8 + 5 * sin((365:1 - 55)/ 365 * 2 * pi) + rnorm(365, sd = 1.2)
+)
+
+line_chart_dense(data_dense, 'dates', c('Warsaw', 'London')) %>%
+  add_title('Temperature in European Cities', 'Daily mean', 'in deg. C', 'In 2019') %>% 
+  SVGrenderer()
+```
+
 
 # Columns vs lines
 
