@@ -150,7 +150,7 @@
   <span class='va'>x</span>,
   <span class='va'>foreground</span>,
   <span class='va'>background</span>,
-  triangles <span class='op'>=</span> <span class='cn'>NULL</span>,
+  markers <span class='op'>=</span> <span class='cn'>NULL</span>,
   data <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>series_labels</span>,
   styles <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -173,7 +173,7 @@
       <td><p>vector or name of column in data representing heights of bars visible in the background</p></td>
     </tr>
     <tr>
-      <th>triangles</th>
+      <th>markers</th>
       <td><p>optional vector representing position of triangles</p></td>
     </tr>
     <tr>
@@ -207,7 +207,7 @@
 <span class='fu'>column_chart_grouped</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>x</span>,
                      foreground <span class='op'>=</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>actual</span>,
                      background <span class='op'>=</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>budget</span>,
-                     triangles <span class='op'>=</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>prev_year</span>,
+                     markers <span class='op'>=</span> <span class='va'>df</span><span class='op'>$</span><span class='va'>prev_year</span>,
                      series_labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'AC'</span>, <span class='st'>'BU'</span>, <span class='st'>'PY'</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
 </div></pre>
   </div>

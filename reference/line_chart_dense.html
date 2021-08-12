@@ -146,25 +146,25 @@
     <p>Line chart with more points then categories on x-axis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>line_chart_dense</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>dates</span>, <span class='va'>series</span>, scale <span class='op'>=</span> <span class='st'>"months"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>line_chart_dense</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>dates</span>, <span class='va'>series</span>, interval <span class='op'>=</span> <span class='st'>"months"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>Date frame with data in wide format.</p></td>
+      <th>data</th>
+      <td><p>Data frame in wide format.</p></td>
     </tr>
     <tr>
       <th>dates</th>
-      <td><p>Name of column in `df` which contains dates.</p></td>
+      <td><p>Name of column in `data` which contains dates or vector of dates.</p></td>
     </tr>
     <tr>
       <th>series</th>
-      <td><p>Vector of column names in `df` with values of time series.</p></td>
+      <td><p>Vector of column names in `data` with values of time series.</p></td>
     </tr>
     <tr>
-      <th>scale</th>
+      <th>interval</th>
       <td><p>Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.</p></td>
     </tr>
     </table>
