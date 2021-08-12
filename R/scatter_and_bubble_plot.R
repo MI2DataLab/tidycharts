@@ -9,7 +9,7 @@ draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,x_en
       ticks,
       #add new tick
       draw_line(80 + shift_x + width_of_one*(tick - x_start), 80+width_of_one*(tick - x_start) + shift_x, 250, 251.6),
-      add_label(80+width_of_one*(tick - x_start)+shift_x, 251.6+4.8+6 + 1.6, tick),
+      add_label(80+width_of_one*(tick - x_start)+shift_x, 251.6+4.8+6 + 1.6, format(tick, digits = 2)),
       #adding grid lines
       draw_line(80+width_of_one*(tick - x_start)+shift_x, 80+width_of_one*(tick - x_start) + shift_x, 250 + shift_y, 50-4.8, "black", 0.1),
       sep='\n'
@@ -48,7 +48,7 @@ draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, y_end, mini
     ticks <- paste(
       ticks,
       draw_line(78.4 + shift_x, 80 + shift_x, 250 - height_of_one*(tick - y_start), 250 - height_of_one*(tick - y_start)),
-      add_label(80-1.6-4.8 + shift_x, 250 - height_of_one*(tick - y_start) + 6 , tick, anchor="end"),
+      add_label(80-1.6-4.8 + shift_x, 250 - height_of_one*(tick - y_start) + 6 , format(tick, digits = 2), anchor="end"),
       #adding grid lines
       draw_line(80, 330 + shift_x, 250 - height_of_one*(tick - y_start), 250 - height_of_one*(tick - y_start),"black", 0.1),
       sep='\n'
@@ -139,7 +139,7 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' @param x vector containing x - coordinates of values
 #' @param y vector containing y - coordinates of values
 #' @param cat vector containing categories of the values
-#' @param x_space_size,y_space_size numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 10 sections
+#' @param x_space_size,y_space_size numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 8 sections
 #' @param x_names vector containing two values:
 #' * name of the value presented on the x - axis
 #' * units of values presented on the x - axis
@@ -178,8 +178,8 @@ scatter_plot <-
            x,
            y,
            cat = NULL,
-           x_space_size = (x_end - x_start) / 10,
-           y_space_size = (y_end - y_start) / 10,
+           x_space_size = (x_end - x_start) / 8,
+           y_space_size = (y_end - y_start) / 8,
            x_names = c('x',''),
            y_names = c('y',''),
            legend_title,
