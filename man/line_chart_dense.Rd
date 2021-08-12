@@ -4,16 +4,16 @@
 \alias{line_chart_dense}
 \title{Line chart with more points then categories on x-axis.}
 \usage{
-line_chart_dense(df, dates, series, scale = "months")
+line_chart_dense(data, dates, series, interval = "months")
 }
 \arguments{
-\item{df}{Date frame with data in wide format.}
+\item{data}{Data frame in wide format.}
 
-\item{dates}{Name of column in `df` which contains dates.}
+\item{dates}{Name of column in `data` which contains dates or vector of dates.}
 
-\item{series}{Vector of column names in `df` with values of time series.}
+\item{series}{Vector of column names in `data` with values of time series.}
 
-\item{scale}{Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.}
+\item{interval}{Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.}
 }
 \value{
 SVG string containing chart
