@@ -1,4 +1,4 @@
-#' Join SVG plots. This function first populates each place in the first row, then columns in the second row
+#' Join SVG charts This function first populates each place in the first row, then columns in the second row
 #'
 #' @param ... mumltiple character vectors with SVG content
 #' @param nrows number of rows of plots in joint plot, default is set to number of plots
@@ -13,11 +13,11 @@
 #'    values = rnorm(6)
 #'   )
 #'
-#' join_plots(
+#' join_charts(
 #'   column_chart(df, x = 'mon', series = 'values'),
 #'   column_chart(df, x = 'mon', series = 'values')
 #' ) %>% SVGrenderer()
-join_plots <- function(..., nrows = length(list(...)), ncols = 1){
+join_charts <- function(..., nrows = length(list(...)), ncols = 1){
 
   n_plots <-length(list(...))
 

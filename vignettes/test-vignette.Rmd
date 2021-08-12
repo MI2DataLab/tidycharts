@@ -454,14 +454,14 @@ df <- data.frame(x = letters[1:20],
                  val = rnorm(20, mean = 5),
                  style = rep('actual',20))
 
-join_plots(column_chart(df, 'x', 'val'),
+join_charts(column_chart(df, 'x', 'val'),
            column_chart(df, 'x', 'val')) %>% SVGrenderer()
 
 df2 <- data.frame(x = month.abb[1:6],
                   y = rnorm(6, mean = 3),
                   z = rnorm(6, mean = 4))
 
-join_plots(
+join_charts(
   column_chart(df2, x = 'x', series = 'y'),
   column_chart(df2, x = 'x', series = 'z'),
   column_chart(df2, x = 'x', series = c('y', 'z')),
@@ -490,8 +490,9 @@ scatter5 <- scatter_plot(p, p$bill_depth_mm, p$flipper_length_mm, p$species, 5, 
 scatter6 <- scatter_plot(p, p$bill_depth_mm, p$body_mass_g, p$species, 5, 1000, c("bill depht", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between bill length and body mass","","")
 
 
-join_plots(scatter1, scatter2, scatter3,
+join_charts(scatter1, scatter2, scatter3,
            scatter4, scatter5,
            nrows=2, ncols=3) %>% SVGrenderer()
+dont compile
 ```
 
