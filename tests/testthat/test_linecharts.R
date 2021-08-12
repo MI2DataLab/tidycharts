@@ -10,8 +10,8 @@ test_that("Line plot with few points is working without errors", {
   )
   groups <- c("val1", "val2", "val3")
 
-  expect_magick(line_plot_index(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% show())
-  expect_magick(line_plot(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% show())
+  expect_magick(line_chart_markers_reference(data, data$cat, groups, c("jeden", "dwa", "trzy"), 7) %>% show())
+  expect_magick(line_chart_markers(data, data$cat, groups, c("jeden", "dwa", "trzy")) %>% show())
 })
 
 test_that("Line plot with many points is working without errors", {
@@ -88,7 +88,7 @@ test_that('Lineplot with positive values does not throw warnings', {
     wounded = c(1, 8, 5)
   )
   srs <- c("hungry", "relaxed", "wounded")
-  expect_magick(line_plot(df, df$animal, srs, srs) %>% show())
+  expect_magick(line_chart_markers(df, df$animal, srs, srs) %>% show())
 })
 
 test_that("Normalized line plot is working without errors", {
@@ -102,7 +102,7 @@ test_that("Normalized line plot is working without errors", {
   groups <- c("val1", "val2", "val3")
   series_labels <- c("speed", "mlemler", "defence")
 
-  expect_magick(line_plot_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% show())
+  expect_magick(line_chart_normalized(data, data$cat, groups, series_labels, c(NA, 1, 1, 1, NA)) %>% show())
 })
 
 test_that("Stacked line plots work without errors", {
@@ -123,7 +123,7 @@ test_that("Stacked line plots work without errors", {
   )
   groups <- c("products", "services")
   series_labels <- groups
-  expect_magick(line_plot_stacked(data, data$city, groups, series_labels, T) %>% show())
+  expect_magick(line_chart_stacked(data, data$city, groups, series_labels, T) %>% show())
 
   data <- data.frame(
     cat = c("blop", "mlem", "kwak", "beep", "moo"),
@@ -134,7 +134,7 @@ test_that("Stacked line plots work without errors", {
   )
   groups <- c("val1", "val2", "val3")
   labels <- groups
-  expect_magick(line_plot_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% show())
+  expect_magick(line_chart_stacked(data, data$cat, groups, labels, c(NA, 1, 1, NA, NA)) %>% show())
 })
 
 test_that('Line plots with many points work without errors', {
@@ -153,7 +153,7 @@ test_that('Line plots with many points work without errors', {
   )
   series_labels <-groups
   expect_magick(
-  line_plot_many_points(data, data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
+    line_chart(data, x = data$city, groups, series_labels, df$ser_name, df$point_coordinates) %>% show()
   )
 })
 
@@ -184,7 +184,7 @@ test_that('Lineplot wrapper works', {
       df,
       dates = 'dates',
       series = c('y', 'z'),
-      scale = 'weeks'
+      interval = 'weeks'
     ) %>%
       show()
   )

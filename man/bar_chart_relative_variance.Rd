@@ -9,6 +9,7 @@ bar_chart_relative_variance(
   baseline,
   real,
   colors = 1,
+  data = NULL,
   y_title,
   y_style = "previous"
 )
@@ -22,6 +23,8 @@ bar_chart_relative_variance(
 
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
 
+\item{data}{data frame with columns containing data for x, baseline or real series}
+
 \item{y_title}{title of the series values}
 
 \item{y_style}{style of y axis to indicate baseline scenario}
@@ -31,4 +34,17 @@ SVG string containing chart
 }
 \description{
 Generate bar chart with relative variance (in percents)
+}
+\examples{
+# get some data
+real <- sin(1:5)
+baseline <- cos(1:5)
+cat <- letters[1:5]
+
+bar_chart_relative_variance(
+  cat = cat,
+  baseline = baseline,
+  real = real,
+  y_title = 'a title') \%>\%
+ SVGrenderer() # show the plot
 }

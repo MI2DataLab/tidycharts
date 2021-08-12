@@ -9,7 +9,7 @@ bar_chart_grouped(
   cat,
   foreground,
   background,
-  triangles = NULL,
+  markers = NULL,
   series_labels,
   df_styles = NULL
 )

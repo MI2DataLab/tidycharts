@@ -8,7 +8,7 @@ column_chart_grouped(
   x,
   foreground,
   background,
-  triangles = NULL,
+  markers = NULL,
   data = NULL,
   series_labels,
   styles = NULL,
@@ -22,7 +22,7 @@ column_chart_grouped(
 
 \item{background}{vector or name of column in data representing heights of bars visible in the background}
 
-\item{triangles}{optional vector representing position of triangles}
+\item{markers}{optional vector representing position of triangles}
 
 \item{data}{data frame in wide format containing data to be plotted}
 
@@ -37,4 +37,16 @@ SVG string containing chart
 }
 \description{
 Generate grouped column chart for visualizing up to 3 data series
+}
+\examples{
+df <- data.frame(x = month.abb[7:12],
+                 actual = rnorm(6, mean = 5, sd = 0.3),
+                 budget = rnorm(6, mean = 4.5, sd = 0.7),
+                 prev_year = rnorm(6, mean = 4))
+
+column_chart_grouped(x = df$x,
+                     foreground = df$actual,
+                     background = df$budget,
+                     markers = df$prev_year,
+                     series_labels = c('AC', 'BU', 'PY')) \%>\% SVGrenderer()
 }

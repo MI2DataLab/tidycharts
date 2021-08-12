@@ -76,7 +76,6 @@ add_column_bar <-
 #'
 #' @return svg string with added bars
 #'
-#' @examples
 add_bars <-
   function(svg_string,
            df,
@@ -252,7 +251,6 @@ add_first_bar <- function(svg_string,
 #'
 #' @return svg string with appended waterfall bars
 #'
-#' @examples
 add_waterfall_bars <-
   function(svg_string,
            df,
@@ -1035,7 +1033,7 @@ column_chart_absolute_variance <-
 #'
 #' @param foreground vector or name of column in data representing heights of bars visible in the foreground
 #' @param background vector or name of column in data representing heights of bars visible in the background
-#' @param triangles optional vector representing position of triangles
+#' @param markers optional vector representing position of triangles
 #' @param series_labels vector of series titles. Consists of 2 or 3 elements
 #' @param styles optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)
 #'
@@ -1045,22 +1043,21 @@ column_chart_absolute_variance <-
 #' @export
 #'
 #' @examples
-# df <- data.frame(x = month.abb[7:12],
-#                  actual = rnorm(6, mean = 5, sd = 0.3),
-#                  budget = rnorm(6, mean = 4.5, sd = 0.7),
-#                  prev_year = rnorm(6, mean = 4))
-#
-# column_chart_grouped(x = df$x,
-#                      foreground = df$actual,
-#                      background = df$budget,
-#                      triangles = df$prev_year,
-#                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
-
+#' df <- data.frame(x = month.abb[7:12],
+#'                  actual = rnorm(6, mean = 5, sd = 0.3),
+#'                  budget = rnorm(6, mean = 4.5, sd = 0.7),
+#'                  prev_year = rnorm(6, mean = 4))
+#'
+#' column_chart_grouped(x = df$x,
+#'                      foreground = df$actual,
+#'                      background = df$budget,
+#'                      markers = df$prev_year,
+#'                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
 column_chart_grouped <-
   function(x,
            foreground,
            background,
-           triangles = NULL,
+           markers = NULL,
            data = NULL,
            series_labels,
            styles = NULL,
@@ -1081,10 +1078,10 @@ column_chart_grouped <-
     df <- data.frame(foreground, background)
     colnames(df) <- series_labels[1:2]
 
-    if (!is.null(triangles)) {
-      triangles <- get_vector(data, triangles)
+    if (!is.null(markers)) {
+      markers <- get_vector(data, markers)
       stopifnot(length(series_labels) == 3)
-      triangles_df <-  data.frame(triangles)
+      triangles_df <-  data.frame(markers)
       df <- cbind(df, triangles_df)
       colnames(df) <- series_labels
     }
@@ -1116,7 +1113,7 @@ column_chart_grouped <-
       ) %>%
       {
         ifelse(
-          is.null(triangles),
+          is.null(markers),
           . ,
           # pass svg_string if triangles is null
           add_triangles(

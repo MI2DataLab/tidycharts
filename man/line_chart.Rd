@@ -6,7 +6,7 @@
 \usage{
 line_chart(
   data,
-  cat,
+  x,
   series,
   series_labels,
   ser_names,
@@ -17,7 +17,7 @@ line_chart(
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{cat}{vector cointaining time interwals of the values}
+\item{x}{vector cointaining time interwals of the values}
 
 \item{series}{vector containing names of columns in data with values to plot}
 

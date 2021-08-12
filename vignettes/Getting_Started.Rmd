@@ -1,8 +1,8 @@
 ---
-title: "Getting_Started"
+title: "Getting Started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting_Started}
+  %\VignetteIndexEntry{Getting Started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 ```
 
-This vignette shows the usage of the ibcsplot package. It contains different chart types examples and tips for proper data visualization.
+This vignette shows the usage of the *tidycharts* package. It contains different chart types examples and tips for proper data visualization.
 
 ## Prerequisites
 This package and vignette are created for a user who:
@@ -28,9 +28,9 @@ This package and vignette are created for a user who:
 ```{r setup, message=FALSE}
 
 # install from CRAN
-# install.packages(ibcsplot)
+# install.packages(tidycharts)
 
-library(ibcsplot)
+library(tidycharts)
 
 ```
 
@@ -60,7 +60,7 @@ Creation of the barchart is simple. We use `barchart_plot` function to do that. 
 
 ```{r base-barchart}
 
-barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
   SVGrenderer()
 
 ```
@@ -68,7 +68,7 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') 
 A plot should contain an informative title. We can use `add_title` function to make one. As with `SVGRenderer`, we chain the commands. 
 
 ```{r barchart-title}
-barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
   SVGrenderer()
 ```
@@ -76,7 +76,7 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep, series = 'profit') 
 We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
 
 ```{r barchart-stacked}
-barchart_plot(data = data_barchart, cat = data_barchart$dep, 
+bar_chart(data = data_barchart, cat = data_barchart$dep, 
               series = c('operational', 'property', 'bonus')) %>%  
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
   SVGrenderer()
@@ -87,19 +87,19 @@ barchart_plot(data = data_barchart, cat = data_barchart$dep,
 Normalized barplot should be used to show the proportions of parts in each category. Typical intention of using this kind of plot could be to visualize the percentage structure of profit among different departments in a company.
 
 ```{r barchart-normalized}
-barchart_plot_normalized(data = data_barchart, cat = data_barchart$dep,
+bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
                          series = c('operational', 'property', 'bonus')) %>% 
   SVGrenderer()
 ```
 
-## Indexed
+## Referenced
 
-We use indecies to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
+We use reference values (indecies) to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
 
 ```{r barchart-index}
-barchart_plot_index(data = data_barchart,
+bar_chart_reference(data = data_barchart,
                     cat = data_barchart$dep, series = 'profit', 
-                    index_val = 10, index_label = 'PY best result') %>% 
+                    ref_val = 10, ref_label = 'PY best result') %>% 
   SVGrenderer()
 ```
 
@@ -128,7 +128,7 @@ Show variance in data using relative variance plots or absolute variance plots. 
 Example usage: Visualize difference between two scenarios in division by departments.
 
 ```{r barchart-abs-variance}
-barchart_plot_absolute_variance(cat = data_barchart$dep, 
+bar_chart_absolute_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
@@ -137,7 +137,7 @@ barchart_plot_absolute_variance(cat = data_barchart$dep,
 ```
 
 ```{r barchart-rel-variance}
-barchart_plot_relative_variance(cat = data_barchart$dep, 
+bar_chart_relative_variance(cat = data_barchart$dep, 
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
@@ -146,34 +146,52 @@ barchart_plot_relative_variance(cat = data_barchart$dep,
 
 ```
 
-## Join plots
+# Scatter plots
 
-Combining plots in one grid is useful and easy by using the function `join_plots`.
+For demonstration we will use `mtcars` dataset available in R as built-in.
 
-```{r barchart-join}
+```{r scatter-data}
+scatter_data <- mtcars[c('hp','qsec','cyl', 'wt')]
+```
 
-join_plots(
-  barchart_plot_grouped(data = data_barchart,
-                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
-                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles),
-  barchart_plot_absolute_variance(cat = data_barchart$dep, 
-                                baseline = data_barchart$plan,
-                                real = data_barchart$profit,
-                                y_title = 'Plan vs. actual',
-                                y_style = 'plan'),
-  barchart_plot_relative_variance(cat = data_barchart$dep, 
-                                baseline = data_barchart$plan,
-                                real = data_barchart$profit,
-                                y_title = 'Plan vs. actual',
-                                y_style = 'plan'),
-  nrows = 1,
-  ncols = 3
-) %>% SVGrenderer()
+
+Scatter plots, also known as point plots, are used to visualize mulitidimensional relationships between variables. Therefore, they are extensively used in exploratory data analysis.
+
+## Scatter <a name="scatterplot"></a>
+
+In scatter plot 2 numerical dimensions are visualized by position of a point on the Cartesian plane. 
+
+```{r scatter}
+scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec, 
+             legend_title = '') %>% SVGrenderer()
+
+```
+
+Optionally, categorical dimension can be added in a form of a point color.
+
+```{r scatter2}
+scatter_plot(scatter_data, x = scatter_data$hp,
+             y = scatter_data$qsec, 
+             cat = scatter_data$cyl, 
+             legend_title = 'No. cylinder') %>% SVGrenderer()
+
+```
+
+## Bubble 
+
+Bubble plots can visualize the same dimensions as [scatter plots](#scatterplot). However even third numeric dimension can be added in a form of point size. On the other hand, there is a tradeoff between dimensionality and size of your data and readability of generated plots, so be carefull when using bubble charts.
+
+```{r bubble}
+scatter_plot(scatter_data, x = scatter_data$hp,
+             y = scatter_data$qsec, 
+             cat = scatter_data$cyl, 
+             bubble_value = scatter_data$wt,
+             legend_title = 'No. cylinders') %>% SVGrenderer()
 ```
 
 # Column charts <a name="columncharts"></a>
 
-Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts) 
+Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts).
 
 ## Data 
 
@@ -220,7 +238,7 @@ column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') %>%
 
 ## Other column charts
 
-Other types of column charts are available, ie. `column_chart_grouped` or `column_chart_normalized`. When using them similar data visualization rules apply as for [bar charts](#barcharts). Feel free to explore them and see [reference page](https://sawickibartosz.github.io/ibcsplot/reference/index.html) if need help.
+Other types of column charts are available, ie. `column_chart_grouped` or `column_chart_normalized`. When using them similar data visualization rules apply as for [bar charts](#barcharts). Feel free to explore them and see [reference page](https://sawickibartosz.github.io/tidycharts/reference/index.html) if need help.
 
 # Line charts <a name="linecharts"></a>
 
@@ -234,15 +252,34 @@ The basic lineplot uses lines with markers to show the data. Typical usage is to
 set.seed(123)
 data_companies <- data.frame(
   time = 2010:2020,
-  Alpha.inc = 40 + 1:11,
-  Beta.inc = 55 - 1:11,
+  Alpha.inc = 25 + round(1:11 + rnorm(11)),
+  Beta.inc = round(40 + rnorm(11, sd = 2)),
   Gamma.inc = round(50 + rnorm(11, sd = 5))
 )
 
-line_plot(data_companies, cat = data_companies$time,
+line_chart_markers(data_companies, x = data_companies$time,
           series = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           series_labels = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           interval = 'years') %>% 
+  SVGrenderer()
+```
+
+## Dense
+
+Use desnse line plot to visualize up to 6 time series with more than one point in a category on x-axis. The more advanced users are encouraged to use the `line_chart_dense_custom` function, where they can choose points that will be highlited by value label.
+
+The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
+
+```{r linechart_dense}
+
+data_dense <- data.frame(
+  dates = seq.Date(as.Date('2019-01-01'), as.Date('2019-12-31'), by = 1),
+  Warsaw = 7 + 9 * sin((365:1 - 60)/ 365 * 2 * pi) + rnorm(365, sd = 2),
+  London = 8 + 5 * sin((365:1 - 55)/ 365 * 2 * pi) + rnorm(365, sd = 1.2)
+)
+
+line_chart_dense(data_dense, 'dates', c('Warsaw', 'London')) %>%
+  add_title('Temperature in European Cities', 'Daily mean', 'in deg. C', 'In 2019') %>% 
   SVGrenderer()
 ```
 
@@ -250,3 +287,5 @@ line_plot(data_companies, cat = data_companies$time,
 # Columns vs lines
 
 One can wonder what type of plot choose: line chart or column chart. The answer depends on the data. If you want to visualize only one series, both line and column chart are appropriate. More differences occur when number of series increases. If the sum of series means something reasonable, use stacked columns, optionally stacked lines. If not, use line plot.
+
+

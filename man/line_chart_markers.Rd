@@ -16,6 +16,8 @@ line_chart_markers(
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
+\item{x}{vector cointaining time interwals of the values}
+
 \item{series}{vector containing names of columns in data with values to plot}
 
 \item{series_labels}{vector containing names of series to be shown on the plot}
@@ -23,8 +25,6 @@ line_chart_markers(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 
 \item{styles}{optional data frame with style names. Styles of the markers will be plotted accordingly.}
-
-\item{cat}{vector cointaining time interwals of the values}
 }
 \value{
 SVG string containing chart

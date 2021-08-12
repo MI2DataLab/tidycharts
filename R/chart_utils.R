@@ -99,7 +99,6 @@ get_svg_size <- function(svg_string){
 #' @return NULL
 #' @export
 #'
-#' @examples
 SVGsave <- function(svg_string, path){
   write(svg_string, path)
 }

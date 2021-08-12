@@ -63,7 +63,6 @@ get_scatter_colors <- function(series_number, scatter_colors = pkg.env$scatter_c
 #'
 #' @return list with bar_color and text_color
 #'
-#' @examples
 get_gray_color_stacked <- function(series_number, colors_df = pkg.env$colors_df){
 
   stopifnot(series_number %in% 1:6)

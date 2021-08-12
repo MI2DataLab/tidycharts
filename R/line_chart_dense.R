@@ -194,10 +194,10 @@ line_chart_dense_custom <-
 #' Line chart with more points then categories on x-axis.
 #'
 #'
-#' @param df Date frame with data in wide format.
-#' @param dates Name of column in `df` which contains dates.
-#' @param series Vector of column names in `df` with values of time series.
-#' @param scale Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.
+#' @param data Data frame in wide format.
+#' @param dates Name of column in `data` which contains dates or vector of dates.
+#' @param series Vector of column names in `data` with values of time series.
+#' @param interval Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.
 #'
 #' @return SVG string containing chart
 #' @export
@@ -225,10 +225,10 @@ line_chart_dense_custom <-
 #'   series = c('Company_sin', 'Company_cos')) %>%
 #'   SVGrenderer()
 #'
-line_chart_dense <- function(df, dates, series, scale = 'months'){
-  stopifnot(scale %in% c('weeks', 'months', 'quarters', 'years'))
+line_chart_dense <- function(data, dates, series, interval = 'months'){
+  stopifnot(interval %in% c('weeks', 'months', 'quarters', 'years'))
 
-  parse_time_series(df, dates, series, scale) %>%
+  parse_time_series(data, dates, series, interval) %>%
     line_chart_dense_custom(
       list = .,
       vector_x = rep('x', length(series)),
@@ -237,6 +237,6 @@ line_chart_dense <- function(df, dates, series, scale = 'months'){
       series_labels = series,
       df_numbers = 1,
       point_cords = NULL,
-      interval = scale
+      interval = interval
     )
 }
