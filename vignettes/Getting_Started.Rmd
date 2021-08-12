@@ -115,9 +115,13 @@ styles <- data.frame(profit = rep('actual', 4),
                      plan = rep('plan', 4),
                      prev_year = rep('previous',4))
 
-barchart_plot_grouped(data = data_barchart,
-                      cat = data_barchart$dep, series = c('prev_year', 'profit', 'plan'),
-                      series_labels = c('PY', 'AC', 'PL'), df_styles = styles) %>% 
+bar_chart_grouped(data = data_barchart,
+                  cat = data_barchart$dep,
+                  foreground = 'prev_year',
+                  background = 'profit',
+                  markers = 'plan',
+                  series_labels = c('PY', 'AC', 'PL'),
+                  styles = styles) %>% 
   SVGrenderer()
 ```
 

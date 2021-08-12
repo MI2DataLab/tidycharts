@@ -128,11 +128,8 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 
 #' Generates grouped horizontal barchart with scenario triangles.
 #'
-#' @param data data frame containing data to be plotted
 #' @param cat vector cointaining category names of values
-#' @param series vector containing names of columns in data with values to plot
-#' @param series_labels vector containing names of series to be shown on the plot
-#' @param df_styles optional data frame containing styles of bars. It is necessary that df_style has the same column names as defined in series vector.
+#' @inheritParams column_chart_grouped
 #'
 #' @return SVG string containing chart
 #' @export
@@ -154,14 +151,15 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 #'  triangles = c("previous", "previous","previous","previous","previous"))
 #'
 #' #creating the svg string
-#' barchart_grouped <- bar_chart_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
+#' barchart_grouped <- bar_chart_grouped(data,
+#'  data$city,  "AC", "PL","triangles", c("triangles", "AC", "PL"), df_styles)
 #'
 #' #showing the plot
 #' barchart_grouped %>% SVGrenderer()
 #'
-bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, df_styles = NULL){
+bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, styles = NULL){
   initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
-    draw_bars_grouped(.,data, cat, foreground, background, markers, series_labels, df_styles = df_styles) %>%
+    draw_bars_grouped(.,data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
     finalize()
 }
 

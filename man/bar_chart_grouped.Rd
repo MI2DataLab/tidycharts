@@ -11,19 +11,23 @@ bar_chart_grouped(
   background,
   markers = NULL,
   series_labels,
-  df_styles = NULL
+  styles = NULL
 )
 }
 \arguments{
-\item{data}{data frame containing data to be plotted}
+\item{data}{data frame in wide format containing data to be plotted}
 
 \item{cat}{vector cointaining category names of values}
 
-\item{series_labels}{vector containing names of series to be shown on the plot}
+\item{foreground}{vector or name of column in data representing heights of bars visible in the foreground}
 
-\item{df_styles}{optional data frame containing styles of bars. It is necessary that df_style has the same column names as defined in series vector.}
+\item{background}{vector or name of column in data representing heights of bars visible in the background}
 
-\item{series}{vector containing names of columns in data with values to plot}
+\item{markers}{optional vector representing position of triangles}
+
+\item{series_labels}{vector of series titles. Consists of 2 or 3 elements}
+
+\item{styles}{optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)}
 }
 \value{
 SVG string containing chart
@@ -48,7 +52,8 @@ df_styles <- data.frame(
  triangles = c("previous", "previous","previous","previous","previous"))
 
 #creating the svg string
-barchart_grouped <- bar_chart_grouped(data, data$city, c("triangles", "AC", "PL"), c("triangles", "AC", "PL"), df_styles)
+barchart_grouped <- bar_chart_grouped(data,
+ data$city,  "AC", "PL","triangles", c("triangles", "AC", "PL"), df_styles)
 
 #showing the plot
 barchart_grouped \%>\% SVGrenderer()
