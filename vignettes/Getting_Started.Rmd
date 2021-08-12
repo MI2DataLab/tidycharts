@@ -174,7 +174,44 @@ join_plots(
 
 # Scatter plots
 
-Scatter plots, also known as point plots, are used to visualize mulitidimensional relationships between variables. 
+```{r scatter-data}
+scatter_data <- mtcars[c('hp','qsec','cyl', 'wt')]
+```
+
+
+Scatter plots, also known as point plots, are used to visualize mulitidimensional relationships between variables. Therefore, they are extensively used in exploratory data analysis.
+
+## Scatter <a name="scatterplot"></a>
+
+In scatter plot 2 numerical dimensions are visualized by position of a point on the Cartesian plane. 
+
+```{r scatter}
+scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec, 
+             legend_title = 'HorsePower vs agility') %>% SVGrenderer()
+
+```
+
+Optionally, categorical dimension can be added in a form of a point color.
+
+```{r scatter2}
+scatter_plot(scatter_data, x = scatter_data$hp,
+             y = scatter_data$qsec, 
+             cat = scatter_data$cyl, 
+             legend_title = 'HorsePower vs agility') %>% SVGrenderer()
+
+```
+
+## Bubble 
+
+Bubble plots can visualize the same dimensions as [scatter plots](#scatterplot). However even third numeric dimension can be added in a form of point size. On the other hand, there is a tradeoff between dimensionality and size of your data and readability of generated plots, so be carefull when using bubble charts.
+
+```{r bubble}
+scatter_plot(scatter_data, x = scatter_data$hp,
+             y = scatter_data$qsec, 
+             cat = scatter_data$cyl, 
+             bubble_value = scatter_data$wt,
+             legend_title = 'HorsePower vs agility') %>% SVGrenderer()
+```
 
 # Column charts <a name="columncharts"></a>
 
@@ -253,7 +290,9 @@ line_chart_markers(data_companies, x = data_companies$time,
 
 ## Dense
 
-Use desnse line plot to visualize up to 6 time series with more than one point in a category on x-axis. The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
+Use desnse line plot to visualize up to 6 time series with more than one point in a category on x-axis. The more advanced users are encouraged to use the `line_chart_dense_custom` function, where they can choose points that will be highlited by value label.
+
+The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
 
 ```{r linechart_dense}
 
