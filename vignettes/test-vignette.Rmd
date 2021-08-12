@@ -227,7 +227,7 @@ column_chart_grouped(
       df4$month,
       foreground = df4$s1,
       background = df4$s2,
-      triangles = df4$s3,
+      markers = df4$s3,
       series_labels = c("Actual", "Looooooooong series name", "Previous year"),
       styles = styles
     ) %>% SVGrenderer()
@@ -442,7 +442,7 @@ df <- data.frame(
 line_chart_dense(df,
                               dates = 'dates',
                               series = c('y', 'z'),
-                              scale = 'weeks') %>%
+                              interval = 'weeks') %>%
   SVGrenderer()
 
 ```

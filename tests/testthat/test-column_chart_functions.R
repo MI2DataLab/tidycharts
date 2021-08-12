@@ -155,13 +155,13 @@ test_that('Grouped column chart are working', {
       df4$month,
       foreground = df4$s1,
       background = df4$s2,
-      triangles = df4$s3,
+      markers = df4$s3,
       series_labels = c("Actual", "Looooooooong series name", "Previous year"),
       styles = styles
     ) %>% show()
   )
 
-  # grouped column chart without triangles
+  # grouped column chart without markers
   expect_magick(
     column_chart_grouped(
       df4$month,
