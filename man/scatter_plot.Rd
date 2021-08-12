@@ -9,10 +9,10 @@ scatter_plot(
   x,
   y,
   cat = NULL,
-  x_space_size,
-  y_space_size,
-  x_names,
-  y_names,
+  x_space_size = (x_end - x_start)/10,
+  y_space_size = (y_end - y_start)/10,
+  x_names = c("x", ""),
+  y_names = c("y", ""),
   legend_title,
   bubble_value = NULL,
   x_start = 0,
@@ -30,9 +30,7 @@ scatter_plot(
 
 \item{cat}{vector containing categories of the values}
 
-\item{x_space_size}{numeric value of the space between the ticks on the x- axis}
-
-\item{y_space_size}{numeric value of the space between the ticks on the y- axis}
+\item{x_space_size, y_space_size}{numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 10 sections}
 
 \item{x_names}{vector containing two values:
 * name of the value presented on the x - axis

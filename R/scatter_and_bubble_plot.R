@@ -139,8 +139,7 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' @param x vector containing x - coordinates of values
 #' @param y vector containing y - coordinates of values
 #' @param cat vector containing categories of the values
-#' @param x_space_size numeric value of the space between the ticks on the x- axis
-#' @param y_space_size numeric value of the space between the ticks on the y- axis
+#' @param x_space_size,y_space_size numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 10 sections
 #' @param x_names vector containing two values:
 #' * name of the value presented on the x - axis
 #' * units of values presented on the x - axis
@@ -179,10 +178,10 @@ scatter_plot <-
            x,
            y,
            cat = NULL,
-           x_space_size,
-           y_space_size,
-           x_names,
-           y_names,
+           x_space_size = (x_end - x_start) / 10,
+           y_space_size = (y_end - y_start) / 10,
+           x_names = c('x',''),
+           y_names = c('y',''),
            legend_title,
            bubble_value = NULL,
            x_start = 0,
