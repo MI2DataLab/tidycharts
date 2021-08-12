@@ -184,7 +184,7 @@ test_that('Lineplot wrapper works', {
       df,
       dates = 'dates',
       series = c('y', 'z'),
-      scale = 'weeks'
+      interval = 'weeks'
     ) %>%
       show()
   )
