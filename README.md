@@ -29,7 +29,7 @@ can be installed with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("SawickiBartosz/tidycharts")
+devtools::install_github("MI2DataLab/tidycharts")
 ```
 
 ## Example
@@ -49,7 +49,7 @@ column_chart(df, x = 'months', series = 'values') %>%
 ```
 
 ![example column
-chart](https://raw.githubusercontent.com/SawickiBartosz/tidycharts/main/man/figures/README-example-columns-1.svg)
+chart](https://raw.githubusercontent.com/MI2DataLab/tidycharts/main/man/figures/README-example-columns-1.svg)
 
 You can easily create other type of plots, ie. lineplots:
 
