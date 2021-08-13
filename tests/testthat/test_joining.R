@@ -101,3 +101,17 @@ test_that('facetting unexisting column gives error',{
     ) %>% show()
   )
 })
+
+test_that('facetting to 1 column works',{
+  expect_magick(
+    facet_chart(
+      data = mtcars,
+      facet_by = 'cyl',
+      ncols = 1,
+      FUN = scatter_plot,
+      x = mtcars$hp,
+      y = mtcars$qsec,
+      legend_title = ''
+    ) %>% show()
+  )
+})
