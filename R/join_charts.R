@@ -23,8 +23,10 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
 
   if (!is.null(list_of_plots)) {
     plots <- list_of_plots
+    titles <- names(list_of_plots)
   }else{
     plots <- list(...)
+    titles <- rep('', length(plots))
   }
   n_plots <-length(plots)
 
@@ -60,7 +62,7 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
       translate_y <- cumulated_heights[i,j] - heights[i,j]
       result_string <- paste(
         result_string,
-        translate_svg(plots[i,j],
+        translate_svg(plots[i,j] %>% add_title('', titles[(i-1) * ncols  + j],'',''),
                       translate_x, translate_y)
       )
     }
@@ -114,6 +116,8 @@ facet_chart <- function(data, facet_by, ncols = 3, FUN, ...){
   list_data <- lapply(categories, function(category)  data[data[facet_by] == category,])
   # draw plots of each subset of data
   plots <- lapply(list_data, FUN, ...)
+  # add names to plots so they can be plotted with titles
+  names(plots) <- paste0(facet_by,' = ', categories)
   # join the charts
   nrows <- ceiling(length(categories) / ncols)
   join_charts(list_of_plots = plots, nrows = nrows, ncols = ncols)
