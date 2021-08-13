@@ -105,7 +105,7 @@
 <p>But for now only development version from <a href="https://github.com/">GitHub</a> can be installed with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SawickiBartosz/tidycharts"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MI2DataLab/tidycharts"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -121,7 +121,7 @@
 <span class="fu"><a href="reference/column_chart.html">column_chart</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="st">'months'</span>, series <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co"># create chart in a form of character vector containing SVG content</span>
   <span class="fu"><a href="reference/SVGrenderer.html">SVGrenderer</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># render and show the SVG </span></code></pre></div>
-<p><img src="https://raw.githubusercontent.com/SawickiBartosz/tidycharts/main/man/figures/README-example-columns-1.svg" alt="example column chart"></p>
+<p><img src="https://raw.githubusercontent.com/MI2DataLab/tidycharts/main/man/figures/README-example-columns-1.svg" alt="example column chart"></p>
 <p>You can easily create other type of plots, ie. lineplots:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">line_plot</span><span class="op">(</span><span class="va">df</span>, cat <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">months</span>, series <span class="op">=</span> <span class="st">'values'</span>, series_labels <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
