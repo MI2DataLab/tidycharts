@@ -74,3 +74,44 @@ test_that("3x2 joining works with only 5 plots",{
   )
 })
 
+test_that('facetting works',{
+  expect_magick(
+    facet_chart(
+      data = mtcars,
+      facet_by = 'cyl',
+      ncols = 3,
+      FUN = scatter_plot,
+      x = mtcars$hp,
+      y = mtcars$qsec,
+      legend_title = ''
+    ) %>% show()
+  )
+})
+
+test_that('facetting unexisting column gives error',{
+  expect_error(
+    facet_chart(
+      data = mtcars,
+      facet_by = 'other_variable',
+      ncols = 3,
+      FUN = scatter_plot,
+      x = mtcars$hp,
+      y = mtcars$qsec,
+      legend_title = ''
+    ) %>% show()
+  )
+})
+
+test_that('facetting to 1 column works',{
+  expect_magick(
+    facet_chart(
+      data = mtcars,
+      facet_by = 'cyl',
+      ncols = 1,
+      FUN = scatter_plot,
+      x = mtcars$hp,
+      y = mtcars$qsec,
+      legend_title = ''
+    ) %>% show()
+  )
+})
