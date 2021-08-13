@@ -35,7 +35,7 @@ quarter_abbr <- function(x){
   paste0('Q', lubridate::quarter(x))
 }
 
-#' Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.
+#' Function to transfer data frame with time series values in wide format to format accepted by `line_chart_dense_custom`.
 #'
 #' @param df Date frame with data in wide format.
 #' @param dates Name of column in `df` which contains dates.
