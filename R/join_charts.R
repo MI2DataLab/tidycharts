@@ -3,6 +3,7 @@
 #' @param ... mumltiple character vectors with SVG content
 #' @param nrows number of rows of plots in joint plot, default is set to number of plots
 #' @param ncols number of columns of plots in joint plot, default is set to 1
+#' @param list_of_plots optional list of plots to join. Use exclusively ... params or list_of_plots. Names of list entries will be plotted as titles of the plots
 #'
 #' @return Character vector with SVG content
 #' @export
@@ -17,16 +18,24 @@
 #'   column_chart(df, x = 'mon', series = 'values'),
 #'   column_chart(df, x = 'mon', series = 'values')
 #' ) %>% SVGrenderer()
-join_charts <- function(..., nrows = length(list(...)), ncols = 1){
+join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots)),
+                        ncols = 1, list_of_plots = NULL){
 
-  n_plots <-length(list(...))
+  if (!is.null(list_of_plots)) {
+    plots <- list_of_plots
+    titles <- names(list_of_plots)
+  }else{
+    plots <- list(...)
+    titles <- rep('', length(plots))
+  }
+  n_plots <-length(plots)
 
   # check if there are enough rows and cols to show all plots
   stopifnot(n_plots <= nrows * ncols)
 
   plots <- tryCatch( # if we pass not full matrix(5 elements to 3x2 matrix) we get warning
                      # so we use tryCatch to ensure no warnings are displayed
-    matrix(data = list(...), nrow = nrows, ncol = ncols, byrow = T),
+    matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T),
     warning = function(cond){
       data = list(...)
       for(i in (n_plots+1):nrows * ncols) data[[i]] <- '<svg height="0" width="0"></svg>'
@@ -53,7 +62,7 @@ join_charts <- function(..., nrows = length(list(...)), ncols = 1){
       translate_y <- cumulated_heights[i,j] - heights[i,j]
       result_string <- paste(
         result_string,
-        translate_svg(plots[i,j],
+        translate_svg(plots[i,j] %>% add_title('', titles[(i-1) * ncols  + j],'',''),
                       translate_x, translate_y)
       )
     }
@@ -71,4 +80,45 @@ translate_svg<- function(svg_string, x, y){
         ')">',
         svg_string,
         '</g>'))
+}
+
+
+#' Facet chart
+#'
+#' Create multiple charts with data split into groups
+#'
+#' @param facet_by a name of column in data, that the charts will be splitted by
+#' @param ncols number of columns of the plots. Number of rows will be adjusted accordingly
+#' @param FUN function to plot the basic chart
+#' @param ... other parameters passed to FUN
+#'
+#' @inheritParams column_chart
+#' @inherit join_charts return
+#' @export
+#'
+#' @examples
+#' facet_chart(
+#'   data = mtcars,
+#'   facet_by = 'cyl',
+#'   ncols = 2,
+#'   FUN = scatter_plot,
+#'   x = mtcars$hp,
+#'   y = mtcars$qsec,
+#'   legend_title = ''
+#'  ) %>% SVGrenderer()
+facet_chart <- function(data, facet_by, ncols = 3, FUN, ...){
+
+  stopifnot(facet_by %in% colnames(data))
+  stopifnot(is.double(ncols), ncols > 0)
+
+  categories <- sort(unique(data[[facet_by]]))
+  # get a list of subsets of data with different facet_by values
+  list_data <- lapply(categories, function(category)  data[data[facet_by] == category,])
+  # draw plots of each subset of data
+  plots <- lapply(list_data, FUN, ...)
+  # add names to plots so they can be plotted with titles
+  names(plots) <- paste0(facet_by,' = ', categories)
+  # join the charts
+  nrows <- ceiling(length(categories) / ncols)
+  join_charts(list_of_plots = plots, nrows = nrows, ncols = ncols)
 }
