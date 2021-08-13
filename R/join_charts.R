@@ -3,6 +3,7 @@
 #' @param ... mumltiple character vectors with SVG content
 #' @param nrows number of rows of plots in joint plot, default is set to number of plots
 #' @param ncols number of columns of plots in joint plot, default is set to 1
+#' @param list_of_plots optional list of plots to join. Use exclusively ... params or list_of_plots. Names of list entries will be plotted as titles of the plots
 #'
 #' @return Character vector with SVG content
 #' @export

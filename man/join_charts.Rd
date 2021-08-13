@@ -17,6 +17,8 @@ join_charts(
 \item{nrows}{number of rows of plots in joint plot, default is set to number of plots}
 
 \item{ncols}{number of columns of plots in joint plot, default is set to 1}
+
+\item{list_of_plots}{optional list of plots to join. Use exclusively ... params or list_of_plots. Names of list entries will be plotted as titles of the plots}
 }
 \value{
 Character vector with SVG content
