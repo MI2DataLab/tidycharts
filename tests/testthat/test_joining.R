@@ -79,9 +79,24 @@ test_that('facetting works',{
     facet_chart(
       data = mtcars,
       facet_by = 'cyl',
-      chart_type = scatter_plot,
-      x = 'hp',
-      y = 'qsec',
+      ncols = 3,
+      FUN = scatter_plot,
+      x = mtcars$hp,
+      y = mtcars$qsec,
+      legend_title = ''
+    ) %>% show()
+  )
+})
+
+test_that('facetting unexisting column gives error',{
+  expect_error(
+    facet_chart(
+      data = mtcars,
+      facet_by = 'other_variable',
+      ncols = 3,
+      FUN = scatter_plot,
+      x = mtcars$hp,
+      y = mtcars$qsec,
       legend_title = ''
     ) %>% show()
   )

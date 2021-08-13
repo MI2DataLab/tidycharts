@@ -17,16 +17,22 @@
 #'   column_chart(df, x = 'mon', series = 'values'),
 #'   column_chart(df, x = 'mon', series = 'values')
 #' ) %>% SVGrenderer()
-join_charts <- function(..., nrows = length(list(...)), ncols = 1){
+join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots)),
+                        ncols = 1, list_of_plots = NULL){
 
-  n_plots <-length(list(...))
+  if (!is.null(list_of_plots)) {
+    plots <- list_of_plots
+  }else{
+    plots <- list(...)
+  }
+  n_plots <-length(plots)
 
   # check if there are enough rows and cols to show all plots
   stopifnot(n_plots <= nrows * ncols)
 
   plots <- tryCatch( # if we pass not full matrix(5 elements to 3x2 matrix) we get warning
                      # so we use tryCatch to ensure no warnings are displayed
-    matrix(data = list(...), nrow = nrows, ncol = ncols, byrow = T),
+    matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T),
     warning = function(cond){
       data = list(...)
       for(i in (n_plots+1):nrows * ncols) data[[i]] <- '<svg height="0" width="0"></svg>'
@@ -74,11 +80,17 @@ translate_svg<- function(svg_string, x, y){
 }
 
 
-facet_chart <- function(data, facet_by, chart_type, ...){
-  categories <- unique(data[[facet_by]])
-  for(category in categories){
-    filtered <- data[data[facet_by] == category]
-    print(category)
-    print(filtered)
-  }
+facet_chart <- function(data, facet_by, ncols = 3, FUN, ...){
+
+  stopifnot(facet_by %in% colnames(data))
+  stopifnot(is.double(ncols), ncols > 0)
+
+  categories <- sort(unique(data[[facet_by]]))
+  # get a list of subsets of data with different facet_by values
+  list_data <- lapply(categories, function(category)  data[data[facet_by] == category,])
+  # draw plots of each subset of data
+  plots <- lapply(list_data, FUN, ...)
+  # join the charts
+  nrows <- ceiling(length(categories) / ncols)
+  join_charts(list_of_plots = plots, nrows = nrows, ncols = ncols)
 }
