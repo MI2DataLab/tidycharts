@@ -4,7 +4,12 @@
 \alias{join_charts}
 \title{Join SVG charts This function first populates each place in the first row, then columns in the second row}
 \usage{
-join_charts(..., nrows = length(list(...)), ncols = 1)
+join_charts(
+  ...,
+  nrows = max(length(list(...)), length(list_of_plots)),
+  ncols = 1,
+  list_of_plots = NULL
+)
 }
 \arguments{
 \item{...}{mumltiple character vectors with SVG content}

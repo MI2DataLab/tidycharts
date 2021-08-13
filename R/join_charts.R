@@ -80,6 +80,29 @@ translate_svg<- function(svg_string, x, y){
 }
 
 
+#' Facet chart
+#'
+#' Create multiple charts with data split into groups
+#'
+#' @param facet_by a name of column in data, that the charts will be splitted by
+#' @param ncols number of columns of the plots. Number of rows will be adjusted accordingly
+#' @param FUN function to plot the basic chart
+#' @param ... other parameters passed to FUN
+#'
+#' @inheritParams column_chart
+#' @inherit join_charts return
+#' @export
+#'
+#' @examples
+#' facet_chart(
+#'   data = mtcars,
+#'   facet_by = 'cyl',
+#'   ncols = 3,
+#'   FUN = scatter_plot,
+#'   x = mtcars$hp,
+#'   y = mtcars$qsec,
+#'   legend_title = ''
+#'  ) %>% SVGrenderer()
 facet_chart <- function(data, facet_by, ncols = 3, FUN, ...){
 
   stopifnot(facet_by %in% colnames(data))
