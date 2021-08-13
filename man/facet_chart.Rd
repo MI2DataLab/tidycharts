@@ -27,7 +27,7 @@ Create multiple charts with data split into groups
 facet_chart(
   data = mtcars,
   facet_by = 'cyl',
-  ncols = 3,
+  ncols = 2,
   FUN = scatter_plot,
   x = mtcars$hp,
   y = mtcars$qsec,
