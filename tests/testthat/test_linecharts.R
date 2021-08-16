@@ -91,6 +91,19 @@ test_that('Lineplot with positive values does not throw warnings', {
   expect_magick(line_chart_markers(df, df$animal, srs, srs) %>% show())
 })
 
+
+
+test_that('Lineplot with one series works', {
+  df <- data.frame(
+    animal = c("cat", "doggo", "rabbito"),
+    hungry = c(7, 5, 9),
+    relaxed = c(3, 4, 5),
+    wounded = c(1, 8, 5)
+  )
+  srs <- c("hungry")
+  expect_magick(line_chart_markers(df, df$animal, srs, srs) %>% show())
+})
+
 test_that("Normalized line plot is working without errors", {
   data <- data.frame(
     cat = c("blop", "mlem", "kwak", "beep", "moo"),
