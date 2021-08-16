@@ -60,7 +60,7 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
       translate_y <- cumulated_heights[i,j] - heights[i,j]
       result_string <- paste(
         result_string,
-        translate_svg(plots[i,j] %>% add_title('', titles[(i-1) * ncols  + j],'',''),
+        translate_svg(plots[i,j] %>% add_title( titles[(i-1) * ncols  + j], '', '', ''),
                       translate_x, translate_y)
       )
     }
