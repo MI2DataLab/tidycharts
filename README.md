@@ -28,7 +28,6 @@ But for now only development version from [GitHub](https://github.com/)
 can be installed with:
 
 ``` r
-# install.packages("devtools")
 devtools::install_github("MI2DataLab/tidycharts")
 ```
 
@@ -43,19 +42,17 @@ library(tidycharts) # load the package
 df <- data.frame(months = month.abb[1:6],
                  values = round(5 + sin(1:6), 2))
 
-column_chart(df, x = 'months', series = 'values') %>% 
-  # create chart in a form of character vector containing SVG content
+# create chart in a form of character vector containing SVG content
+column_chart(df, x = 'months', series = 'values') %>%
   SVGrenderer() # render and show the SVG 
 ```
 
-![example column
-chart](https://raw.githubusercontent.com/MI2DataLab/tidycharts/main/man/figures/README-example-columns-1.svg)
-
-You can easily create other type of plots, ie. lineplots:
+![column chart](man/figures/readme-column.png) You can easily create
+other type of plots, ie. lineplots:
 
 ``` r
-line_plot(df, cat = df$months, series = 'values', series_labels = 'values') %>% 
+line_chart_markers(df, x = df$months, series = 'values', series_labels = 'values') %>% 
   SVGrenderer()
 ```
 
-![example line chart](man/figures/README-example-lines-1.svg)
+![line chart](man/figures/readme-lines.png)
