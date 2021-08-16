@@ -36,5 +36,6 @@ reference:
 - contents:
   - starts_with('SVG')
   - starts_with('set')
+  - restore_defaults
   - add_title
   - parse_time_series
