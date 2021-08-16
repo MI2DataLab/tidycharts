@@ -1,0 +1,37 @@
+
+<svg  version="1.1"
+          baseProfile="full"
+          width="418" height="325" transform="" >
+<pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+            <rect x="0" y="0" width="4" height="4" fill="white"/>
+            <path d="M-1,1 l2,-2
+                     M0,4 l4,-4
+                     M3,5 l2,-2"
+            style="stroke:rgb(64,64,64); stroke-width:1" />
+            </pattern>
+
+<rect x="88" y="77.3688663282572" width="32" height="198" fill="rgb(64,64,64)" stroke="rgb(64,64,64)" />
+<text x="104" y="291.8" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >Jan</text>
+<rect x="80" y="275" width="48" height="1.6" fill="black" />
+<rect x="136" y="75" width="32" height="200" fill="rgb(64,64,64)" stroke="rgb(64,64,64)" />
+<text x="152" y="291.8" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >Feb</text>
+<rect x="128" y="275" width="48" height="1.6" fill="black" />
+<rect x="184" y="101.057529610829" width="32" height="174" fill="rgb(64,64,64)" stroke="rgb(64,64,64)" />
+<text x="200" y="291.8" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >Mar</text>
+<rect x="176" y="275" width="48" height="1.6" fill="black" />
+<rect x="232" y="131.514382402707" width="32" height="144" fill="rgb(64,64,64)" stroke="rgb(64,64,64)" />
+<text x="248" y="291.8" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >Apr</text>
+<rect x="224" y="275" width="48" height="1.6" fill="black" />
+<rect x="280" y="138.282571912014" width="32" height="137" fill="rgb(64,64,64)" stroke="rgb(64,64,64)" />
+<text x="296" y="291.8" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >May</text>
+<rect x="272" y="275" width="48" height="1.6" fill="black" />
+<rect x="328" y="115.270727580372" width="32" height="160" fill="rgb(64,64,64)" stroke="rgb(64,64,64)" />
+<text x="344" y="291.8" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >Jun</text>
+<rect x="320" y="275" width="48" height="1.6" fill="black" />
+<text x="104" y="72.5688663282572" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >5.84</text>
+<text x="152" y="70.2" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >5.91</text>
+<text x="200" y="96.2575296108291" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >5.14</text>
+<text x="248" y="126.714382402707" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >4.24</text>
+<text x="296" y="133.482571912014" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >4.04</text>
+<text x="344" y="110.470727580372" font-size="12"  font-family="Arial" text-anchor="middle" fill="black" font-weight="" transform="translate(0 0)" >4.72</text>
+</svg>

@@ -110,8 +110,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidycharts"</span><span class="op">)</span></code></pre></div>
 <p>But for now only development version from <a href="https://github.com/">GitHub</a> can be installed with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MI2DataLab/tidycharts"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"MI2DataLab/tidycharts"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -124,15 +123,14 @@
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>months <span class="op">=</span> <span class="va">month.abb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,
                  values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">5</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/column_chart.html">column_chart</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="st">'months'</span>, series <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="co"># create chart in a form of character vector containing SVG content</span>
+<span class="co"># create chart in a form of character vector containing SVG content</span>
+<span class="fu"><a href="reference/column_chart.html">column_chart</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="st">'months'</span>, series <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/SVGrenderer.html">SVGrenderer</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># render and show the SVG </span></code></pre></div>
-<p><img src="https://raw.githubusercontent.com/MI2DataLab/tidycharts/main/man/figures/README-example-columns-1.svg" alt="example column chart"></p>
-<p>You can easily create other type of plots, ie. lineplots:</p>
+<p><img src="reference/figures/readme-column.png" alt="column chart"> You can easily create other type of plots, ie. lineplots:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">line_plot</span><span class="op">(</span><span class="va">df</span>, cat <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">months</span>, series <span class="op">=</span> <span class="st">'values'</span>, series_labels <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="fu"><a href="reference/line_chart_markers.html">line_chart_markers</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">months</span>, series <span class="op">=</span> <span class="st">'values'</span>, series_labels <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/SVGrenderer.html">SVGrenderer</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-example-lines-1.svg" alt="example line chart"></p>
+<p><img src="reference/figures/readme-lines.png" alt="line chart"></p>
 </div>
 </div>
   </div>
