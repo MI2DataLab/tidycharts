@@ -104,3 +104,11 @@ column_chart(data_time_series, x = 'time',
              styles = c(rep('actual',7), 'fictual')) %>% SVGrenderer()
 ```
 
+## Resetting to defaults
+
+If you want to restore the default styles and colors, just use `restore_defaults` function.
+
+```{r}
+restore_defaults()
+```
+
