@@ -83,7 +83,9 @@ facet_chart(data = mtcars,
             x = mtcars$qsec,
             y = mtcars$hp,
             cat = mtcars$gear,
-            legend_title = '') %>% 
+            legend_title = '',
+            x_names = c('1/4 mile time', 'is s'),
+            y_names = c('Horsepower', '')) %>% 
   SVGrenderer()
 
 ```
