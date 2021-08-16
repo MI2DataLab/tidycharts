@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   EDA-for-palmer-penguins-data-set: EDA-for-palmer-penguins-data-set.html
   Getting_Started: Getting_Started.html
+  customize-package: customize-package.html
   join_charts: join_charts.html
   test-vignette: test-vignette.html
-last_built: 2021-08-16T08:06Z
+last_built: 2021-08-16T11:28Z
 
