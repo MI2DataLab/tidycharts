@@ -170,4 +170,3 @@ restore_defaults <- function() {
     ),
     text_colors = c("white", "black", "white", "white", "white", "black")
   )
-}
