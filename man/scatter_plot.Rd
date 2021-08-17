@@ -13,7 +13,7 @@ scatter_plot(
   y_space_size = (y_end - y_start)/8,
   x_names = c("x", ""),
   y_names = c("y", ""),
-  legend_title,
+  legend_title = "Legend",
   bubble_value = NULL,
   x_start = 0,
   x_end = max(x),
@@ -24,11 +24,11 @@ scatter_plot(
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{x}{vector containing x - coordinates of values}
+\item{x}{string containing a column name or a vector containing x - coordinates of values}
 
-\item{y}{vector containing y - coordinates of values}
+\item{y}{string containing a column name or a vector containing y - coordinates of values}
 
-\item{cat}{vector containing categories of the values}
+\item{cat}{string containing a column name or a vector containing categories of the values}
 
 \item{x_space_size, y_space_size}{numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 8 sections}
 
