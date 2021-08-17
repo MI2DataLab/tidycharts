@@ -184,7 +184,10 @@ Products <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/b
 Services <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>621</span>, <span class='fl'>545</span>, <span class='fl'>302</span>, <span class='fl'>44</span>, <span class='fl'>39</span>, <span class='fl'>20</span>, <span class='fl'>34</span><span class='op'>)</span>
 <span class='op'>)</span>
 <span class='co'>#create svg string</span>
-<span class='va'>barchart_normalized</span> <span class='op'>&lt;-</span> <span class='fu'>bar_chart_normalized</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>city</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span>, <span class='st'>"Services"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span>, <span class='st'>"Services"</span><span class='op'>)</span> <span class='op'>)</span>
+<span class='va'>barchart_normalized</span> <span class='op'>&lt;-</span> <span class='fu'>bar_chart_normalized</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>data</span>,
+  cat <span class='op'>=</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>city</span>,
+  series <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span>, <span class='st'>"Services"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>#show the plot</span>
 <span class='va'>barchart_normalized</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>

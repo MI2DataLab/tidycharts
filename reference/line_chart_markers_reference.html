@@ -216,7 +216,14 @@ AC <span class='op'>=</span> <span class='op'>(</span><span class='fu'><a href='
 <span class='op'>)</span>
 
 <span class='co'>#generating svg string</span>
-<span class='va'>line_chart_ref</span> <span class='op'>&lt;-</span> <span class='fu'>line_chart_markers_reference</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>time</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PL"</span>, <span class='st'>"AC"</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PL"</span>, <span class='st'>"AC"</span><span class='op'>)</span>,<span class='fl'>42</span> , <span class='st'>"index"</span>, styles<span class='op'>=</span><span class='va'>styles</span><span class='op'>)</span>
+<span class='va'>line_chart_ref</span> <span class='op'>&lt;-</span> <span class='fu'>line_chart_markers_reference</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>data</span>,
+  x <span class='op'>=</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>time</span>,
+  series <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PL"</span>, <span class='st'>"AC"</span><span class='op'>)</span>,
+  series_labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PL"</span>, <span class='st'>"AC"</span><span class='op'>)</span>,
+  ref_val <span class='op'>=</span> <span class='fl'>42</span>,
+  ref_label <span class='op'>=</span> <span class='st'>"index"</span>,
+  styles<span class='op'>=</span><span class='va'>styles</span><span class='op'>)</span>
 
 <span class='co'>#show the plot</span>
 <span class='va'>line_chart_ref</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
