@@ -813,6 +813,8 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' @return SVG string containing chart
 #' @export
 #'
+#' @importFrom magrittr "%>%"
+#'
 #' @examples
 #' # prepare some data frame
 #' df <- data.frame(x = month.abb[1:6],
