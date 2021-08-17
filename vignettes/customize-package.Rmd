@@ -1,0 +1,114 @@
+---
+title: "Customizing the Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Customizing the Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Although IBCS recommend to use gray colors for plotting, `tidycharts` enables user to define their color palette. The same applies to styles, the default IBSC are implemented, but there is a way to set one's own styles. In this vignette we will show how to customize the package. 
+
+```{r setup, message=FALSE}
+library(tidycharts)
+```
+
+## Colors
+
+### The defaults
+
+```{r defaults}
+data_time_series <- data.frame(
+  time = month.abb[1:8],
+  Poland = round(2 + 0.5 * sin(1:8), 2),
+  Germany = round(3 + sin(3:10), 2),
+  Slovakia = round(2 + 2 * cos(1:8), 2)
+)
+column_chart(data_time_series, x = 'time', 
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% SVGrenderer()
+```
+
+### Customization
+
+Firstly, we need to define a data frame with 6 rows and 2 columns. Column `bar_colors` contains 6 colors which will be used to draw the bars. Column `text_colors` contains color of labels that will be drawn on bars. Ideally, `text_colors` are contrasting to corresponding row of `bar_colors`. Users with a lack of the sense of aesthetics are encouraged to select color palette with a help of dedicated software :
+
+- [colorbrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
+- [coolors.co](https://coolors.co/)
+
+```{r colors}
+color_df <- data.frame(
+  bar_colors = c("rgb(61, 56, 124)", 
+                 "rgb(0,89,161)", 
+                 "rgb(0,120,186)", 
+                 "rgb(0,150,193)",
+                 "rgb(0, 178, 184)", 
+                 "rgb(0,178,184)"),
+  text_colors = c("white", 
+                  "white", 
+                  "white", 
+                  "white",
+                  "white", 
+                  "black")
+)
+```
+
+Then, we use `set_colors` function from `tidycharts` package.
+
+```{r set-colors}
+set_colors(color_df)
+```
+
+Now, we can generate chart using new palette. 
+
+```{r customized-chart}
+column_chart(data_time_series, x = 'time', 
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% SVGrenderer()
+```
+
+## Styles
+
+### The defaults
+Styles are used to indicate different type of presented data. `actual`, `previous`, `plan`, `forecast` styles are implemented out of the box. 
+
+```{r styles-default}
+column_chart(data_time_series, x = 'time', 
+             series = 'Poland', interval = 'months',
+             styles = c(rep('actual',7), 'plan')) %>% SVGrenderer()
+```
+
+### Customization
+
+When defining styles, one must define `stroke` and `fill` parameters as column names. Style names are unrestricted. Use `set_styles` to bind `styles_df` to the package environment.  
+
+```{r user-styles}
+styles_df <- rbind(
+  actual = list(fill = "rgb(64,64,64)", stroke = "rgb(64,64,64)" ),
+  fictual = list(fill = "rgb(221,28,119)", stroke = "rgb(136,86,167)")
+)
+
+set_styles(styles_df)
+```
+
+Now, refer to styles through given names and use them in chart functions.
+
+```{r styles-custom}
+column_chart(data_time_series, x = 'time', 
+             series = 'Poland', interval = 'months',
+             styles = c(rep('actual',7), 'fictual')) %>% SVGrenderer()
+```
+
+## Resetting to defaults
+
+If you want to restore the default styles and colors, just use `restore_defaults` function.
+
+```{r}
+restore_defaults()
+```
+

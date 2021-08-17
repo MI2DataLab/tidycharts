@@ -32,16 +32,14 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
 
   # check if there are enough rows and cols to show all plots
   stopifnot(n_plots <= nrows * ncols)
-
   plots <- tryCatch( # if we pass not full matrix(5 elements to 3x2 matrix) we get warning
                      # so we use tryCatch to ensure no warnings are displayed
     matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T),
     warning = function(cond){
-      data = list(...)
-      for(i in (n_plots+1):nrows * ncols) data[[i]] <- '<svg height="0" width="0"></svg>'
-      matrix(data = data, nrow = nrows, ncol = ncols, byrow = T)
-    }
-  )
+      for(i in (n_plots+1):nrows * ncols) plots[[i]] <- '<svg height="0" width="0"></svg>'
+      matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T)
+    })
+
   widths <- matrix(apply(plots, c(1,2), function(svg_string) get_svg_size(svg_string)[1]), nrow = nrows, ncol = ncols)
   heights <- matrix(apply(plots, c(1,2), function(svg_string) get_svg_size(svg_string)[2]), nrow = nrows, ncol = ncols)
   cumulated_widths <- matrix(apply(widths, 1, cumsum), nrow = nrows, ncol = ncols, byrow = T)
@@ -62,7 +60,7 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
       translate_y <- cumulated_heights[i,j] - heights[i,j]
       result_string <- paste(
         result_string,
-        translate_svg(plots[i,j] %>% add_title('', titles[(i-1) * ncols  + j],'',''),
+        translate_svg(plots[i,j] %>% add_title( titles[(i-1) * ncols  + j], '', '', ''),
                       translate_x, translate_y)
       )
     }
@@ -110,15 +108,38 @@ facet_chart <- function(data, facet_by, ncols = 3, FUN, ...){
 
   stopifnot(facet_by %in% colnames(data))
   stopifnot(is.double(ncols), ncols > 0)
+  # find if any of ... is a vector passed to FUN, like vector x passed to scatterplot
+  args <- list(...)
+  data_len <- dim(data)[1] # no of rows in data
+
+  vector_args <- lapply(args, function(arg) if(length(arg) == data_len) arg)
+  single_args <- lapply(args, function(arg) if(length(arg) != data_len) arg)
+
+  vector_args <- vector_args[-which(sapply(vector_args, is.null))]
+  single_args <- single_args[-which(sapply(single_args, is.null))]
 
   categories <- sort(unique(data[[facet_by]]))
   # get a list of subsets of data with different facet_by values
-  list_data <- lapply(categories, function(category)  data[data[facet_by] == category,])
+  list_data <- lapply(categories, function(category) {
+    l <- list(data[data[facet_by] == category,])
+    names(l) <- 'data'
+    l
+  })
+  # filter vectoried args
+  list_args <- list()
+  for(category in categories){
+    list_args <- append(list_args,
+                        list(lapply(vector_args,
+                               function(arg) arg[data[facet_by] == category])))
+  }
+  tmp <- mapply(c, list_data, list_args, SIMPLIFY = F)
+  plots <- list()
   # draw plots of each subset of data
-  plots <- lapply(list_data, FUN, ...)
+  for(entry in tmp){
+    plots <- append(plots, do.call(FUN, c(entry, single_args)))
+  }
   # add names to plots so they can be plotted with titles
   names(plots) <- paste0(facet_by,' = ', categories)
-  # join the charts
   nrows <- ceiling(length(categories) / ncols)
   join_charts(list_of_plots = plots, nrows = nrows, ncols = ncols)
 }

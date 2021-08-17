@@ -1,0 +1,92 @@
+---
+title: "Joining charts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Joining charts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+data_barchart <- data.frame(
+  dep = c('Services', 'Production', 'Marketing', 'Purchasing'),
+  profit = c(12, 15, 2, -3),
+  operational = c(9, 7, 1.5, -0.4),
+  property = c(2, 4, 0.5, -0.6),
+  bonus = c(1, 4, 0, -2),
+  prev_year = c(10, 16, 4, -1),
+  plan = c(11, 13, 2, -2.5)
+)
+
+styles <- data.frame(profit = rep('actual', 4),
+                     plan = rep('plan', 4),
+                     prev_year = rep('previous',4))
+```
+
+In this vignette we will show how to join charts in different ways. This is a useful functionality of the `tidycharts` package, as it enables the user to group charts into panels or even generate multiple charts by one command (facetting).
+
+```{r setup, message = FALSE}
+library(tidycharts)
+```
+
+# Joining charts
+
+Combining plots in one panel is useful and easy by using the function `join_charts`. By setting `nrows` and `ncols` parameters user can control the layout of the grid.
+
+As you can see in [Getting Started vignette](https://mi2datalab.github.io/tidycharts/articles/Getting_Started.html#grouped-1), we created grouped bar chart and two variance bar charts. We can use the data and plots from that example to create a joined chart.
+
+```{r barchart-join}
+join_charts(
+  bar_chart_grouped(data = data_barchart,
+                  cat = data_barchart$dep,
+                  foreground = 'prev_year',
+                  background = 'profit',
+                  markers = 'plan',
+                  series_labels = c('PY', 'AC', 'PL')),
+  bar_chart_absolute_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan'),
+  bar_chart_relative_variance(cat = data_barchart$dep, 
+                                baseline = data_barchart$plan,
+                                real = data_barchart$profit,
+                                y_title = 'Plan vs. actual',
+                                y_style = 'plan'),
+  nrows = 1,
+  ncols = 3
+) %>% SVGrenderer()
+```
+
+# Facetting
+
+Facetting means dividing data into some categories and generating charts for each category. We will apply `facet_chart` function to visualize data from R built-in demo dataset `mtcars`.
+
+```{r mtcars}
+head(mtcars)
+```
+
+We should facet the data by a variable which doesn't have many unique values (preferably a categorical variable), so we won't end up with astounding number of charts. In this case, we will facet by `cyl` variable, that has only 3 unique values, so we will get 3 charts. 
+
+We need to pass `FUN` argument to `facet_chart` function, which must be one of plotting functions in the package. `FUN` is responsible for creating base charts. Arguments to `FUN` can be passed through `...`. In the example, `scatter_plot` is used.
+
+```{r facet}
+facet_chart(data = mtcars, 
+            facet_by = 'cyl',
+            ncols = 2,
+            FUN = scatter_plot,
+            x = mtcars$qsec,
+            y = mtcars$hp,
+            cat = mtcars$gear,
+            legend_title = '',
+            x_names = c('1/4 mile time', 'is s'),
+            y_names = c('Horsepower', '')) %>% 
+  SVGrenderer()
+
+```
+

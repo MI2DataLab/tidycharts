@@ -146,7 +146,7 @@ line_chart_markers <- function(data, x, series, series_labels, interval="months"
     x <- data[,x]
   }
   cat_width <- get_interval_width(interval)$category_width
-  averages <-rowMeans(data[,series])
+  averages <-rowMeans(data[series])
   maximum <- max(abs(data[, series]))
   neg <- data[, series][data[,series] < 0]
   min_avg <- min(averages)

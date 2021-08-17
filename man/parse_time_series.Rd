@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_time_series.R
 \name{parse_time_series}
 \alias{parse_time_series}
-\title{Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.}
+\title{Function to transfer data frame with time series values in wide format to format accepted by `line_chart_dense_custom`.}
 \usage{
 parse_time_series(df, dates, series, convert.to = "months")
 }
@@ -22,7 +22,7 @@ list of data frames, each one containing data about one time series.  Data frame
 * containing the time interval of the value
 }
 \description{
-Function to transfer data frame with time series values in wide format to format accepted by `line_plot_many_points_complex`.
+Function to transfer data frame with time series values in wide format to format accepted by `line_chart_dense_custom`.
 }
 \examples{
 df <- data.frame(

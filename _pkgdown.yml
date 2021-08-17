@@ -24,11 +24,18 @@ reference:
 - contents:
   - scatter_plot
 
+
+- title: "Groupping charts"
+  decs: "Functions for making groups of charts organized in grid"
+- contents:
+  - join_charts
+  - facet_chart
+
 - title: "Utility functions"
   desc: "Functions for other utilities, not for generating charts"
 - contents:
   - starts_with('SVG')
   - starts_with('set')
+  - restore_defaults
   - add_title
   - parse_time_series
-  - join_charts
