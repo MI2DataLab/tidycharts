@@ -5,4 +5,5 @@
 ^codecov\.yml$
 ^\.github
 ^_pkgdown.yml
-^vignettes/test-vignette\.Rmd
+^vignettes/_test-vignette\.Rmd
+^README_cache$
