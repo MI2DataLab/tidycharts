@@ -38,10 +38,10 @@ add_bar_basic <-
 
       rect <- draw_rect(x, y, curr_color$bar_color, (width_of_one*abs(value[k])), 16, style = style)
 
-      if(is.null(df_with_real_values)==FALSE){value_text <- df_with_real_values[,series[i]][k]}
+      if(is.null(df_with_real_values)==FALSE){value_text <- round(df_with_real_values[,series[i]][k],1)}
       else{value_text <- value[k]}
       #checking if there's enough place for a label
-      if(str_width(abs(value_text)) + 3.2 < abs(value_text)*width_of_one && length(series) > 1){
+      if(str_width(abs(value_text)) + 3.2 < abs(value[k])*width_of_one && length(series) > 1){
 
         labels <- paste(
           labels,
@@ -54,7 +54,7 @@ add_bar_basic <-
       if(value[k] > 0){ x <- x + (width_of_one*value[k])}
 
     }
-    if(value[k]>0) {
+    if(value[k] >= 0) {
       sum_label <- add_label((x + 4.8), y + 12, all_sums[k], anchor = "start")
     }
     else{
@@ -281,7 +281,7 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
   y_end <- 50 + 24*length(cat)
   initialize(y_vector = cat,
              bar_width = 16) %>%
-    draw_bars_basic(.,df, cat, series, series_labels, data) %>%
+    draw_bars_basic(.,df, cat, series, series_labels, df_with_real_values = data) %>%
     paste(.,
           add_vertical_index(280, (y_end+16+4.8-24)),
           draw_rect(285, 50, "white", 25, y_end, style = "total_white"), #it covers the sum labels
