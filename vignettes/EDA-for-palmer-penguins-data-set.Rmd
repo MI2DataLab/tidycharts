@@ -191,7 +191,7 @@ p <- penguins_raw %>%
   group_by(`Date Egg`, species) %>% 
   count() %>% 
   pivot_wider(names_from = species, values_from = n, values_fill = list(n = 0)) %>% 
-  group_by(week = week(`Date Egg`), year = year(`Date Egg`)) %>% 
+  group_by(week = lubridate::week(`Date Egg`), year = lubridate::year(`Date Egg`)) %>% 
   summarise(across(c('Adelie', 'Gentoo', 'Chinstrap'), sum)) %>% 
   mutate(date = paste(paste0('W',week), year, sep = '\n')) %>% 
   arrange(year, week) %>% 
