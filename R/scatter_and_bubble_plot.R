@@ -182,7 +182,7 @@ scatter_plot <-
            y_space_size = (y_end - y_start) / 8,
            x_names = c('x',''),
            y_names = c('y',''),
-           legend_title,
+           legend_title="Legend",
            bubble_value = NULL,
            x_start = 0,
            x_end = max(x),
@@ -193,6 +193,13 @@ scatter_plot <-
 
     if (is.null(cat)) {
       cat <- rep("", length(x))
+    }else{
+        if(length(cat) == 1){cat <- data[ , cat]}
+    }
+    if(length(x) == 1){x <- data[ , x]}
+    if(length(y) == 1){y <- data[ , y]}
+    if (is.null(bubble_value)==FALSE) {
+      if(length(bubble_value) == 1){bubble_value <- data[ , bubble_value]}
     }
 
     #dealing with negative values
