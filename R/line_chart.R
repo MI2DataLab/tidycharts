@@ -126,7 +126,14 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' cords <- c(1, 4,5,2, 5,4)
 #'
 #' #generating SVG string
-#' line_chart  <- line_chart(data, data$time, c("Gamma", "Delta"), c("Gamma inc.", "Delta inc."), names, cords, "years")
+#' line_chart  <- line_chart(
+#'   data = data,
+#'   x = data$time,
+#'   series = c("Gamma", "Delta"),
+#'   series_labels =c("Gamma inc.", "Delta inc."),
+#'   ser_names = names,
+#'   point_cords = cords,
+#'   interval = "years")
 #'
 #' #showing the plot
 #' line_chart %>% SVGrenderer

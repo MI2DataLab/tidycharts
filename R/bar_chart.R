@@ -267,7 +267,10 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
 #' Services = c(621, 545, 302, 44, 39, 20, 34)
 #')
 #' #create svg string
-#' barchart_normalized <- bar_chart_normalized(data, data$city,c("Products", "Services"), c("Products", "Services") )
+#' barchart_normalized <- bar_chart_normalized(
+#'   data = data,
+#'   cat = data$city,
+#'   series = c("Products", "Services"))
 #'
 #' #show the plot
 #' barchart_normalized %>% SVGrenderer()

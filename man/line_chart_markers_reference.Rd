@@ -53,7 +53,14 @@ styles <- data.frame(
 )
 
 #generating svg string
-line_chart_ref <- line_chart_markers_reference(data, data$time, c("PL", "AC"), c("PL", "AC"),42 , "index", styles=styles)
+line_chart_ref <- line_chart_markers_reference(
+  data = data,
+  x = data$time,
+  series = c("PL", "AC"),
+  series_labels = c("PL", "AC"),
+  ref_val = 42,
+  ref_label = "index",
+  styles=styles)
 
 #show the plot
 line_chart_ref \%>\% SVGrenderer()

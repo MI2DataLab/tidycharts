@@ -161,13 +161,34 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' data <- data.frame(
 #'     x = c(2, -3, -5, 5.5, 7, 9, 2.5, 1, 5, 5.3, 8.5, 6.6),
 #'     value = c(5,-3,2,6, 7, 3, -2, 1,7,8,3, -5),
-#'     cat = c("val1","val1","val2","val2","val2", "val3","val3","val3", "val4","val4","val4","val4"),
+#'     cat = c("val1","val1","val2","val2","val2",
+#'             "val3","val3","val3", "val4","val4","val4","val4"),
 #'     bubble = c (1,2,12,4,5,4,8,2,1,9, 8, 4.5 )
 #')
 #'
 #' # generate character vectors with svg data
-#' scatter <- scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legend")
-#' bubble <- scatter_plot(data, data$x, data$value, data$cat, 2, 1, c("time", "in s"), c("distance", "in km"), "Legend", bubble_value = data$bubble)
+#' scatter <- scatter_plot(
+#'   data = data,
+#'   x = data$x,
+#'   y = data$value,
+#'   cat = data$cat,
+#'   x_space_size = 2,
+#'   y_space_size = 1,
+#'   x_names = c("time", "in s"),
+#'   y_names = c("distance", "in km"),
+#'   legend_title = "Legend")
+#'
+#' bubble <-scatter_plot(
+#'   data = data,
+#'   x = data$x,
+#'   y = data$value,
+#'   cat = data$cat,
+#'   x_space_size = 2,
+#'   y_space_size = 1,
+#'   x_names = c("time", "in s"),
+#'   y_names = c("distance", "in km"),
+#'   legend_title = "Legend",
+#'   bubble_value = data$bubble)
 #'
 #' # show the plots
 #' scatter %>% SVGrenderer()
