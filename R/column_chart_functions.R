@@ -766,7 +766,7 @@ get_plot_height_abs_var <- function(real, baseline){
   lowest_bar <- min(variance) / max_val * max_bar_height
   if(abs(lowest_bar) > max_val){
     return(x_axis_pos + abs(lowest_bar) + 50) # axis position + height of the longest negative bar + 50 margin
-  }else if(min_val < 0){
+  }else if(lowest_bar < 0){
     return(x_axis_pos + abs(lowest_bar) + 50)
   }else{
     return(x_axis_pos + 50)
@@ -1065,7 +1065,7 @@ column_chart_grouped <-
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec <- c(0,0) # c(max(str_width(series_labels)) + 10, 0)
-
+    . <- NULL # initialize . variable not to get CRAN notes
     if (!is.null(data)) {
       x <- get_vector(data, x)
       foreground <- get_vector(data, foreground)

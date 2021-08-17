@@ -159,7 +159,7 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 #'
 bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, styles = NULL){
   initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
-    draw_bars_grouped(.,data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
+    draw_bars_grouped(data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
     finalize()
 }
 

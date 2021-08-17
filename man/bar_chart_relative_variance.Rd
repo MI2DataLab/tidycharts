@@ -11,7 +11,8 @@ bar_chart_relative_variance(
   colors = 1,
   data = NULL,
   y_title,
-  y_style = "previous"
+  y_style = "previous",
+  styles = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ bar_chart_relative_variance(
 \item{y_title}{title of the series values}
 
 \item{y_style}{style of y axis to indicate baseline scenario}
+
+\item{styles}{optional vector with styles of the pin heads}
 }
 \value{
 SVG string containing chart

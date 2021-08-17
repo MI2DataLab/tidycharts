@@ -86,8 +86,8 @@ add_title <- function(svg_string, line1, line2_measure, line2_rest, line3=""){
 
 get_svg_size <- function(svg_string){
   size <- numeric()
-  size[1] <- str_extract(svg_string, 'width="\\d+\\.?\\d*"') %>% str_extract("\\d+\\.?\\d*") %>% as.numeric()
-  size[2] <- str_extract(svg_string, 'height="\\d+\\.?\\d*"') %>% str_extract("\\d+\\.?\\d*") %>% as.numeric()
+  size[1] <- stringr::str_extract(svg_string, 'width="\\d+\\.?\\d*"') %>% stringr::str_extract("\\d+\\.?\\d*") %>% as.numeric()
+  size[2] <- stringr::str_extract(svg_string, 'height="\\d+\\.?\\d*"') %>% stringr::str_extract("\\d+\\.?\\d*") %>% as.numeric()
   return(size)
 }
 

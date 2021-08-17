@@ -194,6 +194,9 @@ bar_chart_waterfall <-
            add_result = FALSE,
            result_title = NULL) {
     stopifnot(length(cat) == length(series))
+
+    . <- NULL # initialize . variable not to get CRAN notes
+
     if (!is.null(data)) {
       cat <- get_vector(data, cat)
       series <- get_vector(data, series)
@@ -205,7 +208,7 @@ bar_chart_waterfall <-
     }
     initialize(y_vector = labels,
                bar_width = 16) %>%
-      add_horiz_waterfall_bars(., cat, series) %>%
+      add_horiz_waterfall_bars(cat, series) %>%
       {
         ifelse(add_result,
                add_result_bar(., cat, series, result_title),

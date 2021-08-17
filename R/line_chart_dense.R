@@ -178,7 +178,6 @@ line_chart_dense_custom <-
            interval = "months") {
     initialize() %>%
       draw_lines_complex(
-        .,
         list,
         vector_x,
         vector_y,
@@ -230,7 +229,6 @@ line_chart_dense <- function(data, dates, series, interval = 'months'){
 
   parse_time_series(data, dates, series, interval) %>%
     line_chart_dense_custom(
-      list = .,
       vector_x = rep('x', length(series)),
       vector_y = rep('y', length(series)),
       vector_cat = rep('cat', length(series)),

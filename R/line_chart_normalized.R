@@ -142,7 +142,7 @@ line_chart_normalized <- function( data, x, series, series_labels, show_labels, 
 
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-    draw_polygons_normalized(.,data, x, series, series_labels,show_labels, cat_width) %>%
+    draw_polygons_normalized(data, x, series, series_labels,show_labels, cat_width) %>%
     finalize()
 }
 

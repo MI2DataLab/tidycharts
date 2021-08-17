@@ -222,7 +222,6 @@ scatter_plot <-
     initialize(width = 80 + shift_x + 250 + 80,
                height = 250 + shift_y + 20) %>%
       draw_scatter_points(
-        .,
         data,
         x,
         y,

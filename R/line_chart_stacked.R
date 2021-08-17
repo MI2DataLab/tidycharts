@@ -145,7 +145,7 @@ line_chart_stacked <- function(data, cat, series, series_labels, show_labels, in
 
   cat_width <- get_interval_width(interval)$category_width
   initialize(width = 80 + cat_width*length(cat) +80, height = 300) %>%
-    draw_polygons(.,data, cat, series, series_labels, show_labels, cat_width) %>%
+    draw_polygons(data, cat, series, series_labels, show_labels, cat_width) %>%
     finalize()
 }
 

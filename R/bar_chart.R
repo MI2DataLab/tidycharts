@@ -193,7 +193,7 @@ bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
 
   initialize(y_vector = cat,
              bar_width = 16) %>%
-    draw_bars_basic(.,data, cat, series, series_labels, styles = styles, shift = shift) %>%
+    draw_bars_basic(data, cat, series, series_labels, styles = styles, shift = shift) %>%
     finalize()
 }
 
@@ -242,8 +242,7 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
   else{shift <- width_of_one*abs(min(neg))}
 
   initialize(width= 80 + shift + 250, height = 50 + 24*length(cat)) %>%
-    paste(.,
-          draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
+    paste(draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
           add_vertical_index(80+(width_of_one*ref_val)+shift, (66+24*(length(cat)-1)), ref_label),
           sep='\n') %>%
     finalize()
@@ -281,9 +280,8 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
   y_end <- 50 + 24*length(cat)
   initialize(y_vector = cat,
              bar_width = 16) %>%
-    draw_bars_basic(.,df, cat, series, series_labels, df_with_real_values = data) %>%
-    paste(.,
-          add_vertical_index(280, (y_end+16+4.8-24)),
+    draw_bars_basic(df, cat, series, series_labels, df_with_real_values = data) %>%
+    paste(add_vertical_index(280, (y_end+16+4.8-24)),
           draw_rect(285, 50, "white", 25, y_end, style = "total_white"), #it covers the sum labels
           sep='\n') %>%
     finalize()
@@ -344,7 +342,7 @@ bar_chart_absolute_variance <-
 
 
     initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
-      draw_bars_variance(., cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
+      draw_bars_variance(cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
       finalize()
   }
 
@@ -417,6 +415,7 @@ draw_bars_variance <-
 #' Generate bar chart with relative variance (in percents)
 #'
 #' @inheritParams bar_chart_absolute_variance
+#' @param styles optional vector with styles of the pin heads
 #'
 #' @return SVG string containing chart
 #' @export
@@ -440,7 +439,8 @@ bar_chart_relative_variance <-
            colors = 1,
            data = NULL,
            y_title,
-           y_style = 'previous') {
+           y_style = 'previous',
+           styles = NULL) {
 
     if (!is.null(data)) {
       cat <- get_vector(data, cat)
@@ -460,12 +460,12 @@ bar_chart_relative_variance <-
 
 
   initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
-    draw_pins_variance(., cat, values, width_of_one, shift, colors, y_title, y_style) %>%
+    draw_pins_variance(cat, values, width_of_one, shift, colors, y_title, y_style, styles) %>%
     finalize()
   }
 
 
-draw_pins_variance <- function(svg_string, cat, values, width_of_one, shift, colors, y_title, y_style){
+draw_pins_variance <- function(svg_string, cat, values, width_of_one, shift, colors, y_title, y_style, styles){
 
   y <- 50
 

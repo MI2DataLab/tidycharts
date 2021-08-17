@@ -138,6 +138,6 @@ line_chart <- function(data, x, series, series_labels, ser_names, point_cords, i
   }
   cat_width <- get_interval_width(interval)$category_width
   initialize() %>%
-  draw_lines(., data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
+  draw_lines(data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
   finalize()
 }
