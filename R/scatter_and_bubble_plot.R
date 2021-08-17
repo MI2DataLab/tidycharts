@@ -136,9 +136,9 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' Generates a scatter plot. If additional argument added, a bubble plot is generated.
 #'
 #' @param data data frame containing data to be plotted
-#' @param x vector containing x - coordinates of values
-#' @param y vector containing y - coordinates of values
-#' @param cat vector containing categories of the values
+#' @param x string containing a column name or a vector containing x - coordinates of values
+#' @param y string containing a column name or a vector containing y - coordinates of values
+#' @param cat string containing a column name or a vector containing categories of the values
 #' @param x_space_size,y_space_size numeric value of the space between the ticks on the x,y - axis. Defaultly, axis will be divided into 8 sections
 #' @param x_names vector containing two values:
 #' * name of the value presented on the x - axis
