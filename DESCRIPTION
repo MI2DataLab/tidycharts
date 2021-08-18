@@ -3,7 +3,7 @@ Type: Package
 Title: Generate plots in IBCS-like style
 Version: 0.1.0
 Authors@R: c(
-    person('Przemysław', 'Biecek', email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre")),
+    person('Przemysław', 'Biecek', email = "przemyslaw.biecek@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-8423-1823")),
     person('Piotr', 'Piątyszek', email = "piotrp@wektor.xyz", role = c("aut")),
     person('Kinga', 'Ułasik', email = 'kinia.u@poczta.fm', role = c("aut")),
     person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = c("aut")))

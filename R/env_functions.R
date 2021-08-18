@@ -168,5 +168,5 @@ restore_defaults <- function() {
       "rgb(110,110,110)",
       "rgb(127,127,127)"
     ),
-    text_colors = c("white", "black", "white", "white", "white", "black")
-  )
+    text_colors = c("white", "black", "white", "white", "white", "black"))
+}
