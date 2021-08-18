@@ -10,7 +10,7 @@ Authors@R: c(
     person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = c("aut")))
 Description: The tidycharts package enables user to generate charts compliant with International Business Communication Standards (IBCS).
     It means unified bar widths, colors, chart sizes, etc. Creating homogeneous reports has never been so easy. Addtionally, user can apply
-    semantic notation to indicate defferent data scenarios (plan, budget, forecast).
+    semantic notation to indicate different data scenarios (plan, budget, forecast).
     All charts are generated in SVG format and can be shown in RStudio viewer pane or can be exported to HTML output of knitr/markdown.
 License: GPL (>= 3)
 Encoding: UTF-8
