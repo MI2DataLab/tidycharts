@@ -9,9 +9,9 @@ Authors@R: c(
     person('Kinga', 'Ułasik', email = 'kinia.u@poczta.fm', role = c("aut")),
     person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = c("aut")))
 Description: The tidycharts package enables the user to generate charts compliant with International Business Communication Standards (IBCS).
-It means unified bar widths, colors, chart sizes, etc. Creating homogeneous reports has never been that easy! Additionally, users can apply semantic notation to indicate different data scenarios (plan, budget, forecast). What's more, it is possible to customize the charts by creating a personal color pallet with the possibility of switching to default options after the experiments.
-We wanted the package to be helpful in writing reports, so we also made joining charts in a one, clear image possible.
-All charts are generated in SVG format and can be shown in the RStudio viewer pane or exported to HTML output of knitr/markdown.
+    It means unified bar widths, colors, chart sizes, etc. Creating homogeneous reports has never been that easy! Additionally, users can apply semantic notation to indicate different data scenarios (plan, budget, forecast). What's more, it is possible to customize the charts by creating a personal color pallet with the possibility of switching to default options after the experiments.
+    We wanted the package to be helpful in writing reports, so we also made joining charts in a one, clear image possible.
+    All charts are generated in SVG format and can be shown in the RStudio viewer pane or exported to HTML output of knitr/markdown.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
