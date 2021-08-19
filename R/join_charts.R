@@ -40,7 +40,7 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
       matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T)
     },
     warning = function(cond){
-      for(i in (n_plots+1):nrows * ncols) plots[[i]] <- '<svg height="0" width="0"></svg>'
+      for(i in (n_plots+1):(nrows * ncols)) plots[[i]] <- '<svg height="0" width="0"></svg>'
       matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T)
     }
    )
