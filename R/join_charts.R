@@ -80,7 +80,6 @@ translate_svg<- function(svg_string, x, y){
         '</g>'))
 }
 
-
 #' Facet chart
 #'
 #' Create multiple charts with data split into groups
