@@ -242,7 +242,7 @@ column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') %>%
 
 ## Other column charts
 
-Other types of column charts are available, ie. `column_chart_grouped` or `column_chart_normalized`. When using them similar data visualization rules apply as for [bar charts](#barcharts). Feel free to explore them and see [reference page](https://sawickibartosz.github.io/tidycharts/reference/index.html) if need help.
+Other types of column charts are available, ie. `column_chart_grouped` or `column_chart_normalized`. When using them similar data visualization rules apply as for [bar charts](#barcharts). Feel free to explore them and see [reference page](https://mi2datalab.github.io/tidycharts/reference/index.html) if need help.
 
 # Line charts <a name="linecharts"></a>
 
