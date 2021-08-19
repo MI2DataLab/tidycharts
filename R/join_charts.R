@@ -35,10 +35,15 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
   plots <- tryCatch( # if we pass not full matrix(5 elements to 3x2 matrix) we get warning
                      # so we use tryCatch to ensure no warnings are displayed
     matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T),
+    error = function(cond){
+      for(i in (n_plots+1):nrows * ncols) plots[[i]] <- '<svg height="0" width="0"></svg>'
+      matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T)
+    },
     warning = function(cond){
       for(i in (n_plots+1):nrows * ncols) plots[[i]] <- '<svg height="0" width="0"></svg>'
       matrix(data = plots, nrow = nrows, ncol = ncols, byrow = T)
-    })
+    }
+   )
 
   widths <- matrix(apply(plots, c(1,2), function(svg_string) get_svg_size(svg_string)[1]), nrow = nrows, ncol = ncols)
   heights <- matrix(apply(plots, c(1,2), function(svg_string) get_svg_size(svg_string)[2]), nrow = nrows, ncol = ncols)
