@@ -1,7 +1,8 @@
 on:
   push:
     branches:
-      # - main
+      - main
+      - stable
       - 'dev*'
       - 'fix*'
       - 'issue*'
@@ -13,6 +14,7 @@ on:
   pull_request:
     branches:
       - main
+      - stable
     paths:
       - '**.R'
       - '**.r'
