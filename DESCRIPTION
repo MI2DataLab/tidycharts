@@ -1,7 +1,7 @@
 Package: tidycharts
 Type: Package
 Title: Generate Tidy Charts Inspired by 'IBCS'
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person('Przemysław', 'Biecek', email = "przemyslaw.biecek@gmail.com", role = c("aut"),
         comment = c(ORCID = "0000-0001-8423-1823")),
@@ -9,7 +9,7 @@ Authors@R: c(
     person('Kinga', 'Ułasik', email = 'kinia.u@poczta.fm', role = c("aut")),
     person('Bartosz', 'Sawicki', email = 'sawicki.bartosz@interia.pl', role = c("aut", "cre")))
 Maintainer: Bartosz Sawicki <sawicki.bartosz@interia.pl>
-Description: The 'tidycharts' package enables the user to generate charts compliant with International Business Communication Standards ('IBCS').
+Description: There is a wide range of R packages created for data visualization, but still, there was no simple and easily accessible way to create clean and transparent charts - up to now. The 'tidycharts' package enables the user to generate charts compliant with International Business Communication Standards ('IBCS').
     It means unified bar widths, colors, chart sizes, etc. Creating homogeneous reports has never been that easy! Additionally, users can apply semantic notation to indicate different data scenarios (plan, budget, forecast). What's more, it is possible to customize the charts by creating a personal color pallet with the possibility of switching to default options after the experiments.
     We wanted the package to be helpful in writing reports, so we also made joining charts in a one, clear image possible.
     All charts are generated in SVG format and can be shown in the 'RStudio' viewer pane or exported to HTML output of 'knitr'/'markdown'.
