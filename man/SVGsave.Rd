@@ -11,6 +11,9 @@ SVGsave(svg_string, path)
 
 \item{path}{path to file where image will be saved}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Save svg image
 }

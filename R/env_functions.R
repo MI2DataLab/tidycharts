@@ -86,7 +86,7 @@ get_interval_width <- function(interval){
 #'
 #' @param colors_df data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors". In cells there should be rgb values of chosen colors in format: "rgb(x,y,z)". Rows represent subsequent colors on stacked plots.
 #'
-#' @return NULL
+#' @return No return value, called for side effects
 #' @export
 #'
 #' @examples
@@ -116,7 +116,7 @@ set_colors <- function(colors_df){
 #'
 #' @param styles_df data frame with columns 'fill' and 'stroke'. Rows represent subsequent styles which names can be passed to plotting functions, usually as styles argument.
 #'
-#' @return NULL
+#' @return No return value, called for side effects
 #' @export
 #'
 #' @examples
@@ -140,7 +140,7 @@ set_styles <- function(styles_df){
 
 #' Restore default color and style settings
 #'
-#' @return NULL
+#' @return No return value, called for side effects
 #' @export
 #'
 #' @examples

@@ -8,6 +8,7 @@
 #' @param elementId  HTML element ID
 #'
 #' @import htmlwidgets
+#' @return No return value, called for side effects
 #'
 #' @export
 SVGrenderer <- function(svg_string, width = NULL, height = NULL, elementId = NULL) {

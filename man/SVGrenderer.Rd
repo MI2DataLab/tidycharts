@@ -15,6 +15,9 @@ SVGrenderer(svg_string, width = NULL, height = NULL, elementId = NULL)
 
 \item{elementId}{HTML element ID}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Use this function to show SVG images from given string in SVG embedded in HTML.
 }

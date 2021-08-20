@@ -9,6 +9,9 @@ set_styles(styles_df)
 \arguments{
 \item{styles_df}{data frame with columns 'fill' and 'stroke'. Rows represent subsequent styles which names can be passed to plotting functions, usually as styles argument.}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Change default styles for plots
 }

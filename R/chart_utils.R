@@ -96,7 +96,7 @@ get_svg_size <- function(svg_string){
 #' @param svg_string string containing SVG statements
 #' @param path path to file where image will be saved
 #'
-#' @return NULL
+#' @return No return value, called for side effects
 #' @export
 #'
 SVGsave <- function(svg_string, path){
