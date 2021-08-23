@@ -43,9 +43,9 @@ Bar charts shoud be used to show structure in one moment of time. One of typical
 ```{r data}
 data_barchart <- data.frame(
   dep = c('Services', 'Production', 'Marketing', 'Purchasing'),
-  profit = c(12, 15, 2, -3),
+  profit = c(14, 15, 2, -3),
   operational = c(9, 7, 1.5, -0.4),
-  property = c(2, 4, 0.5, -0.6),
+  property = c(4, 4, 0.5, -0.6),
   bonus = c(1, 4, 0, -2),
   prev_year = c(10, 16, 4, -1),
   plan = c(11, 13, 2, -2.5)
@@ -77,7 +77,8 @@ We can show the structure of each value by specyfing different `series` argument
 
 ```{r barchart-stacked}
 bar_chart(data = data_barchart, cat = data_barchart$dep, 
-              series = c('operational', 'property', 'bonus')) %>%  
+          series = c('operational', 'property', 'bonus'),
+          series_labels = c('op', 'porp', 'bon')) %>%  
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
   SVGrenderer()
 ```
@@ -88,7 +89,8 @@ Normalized barplot should be used to show the proportions of parts in each categ
 
 ```{r barchart-normalized}
 bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
-                         series = c('operational', 'property', 'bonus')) %>% 
+                     series = c('operational', 'property', 'bonus'),
+                     series_labels = c('op', 'porp', 'bon')) %>% 
   SVGrenderer()
 ```
 
