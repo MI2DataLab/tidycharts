@@ -1,7 +1,7 @@
 Package: tidycharts
 Type: Package
 Title: Generate Tidy Charts Inspired by 'IBCS'
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person('Przemysław', 'Biecek', email = "przemyslaw.biecek@gmail.com", role = c("aut"),
         comment = c(ORCID = "0000-0001-8423-1823")),
