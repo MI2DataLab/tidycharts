@@ -5,6 +5,11 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/MI2DataLab/tidycharts/workflows/R-CMD-check/badge.svg)](https://github.com/MMI2DataLab/tidycharts/actions)
+<!-- badges: end -->
+
+<!-- badges: start -->
+
 [![Codecov test
 coverage](https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/tidycharts?branch=main)
 <!-- badges: end -->
@@ -16,16 +21,15 @@ so embedding them in HTML documents is straight forward.
 
 ## Installation
 
-~~You can install the released version of tidycharts from
-[CRAN](https://CRAN.R-project.org) with:~~ The package is going to be
-deployed to CRAN, so that the installation process will look like:
+You can install the released version of tidycharts from
+[CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("tidycharts")
 ```
 
-But for now only development version from [GitHub](https://github.com/)
-can be installed with:
+Development version from [GitHub](https://github.com/) can be installed
+with:
 
 ``` r
 devtools::install_github("MI2DataLab/tidycharts")
