@@ -51,12 +51,13 @@ column_chart(df, x = 'months', series = 'values') %>%
   SVGrenderer() # render and show the SVG 
 ```
 
-![column chart](man/figures/readme-column.png) You can easily create
-other type of plots, ie. lineplots:
+<img src="man/figures/readme-column.png" width="50%" />
+
+You can easily create other type of plots, ie. lineplots:
 
 ``` r
 line_chart_markers(df, x = df$months, series = 'values', series_labels = 'values') %>% 
   SVGrenderer()
 ```
 
-![line chart](man/figures/readme-lines.png)
+<img src="man/figures/readme-lines.png" width="50%" />
