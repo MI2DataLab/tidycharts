@@ -49,3 +49,8 @@ figures:
   fig.retina: 2
   fig.asp: 1.618
   bg: NA
+repo:
+  url:
+    home: https://github.com/MI2DataLab/tidycharts
+    source: https://github.com/MI2DataLab/tidycharts
+    issue: https://github.com/MI2DataLab/tidycharts/issues/
