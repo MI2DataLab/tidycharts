@@ -30,7 +30,7 @@ line_chart(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().
@@ -59,6 +59,6 @@ line_chart  <- line_chart(
   interval = "years")
 
 #showing the plot
-line_chart \%>\% SVGrenderer
+line_chart
 
 }

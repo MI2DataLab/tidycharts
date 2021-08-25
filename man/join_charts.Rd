@@ -21,7 +21,7 @@ join_charts(
 \item{list_of_plots}{optional list of plots to join. Use exclusively ... params or list_of_plots. Names of list entries will be plotted as titles of the plots}
 }
 \value{
-Character vector with SVG content
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Join SVG charts This function first populates each place in the first row, then columns in the second row
@@ -35,5 +35,5 @@ Join SVG charts This function first populates each place in the first row, then 
 join_charts(
   column_chart(df, x = 'mon', series = 'values'),
   column_chart(df, x = 'mon', series = 'values')
-) \%>\% SVGrenderer()
+)
 }

@@ -30,7 +30,7 @@ bar_chart_grouped(
 \item{styles}{optional dataframe of styles. First column contains styles for foreground series, second for background, third for triangles. dim(styles) must be length(x), length(titles)}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates grouped horizontal barchart with scenario triangles.
@@ -56,6 +56,6 @@ barchart_grouped <- bar_chart_grouped(data,
  data$city,  "AC", "PL","triangles", c("triangles", "AC", "PL"), df_styles)
 
 #showing the plot
-barchart_grouped \%>\% SVGrenderer()
+barchart_grouped
 
 }

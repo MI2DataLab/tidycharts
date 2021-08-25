@@ -109,7 +109,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #' @param point_cords vector of the same length as ser_names containing numerical values of indexes in data of values to be marked
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -136,7 +136,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #'   interval = "years")
 #'
 #' #showing the plot
-#' line_chart %>% SVGrenderer
+#' line_chart
 #'
 line_chart <- function(data, x, series, series_labels, ser_names, point_cords, interval="months"){
 
@@ -144,7 +144,9 @@ line_chart <- function(data, x, series, series_labels, ser_names, point_cords, i
     x <- data[,x]
   }
   cat_width <- get_interval_width(interval)$category_width
-  initialize() %>%
-  draw_lines(data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
-  finalize()
+  svg_string <- initialize() %>%
+    draw_lines(data, x, series, series_labels, ser_names, point_cords, cat_width) %>%
+    finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }

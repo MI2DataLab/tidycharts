@@ -30,7 +30,7 @@ bar_chart_absolute_variance(
 \item{y_style}{style of y axis to indicate baseline scenario}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
@@ -46,6 +46,5 @@ bar_chart_absolute_variance(
   cat = cat,
   baseline = baseline,
   real = real,
-  y_title = 'a title') \%>\%
- SVGrenderer() # show the plot
+  y_title = 'a title')
 }

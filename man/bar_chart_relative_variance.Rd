@@ -33,7 +33,7 @@ bar_chart_relative_variance(
 \item{styles}{optional vector with styles of the pin heads}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generate bar chart with relative variance (in percents)
@@ -48,6 +48,5 @@ bar_chart_relative_variance(
   cat = cat,
   baseline = baseline,
   real = real,
-  y_title = 'a title') \%>\%
- SVGrenderer() # show the plot
+  y_title = 'a title')
 }

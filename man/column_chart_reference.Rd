@@ -30,7 +30,7 @@ column_chart_reference(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generate column chart with reference line.
@@ -42,11 +42,9 @@ df <- data.frame(x = month.abb[1:6],
                  z = c(3, 4.5, 2, 1, 4, 2))
 
 # generate character vector with svg data
-svg <- column_chart_reference(df, x = 'x',
-                              series = 'y',
-                              ref_value = 3,
-                              ref_label = 'baseline')
+column_chart_reference(df, x = 'x',
+                       series = 'y',
+                       ref_value = 3,
+                       ref_label = 'baseline')
 
-# show the plot
-svg \%>\% SVGrenderer()
 }

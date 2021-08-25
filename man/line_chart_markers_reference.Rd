@@ -33,7 +33,7 @@ line_chart_markers_reference(
 \item{styles}{optional data frame with style names. Styles of the markers will be plotted accordingly.}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates line plot with markers on every value with index on a given value.
@@ -63,6 +63,6 @@ line_chart_ref <- line_chart_markers_reference(
   styles=styles)
 
 #show the plot
-line_chart_ref \%>\% SVGrenderer()
+line_chart_ref
 
 }

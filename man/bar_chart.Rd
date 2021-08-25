@@ -18,7 +18,7 @@ bar_chart(data, cat, series, series_labels = series, styles = NULL)
 \item{styles}{optional vector with styles of bars}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates basic horizontal barchart. If more than one series is supplied, stacked barchart is generated.
@@ -34,7 +34,7 @@ Services = c(621, 545, 302, 44, 39, 20, 34)
 barchart <- bar_chart(data, data$city, c("Products", "Services"), c("Products", "Services"))
 
 #show the plot
-barchart \%>\% SVGrenderer()
+barchart
 
 
 }

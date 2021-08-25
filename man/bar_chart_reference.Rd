@@ -30,7 +30,7 @@ bar_chart_reference(
 \item{ref_label}{string defining a text that should be displayed in the referencing line. Set by default to index_val.}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates basic horizontal barchart with index on a given value. If more than one series is supplied, stacked barchart is generated.
@@ -47,7 +47,6 @@ Services = c(621, 545, 302, 44, 39, 20, 34)
 barchart_ref <- bar_chart_reference(data, data$city, c("Products"), 100, c("Products"))
 
 #show the plot
-barchart_ref \%>\% SVGrenderer()
-
+barchart_ref
 
 }

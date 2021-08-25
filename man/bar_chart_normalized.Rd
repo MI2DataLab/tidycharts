@@ -16,7 +16,7 @@ bar_chart_normalized(data, cat, series, series_labels = series)
 \item{series_labels}{vector containing names of series to be shown on the plot}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates normalized horizontal barchart. If more than one series is supplied, stacked barchart is generated.
@@ -35,6 +35,6 @@ barchart_normalized <- bar_chart_normalized(
   series = c("Products", "Services"))
 
 #show the plot
-barchart_normalized \%>\% SVGrenderer()
+barchart_normalized
 
 }

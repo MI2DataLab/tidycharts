@@ -30,7 +30,7 @@ column_chart_waterfall_variance(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generate column waterfall chart with absolute variance
@@ -39,6 +39,5 @@ Generate column waterfall chart with absolute variance
 x <- month.abb
 baseline <- rnorm(12)
 real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
-column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') \%>\%
-  SVGrenderer()
+column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit')
 }

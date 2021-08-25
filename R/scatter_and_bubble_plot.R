@@ -153,7 +153,7 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #' @param y_start numeric value defining where the y axis should start at. Set by default to 0.
 #' @param y_end numeric value defining where the y axis should end at. Set by default to max(y).
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -191,8 +191,8 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 #'   bubble_value = data$bubble)
 #'
 #' # show the plots
-#' scatter %>% SVGrenderer()
-#' bubble %>% SVGrenderer()
+#' scatter
+#' bubble
 #'
 scatter_plot <-
   function(data,
@@ -240,7 +240,7 @@ scatter_plot <-
       shift_x <- height_of_one * abs(min(neg_x))
     }
 
-    initialize(width = 80 + shift_x + 250 + 80,
+    svg_string <- initialize(width = 80 + shift_x + 250 + 80,
                height = 250 + shift_y + 20) %>%
       draw_scatter_points(
         data,
@@ -263,5 +263,6 @@ scatter_plot <-
         y_end
       ) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
-

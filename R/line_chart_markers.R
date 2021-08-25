@@ -174,7 +174,7 @@ line_chart_markers <- function(data, x, series, series_labels, interval="months"
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #' @param styles optional data frame with style names. Styles of the markers will be plotted accordingly.
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -202,7 +202,7 @@ line_chart_markers <- function(data, x, series, series_labels, interval="months"
 #'   styles=styles)
 #'
 #' #show the plot
-#' line_chart_ref %>% SVGrenderer()
+#' line_chart_ref
 #'
 line_chart_markers_reference <- function(data, x, series, series_labels, ref_val, ref_label=ref_val, interval = "months", styles=NULL){
 
@@ -220,12 +220,13 @@ line_chart_markers_reference <- function(data, x, series, series_labels, ref_val
   if(length(neg) == 0){shift <- 0}
   else{shift <- height_of_one*abs(min(neg)) + 12 + 4.8}
 
-  initialize(width = 80 + cat_width*length(x) + 80, height = 250+shift + 20) %>%
+  svg_string <- initialize(width = 80 + cat_width*length(x) + 80, height = 250+shift + 20) %>%
     draw_points(data, x, series, series_labels, cat_width, styles, height_of_one, min_avg, shift) %>%
     paste(add_index(80 +cat_width/2 + cat_width*(length(x)-1), 250-height_of_one*ref_val, ref_label),
           sep='\n') %>%
     finalize()
-
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 

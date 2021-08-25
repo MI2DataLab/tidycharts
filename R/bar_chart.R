@@ -160,7 +160,7 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param styles optional vector with styles of bars
 #'
-#' @return SVG string containing chart
+#' @return object of class tidychart with a character vector containing SVG elements
 #' @export
 #'
 #' @examples
@@ -174,11 +174,10 @@ draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_wit
 #' barchart <- bar_chart(data, data$city, c("Products", "Services"), c("Products", "Services"))
 #'
 #' #show the plot
-#' barchart %>% SVGrenderer()
+#' barchart
 #'
 #'
 #' @importFrom magrittr "%>%"
-
 bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
 
   all_sums <- rowSums(data[series])
@@ -191,10 +190,12 @@ bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
   if(length(neg) == 0){shift <- 0}
   else{shift <- width_of_one*abs(min(neg))}
 
-  initialize(y_vector = cat,
+  svg_string <- initialize(y_vector = cat,
              bar_width = 16) %>%
     draw_bars_basic(data, cat, series, series_labels, styles = styles, shift = shift) %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 #---
@@ -209,7 +210,7 @@ bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
 #' @param styles optional vector with styles of bars
 #' @param ref_label string defining a text that should be displayed in the referencing line. Set by default to index_val.
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -224,10 +225,8 @@ bar_chart <- function(data, cat, series, series_labels = series, styles = NULL){
 #' barchart_ref <- bar_chart_reference(data, data$city, c("Products"), 100, c("Products"))
 #'
 #' #show the plot
-#' barchart_ref %>% SVGrenderer()
+#' barchart_ref
 #'
-#'
-
 bar_chart_reference <- function(data, cat, series, ref_val, series_labels = series, styles = NULL, ref_label=ref_val){
 
   all_sums <- rowSums(data[series])
@@ -241,11 +240,13 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
   if(length(neg) == 0){shift <- 0}
   else{shift <- width_of_one*abs(min(neg))}
 
-  initialize(width= 80 + shift + 250, height = 50 + 24*length(cat)) %>%
+  svg_string <-initialize(width= 80 + shift + 250, height = 50 + 24*length(cat)) %>%
     paste(draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
           add_vertical_index(80+(width_of_one*ref_val)+shift, (66+24*(length(cat)-1)), ref_label),
           sep='\n') %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 #---
@@ -256,7 +257,7 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -273,7 +274,7 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
 #'   series = c("Products", "Services"))
 #'
 #' #show the plot
-#' barchart_normalized %>% SVGrenderer()
+#' barchart_normalized
 #'
 bar_chart_normalized <- function(data, cat, series, series_labels = series){
   if(length(cat) == 1){
@@ -281,13 +282,15 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
   }
   df <- normalize_rows(data, cat, series)
   y_end <- 50 + 24*length(cat)
-  initialize(y_vector = cat,
+  svg_string <- initialize(y_vector = cat,
              bar_width = 16) %>%
     draw_bars_basic(df, cat, series, series_labels, df_with_real_values = data) %>%
     paste(add_vertical_index(280, (y_end+16+4.8-24)),
           draw_rect(285, 50, "white", 25, y_end, style = "total_white"), #it covers the sum labels
           sep='\n') %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 #' Generate bar chart with absolute variance
@@ -299,7 +302,7 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
 #' @param y_title title of the series values
 #' @param y_style style of y axis to indicate baseline scenario
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -313,8 +316,7 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
 #'   cat = cat,
 #'   baseline = baseline,
 #'   real = real,
-#'   y_title = 'a title') %>%
-#'  SVGrenderer() # show the plot
+#'   y_title = 'a title')
 bar_chart_absolute_variance <-
   function(cat,
            baseline,
@@ -344,9 +346,11 @@ bar_chart_absolute_variance <-
       shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
 
 
-    initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
       draw_bars_variance(cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 
@@ -420,7 +424,7 @@ draw_bars_variance <-
 #' @inheritParams bar_chart_absolute_variance
 #' @param styles optional vector with styles of the pin heads
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -433,8 +437,7 @@ draw_bars_variance <-
 #'   cat = cat,
 #'   baseline = baseline,
 #'   real = real,
-#'   y_title = 'a title') %>%
-#'  SVGrenderer() # show the plot
+#'   y_title = 'a title')
 bar_chart_relative_variance <-
   function(cat,
            baseline,
@@ -462,9 +465,11 @@ bar_chart_relative_variance <-
       shift <- width_of_one * abs(min(neg)) + 25 # 25 px for value labels
 
 
-  initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
     draw_pins_variance(cat, values, width_of_one, shift, colors, y_title, y_style, styles) %>%
     finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 

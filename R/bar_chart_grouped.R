@@ -131,7 +131,7 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 #' @param cat vector cointaining category names of values
 #' @inheritParams column_chart_grouped
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -155,11 +155,12 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 #'  data$city,  "AC", "PL","triangles", c("triangles", "AC", "PL"), df_styles)
 #'
 #' #showing the plot
-#' barchart_grouped %>% SVGrenderer()
+#' barchart_grouped
 #'
 bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, styles = NULL){
-  initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
+  svg_string <- initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
     draw_bars_grouped(data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
-

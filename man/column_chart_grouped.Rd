@@ -33,7 +33,7 @@ column_chart_grouped(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generate grouped column chart for visualizing up to 3 data series
@@ -48,5 +48,5 @@ column_chart_grouped(x = df$x,
                      foreground = df$actual,
                      background = df$budget,
                      markers = df$prev_year,
-                     series_labels = c('AC', 'BU', 'PY')) \%>\% SVGrenderer()
+                     series_labels = c('AC', 'BU', 'PY'))
 }

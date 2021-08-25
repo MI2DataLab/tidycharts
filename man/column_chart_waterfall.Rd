@@ -18,7 +18,7 @@ column_chart_waterfall(data, x, series, styles = NULL, interval = "months")
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generate column waterfall chart for visualizing contribution.
@@ -26,5 +26,5 @@ Generate column waterfall chart for visualizing contribution.
 \examples{
 df <- data.frame(x = 10:18,
                  y = rnorm(9))
-column_chart_waterfall(df, 'x', 'y') \%>\% SVGrenderer()
+column_chart_waterfall(df, 'x', 'y')
 }

@@ -134,7 +134,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 #' @param point_cords vector of the same length as df_numbers containing numerical values of indexes in data frame of values to be marked
 #' @inheritParams column_chart
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -173,7 +173,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
 #'   point_cords = point_cords)
 #'
 #' #showing the plot
-#' plot %>% SVGrenderer()
+#' plot
 #'
 #'
 line_chart_dense_custom <-
@@ -185,7 +185,7 @@ line_chart_dense_custom <-
            df_numbers = NULL,
            point_cords = NULL,
            interval = "months") {
-    initialize() %>%
+    svg_string <- initialize() %>%
       draw_lines_complex(
         list,
         vector_x,
@@ -197,6 +197,8 @@ line_chart_dense_custom <-
         point_cords
       ) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 #' Line chart with more points then categories on x-axis.
@@ -207,7 +209,7 @@ line_chart_dense_custom <-
 #' @param series Vector of column names in `data` with values of time series.
 #' @param interval Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -230,8 +232,7 @@ line_chart_dense_custom <-
 #' line_chart_dense(
 #'   df,
 #'   dates = 'x',
-#'   series = c('Company_sin', 'Company_cos')) %>%
-#'   SVGrenderer()
+#'   series = c('Company_sin', 'Company_cos'))
 #'
 line_chart_dense <- function(data, dates, series, interval = 'months'){
   stopifnot(interval %in% c('weeks', 'months', 'quarters', 'years'))

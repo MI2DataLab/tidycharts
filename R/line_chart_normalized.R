@@ -115,7 +115,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #'
-#' @return SVG SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -137,12 +137,14 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' line_chart_normalized <- line_chart_normalized(data, data$weeks, series, series, labels, "weeks")
 #'
 #' #show the plot
-#' line_chart_normalized %>% SVGrenderer()
+#' line_chart_normalized
 line_chart_normalized <- function( data, x, series, series_labels, show_labels, interval="months"){
 
   cat_width <- get_interval_width(interval)$category_width
-  initialize() %>%
+  svg_string <- initialize() %>%
     draw_polygons_normalized(data, x, series, series_labels,show_labels, cat_width) %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 

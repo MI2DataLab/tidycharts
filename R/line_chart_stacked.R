@@ -117,7 +117,7 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
 #' @param show_labels vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -138,14 +138,15 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
 #' line_chart_stacked <- line_chart_stacked(data, data$weeks, series, series, labels, "weeks")
 #'
 #' #show the plot
-#' line_chart_stacked %>% SVGrenderer()
-#'
+#' line_chart_stacked
 #'
 line_chart_stacked <- function(data, cat, series, series_labels, show_labels, interval = "months"){
 
   cat_width <- get_interval_width(interval)$category_width
-  initialize(width = 80 + cat_width*length(cat) +80, height = 300) %>%
+  svg_string <- initialize(width = 80 + cat_width*length(cat) +80, height = 300) %>%
     draw_polygons(data, cat, series, series_labels, show_labels, cat_width) %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 

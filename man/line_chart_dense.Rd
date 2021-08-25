@@ -16,7 +16,7 @@ line_chart_dense(data, dates, series, interval = "months")
 \item{interval}{Granularity of x axis. One of c('weeks', 'months', 'quarters', 'years'). Default value is 'months'.}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Line chart with more points then categories on x-axis.
@@ -41,7 +41,6 @@ df <- head(df, n = 199)
 line_chart_dense(
   df,
   dates = 'x',
-  series = c('Company_sin', 'Company_cos')) \%>\%
-  SVGrenderer()
+  series = c('Company_sin', 'Company_cos'))
 
 }

@@ -810,7 +810,7 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' @param styles optional vector with styles of bars
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @importFrom magrittr "%>%"
@@ -827,7 +827,7 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #'
 #'
 #' # show the plot
-#' svg1 %>% SVGrenderer()
+#' svg1
 #'
 column_chart <- function(data, x, series = NULL, series_labels = series, styles = NULL, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
@@ -835,18 +835,20 @@ column_chart <- function(data, x, series = NULL, series_labels = series, styles 
   stop_if_pos_neg_values(data, series) # signum of values in one bar is the same for every bar
   x <- get_vector(data, x)
   stop_if_many_categories(x, max_categories = 24)
-  initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(data[series])) %>%
+  svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(data[series])) %>%
     add_bars(data, x, series, bar_width = bar_width, styles) %>%
     add_legend(data, x, series_labels, bar_width = bar_width) %>%
     add_top_values(data, x, series, bar_width = bar_width) %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 
 #' Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
 #'
 #' @inheritParams column_chart
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -856,10 +858,8 @@ column_chart <- function(data, x, series = NULL, series_labels = series, styles 
 #'                  z = c(3, 4.5, 2, 1, 4, 2))
 #'
 #' # generate character vector with svg data
-#' svg <- column_chart_normalized(df, x = df$x, series = c('y', 'z'))
+#' column_chart_normalized(df, x = df$x, series = c('y', 'z'))
 #'
-#' # show the plot
-#' svg %>% SVGrenderer()
 column_chart_normalized <- function(data, x, series = NULL, series_labels = series, interval = 'months') {
   bar_width <- get_interval_width(interval)$bar_width
 
@@ -869,11 +869,13 @@ column_chart_normalized <- function(data, x, series = NULL, series_labels = seri
 
   normalized_df <- normalize_rows(data, x, series)
 
-  initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
+  svg_string <- initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
     add_legend(normalized_df, x, series_labels, bar_width = bar_width) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 75, label = "100") %>%
     finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 
@@ -883,7 +885,7 @@ column_chart_normalized <- function(data, x, series = NULL, series_labels = seri
 #' @param ref_value one element numeric vector with referencing value.
 #' @param ref_label name of the referencing value
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -893,13 +895,11 @@ column_chart_normalized <- function(data, x, series = NULL, series_labels = seri
 #'                  z = c(3, 4.5, 2, 1, 4, 2))
 #'
 #' # generate character vector with svg data
-#' svg <- column_chart_reference(df, x = 'x',
-#'                               series = 'y',
-#'                               ref_value = 3,
-#'                               ref_label = 'baseline')
+#' column_chart_reference(df, x = 'x',
+#'                        series = 'y',
+#'                        ref_value = 3,
+#'                        ref_label = 'baseline')
 #'
-#' # show the plot
-#' svg %>% SVGrenderer()
 column_chart_reference <-
   function(data,
            x,
@@ -921,7 +921,7 @@ column_chart_reference <-
     referenced_df <- reference(data, x, series, ref_value)
     index_level <-
       ref_value / max(data[series]) * 200
-    initialize(
+    svg_string <- initialize(
       x_vector = x,
       bar_width = bar_width,
       height = get_plot_height(referenced_df[series], x_axis_pos = x_axis_pos)
@@ -944,19 +944,21 @@ column_chart_reference <-
                      labels = "percent",
                      ref_value = ref_value) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 #' Generate column waterfall chart for visualizing contribution.
 #'
 #' @inheritParams column_chart
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
 #' df <- data.frame(x = 10:18,
 #'                  y = rnorm(9))
-#' column_chart_waterfall(df, 'x', 'y') %>% SVGrenderer()
+#' column_chart_waterfall(df, 'x', 'y')
 column_chart_waterfall <-
   function(data,
            x,
@@ -970,13 +972,15 @@ column_chart_waterfall <-
     stop_if_many_categories(x, max_categories = 24)
     stop_if_many_series(series, max_series = 1) # maximum 1 series
 
-    initialize(
+    svg_string <- initialize(
       x_vector = x,
       bar_width = bar_width,
       height = get_plot_height(data[series], x_axis_pos = 250)
     ) %>%
       add_waterfall_bars(data, x, series, bar_width, styles) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 #' Generate column chart with absolute variance
@@ -992,15 +996,14 @@ column_chart_waterfall <-
 #'
 #' @inheritParams column_chart
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
 #' x <- month.abb
 #' baseline <- rnorm(12)
 #' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
-#' column_chart_absolute_variance(x, baseline, real, x_title = 'profit') %>%
-#'   SVGrenderer()
+#' column_chart_absolute_variance(x, baseline, real, x_title = 'profit')
 column_chart_absolute_variance <-
   function(x,
            baseline,
@@ -1022,13 +1025,15 @@ column_chart_absolute_variance <-
     stop_if_variance_colors(colors)
     stop_if_many_categories(x, max_categories = 24)
 
-    initialize(
+    svg_string <- initialize(
       x_vector = x,
       bar_width = bar_width,
       height = get_plot_height_abs_var(real, baseline)
     ) %>%
       add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title, x_style) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 #' Generate grouped column chart for visualizing up to 3 data series
@@ -1041,7 +1046,7 @@ column_chart_absolute_variance <-
 #'
 #' @inheritParams column_chart
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -1054,7 +1059,7 @@ column_chart_absolute_variance <-
 #'                      foreground = df$actual,
 #'                      background = df$budget,
 #'                      markers = df$prev_year,
-#'                      series_labels = c('AC', 'BU', 'PY')) %>% SVGrenderer()
+#'                      series_labels = c('AC', 'BU', 'PY'))
 column_chart_grouped <-
   function(x,
            foreground,
@@ -1089,7 +1094,7 @@ column_chart_grouped <-
     }
     max_bar_height <- 200
     df <- normalize_df(df, max_bar_height)
-    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series_labels])) %>%
+    svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series_labels])) %>%
       add_bars(
         df[, series_labels[2], drop = FALSE],
         x = x,
@@ -1142,6 +1147,8 @@ column_chart_grouped <-
         max_val = max_bar_height
       ) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 
@@ -1150,15 +1157,14 @@ column_chart_grouped <-
 #' @inheritParams column_chart_absolute_variance
 #' @param styles optional vector with styles of the pin heads
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
 #' x <- month.abb
 #' baseline <- rnorm(12, mean = 1, sd = 0.2)
 #' real <- c(rnorm(6, mean = 0.8, sd = 0.2), rnorm(6, mean = 1.2, sd = 0.2))
-#' column_chart_relative_variance(x, baseline, real, x_title = 'profit %') %>%
-#'   SVGrenderer()
+#' column_chart_relative_variance(x, baseline, real, x_title = 'profit %')
 column_chart_relative_variance <-
   function(x,
            baseline,
@@ -1181,7 +1187,7 @@ column_chart_relative_variance <-
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec = c(str_width(x_title), 0)
-    initialize(x_vector = x,
+    svg_string <- initialize(x_vector = x,
                bar_width = bar_width,
                height = 300) %>%
       add_relative_variance_pins(
@@ -1196,6 +1202,8 @@ column_chart_relative_variance <-
         styles = styles
       ) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
 
 
@@ -1204,15 +1212,14 @@ column_chart_relative_variance <-
 #' @inheritParams column_chart_absolute_variance
 #' @param result_title title for the result bar
 #'
-#' @return SVG string containing chart
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
 #' x <- month.abb
 #' baseline <- rnorm(12)
 #' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
-#' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit') %>%
-#'   SVGrenderer()
+#' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit')
 column_chart_waterfall_variance <-
   function(x, baseline, real, colors = 1, data = NULL, result_title, interval = 'months') {
 
@@ -1228,7 +1235,7 @@ column_chart_waterfall_variance <-
     difference <- real - baseline
     df <- data.frame("series" = difference)
 
-    initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df)) %>%
+    svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df)) %>%
       add_first_bar(
         x[1],
         df[1, 'series'],
@@ -1253,6 +1260,6 @@ column_chart_waterfall_variance <-
         translate_vec = c(50,0)
       ) %>%
       finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
   }
-
-

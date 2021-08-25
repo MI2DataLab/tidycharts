@@ -27,7 +27,7 @@ column_chart(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generate basic column chart. If more than one series is supplied, stacked column plot is generated
@@ -44,6 +44,6 @@ svg2 <- column_chart(df, x = df$x, series = c('y', 'z'))
 
 
 # show the plot
-svg1 \%>\% SVGrenderer()
+svg1
 
 }

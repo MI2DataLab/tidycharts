@@ -5,7 +5,7 @@
 #' @param ncols number of columns of plots in joint plot, default is set to 1
 #' @param list_of_plots optional list of plots to join. Use exclusively ... params or list_of_plots. Names of list entries will be plotted as titles of the plots
 #'
-#' @return Character vector with SVG content
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -17,7 +17,7 @@
 #' join_charts(
 #'   column_chart(df, x = 'mon', series = 'values'),
 #'   column_chart(df, x = 'mon', series = 'values')
-#' ) %>% SVGrenderer()
+#' )
 join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots)),
                         ncols = 1, list_of_plots = NULL){
 
@@ -71,6 +71,7 @@ join_charts <- function(..., nrows = max(length(list(...)), length(list_of_plots
     }
   }
   result_string <- finalize(result_string)
+  class(result_string) <- c('tidychart', 'character')
   return(result_string)
 }
 
@@ -107,7 +108,7 @@ translate_svg<- function(svg_string, x, y){
 #'   x = mtcars$hp,
 #'   y = mtcars$qsec,
 #'   legend_title = ''
-#'  ) %>% SVGrenderer()
+#'  )
 facet_chart <- function(data, facet_by, ncols = 3, FUN, ...){
 
   stopifnot(facet_by %in% colnames(data))

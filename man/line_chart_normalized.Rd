@@ -27,7 +27,7 @@ line_chart_normalized(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Generates normalized areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.
@@ -51,5 +51,5 @@ labels <- c(NA, 1, NA, 1, NA, NA, 1, NA, 1, NA)
 line_chart_normalized <- line_chart_normalized(data, data$weeks, series, series, labels, "weeks")
 
 #show the plot
-line_chart_normalized \%>\% SVGrenderer()
+line_chart_normalized
 }

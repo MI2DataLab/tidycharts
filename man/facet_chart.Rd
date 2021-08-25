@@ -18,7 +18,7 @@ facet_chart(data, facet_by, ncols = 3, FUN, ...)
 \item{...}{other parameters passed to FUN}
 }
 \value{
-Character vector with SVG content
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Create multiple charts with data split into groups
@@ -32,5 +32,5 @@ facet_chart(
   x = mtcars$hp,
   y = mtcars$qsec,
   legend_title = ''
- ) \%>\% SVGrenderer()
+ )
 }

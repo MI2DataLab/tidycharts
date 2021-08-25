@@ -36,7 +36,7 @@ line_chart_dense_custom(
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
 \value{
-SVG string containing chart
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 More customizable version of `line_chart_dense`. User can choose the points to highlight.
@@ -77,7 +77,7 @@ plot<- line_chart_dense_custom(
   point_cords = point_cords)
 
 #showing the plot
-plot \%>\% SVGrenderer()
+plot
 
 
 }
