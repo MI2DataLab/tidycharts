@@ -194,7 +194,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>SVG string containing chart</p>
+    <p>object of class tidychart with a character vector containing SVG elements</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -208,8 +208,7 @@ Services <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/b
 <span class='va'>barchart_ref</span> <span class='op'>&lt;-</span> <span class='fu'>bar_chart_reference</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>city</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span><span class='op'>)</span>, <span class='fl'>100</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Products"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>#show the plot</span>
-<span class='va'>barchart_ref</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='SVGrenderer.html'>SVGrenderer</a></span><span class='op'>(</span><span class='op'>)</span>
-
+<span class='va'>barchart_ref</span>
 
 </div></pre>
   </div>
