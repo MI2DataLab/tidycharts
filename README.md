@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/MI2DataLab/tidycharts/workflows/R-CMD-check/badge.svg)](https://github.com/MMI2DataLab/tidycharts/actions)
+[![R-CMD-check](https://github.com/MI2DataLab/tidycharts/workflows/R-CMD-check/badge.svg)](https://github.com/MI2DataLab/tidycharts/actions)
 <!-- badges: end -->
 
 <!-- badges: start -->
