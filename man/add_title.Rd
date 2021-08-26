@@ -18,7 +18,7 @@ add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 \item{line3}{Third line of the title, it should indicate time, scenarios, variances, etc}
 }
 \value{
-one element character vector containing SVG graphic statements. svg_string with appended legend.
+object of class tidychart with a character vector containing SVG elements
 }
 \description{
 Add IBCS complient legend
@@ -29,7 +29,6 @@ column_chart(df, df$x, 'sales') \%>\%
   add_title(line1 = 'Department of Big Computers',
     line2_measure = "Sales",
     line2_rest = "in mEUR",
-    line3 = "2010..2015") \%>\%
-  SVGrenderer()
+    line3 = "2010..2015")
 
 }

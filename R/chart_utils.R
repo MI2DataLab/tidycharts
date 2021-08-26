@@ -61,7 +61,7 @@ finalize <- function(svg_string) {
 #' @param line2_rest Second part of second line of the title. It should represent units of measure.
 #' @param line3 Third line of the title, it should indicate time, scenarios, variances, etc
 #'
-#' @return one element character vector containing SVG graphic statements. svg_string with appended legend.
+#' @inherit bar_chart return
 #' @export
 #'
 #' @examples
@@ -70,18 +70,18 @@ finalize <- function(svg_string) {
 #'   add_title(line1 = 'Department of Big Computers',
 #'     line2_measure = "Sales",
 #'     line2_rest = "in mEUR",
-#'     line3 = "2010..2015") %>%
-#'   SVGrenderer()
+#'     line3 = "2010..2015")
 #'
 add_title <- function(svg_string, line1, line2_measure, line2_rest, line3=""){
   size = get_svg_size(svg_string)
-  initialize(svg_string_append = svg_string, width = size[1], height = size[2]) %>%
+  svg_string <- initialize(svg_string_append = svg_string, width = size[1], height = size[2]) %>%
     draw_text(text = line1, x = 0, y = 12, text_anchor = "start") %>%
     draw_text(text = line2_measure, x = 0, y = 24, text_anchor = "start", text_weight = "bold") %>%
     draw_text(text = line2_rest, x = str_width(line2_measure, bold = T)+2, y = 24, text_anchor = "start") %>%
     draw_text(text = line3, x = 0, y = 36, text_anchor = "start") %>%
-    finalize() %>%
-    return()
+    finalize()
+  class(svg_string) <- c('tidychart', 'character')
+  return(svg_string)
 }
 
 get_svg_size <- function(svg_string){
