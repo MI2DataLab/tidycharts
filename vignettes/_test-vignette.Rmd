@@ -32,6 +32,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(tidycharts)
+library(dplyr)
 df <- data.frame(x = letters[1:20],
                  val = rnorm(20, mean = 5),
                  style = rep('actual',20))
