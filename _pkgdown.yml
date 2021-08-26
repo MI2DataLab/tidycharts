@@ -56,6 +56,6 @@ figures:
   bg: NA
 repo:
   url:
-    home: https://github.com/MI2DataLab/tidycharts
-    source: https://github.com/MI2DataLab/tidycharts
+    home: https://github.com/MI2DataLab/tidycharts/
+    source: https://github.com/MI2DataLab/tidycharts/blob/main/
     issue: https://github.com/MI2DataLab/tidycharts/issues/
