@@ -75,7 +75,8 @@ We can show the structure of each value by specyfing different `series` argument
 bar_chart(data = data_barchart, cat = data_barchart$dep, 
           series = c('operational', 'property', 'bonus'),
           series_labels = c('op', 'porp', 'bon')) %>%  
-  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020')
+  add_title('The company XYZ', 'Profit', 'in mEUR',
+            'by departments and profit type, 2020')
 ```
 
 ## Normalized
@@ -85,7 +86,8 @@ Normalized barplot should be used to show the proportions of parts in each categ
 ```{r barchart-normalized}
 bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
                      series = c('operational', 'property', 'bonus'),
-                     series_labels = c('op', 'porp', 'bon'))
+                     series_labels = c('op', 'porp', 'bon')) %>% 
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'normalized in department')
 ```
 
 ## Referenced
@@ -95,7 +97,9 @@ We use reference values (indecies) to show a reference value on the plot. In the
 ```{r barchart-index}
 bar_chart_reference(data = data_barchart,
                     cat = data_barchart$dep, series = 'profit', 
-                    ref_val = 10, ref_label = 'PY best result') 
+                    ref_val = 10, ref_label = 'PY best result')  %>% 
+  add_title('The company XYZ', 'Profit', 'in mEUR', 
+            'with reference value of 10 mEUR')
 ```
 
 ## Grouped
@@ -106,17 +110,21 @@ The most typical usecase of this chart is to visualize profit of different depar
 
 ```{r barchart-grouped}
 
-styles <- data.frame(profit = rep('actual', 4),
-                     plan = rep('plan', 4),
-                     prev_year = rep('previous',4))
+# names of columns in styles data frame are not important, 
+# only order of column is
+styles <- data.frame(style_foreground = rep('actual', 4),
+                     style_background = rep('previous',4),
+                     style_markers = rep('plan', 4))
 
 bar_chart_grouped(data = data_barchart,
                   cat = data_barchart$dep,
-                  foreground = 'prev_year',
-                  background = 'profit',
+                  foreground = 'profit',
+                  background = 'prev_year',
                   markers = 'plan',
                   series_labels = c('PY', 'AC', 'PL'),
-                  styles = styles) 
+                  styles = styles)  %>% 
+  add_title('The company XYZ', 'Profit', 'in mEUR', 
+            'compared to different scenarios')
 ```
 
 ## Variances
@@ -130,7 +138,9 @@ bar_chart_absolute_variance(cat = data_barchart$dep,
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
-                                y_style = 'plan')
+                                y_style = 'plan') %>% 
+  add_title('The company XYZ', 'Profit variance', 'in mEUR', 
+            'between plan and actual')
 ```
 
 ```{r barchart-rel-variance}
@@ -138,7 +148,9 @@ bar_chart_relative_variance(cat = data_barchart$dep,
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
-                                y_style = 'plan') 
+                                y_style = 'plan') %>% 
+  add_title('The company XYZ', 'Profit variance', 'in %', 
+            'between plan and actual (plan=100%)')
 ```
 
 # Scatter plots
@@ -158,7 +170,10 @@ In scatter plot 2 numerical dimensions are visualized by position of a point on 
 
 ```{r scatter}
 scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec, 
-             legend_title = '')
+             legend_title = '', 
+             x_names = c('Horsepower', 'in hp'),
+             y_names = c('1/4 mile time', 'in s')) %>% 
+  add_title('The mtcars dataset', '', '', '')
 ```
 
 Optionally, categorical dimension can be added in a form of a point color.
@@ -167,7 +182,10 @@ Optionally, categorical dimension can be added in a form of a point color.
 scatter_plot(scatter_data, x = scatter_data$hp,
              y = scatter_data$qsec, 
              cat = scatter_data$cyl, 
-             legend_title = 'No. cylinder') 
+             legend_title = 'No. cylinder', 
+             x_names = c('Horsepower', 'in hp'),
+             y_names = c('1/4 mile time', 'in s')) %>% 
+  add_title('The mtcars dataset', '', '', '') 
 
 ```
 
@@ -180,7 +198,10 @@ scatter_plot(scatter_data, x = scatter_data$hp,
              y = scatter_data$qsec, 
              cat = scatter_data$cyl, 
              bubble_value = scatter_data$wt,
-             legend_title = 'No. cylinders')
+             legend_title = 'No. cylinders',
+             x_names = c('Horsepower', 'in hp'),
+             y_names = c('1/4 mile time', 'in s')) %>% 
+  add_title('The mtcars dataset', '', '', '')
 ```
 
 # Column charts <a name="columncharts"></a>
@@ -210,7 +231,8 @@ Typical task related to this kind of plot could be the following: Show sales fro
 
 ```{r columnchart-basic}
 column_chart(data_time_series, x = 'time', 
-             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') 
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% 
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'by country, 2020')
 ```
 
 ## Waterfall
@@ -225,7 +247,8 @@ data_time_series %>% group_by(time) %>%
   arrange(match(time, month.abb)) %>% 
   mutate(Sales = round(cumsum(Sales), 2)) -> df_summarized
 
-column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') 
+column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') %>% 
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'cumulative, 2020')
 ```
 
 ## Other column charts
@@ -252,7 +275,8 @@ data_companies <- data.frame(
 line_chart_markers(data_companies, x = data_companies$time,
           series = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           series_labels = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
-          interval = 'years') 
+          interval = 'years') %>% 
+  add_title('Some companies', 'Market value', 'in mEUR', '2010...2020')
 ```
 
 ## Dense
