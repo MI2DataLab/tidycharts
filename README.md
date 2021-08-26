@@ -47,8 +47,7 @@ df <- data.frame(months = month.abb[1:6],
                  values = round(5 + sin(1:6), 2))
 
 # create chart in a form of character vector containing SVG content
-column_chart(df, x = 'months', series = 'values') %>%
-  SVGrenderer() # render and show the SVG 
+column_chart(df, x = 'months', series = 'values')
 ```
 
 <img src="man/figures/readme-column.png" width="50%" />
@@ -56,8 +55,7 @@ column_chart(df, x = 'months', series = 'values') %>%
 You can easily create other type of plots, ie. lineplots:
 
 ``` r
-line_chart_markers(df, x = df$months, series = 'values', series_labels = 'values') %>% 
-  SVGrenderer()
+line_chart_markers(df, x = df$months, series = 'values', series_labels = 'values')
 ```
 
 <img src="man/figures/readme-lines.png" width="50%" />

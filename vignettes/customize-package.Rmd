@@ -32,7 +32,7 @@ data_time_series <- data.frame(
   Slovakia = round(2 + 2 * cos(1:8), 2)
 )
 column_chart(data_time_series, x = 'time', 
-             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% SVGrenderer()
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months')
 ```
 
 ### Customization
@@ -69,7 +69,7 @@ Now, we can generate chart using new palette.
 
 ```{r customized-chart}
 column_chart(data_time_series, x = 'time', 
-             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% SVGrenderer()
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months')
 ```
 
 ## Styles
@@ -80,7 +80,7 @@ Styles are used to indicate different type of presented data. `actual`, `previou
 ```{r styles-default}
 column_chart(data_time_series, x = 'time', 
              series = 'Poland', interval = 'months',
-             styles = c(rep('actual',7), 'plan')) %>% SVGrenderer()
+             styles = c(rep('actual',7), 'plan'))
 ```
 
 ### Customization
@@ -101,7 +101,7 @@ Now, refer to styles through given names and use them in chart functions.
 ```{r styles-custom}
 column_chart(data_time_series, x = 'time', 
              series = 'Poland', interval = 'months',
-             styles = c(rep('actual',7), 'fictual')) %>% SVGrenderer()
+             styles = c(rep('actual',7), 'fictual'))
 ```
 
 ## Resetting to defaults
@@ -111,4 +111,3 @@ If you want to restore the default styles and colors, just use `restore_defaults
 ```{r}
 restore_defaults()
 ```
-

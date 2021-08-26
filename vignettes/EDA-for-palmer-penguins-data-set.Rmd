@@ -26,55 +26,53 @@ exploration & visualization, as an alternative to iris
 p <- penguins %>%
          drop_na(bill_length_mm, bill_depth_mm)
 scatter_plot(p, p$bill_length_mm, p$bill_depth_mm, p$species, 10, 5, c("bill length", "in mm"), c("bill depht", "in mm"), "Legend") %>% 
-   add_title("Relationship between bill length and bill depth","","") %>%
-  SVGrenderer(height=300)
-  #show()
+   add_title("Relationship between bill length and bill depth","","")
 #---
 p <- penguins %>%
   drop_na(bill_length_mm, flipper_length_mm)
 scatter_plot(p, p$bill_length_mm, p$flipper_length_mm, p$species, 10, 50, c("bill length", "in mm"), c("flipper length", "in mm"), "Legend") %>% 
-  add_title("Relationship between bill length and flipper length","","") %>% SVGrenderer(height=300)
+  add_title("Relationship between bill length and flipper length","","") 
 #---
 p <- penguins %>%
   drop_na(bill_length_mm, body_mass_g)
 scatter_plot(p, p$bill_length_mm, p$body_mass_g, p$species, 10, 1000, c("bill length", "in mm"), c("body mass", "in g"), "Legend") %>% 
-  add_title("Relationship between bill length and body mass","","") %>% SVGrenderer(height=300)
+  add_title("Relationship between bill length and body mass","","") 
 #--- bill depht on the x -axis ---
 p <- penguins %>%
   drop_na(bill_depth_mm, bill_length_mm)
-scatter_plot(p, p$bill_depth_mm, p$bill_length_mm, p$species, 5, 10, c("bill depht", "in mm"), c("bill length", "in mm"), "Legend") %>% add_title("Relationship between bill depth and bill length","","") %>% SVGrenderer(height=300)
+scatter_plot(p, p$bill_depth_mm, p$bill_length_mm, p$species, 5, 10, c("bill depht", "in mm"), c("bill length", "in mm"), "Legend") %>% add_title("Relationship between bill depth and bill length","","")
 #----
 p <- penguins %>%
   drop_na(bill_depth_mm, flipper_length_mm)
-scatter_plot(p, p$bill_depth_mm, p$flipper_length_mm, p$species, 5, 50, c("bill depht", "in mm"), c("flipper length", "in mm"), "Legend") %>% add_title("Relationship between bill depth and flipper length","","") %>%  SVGrenderer(height=300)
+scatter_plot(p, p$bill_depth_mm, p$flipper_length_mm, p$species, 5, 50, c("bill depht", "in mm"), c("flipper length", "in mm"), "Legend") %>% add_title("Relationship between bill depth and flipper length","","")
 #----
 p <- penguins %>%
   drop_na(bill_depth_mm, body_mass_g)
-scatter_plot(p, p$bill_depth_mm, p$body_mass_g, p$species, 5, 1000, c("bill depht", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between bill length and body mass","","") %>% SVGrenderer(height=300)
+scatter_plot(p, p$bill_depth_mm, p$body_mass_g, p$species, 5, 1000, c("bill depht", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between bill length and body mass","","")
 #---flipper length on the x axis ----
 p <- penguins %>%
   drop_na(flipper_length_mm, bill_length_mm)
-scatter_plot(p, p$flipper_length_mm, p$bill_length_mm, p$species, 50, 10, c("flipper length", "in mm"), c("bill length", "in mm"), "Legend") %>% add_title("Relationship between flipper length and bill length","","") %>% SVGrenderer(height=300)
+scatter_plot(p, p$flipper_length_mm, p$bill_length_mm, p$species, 50, 10, c("flipper length", "in mm"), c("bill length", "in mm"), "Legend") %>% add_title("Relationship between flipper length and bill length","","")
 #----
 p <- penguins %>%
   drop_na(flipper_length_mm, bill_depth_mm)
-scatter_plot(p, p$flipper_length_mm,p$bill_depth_mm, p$species, 50, 5, c("flipper length", "in mm"), c("bill depth", "in mm"), "Legend") %>%add_title("Relationship between flipper length and bill depth","","") %>% SVGrenderer(height=300)
+scatter_plot(p, p$flipper_length_mm,p$bill_depth_mm, p$species, 50, 5, c("flipper length", "in mm"), c("bill depth", "in mm"), "Legend") %>%add_title("Relationship between flipper length and bill depth","","")
 #----
 p <- penguins %>%
   drop_na(flipper_length_mm, body_mass_g)
-scatter_plot(p, p$flipper_length_mm, p$body_mass_g, p$species, 50, 1000, c("flipper length", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between flipper length and body_mass","","")  %>% SVGrenderer(height=300)
+scatter_plot(p, p$flipper_length_mm, p$body_mass_g, p$species, 50, 1000, c("flipper length", "in mm"), c("body mass", "in g"), "Legend") %>% add_title("Relationship between flipper length and body_mass","","")
 #---body mass on the x axis ----
 p <- penguins %>%
   drop_na(body_mass_g, bill_length_mm)
-scatter_plot(p, p$body_mass_g, p$bill_length_mm, p$species, 1000, 10, c("body mass", "in g"), c("bill length", "in mm"), "Legend") %>% add_title("Relationship between body mass and bill length","","")  %>% SVGrenderer(height=300)
+scatter_plot(p, p$body_mass_g, p$bill_length_mm, p$species, 1000, 10, c("body mass", "in g"), c("bill length", "in mm"), "Legend") %>% add_title("Relationship between body mass and bill length","","")
 #----
 p <- penguins %>%
   drop_na(body_mass_g, bill_depth_mm)
-scatter_plot(p, p$body_mass_g, p$bill_depth_mm, p$species, 1000, 5, c("body mass", "in g"), c("bill depths", "in mm"), "Legend") %>% add_title("Relationship between body mass and bill depth","","") %>% SVGrenderer(height=300)
+scatter_plot(p, p$body_mass_g, p$bill_depth_mm, p$species, 1000, 5, c("body mass", "in g"), c("bill depths", "in mm"), "Legend") %>% add_title("Relationship between body mass and bill depth","","")
 #----
 p <- penguins %>%
   drop_na(body_mass_g, flipper_length_mm)
-scatter_plot(p, p$body_mass_g, p$flipper_length_mm, p$species, 1000, 50, c("body mass", "in g"), c("flipper length", "in mm"), "Legend") %>%add_title("Relationship between body mass and flipper length","","") %>% SVGrenderer(height=300)
+scatter_plot(p, p$body_mass_g, p$flipper_length_mm, p$species, 1000, 50, c("body mass", "in g"), c("flipper length", "in mm"), "Legend") %>%add_title("Relationship between body mass and flipper length","","")
 ```
 
 ### Histograms - distribution of the variables
@@ -82,22 +80,18 @@ scatter_plot(p, p$body_mass_g, p$flipper_length_mm, p$species, 1000, 50, c("body
 ```{r histograms, echo=FALSE, warning = FALSE}
 p<- penguins %>% count(species)
 bar_chart(p, p$species, series=c("n"), c("")) %>% 
-  add_title("Histogram of penguin species", "","") %>%
-  SVGrenderer(height= 50 + 24*length(p$species))
+  add_title("Histogram of penguin species", "","") 
 p<- penguins %>% count(island)
 bar_chart(p, p$island, series=c("n"), c("")) %>% 
-  add_title("Histogram of islands","", "") %>%
-  SVGrenderer(height=50+24*length(p$island))
+  add_title("Histogram of islands","", "")
 p<- penguins %>% 
   drop_na(sex) %>%
   count(sex)
 bar_chart(p, p$sex, series=c("n"), c("")) %>% 
-  add_title("Histogram of penguin sex", "","") %>%
-  SVGrenderer(height=50+24*length(p$sex))
+  add_title("Histogram of penguin sex", "","")
 p<- penguins %>% count(year)
 column_chart(p, "year", series=c("n")) %>% 
-  add_title("Histogram of number of studied penguin during the years", "","") %>%
-  SVGrenderer(height=300)
+  add_title("Histogram of number of studied penguin during the years", "","")
 #--- bill length_histogram ---
 h <- hist(penguins$bill_length_mm, plot=FALSE)
 breaks <- paste(seq(32,58,2), '-', seq(34,60,2), sep="")
@@ -105,8 +99,7 @@ df <- cbind(h$counts)
 df <- as.data.frame(df)
 colnames(df) <- c("counts")
 column_chart(df, breaks, series=c("counts")) %>%
-  add_title("Histogram of bill length", "length","in mm") %>% 
-  SVGrenderer(height=300)
+  add_title("Histogram of bill length", "length","in mm")
 #--- bill depth histogram ---
 h <- hist(penguins$bill_depth_mm, plot=FALSE)
 breaks <- paste(seq(13,21,1), '-', seq(14,22,1), sep="")
@@ -114,8 +107,7 @@ df <- cbind(h$counts)
 df <- as.data.frame(df)
 colnames(df) <- c("counts")
 column_chart(df, breaks, series=c("counts")) %>%
-  add_title("Histogram of bill depth", "depth","in mm") %>% 
-  SVGrenderer(height=300)
+  add_title("Histogram of bill depth", "depth","in mm")
 #--- flipper length histogram ---
 h <- hist(penguins$flipper_length_mm, plot=FALSE)
 breaks <- paste(seq(170, 230,5), '-', seq(175,235,5), sep="")
@@ -123,7 +115,7 @@ df <- cbind(h$counts)
 df <- as.data.frame(df)
 colnames(df) <- c("counts")
 column_chart(df, breaks, series=c("counts")) %>%
-  add_title("Histogram of flipper length", "length","in mm") %>% SVGrenderer(height=300)
+  add_title("Histogram of flipper length", "length","in mm")
 #--- body mass histogram ---
 h <- hist(penguins$body_mass_g, plot=FALSE)
 breaks <- paste(seq(2.5, 6.0, 0.5), '-', seq(3.0,6.5,0.5), sep="")
@@ -131,7 +123,7 @@ df <- cbind(h$counts)
 df <- as.data.frame(df)
 colnames(df) <- c("counts")
 column_chart(df, breaks, series=c("counts")) %>%
-  add_title("Histogram of body mass", "mass","in kg") %>% SVGrenderer(height=300)
+  add_title("Histogram of body mass", "mass","in kg")
 ```
 
 ### Closer look at species distribution
@@ -165,8 +157,7 @@ df$Biscoe <- as.numeric(df$Biscoe)
 df$Dream <- as.numeric(df$Dream)
 df$Torgersen <- as.numeric(df$Torgersen)
 column_chart_normalized(df, df$Year, c("Biscoe", "Dream", "Torgersen")) %>% 
-  add_title('Penguin distribution', 'in %', 'by island', '2007...2009') %>% 
-  SVGrenderer(height=300)
+  add_title('Penguin distribution', 'in %', 'by island', '2007...2009')
 #species column
 p<- penguins %>% count(species, year)
 Adelie <- p %>% filter(species=="Adelie")
@@ -180,7 +171,7 @@ colnames(df) <- c("Adelie", "Chinstrap", "Gentoo", "Year")
 df$Adelie <- as.numeric(df$Adelie)
 df$Chinstrap <- as.numeric(df$Chinstrap)
 df$Gentoo <- as.numeric(df$Gentoo)
-column_chart(df, df$Year, c("Adelie", "Chinstrap", "Gentoo")) %>% SVGrenderer(height=300)
+column_chart(df, df$Year, c("Adelie", "Chinstrap", "Gentoo"))
 ```
 
 ### Line charts - data in time
@@ -203,8 +194,9 @@ line_chart_stacked(p, p$date,
                   series_labels = c('Adelie', 'Gentoo', 'Chinstrap'), 
                   show_labels = rep(NA, length.out = 14),
                   interval = 'weeks') %>%
-  add_title('Palmer penguins sampling expedition', 'Number of new eggs observed', '', '2007...2009') %>% 
-  SVGrenderer()
+  add_title('Palmer penguins sampling expedition', 
+            'Number of new eggs observed', '',
+            '2007...2009') 
 ```
 
 

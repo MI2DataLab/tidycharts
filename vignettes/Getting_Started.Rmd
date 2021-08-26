@@ -56,21 +56,17 @@ In the example data `operational`, `property` and `bonus` are parts of `profit` 
 
 ## Basic
 
-Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function, `SVGrenderer()` should be used to render the plot as HTML content. Otherwise one element character vector with SVG content is returned. We can chain the commands by pipe operator (`%>%`).
+Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function chart will be automatically printed. It can also be assigned to a variable as one element character vector with SVG content.
 
 ```{r base-barchart}
-
-bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
-  SVGrenderer()
-
+bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit')
 ```
 
-A plot should contain an informative title. We can use `add_title` function to make one. As with `SVGRenderer`, we chain the commands. 
+A plot should contain an informative title. We can use `add_title` function to make one. We can chain the commands by pipe operator (`%>%`). 
 
 ```{r barchart-title}
 bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
-  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
-  SVGrenderer()
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020')
 ```
 
 We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
@@ -79,8 +75,7 @@ We can show the structure of each value by specyfing different `series` argument
 bar_chart(data = data_barchart, cat = data_barchart$dep, 
           series = c('operational', 'property', 'bonus'),
           series_labels = c('op', 'porp', 'bon')) %>%  
-  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020') %>% 
-  SVGrenderer()
+  add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020')
 ```
 
 ## Normalized
@@ -90,8 +85,7 @@ Normalized barplot should be used to show the proportions of parts in each categ
 ```{r barchart-normalized}
 bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
                      series = c('operational', 'property', 'bonus'),
-                     series_labels = c('op', 'porp', 'bon')) %>% 
-  SVGrenderer()
+                     series_labels = c('op', 'porp', 'bon'))
 ```
 
 ## Referenced
@@ -101,8 +95,7 @@ We use reference values (indecies) to show a reference value on the plot. In the
 ```{r barchart-index}
 bar_chart_reference(data = data_barchart,
                     cat = data_barchart$dep, series = 'profit', 
-                    ref_val = 10, ref_label = 'PY best result') %>% 
-  SVGrenderer()
+                    ref_val = 10, ref_label = 'PY best result') 
 ```
 
 ## Grouped
@@ -123,8 +116,7 @@ bar_chart_grouped(data = data_barchart,
                   background = 'profit',
                   markers = 'plan',
                   series_labels = c('PY', 'AC', 'PL'),
-                  styles = styles) %>% 
-  SVGrenderer()
+                  styles = styles) 
 ```
 
 ## Variances
@@ -138,8 +130,7 @@ bar_chart_absolute_variance(cat = data_barchart$dep,
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
-                                y_style = 'plan') %>% 
-  SVGrenderer()
+                                y_style = 'plan')
 ```
 
 ```{r barchart-rel-variance}
@@ -147,9 +138,7 @@ bar_chart_relative_variance(cat = data_barchart$dep,
                                 baseline = data_barchart$plan,
                                 real = data_barchart$profit,
                                 y_title = 'Plan vs. actual',
-                                y_style = 'plan') %>% 
-  SVGrenderer()
-
+                                y_style = 'plan') 
 ```
 
 # Scatter plots
@@ -169,8 +158,7 @@ In scatter plot 2 numerical dimensions are visualized by position of a point on 
 
 ```{r scatter}
 scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec, 
-             legend_title = '') %>% SVGrenderer()
-
+             legend_title = '')
 ```
 
 Optionally, categorical dimension can be added in a form of a point color.
@@ -179,7 +167,7 @@ Optionally, categorical dimension can be added in a form of a point color.
 scatter_plot(scatter_data, x = scatter_data$hp,
              y = scatter_data$qsec, 
              cat = scatter_data$cyl, 
-             legend_title = 'No. cylinder') %>% SVGrenderer()
+             legend_title = 'No. cylinder') 
 
 ```
 
@@ -192,7 +180,7 @@ scatter_plot(scatter_data, x = scatter_data$hp,
              y = scatter_data$qsec, 
              cat = scatter_data$cyl, 
              bubble_value = scatter_data$wt,
-             legend_title = 'No. cylinders') %>% SVGrenderer()
+             legend_title = 'No. cylinders')
 ```
 
 # Column charts <a name="columncharts"></a>
@@ -222,8 +210,7 @@ Typical task related to this kind of plot could be the following: Show sales fro
 
 ```{r columnchart-basic}
 column_chart(data_time_series, x = 'time', 
-             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') %>% 
-  SVGrenderer()
+             series = c('Poland', 'Germany', 'Slovakia'), interval = 'months') 
 ```
 
 ## Waterfall
@@ -238,8 +225,7 @@ data_time_series %>% group_by(time) %>%
   arrange(match(time, month.abb)) %>% 
   mutate(Sales = round(cumsum(Sales), 2)) -> df_summarized
 
-column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') %>% 
-  SVGrenderer()
+column_chart_waterfall(df_summarized, x = 'time', series = 'Sales') 
 ```
 
 ## Other column charts
@@ -266,8 +252,7 @@ data_companies <- data.frame(
 line_chart_markers(data_companies, x = data_companies$time,
           series = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           series_labels = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
-          interval = 'years') %>% 
-  SVGrenderer()
+          interval = 'years') 
 ```
 
 ## Dense
@@ -285,13 +270,10 @@ data_dense <- data.frame(
 )
 
 line_chart_dense(data_dense, 'dates', c('Warsaw', 'London')) %>%
-  add_title('Temperature in European Cities', 'Daily mean', 'in deg. C', 'In 2019') %>% 
-  SVGrenderer()
+  add_title('Temperature in European Cities', 'Daily mean', 'in deg. C', 'In 2019')
 ```
 
 
 # Columns vs lines
 
 One can wonder what type of plot choose: line chart or column chart. The answer depends on the data. If you want to visualize only one series, both line and column chart are appropriate. More differences occur when number of series increases. If the sum of series means something reasonable, use stacked columns, optionally stacked lines. If not, use line plot.
-
-
