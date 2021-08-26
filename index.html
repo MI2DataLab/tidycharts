@@ -82,7 +82,12 @@
     </li>
   </ul>
 </li>
-        
+        <li>
+  <a href="https://github.com/MI2DataLab/tidycharts">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -118,20 +123,18 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>How to create IBCS inspired charts using tidycharts?</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidycharts</span><span class="op">)</span> <span class="co"># load the package</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mi2datalab.github.io/tidycharts">tidycharts</a></span><span class="op">)</span> <span class="co"># load the package</span>
 
 <span class="co"># create some data to visualize</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>months <span class="op">=</span> <span class="va">month.abb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,
                  values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">5</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># create chart in a form of character vector containing SVG content</span>
-<span class="fu"><a href="reference/column_chart.html">column_chart</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="st">'months'</span>, series <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/SVGrenderer.html">SVGrenderer</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># render and show the SVG </span></code></pre></div>
+<span class="fu"><a href="reference/column_chart.html">column_chart</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="st">'months'</span>, series <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/readme-column.png" width="50%"></p>
 <p>You can easily create other type of plots, ie. lineplots:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/line_chart_markers.html">line_chart_markers</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">months</span>, series <span class="op">=</span> <span class="st">'values'</span>, series_labels <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/SVGrenderer.html">SVGrenderer</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="reference/line_chart_markers.html">line_chart_markers</a></span><span class="op">(</span><span class="va">df</span>, x <span class="op">=</span> <span class="va">df</span><span class="op">$</span><span class="va">months</span>, series <span class="op">=</span> <span class="st">'values'</span>, series_labels <span class="op">=</span> <span class="st">'values'</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/readme-lines.png" width="50%"></p>
 </div>
 </div>
@@ -142,6 +145,8 @@
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=tidycharts">https://​cloud.r-project.org/​package=tidycharts</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/MI2DataLab/tidycharts">https://​github.com/​MI2DataLab/​tidycharts</a>
 </li>
 </ul>
 </div>
