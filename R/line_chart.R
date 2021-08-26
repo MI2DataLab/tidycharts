@@ -136,7 +136,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
 #'   interval = "years")
 #'
 #' #showing the plot
-#' line_chart
+#' line_chart %>% tidycharts::show()
 #'
 line_chart <- function(data, x, series, series_labels, ser_names, point_cords, interval="months"){
 
