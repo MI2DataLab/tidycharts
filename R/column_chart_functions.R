@@ -31,7 +31,7 @@ add_column_bar <-
         svg_string = svg_string,
         x = x_pos + bar_width / 4,
         y = x_axis_pos - height - bar_height,
-        height = ceiling(height),
+        height = height,
         width = bar_width,
         color = colors_$bar_color,
         style = style,
@@ -44,7 +44,10 @@ add_column_bar <-
         # height at least 150% of font size and more than one series
         svg_string <- draw_text(
           svg_string = svg_string,
-          text = round(df[i, series[j], 1], digits = 1),
+          text = formatC(
+            round_preserve_sum(as.numeric(df[i, series]),digits = 2)[j],
+            digits=2,
+            format='f'),
           x = x_pos + bar_width * 1.5 / 2,
           y = x_axis_pos - bar_height + (height / 2) + 6,
           text_color = colors_$text_color,
@@ -700,6 +703,7 @@ add_top_values <-
            max_val = NULL,
            ref_value = NULL) {
     x_axis_pos <- get_x_axis_pos(df[series], max_val)
+
     heights <- rowSums(df[series])
     max_height <-
       ifelse(is.null(max_val), max(abs(heights)), max_val)
@@ -709,13 +713,15 @@ add_top_values <-
       ifelse(is.null(ref_value), max_height, ref_value)
 
     if (is.null(labels)) {
-      labels <- heights
+      round_df <- apply(df[series], MARGIN = 1, round_preserve_sum, digits = 2)
+      if(!is.null(dim(round_df))) labels <- rowSums(t(round_df))
+      else labels <- round_df
     }
     if (length(labels) == 1 && labels == "percent"){
       labels <- paste0(format(heights / ref_value * 100, digits = 3),"%")
     }
     else{
-      labels <- format(labels, digits = 6)
+      labels <-labels
     }
 
     for (i in 1:length(x)) {
@@ -725,7 +731,7 @@ add_top_values <-
       # numeric value label for total bar
       svg_string <- draw_text(
         svg_string = svg_string,
-        text = labels[i],
+        text = formatC(labels[i], digits = 2, format = 'f'),
         x =  x_pos + bar_width * 1.5 / 2,
         y = x_axis_pos - bar_height - sign(bar_height) * 4.8 + ifelse(bar_height > 0, 0, 6)
       )
