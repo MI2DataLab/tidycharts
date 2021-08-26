@@ -59,6 +59,6 @@ line_chart  <- line_chart(
   interval = "years")
 
 #showing the plot
-line_chart \%>\% tidycharts::show()
+line_chart
 
 }

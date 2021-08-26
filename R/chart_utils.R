@@ -1,4 +1,3 @@
-#' @export
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
