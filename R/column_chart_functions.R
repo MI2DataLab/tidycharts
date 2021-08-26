@@ -314,9 +314,9 @@ add_waterfall_bars <-
       )
 
       if (bar_height >= 0) {
-        bar_y <- x_axis_pos - prev_level - bar_height
-        bar_h <- ceiling(bar_height)
-        line_y <- x_axis_pos - prev_level - bar_height
+        bar_y <- ceiling(x_axis_pos - prev_level - bar_height)
+        bar_h <- bar_height
+        line_y <- bar_y - 0.2 # pos - height of line
         label_y <- x_axis_pos - prev_level - bar_height - 4.8
         last_label_y <- label_y
         last_label_x <- x_pos + 0.75 * bar_width
@@ -325,7 +325,7 @@ add_waterfall_bars <-
       } else{
         bar_y <- x_axis_pos - prev_level
         bar_h <- -1 * bar_height
-        line_y <- floor(x_axis_pos - prev_level - bar_height)
+        line_y <- x_axis_pos - prev_level - bar_height
         label_y <- x_axis_pos - prev_level - bar_height + 4.8 + 6
         last_label_y <- label_y - 10.8
         last_label_x <- x_pos + 1.25 * bar_width + 4.8
