@@ -14,7 +14,7 @@ initialize <-
            bar_width = NULL,
            x_margin = 130,
            y_vector = NULL,
-           y_margin = 50) {
+           y_margin = 60) {
     if (!is.null(x_vector) & !is.null(bar_width)) {
       width <- length(x_vector) * 1.5 * bar_width + x_margin
     }

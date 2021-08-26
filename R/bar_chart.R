@@ -29,7 +29,7 @@ add_bar_basic <-
         if(show_series_labels){
           labels <- paste(labels,
                           #series label
-                          add_label((x+(width_of_one*(value[k])/2)), y+12-16, series_labels[i]),
+                          add_label((x+(width_of_one*(value[k])/2)), y+8-16, series_labels[i]),
                           sep='\n')}
       }
 
@@ -365,7 +365,7 @@ draw_bars_variance <-
            y_style) {
 
 
-    y <- 50
+    y <- 60
 
 
     data <- data.frame(variance)
@@ -475,7 +475,7 @@ bar_chart_relative_variance <-
 
 draw_pins_variance <- function(svg_string, cat, values, width_of_one, shift, colors, y_title, y_style, styles){
 
-  y <- 50
+  y <- 60
 
   data <- data.frame(values)
   colnames(data) <- y_title
