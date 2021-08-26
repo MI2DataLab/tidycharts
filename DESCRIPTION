@@ -29,8 +29,8 @@ Imports:
     stringr
 Depends:
     magrittr,
+    knitr
 Suggests: 
-    knitr,
     rmarkdown,
     palmerpenguins,
     tidyverse,

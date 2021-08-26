@@ -33,3 +33,20 @@ print.tidychart <- function(x, ...){
   print(SVGrenderer(unclass(x), ...))
   invisible(x)
 }
+
+
+#' Printing in knitr reports
+#'
+#' Normally you don't want to use this function explicitly.
+#' It is called automatically when printing output in knitr.
+#'
+#' @param x object of class tidychart to display in knitr document
+#' @param ... arguments passed to `knit_print` function
+#'
+#' @return object of class `html_screenshot` or `knit_asis`
+#' @export
+#'
+#' @importFrom knitr knit_print
+knit_print.tidychart <- function(x, ...){
+  knit_print(SVGrenderer(unclass(x)), ...)
+}
