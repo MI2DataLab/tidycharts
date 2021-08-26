@@ -2,7 +2,7 @@
 % Please edit documentation in R/line_chart.R
 \name{line_chart}
 \alias{line_chart}
-\title{Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().}
+\title{Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try `line_chart_dense`.}
 \usage{
 line_chart(
   data,
@@ -33,7 +33,7 @@ line_chart(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try line_plot_with_many_points_complex().
+Generates a line plot with markers on chosen points. Allows only one point per time interval. To create a plot with many points within one time interval try `line_chart_dense`.
 }
 \examples{
 
