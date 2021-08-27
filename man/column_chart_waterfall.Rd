@@ -4,7 +4,14 @@
 \alias{column_chart_waterfall}
 \title{Generate column waterfall chart for visualizing contribution.}
 \usage{
-column_chart_waterfall(data, x, series, styles = NULL, interval = "months")
+column_chart_waterfall(
+  data,
+  x,
+  series,
+  styles = NULL,
+  interval = "months",
+  unit = "auto"
+)
 }
 \arguments{
 \item{data}{data frame in wide format containing data to be plotted}
@@ -16,6 +23,8 @@ column_chart_waterfall(data, x, series, styles = NULL, interval = "months")
 \item{styles}{optional vector with styles of bars}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
+
+\item{unit}{scale of plot: how many pixels should represent 1 unit of data on the plot. Can be 'auto' for automatic scaling}
 }
 \value{
 object of class tidychart with a character vector containing SVG elements

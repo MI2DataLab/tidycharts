@@ -52,6 +52,11 @@ test_that('Most simple example works',{
   expect_magick(column_chart(df, x='x', series = 'val') %>% show())
 })
 
+test_that('Column chart with unit works',{
+  df <- data.frame(x = c('a','b','c'),
+                   val = c(1,2,3))
+  expect_magick(column_chart(df, x='x', series = 'val', unit = 100) %>% show())
+})
 
 test_that('Stacked column charts are generating',{
   # negative values

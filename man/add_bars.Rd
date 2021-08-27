@@ -17,7 +17,9 @@ add_bars(
   color = NULL,
   add_legend = FALSE,
   legend_position = "left_top",
-  max_val = NULL
+  max_val = NULL,
+  x_axis_pos = NULL,
+  unit
 )
 }
 \arguments{
@@ -46,6 +48,10 @@ add_bars(
 \item{legend_position}{string with legend position}
 
 \item{max_val}{maximal value that bars will be scaled to}
+
+\item{x_axis_pos}{position of x axis}
+
+\item{unit}{unit of plot: how many pixels should represent 1 unit on the plot}
 }
 \value{
 svg string with added bars

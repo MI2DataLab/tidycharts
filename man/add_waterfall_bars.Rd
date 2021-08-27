@@ -19,7 +19,8 @@ add_waterfall_bars(
   result_bar_color = NULL,
   result_title = NULL,
   ref_value = 0,
-  translate_vec = c(0, 0)
+  translate_vec = c(0, 0),
+  unit = "auto"
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ add_waterfall_bars(
 \item{ref_value}{first bar starts from this value, intended to be used with add_first_bar function.}
 
 \item{translate_vec}{2 element translation vector. By setting this parameter you can translate bars and legend.}
+
+\item{unit}{unit of plot: how many pixels should represent 1 unit on the plot}
 }
 \value{
 svg string with appended waterfall bars

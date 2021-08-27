@@ -11,7 +11,8 @@ column_chart_waterfall_variance(
   colors = 1,
   data = NULL,
   result_title,
-  interval = "months"
+  interval = "months",
+  unit = "auto"
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ column_chart_waterfall_variance(
 \item{result_title}{title for the result bar}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
+
+\item{unit}{scale of plot: how many pixels should represent 1 unit of data on the plot. Can be 'auto' for automatic scaling}
 }
 \value{
 object of class tidychart with a character vector containing SVG elements

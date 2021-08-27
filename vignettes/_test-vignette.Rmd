@@ -255,6 +255,86 @@ column_chart_waterfall_variance(
     ) %>% SVGrenderer()
 ```
 
+## Column charts with units
+
+```{r}
+column_chart(df, x = df$Species, series = c("avg"), styles = c('actual', 'actual', 'forecast'), unit = 20) %>% SVGrenderer()
+column_chart(df, x = df$Species, series = c("avg"), unit = 20) %>%
+    add_title(line1 = 'Iris', line2_measure = "Typical measure", line2_rest = "in cm", line3 = "2020..2021") %>% SVGrenderer()
+
+column_chart(
+  df2,
+  x = df2$Species,
+  series = c("avg", "std", "median"),
+  unit = 10
+) %>% SVGrenderer()
+
+column_chart(
+  df2,
+  x = df2$Species,
+  series = c("avg", "std", "median"),
+  unit = 15
+) %>% SVGrenderer()
+
+
+column_chart_normalized(
+  df2,
+  x = df2$Species,
+  series = c("avg", "std", "median")
+) %>% SVGrenderer()
+
+
+column_chart_reference(
+    df,
+    x = df$Species,
+    series = c("avg"),
+    ref_value = 5.01,
+    unit = 20
+  ) %>% SVGrenderer()
+
+column_chart_waterfall(df, x = df$Species, series = c("avg"), unit = 10) %>% SVGrenderer()
+
+column_chart_waterfall(
+    df,
+    x = df$Species,
+    series = c("avg"),
+    styles = c('previous', 'actual', 'actual'),
+    unit = 5
+  ) %>% SVGrenderer()
+
+column_chart_absolute_variance(df4$month, df4$s1, df4$s2, colors = 1, x_title = 'PL', x_style = 'plan', unit = 50) %>% SVGrenderer()
+
+column_chart_grouped(
+      df4$month,
+      foreground = df4$s1,
+      background = df4$s2,
+      markers = df4$s3,
+      series_labels = c("Actual", "Looooooooong series name", "Previous year"),
+      styles = styles,
+      unit = 50
+    ) %>% SVGrenderer()
+
+column_chart_relative_variance(
+      df4$month,
+      df4$s1,
+      df4$s2,
+      colors = 1,
+      x_title = "Serie",
+      x_style = 'plan',
+      styles = styles$s1
+    ) %>% SVGrenderer()
+
+
+column_chart_waterfall_variance(
+      df4$month,
+      df4$s1,
+      df4$s2,
+      colors = 1,
+      result_title = "Total",
+      unit = 30
+    ) %>% SVGrenderer()
+
+```
 
 ## Linecharts
 

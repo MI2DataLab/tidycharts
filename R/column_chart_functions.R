@@ -10,14 +10,23 @@ add_column_bar <-
            bar_width,
            color = NULL,
            style = NULL,
-           translate_vec = c(0,0)) {
+           translate_vec = c(0,0),
+           x_axis_pos = NULL,
+           unit) {
 
-    x_axis_pos <- get_x_axis_pos(df[series])
+    if(is.null(x_axis_pos)) x_axis_pos <- get_x_axis_pos(df[series], unit = unit)
     bar_height = 0 # height of existing bar, updated in the loop
 
     for (j in 1:length(series)) {
       column_name <- series[j]
-      height <- df[i, column_name] * 200 / max_height
+      if (unit == 'auto') {
+        height <- df[i, column_name] * 200 / max_height
+      }else if(is.numeric(unit)){
+        height <- df[i, column_name] * unit
+      }else{
+        stop('incorrect value of unit')
+      }
+
       if (is.null(color)) {
         colors_ <- get_gray_color_stacked(j)
       }
@@ -76,6 +85,8 @@ add_column_bar <-
 #' @param add_legend boolean flag if legend should be added
 #' @param legend_position string with legend position
 #' @param max_val maximal value that bars will be scaled to
+#' @param unit unit of plot: how many pixels should represent 1 unit on the plot
+#' @param x_axis_pos position of x axis
 #'
 #' @return svg string with added bars
 #'
@@ -92,14 +103,17 @@ add_bars <-
            color = NULL,
            add_legend = FALSE,
            legend_position = "left_top",
-           max_val = NULL) {
+           max_val = NULL,
+           x_axis_pos = NULL,
+           unit) {
 
-    # TODO check series lengths and NA there
     n_bars <- length(x)
     left_margin <- 80
 
     n_splits = length(series)
-    x_axis_pos <- get_x_axis_pos(df[series], max_val)
+    if (is.null(x_axis_pos)) {
+      x_axis_pos <-  get_x_axis_pos(df[series], max_val, unit = unit)
+    }
     max_height <- ifelse(is.null(max_val),
                          max(abs(rowSums(df[series]))),
                          max_val)
@@ -119,7 +133,9 @@ add_bars <-
         bar_width,
         color = color,
         style = styles[i],
-        translate_vec = translate
+        translate_vec = translate,
+        unit = unit,
+        x_axis_pos = x_axis_pos
       )
       if (add_x_axis) {
         # add label on x axis
@@ -143,12 +159,17 @@ add_bars <-
         )
       }
     }
+    if (unit == 'auto') {
+      width_of_one <- 200 / max_height
+    }else if (is.numeric(unit)) {
+      width_of_one <- unit
+    }
     if (add_legend == TRUE) {
       legend_pos <- switch (
         legend_position,
         "left_top" = c(
           x_offset + translate[1] + left_margin,
-          x_axis_pos - df[1, series] / max_height * 200 + 6 + translate[2]
+          x_axis_pos - df[1, series] * width_of_one + 6 + translate[2]
         )
       )
       svg_string <-
@@ -168,15 +189,20 @@ add_first_bar <- function(svg_string,
                           low_value,
                           bar_width,
                           color = "rgb(166,166,166)",
-                          label_color = "black") {
+                          label_color = "black",
+                          unit.) {
   left_margin <- 80
   x_pos <- 50 - bar_width * 1.5 + left_margin
-  bar_height <- value / top_value * max_bar_height
+  if (unit. == 'auto') {
+    bar_height <- value / top_value * max_bar_height
+  }else if (is.numeric(unit.)) {
+    bar_height <- value * unit.
+  }
   # calculate x labels y position
   x_label_pos <- ifelse(
     low_value >= 0,
     x_axis_pos + 4.8 + 10,
-    x_axis_pos - low_value / top_value * max_bar_height + 25
+    x_axis_pos - bar_height + 25
   )
   # add axis on the bottom
   svg_string <- draw_x_axis(
@@ -251,6 +277,7 @@ add_first_bar <- function(svg_string,
 #' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
 #' @param ref_value first bar starts from this value, intended to be used with add_first_bar function.
 #' @param translate_vec 2 element translation vector. By setting this parameter you can translate bars and legend.
+#' @param unit unit of plot: how many pixels should represent 1 unit on the plot
 #'
 #' @return svg string with appended waterfall bars
 #'
@@ -269,11 +296,17 @@ add_waterfall_bars <-
            result_bar_color = NULL,
            result_title = NULL,
            ref_value = 0,
-           translate_vec = c(0,0)) {
+           translate_vec = c(0,0),
+           unit = 'auto') {
     # NOT IMPLEMENTED translation along y axis
-    x_axis_pos <- get_x_axis_pos(df[series])
-    max_bar_height <- 200
+    x_axis_pos <- get_x_axis_pos(df[series], unit = unit)
     top_value <- max(abs(df[series]))
+    if(unit == 'auto'){
+      max_bar_height <- 200
+    }else if (is.numeric(unit)) {
+      max_bar_height <- top_value * unit
+    }
+
     prev_level <- ref_value / top_value * max_bar_height
     left_margin <- 80 + translate_vec[1]
 
@@ -442,16 +475,19 @@ add_abs_variance_bars <-
            colors,
            bar_width,
            x_title,
-           x_style) {
+           x_style,
+           unit) {
     x_pos <- 80
 
     color <- choose_variance_colors(colors)
     max_val <- max(abs(baseline), abs(real))
+    if(unit == 'auto') width_of_one <- 200 / max_val
+    else if(is.numeric(unit)) width_of_one <- unit
     variance <- real - baseline
-    x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real)
+    x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real, unit = unit)
 
     # add legend on the left of plot
-    first_bar_h <- variance[1] / max_val * 200
+    first_bar_h <- variance[1] * width_of_one
 
     svg_string <- draw_text(
       svg_string,
@@ -473,7 +509,7 @@ add_abs_variance_bars <-
         style = x_style
       )
 
-      bar_h <- abs(variance[i] / max_val * 200)
+      bar_h <- abs(variance[i] * width_of_one)
 
       if (variance[i] > 0) {
         c <- color[["pos_color"]]
@@ -641,9 +677,13 @@ add_triangles <- function(svg_string,
                           translate = c(0, 0),
                           max_val = NULL,
                           add_legend = FALSE,
-                          styles = NULL) {
-  x_axis_pos <- get_x_axis_pos(df[series], max_val)
+                          x_axis_pos = NULL,
+                          styles = NULL,
+                          unit = unit) {
+  if(is.null(x_axis_pos)) x_axis_pos <- get_x_axis_pos(df[series], max_val, unit = unit)
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
+  if(unit == 'auto') width_of_one <- 200 / max_height
+  else if(is.numeric(unit)) width_of_one <- unit
   left_margin <- 80
   for (i in 1:length(x)) {
     x_pos <- 1.5 * bar_width * (i - 1) + 4 + 0.25 * bar_width + left_margin
@@ -651,14 +691,14 @@ add_triangles <- function(svg_string,
     svg_string <- draw_triangle(
       svg_string = svg_string,
       tip_position_x = x_pos,
-      tip_position_y = x_axis_pos - df[i, series] / max_height * 200,
+      tip_position_y = x_axis_pos - df[i, series] * width_of_one,
       orientation = "right",
       style = styles[i]
     )
   }
   if (add_legend == TRUE) {
     legend_pos <- c(x_offset + translate[1] + left_margin,
-                    x_axis_pos - df[1, series] / max_height * 200 + 6 + translate[2])
+                    x_axis_pos - df[1, series] * width_of_one + 6 + translate[2])
     svg_string <-
       draw_text(svg_string, series, legend_pos[1], legend_pos[2], text_anchor = "end")
   }
@@ -666,16 +706,24 @@ add_triangles <- function(svg_string,
 }
 
 
-add_legend <- function(svg_string, df, x, series, bar_width) {
-  x_axis_pos <- get_x_axis_pos(df[series])
+add_legend <- function(svg_string, df, x, series, bar_width, unit = 'auto') {
+  x_axis_pos <- get_x_axis_pos(df[series], unit = unit)
   left_margin <- 80
+  max_height = max(abs(rowSums(df[series])))
+  if (unit == 'auto') {
+    width_of_one <- 200 / max_height
+  }else if(is.numeric(unit)){
+    width_of_one <- unit
+  }else{
+    stop('incorrect value of unit')
+  }
+
   if (length(series) == 1)
     return(svg_string)
   x_pos = 1.5 * bar_width * length(x) + 4.8 - bar_width / 4 + left_margin
-  max_height = max(abs(rowSums(df[series])))
   total_height = 0
   for (column_name in series) {
-    bar_height <- df[length(x), column_name] * 200 / max_height
+    bar_height <- df[length(x), column_name] * width_of_one
     label_height <- bar_height / 2
 
     svg_string <- draw_text(
@@ -701,12 +749,25 @@ add_top_values <-
            labels = NULL,
            translate = c(0, 0),
            max_val = NULL,
-           ref_value = NULL) {
-    x_axis_pos <- get_x_axis_pos(df[series], max_val)
-
+           ref_value = NULL,
+           x_axis_pos = NULL,
+           unit = 'auto') {
+    if (is.null(x_axis_pos)) {
+      x_axis_pos <- get_x_axis_pos(df[series], max_val, unit)
+    }
     heights <- rowSums(df[series])
     max_height <-
       ifelse(is.null(max_val), max(abs(heights)), max_val)
+
+    if (unit == 'auto') {
+      width_of_one <- 200 / max_height
+    }else if(is.numeric(unit)){
+      width_of_one <- unit
+    }else{
+      stop('incorrect value of unit')
+    }
+
+
     left_margin <- 80
 
     ref_value <-
@@ -718,7 +779,7 @@ add_top_values <-
       else labels <- round_df
     }
     if (length(labels) == 1 && labels == "percent"){
-      labels <- paste0(format(heights / ref_value * 100, digits = 3),"%")
+      labels <- paste0(format(heights , digits = 3),"%")
     }
     else{
       labels <-labels
@@ -726,7 +787,7 @@ add_top_values <-
 
     for (i in 1:length(x)) {
       x_pos <- 1.5 * bar_width * (i - 1) + left_margin
-      bar_height <- heights[i] * 200 / max_height
+      bar_height <- heights[i] * width_of_one
 
       # numeric value label for total bar
       svg_string <- draw_text(
@@ -750,26 +811,43 @@ reference <- function(df, x, series, ref_value) {
   return(new_df)
 }
 
-get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num), max_bar_height = 200){
-  min_val <- min(df_num)
-  max_val <- max(df_num)
-  if(abs(min_val) > max_val){
-    return(x_axis_pos + max_bar_height + 50) # axis position + height of the longest negative bar + 50 margin
-  }else if(min_val < 0){
-    return(x_axis_pos + abs(min_val) / max_val * max_bar_height + 50)
-  }else{
-    return(x_axis_pos + 50)
+get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num, unit = unit.), max_bar_height = 200, unit. = 'auto'){
+  df_num <- as.data.frame(df_num)
+  min_val <- min(rowSums(df_num))
+  max_val <- max(rowSums(df_num))
+  if (unit. == 'auto') {
+    if(abs(min_val) > max_val){
+      return(x_axis_pos + max_bar_height + 50) # axis position + height of the longest negative bar + 50 margin
+    }else if(min_val < 0){
+      return(x_axis_pos + abs(min_val) / max_val * max_bar_height + 50)
+    }else{
+      return(x_axis_pos + 50)
+    }
+  }else if (is.numeric(unit.)) {
+    if(abs(min_val) > max_val){
+      return(x_axis_pos + unit. * abs(min_val) + 50) # axis position + height of the longest negative bar + 50 margin
+    }else if(min_val < 0){
+      return(x_axis_pos + abs(min_val) * unit. + 50)
+    }else{
+      return(x_axis_pos + 50)
+    }
   }
 }
 
-get_plot_height_abs_var <- function(real, baseline){
-  max_bar_height <- 200
+get_plot_height_abs_var <- function(real, baseline, unit){
   top_margin <- 75
-  x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real)
+  x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real, unit)
   max_val <- max(abs(baseline), abs(real))
   variance <- real - baseline
-  highest_bar <- max(variance) / max_val * max_bar_height
-  lowest_bar <- min(variance) / max_val * max_bar_height
+  if (unit == 'auto') {
+    max_bar_height <- 200
+    highest_bar <- max(variance) / max_val * max_bar_height
+    lowest_bar <- min(variance) / max_val * max_bar_height
+  }else if(is.numeric(unit)){
+    highest_bar <- max(variance) * unit
+    lowest_bar <- min(variance) * unit
+  }
+
   if(abs(lowest_bar) > max_val){
     return(x_axis_pos + abs(lowest_bar) + 50) # axis position + height of the longest negative bar + 50 margin
   }else if(lowest_bar < 0){
@@ -779,12 +857,18 @@ get_plot_height_abs_var <- function(real, baseline){
   }
 }
 
-get_x_axis_pos <- function(df_num, max_val = NULL){
-  max_bar_height <- 200
+get_x_axis_pos <- function(df_num, max_val = NULL, unit){
+  df_num = as.data.frame(df_num)
   top_margin <- 75
-  min_val <- min(df_num)
-  max_val <- max(df_num)
+  min_val <- min(rowSums(df_num))
+  max_val <- max(rowSums(df_num))
   longest_bar <- max(abs(min_val), abs(max_val))
+
+  if (unit == 'auto') {
+    max_bar_height <- 200
+  }else if(is.numeric(unit)){
+    max_bar_height <- longest_bar * unit
+  }
   if (max_val > 0) {
     return(top_margin + max_bar_height * max_val / longest_bar)
   }
@@ -793,13 +877,20 @@ get_x_axis_pos <- function(df_num, max_val = NULL){
   }
 }
 
-get_x_axis_pos_abs_variance <- function(baseline, real){
-  max_bar_height <- 200
+get_x_axis_pos_abs_variance <- function(baseline, real, unit){
+
   top_margin <- 75
   max_val <- max(abs(baseline), abs(real))
   variance <- real - baseline
-  highest_bar <- max(variance) / max_val * max_bar_height
-  lowest_bar <- min(variance) / max_val * max_bar_height
+  if (unit == 'auto') {
+    max_bar_height <- 200
+    highest_bar <- max(variance) / max_val * max_bar_height
+    lowest_bar <- min(variance) / max_val * max_bar_height
+  }else if (is.numeric(unit)) {
+    highest_bar <- max(variance) * unit
+    lowest_bar <- min(variance) * unit
+  }
+
   if (highest_bar < 0) {
     highest_bar <- 0
   }
@@ -815,7 +906,7 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' @param series_labels optional vector with labels for series to be plotted as legend. The default is the same as series.
 #' @param styles optional vector with styles of bars
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
-#'
+#' @param unit scale of plot: how many pixels should represent 1 unit of data on the plot. Can be 'auto' for automatic scaling
 #' @inherit bar_chart return
 #' @export
 #'
@@ -835,20 +926,30 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 #' # show the plot
 #' svg1
 #'
-column_chart <- function(data, x, series = NULL, series_labels = series, styles = NULL, interval = 'months') {
-  bar_width <- get_interval_width(interval)$bar_width
-  stop_if_many_series(series, max_series = 6) # maximum 6 series
-  stop_if_pos_neg_values(data, series) # signum of values in one bar is the same for every bar
-  x <- get_vector(data, x)
-  stop_if_many_categories(x, max_categories = 24)
-  svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(data[series])) %>%
-    add_bars(data, x, series, bar_width = bar_width, styles) %>%
-    add_legend(data, x, series_labels, bar_width = bar_width) %>%
-    add_top_values(data, x, series, bar_width = bar_width) %>%
-    finalize()
-  class(svg_string) <- c('tidychart', 'character')
-  return(svg_string)
-}
+column_chart <-
+  function(data,
+           x,
+           series = NULL,
+           series_labels = series,
+           styles = NULL,
+           interval = 'months',
+           unit = 'auto') {
+    bar_width <- get_interval_width(interval)$bar_width
+    stop_if_many_series(series, max_series = 6) # maximum 6 series
+    stop_if_pos_neg_values(data, series) # signum of values in one bar is the same for every bar
+    x <- get_vector(data, x)
+    stop_if_many_categories(x, max_categories = 24)
+    svg_string <-
+      initialize(x_vector = x,
+                 bar_width = bar_width,
+                 height = get_plot_height(data[series], unit. = unit)) %>%
+      add_bars(data, x, series, bar_width = bar_width, styles, unit = unit) %>%
+      add_legend(data, x, series_labels, bar_width = bar_width, unit = unit) %>%
+      add_top_values(data, x, series, bar_width = bar_width, unit = unit) %>%
+      finalize()
+    class(svg_string) <- c('tidychart', 'character')
+    return(svg_string)
+  }
 
 
 #' Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
@@ -876,7 +977,7 @@ column_chart_normalized <- function(data, x, series = NULL, series_labels = seri
   normalized_df <- normalize_rows(data, x, series)
 
   svg_string <- initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
-    add_bars(normalized_df, x, series, bar_width = bar_width) %>%
+    add_bars(normalized_df, x, series, bar_width = bar_width, unit = 'auto') %>%
     add_legend(normalized_df, x, series_labels, bar_width = bar_width) %>%
     draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 75, label = "100") %>%
     finalize()
@@ -913,7 +1014,8 @@ column_chart_reference <-
            ref_value,
            ref_label = NULL,
            styles = NULL,
-           interval = 'months') {
+           interval = 'months',
+           unit = 'auto') {
     bar_width <- get_interval_width(interval)$bar_width
 
 
@@ -921,34 +1023,43 @@ column_chart_reference <-
     x <- get_vector(data, x)
     stop_if_many_categories(x, max_categories = 24)
 
-    x_axis_pos <- get_x_axis_pos(data[series])
 
     ref_label <- ifelse(is.null(ref_label), ref_value, ref_label)
     referenced_df <- reference(data, x, series, ref_value)
+    x_axis_pos <- get_x_axis_pos(referenced_df[series], unit = unit)
+
+    if (unit == 'auto') {
+      width_of_one <- 200 / max(referenced_df[series])
+    }else if (is.numeric(unit)) {
+      width_of_one <- unit
+    }
+
     index_level <-
-      ref_value / max(data[series]) * 200
+      100 * width_of_one
     svg_string <- initialize(
       x_vector = x,
       bar_width = bar_width,
-      height = get_plot_height(referenced_df[series], x_axis_pos = x_axis_pos)
+      height = get_plot_height(referenced_df[series], x_axis_pos = x_axis_pos, unit. = unit)
     ) %>%
       add_bars(referenced_df,
                x,
                series,
                bar_width = bar_width,
-               styles = styles) %>%
+               styles = styles,
+               unit = unit) %>%
       draw_ref_line_horizontal(
         x,
         bar_width = bar_width,
         line_y = x_axis_pos - index_level,
         label = ref_label
       ) %>%
-      add_top_values(data,
+      add_top_values(referenced_df,
                      x,
                      series,
                      bar_width,
                      labels = "percent",
-                     ref_value = ref_value) %>%
+                     ref_value = ref_value,
+                     unit = unit) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
     return(svg_string)
@@ -970,7 +1081,8 @@ column_chart_waterfall <-
            x,
            series,
            styles = NULL,
-           interval = 'months') {
+           interval = 'months',
+           unit = 'auto') {
     bar_width <- get_interval_width(interval)$bar_width
 
     x <- get_vector(data, x)
@@ -981,9 +1093,9 @@ column_chart_waterfall <-
     svg_string <- initialize(
       x_vector = x,
       bar_width = bar_width,
-      height = get_plot_height(data[series], x_axis_pos = 250)
+      height = get_plot_height(data[series], x_axis_pos = 250, unit. = unit)
     ) %>%
-      add_waterfall_bars(data, x, series, bar_width, styles) %>%
+      add_waterfall_bars(data, x, series, bar_width, styles, unit = unit) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
     return(svg_string)
@@ -1018,7 +1130,8 @@ column_chart_absolute_variance <-
            data = NULL,
            x_title = "PY",
            x_style = 'previous',
-           interval = 'months') {
+           interval = 'months',
+           unit = 'auto') {
 
     bar_width <- get_interval_width(interval)$bar_width
 
@@ -1034,9 +1147,9 @@ column_chart_absolute_variance <-
     svg_string <- initialize(
       x_vector = x,
       bar_width = bar_width,
-      height = get_plot_height_abs_var(real, baseline)
+      height = get_plot_height_abs_var(real, baseline, unit)
     ) %>%
-      add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title, x_style) %>%
+      add_abs_variance_bars(x, baseline, real, colors, bar_width, x_title, x_style, unit = unit) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
     return(svg_string)
@@ -1074,7 +1187,8 @@ column_chart_grouped <-
            data = NULL,
            series_labels,
            styles = NULL,
-           interval = 'months') {
+           interval = 'months',
+           unit = 'auto') {
 
     bar_width <- get_interval_width(interval)$bar_width
     translation_vec <- c(0,0) # c(max(str_width(series_labels)) + 10, 0)
@@ -1098,9 +1212,11 @@ column_chart_grouped <-
       df <- cbind(df, triangles_df)
       colnames(df) <- series_labels
     }
-    max_bar_height <- 200
-    df <- normalize_df(df, max_bar_height)
-    svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series_labels])) %>%
+    max_bar_height <- max(df)
+
+    x_axis_pos <- get_x_axis_pos(df, unit = unit)
+
+    svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df[series_labels], unit. = unit)) %>%
       add_bars(
         df[, series_labels[2], drop = FALSE],
         x = x,
@@ -1112,7 +1228,9 @@ column_chart_grouped <-
         translate = translation_vec,
         add_legend = TRUE,
         max_val = max_bar_height,
-        styles = styles[[2]]
+        styles = styles[[2]],
+        x_axis_pos = x_axis_pos,
+        unit = unit
       ) %>%
       add_bars(
         df[, series_labels[1], drop = FALSE],
@@ -1122,7 +1240,9 @@ column_chart_grouped <-
         translate = translation_vec,
         add_legend = TRUE,
         max_val = max_bar_height,
-        styles = styles[[1]]
+        styles = styles[[1]],
+        x_axis_pos = x_axis_pos,
+        unit = unit
       ) %>%
       {
         ifelse(
@@ -1137,9 +1257,11 @@ column_chart_grouped <-
             bar_width = bar_width,
             series = series_labels[3],
             translate = translation_vec,
-            max_val = max_bar_height,
             add_legend = TRUE,
-            styles = styles[[3]]
+            max_val = max_bar_height,
+            x_axis_pos = x_axis_pos,
+            styles = styles[[3]],
+            unit = unit
           )
         )
       } %>%
@@ -1150,7 +1272,9 @@ column_chart_grouped <-
         series = series_labels[1],
         bar_width = bar_width,
         translate = translation_vec,
-        max_val = max_bar_height
+        max_val = max_bar_height,
+        x_axis_pos = x_axis_pos,
+        unit = unit
       ) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
@@ -1216,6 +1340,7 @@ column_chart_relative_variance <-
 #' Generate column waterfall chart with absolute variance
 #'
 #' @inheritParams column_chart_absolute_variance
+#' @inheritParams column_chart
 #' @param result_title title for the result bar
 #'
 #' @inherit bar_chart return
@@ -1227,8 +1352,14 @@ column_chart_relative_variance <-
 #' real <- c(rnorm(6, mean = -1), rnorm(6, mean = 1))
 #' column_chart_waterfall_variance(x, baseline, real, result_title = 'year profit')
 column_chart_waterfall_variance <-
-  function(x, baseline, real, colors = 1, data = NULL, result_title, interval = 'months') {
-
+  function(x,
+           baseline,
+           real,
+           colors = 1,
+           data = NULL,
+           result_title,
+           interval = 'months',
+           unit = 'auto') {
     if (!is.null(data)) {
       x <- get_vector(data, x)
       baseline <- get_vector(data, baseline)
@@ -1241,14 +1372,18 @@ column_chart_waterfall_variance <-
     difference <- real - baseline
     df <- data.frame("series" = difference)
 
-    svg_string <- initialize(x_vector = x, bar_width = bar_width, height = get_plot_height(df)) %>%
+    svg_string <-
+      initialize(x_vector = x,
+                 bar_width = bar_width,
+                 height = get_plot_height(df, unit. = unit)) %>%
       add_first_bar(
         x[1],
         df[1, 'series'],
         top_value = max(df['series']),
         low_value = min(df['series']),
         bar_width = bar_width,
-        x_axis_pos = get_x_axis_pos(real - baseline)
+        x_axis_pos = get_x_axis_pos(real - baseline, unit = unit),
+        unit. = unit
       ) %>%
       add_waterfall_bars(
         df[-1, , drop = FALSE],
@@ -1263,7 +1398,8 @@ column_chart_waterfall_variance <-
         result_bar_color = "rgb(64,64,64)",
         result_title = result_title,
         ref_value = df[1, 'series'],
-        translate_vec = c(50,0)
+        translate_vec = c(50, 0),
+        unit = unit
       ) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
