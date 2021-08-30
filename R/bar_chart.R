@@ -318,11 +318,11 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
 #'   real = real,
 #'   y_title = 'a title')
 bar_chart_absolute_variance <-
-  function(cat,
+  function(data = NULL,
+           cat,
            baseline,
            real,
            colors = 1,
-           data = NULL,
            y_title,
            y_style = 'previous') {
 
@@ -439,11 +439,11 @@ draw_bars_variance <-
 #'   real = real,
 #'   y_title = 'a title')
 bar_chart_relative_variance <-
-  function(cat,
+  function(data = NULL,
+           cat,
            baseline,
            real,
            colors = 1,
-           data = NULL,
            y_title,
            y_style = 'previous',
            styles = NULL) {

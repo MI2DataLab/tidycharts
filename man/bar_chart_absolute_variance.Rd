@@ -5,16 +5,18 @@
 \title{Generate bar chart with absolute variance}
 \usage{
 bar_chart_absolute_variance(
+  data = NULL,
   cat,
   baseline,
   real,
   colors = 1,
-  data = NULL,
   y_title,
   y_style = "previous"
 )
 }
 \arguments{
+\item{data}{data frame with columns containing data for x, baseline or real series}
+
 \item{cat}{vector containing category names of values}
 
 \item{baseline}{vector containing base values or name of column in data with base values}
@@ -22,8 +24,6 @@ bar_chart_absolute_variance(
 \item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}
 
 \item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
-
-\item{data}{data frame with columns containing data for x, baseline or real series}
 
 \item{y_title}{title of the series values}
 
