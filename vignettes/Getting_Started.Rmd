@@ -59,22 +59,22 @@ In the example data `operational`, `property` and `bonus` are parts of `profit` 
 Creation of the barchart is simple. We use `barchart_plot` function to do that. After calling the function chart will be automatically printed. It can also be assigned to a variable as one element character vector with SVG content.
 
 ```{r base-barchart}
-bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit')
+bar_chart(data = data_barchart, cat = 'dep', series = 'profit')
 ```
 
 A plot should contain an informative title. We can use `add_title` function to make one. We can chain the commands by pipe operator (`%>%`). 
 
 ```{r barchart-title}
-bar_chart(data = data_barchart, cat = data_barchart$dep, series = 'profit') %>% 
+bar_chart(data = data_barchart, cat = 'dep', series = 'profit') %>% 
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020')
 ```
 
 We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
 
 ```{r barchart-stacked}
-bar_chart(data = data_barchart, cat = data_barchart$dep, 
+bar_chart(data = data_barchart, cat = 'dep', 
           series = c('operational', 'property', 'bonus'),
-          series_labels = c('op', 'porp', 'bon')) %>%  
+          series_labels = c('op', 'prop', 'bon')) %>%  
   add_title('The company XYZ', 'Profit', 'in mEUR',
             'by departments and profit type, 2020')
 ```
@@ -84,7 +84,7 @@ bar_chart(data = data_barchart, cat = data_barchart$dep,
 Normalized barplot should be used to show the proportions of parts in each category. Typical intention of using this kind of plot could be to visualize the percentage structure of profit among different departments in a company.
 
 ```{r barchart-normalized}
-bar_chart_normalized(data = data_barchart, cat = data_barchart$dep,
+bar_chart_normalized(data = data_barchart, cat = 'dep',
                      series = c('operational', 'property', 'bonus'),
                      series_labels = c('op', 'porp', 'bon')) %>% 
   add_title('The company XYZ', 'Profit', 'in mEUR', 'normalized in department')
@@ -96,7 +96,7 @@ We use reference values (indecies) to show a reference value on the plot. In the
 
 ```{r barchart-index}
 bar_chart_reference(data = data_barchart,
-                    cat = data_barchart$dep, series = 'profit', 
+                    cat = 'dep', series = 'profit', 
                     ref_val = 10, ref_label = 'PY best result')  %>% 
   add_title('The company XYZ', 'Profit', 'in mEUR', 
             'with reference value of 10 mEUR')
@@ -117,7 +117,7 @@ styles <- data.frame(style_foreground = rep('actual', 4),
                      style_markers = rep('plan', 4))
 
 bar_chart_grouped(data = data_barchart,
-                  cat = data_barchart$dep,
+                  cat = 'dep',
                   foreground = 'profit',
                   background = 'prev_year',
                   markers = 'plan',
@@ -134,21 +134,23 @@ Show variance in data using relative variance plots or absolute variance plots. 
 Example usage: Visualize difference between two scenarios in division by departments.
 
 ```{r barchart-abs-variance}
-bar_chart_absolute_variance(cat = data_barchart$dep, 
-                                baseline = data_barchart$plan,
-                                real = data_barchart$profit,
-                                y_title = 'Plan vs. actual',
-                                y_style = 'plan') %>% 
+bar_chart_absolute_variance(data = data_barchart,
+                            cat = 'dep', 
+                            baseline = 'plan',
+                            real = 'profit',
+                            y_title = 'Plan vs. actual',
+                            y_style = 'plan') %>% 
   add_title('The company XYZ', 'Profit variance', 'in mEUR', 
             'between plan and actual')
 ```
 
 ```{r barchart-rel-variance}
-bar_chart_relative_variance(cat = data_barchart$dep, 
-                                baseline = data_barchart$plan,
-                                real = data_barchart$profit,
-                                y_title = 'Plan vs. actual',
-                                y_style = 'plan') %>% 
+bar_chart_relative_variance(data = data_barchart,
+                            cat = 'dep', 
+                            baseline = 'plan',
+                            real = 'profit',
+                            y_title = 'Plan vs. actual',
+                            y_style = 'plan') %>% 
   add_title('The company XYZ', 'Profit variance', 'in %', 
             'between plan and actual (plan=100%)')
 ```
@@ -169,7 +171,7 @@ Scatter plots, also known as point plots, are used to visualize mulitidimensiona
 In scatter plot 2 numerical dimensions are visualized by position of a point on the Cartesian plane. 
 
 ```{r scatter}
-scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec, 
+scatter_plot(scatter_data, x = 'hp', y = 'qsec', 
              legend_title = '', 
              x_names = c('Horsepower', 'in hp'),
              y_names = c('1/4 mile time', 'in s')) %>% 
@@ -179,9 +181,9 @@ scatter_plot(scatter_data, x = scatter_data$hp, y = scatter_data$qsec,
 Optionally, categorical dimension can be added in a form of a point color.
 
 ```{r scatter2}
-scatter_plot(scatter_data, x = scatter_data$hp,
-             y = scatter_data$qsec, 
-             cat = scatter_data$cyl, 
+scatter_plot(scatter_data, x = 'hp',
+             y = 'qsec', 
+             cat = 'cyl', 
              legend_title = 'No. cylinder', 
              x_names = c('Horsepower', 'in hp'),
              y_names = c('1/4 mile time', 'in s')) %>% 
@@ -194,10 +196,10 @@ scatter_plot(scatter_data, x = scatter_data$hp,
 Bubble plots can visualize the same dimensions as [scatter plots](#scatterplot). However even third numeric dimension can be added in a form of point size. On the other hand, there is a tradeoff between dimensionality and size of your data and readability of generated plots, so be carefull when using bubble charts.
 
 ```{r bubble}
-scatter_plot(scatter_data, x = scatter_data$hp,
-             y = scatter_data$qsec, 
-             cat = scatter_data$cyl, 
-             bubble_value = scatter_data$wt,
+scatter_plot(scatter_data, x = 'hp',
+             y = 'qsec', 
+             cat = 'cyl', 
+             bubble_value = 'wt',
              legend_title = 'No. cylinders',
              x_names = c('Horsepower', 'in hp'),
              y_names = c('1/4 mile time', 'in s')) %>% 
@@ -272,7 +274,7 @@ data_companies <- data.frame(
   Gamma.inc = round(50 + rnorm(11, sd = 5))
 )
 
-line_chart_markers(data_companies, x = data_companies$time,
+line_chart_markers(data_companies, x = 'time',
           series = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           series_labels = c('Alpha.inc', 'Beta.inc', 'Gamma.inc'),
           interval = 'years') %>% 
