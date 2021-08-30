@@ -155,11 +155,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>bar_chart_absolute_variance</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>cat</span>,
   <span class='va'>baseline</span>,
   <span class='va'>real</span>,
   colors <span class='op'>=</span> <span class='fl'>1</span>,
-  data <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>y_title</span>,
   y_style <span class='op'>=</span> <span class='st'>"previous"</span>
 <span class='op'>)</span></pre>
@@ -167,6 +167,10 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>data frame with columns containing data for x, baseline or real series</p></td>
+    </tr>
     <tr>
       <th>cat</th>
       <td><p>vector containing category names of values</p></td>
@@ -182,10 +186,6 @@
     <tr>
       <th>colors</th>
       <td><p>1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>data frame with columns containing data for x, baseline or real series</p></td>
     </tr>
     <tr>
       <th>y_title</th>

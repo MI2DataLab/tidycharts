@@ -159,16 +159,16 @@
   <span class='va'>x</span>,
   <span class='va'>y</span>,
   cat <span class='op'>=</span> <span class='cn'>NULL</span>,
-  x_space_size <span class='op'>=</span> <span class='op'>(</span><span class='va'>x_end</span> <span class='op'>-</span> <span class='va'>x_start</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>8</span>,
-  y_space_size <span class='op'>=</span> <span class='op'>(</span><span class='va'>y_end</span> <span class='op'>-</span> <span class='va'>y_start</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>8</span>,
+  x_space_size <span class='op'>=</span> <span class='cn'>NULL</span>,
+  y_space_size <span class='op'>=</span> <span class='cn'>NULL</span>,
   x_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"x"</span>, <span class='st'>""</span><span class='op'>)</span>,
   y_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y"</span>, <span class='st'>""</span><span class='op'>)</span>,
   legend_title <span class='op'>=</span> <span class='st'>"Legend"</span>,
   bubble_value <span class='op'>=</span> <span class='cn'>NULL</span>,
   x_start <span class='op'>=</span> <span class='fl'>0</span>,
-  x_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>,
+  x_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fu'><a href='get_vector.html'>get_vector</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
   y_start <span class='op'>=</span> <span class='fl'>0</span>,
-  y_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>
+  y_end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fu'><a href='get_vector.html'>get_vector</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
