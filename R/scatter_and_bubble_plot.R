@@ -1,13 +1,12 @@
-#library(pretty)
 
 #---
 draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,x_end, minimum, x_start, x){
   ticks <- ""
-  if(is.null(space_size)==TRUE){
+  if(is.null(space_size)){
     pretty_vector <- pretty(x_start:x_end, 8)
     space_size <- pretty_vector[2] - pretty_vector[1]
   }
-  if(x_start==0){x_start <- pretty_vector[1]}
+  if(x_start==0 && is.null(space_size)){x_start <- pretty_vector[1]}
   #if(x_end==max(x)){x_end <- pretty_vector[8]}
   tick <- x_start + space_size
   while(tick <= x_end){
@@ -49,11 +48,11 @@ draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,x_en
 #---
 draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, y_end, minimum, y_start, y){
   ticks <- ""
-  if(is.null(space_size)==TRUE){
+  if(is.null(space_size)){
     pretty_vector <- pretty(y_start:y_end, 8)
     space_size <- pretty_vector[2] - pretty_vector[1]
   }
-  if(y_start==0){y_start <- pretty_vector[1]}
+  if(y_start==0 && is.null(space_size)){y_start <- pretty_vector[1]}
   #if(y_end==max(y)){y_end <- pretty_vector[8]}
 
   tick <- space_size + y_start
