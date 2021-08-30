@@ -1,8 +1,14 @@
-
+#library(pretty)
 
 #---
-draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,x_end, minimum, x_start){
+draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,x_end, minimum, x_start, x){
   ticks <- ""
+  if(is.null(space_size)==TRUE){
+    pretty_vector <- pretty(x_start:x_end, 8)
+    space_size <- pretty_vector[2] - pretty_vector[1]
+  }
+  if(x_start==0){x_start <- pretty_vector[1]}
+  #if(x_end==max(x)){x_end <- pretty_vector[8]}
   tick <- x_start + space_size
   while(tick <= x_end){
     ticks <- paste(
@@ -41,8 +47,15 @@ draw_x_axis_scatter <- function(shift_x, shift_y, space_size, width_of_one ,x_en
 }
 
 #---
-draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, y_end, minimum, y_start){
+draw_y_axis <- function(shift_x, shift_y, space_size, height_of_one, y_end, minimum, y_start, y){
   ticks <- ""
+  if(is.null(space_size)==TRUE){
+    pretty_vector <- pretty(y_start:y_end, 8)
+    space_size <- pretty_vector[2] - pretty_vector[1]
+  }
+  if(y_start==0){y_start <- pretty_vector[1]}
+  #if(y_end==max(y)){y_end <- pretty_vector[8]}
+
   tick <- space_size + y_start
   while(tick <= y_end){
     ticks <- paste(
@@ -118,8 +131,8 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
 
   }
   svg_string <- paste(svg_string,
-        draw_x_axis_scatter(shift_x, shift_y,x_space_size, width_of_one, x_end, min(x), x_start),
-        draw_y_axis(shift_x, shift_y,y_space_size, height_of_one, y_end, min(y), y_start),
+        draw_x_axis_scatter(shift_x, shift_y, x_space_size, width_of_one, x_end, min(x), x_start, x),
+        draw_y_axis(shift_x, shift_y,y_space_size, height_of_one, y_end, min(y), y_start, y),
         add_label( 334.8+4.8 + shift_x, 250+6, x_names[1], anchor="start"),
         add_label( 334.8+4.8 + shift_x, 250+4.8+12, x_names[2], anchor="start"),
         add_label( 80-4.8 + shift_x, 50 - 4.8 - 6 - 6 -4.8, y_names[1], anchor="end"),
@@ -204,8 +217,10 @@ scatter_plot <-
            x,
            y,
            cat = NULL,
-           x_space_size = (x_end - x_start) / 8,
-           y_space_size = (y_end - y_start) / 8,
+           #x_space_size = (x_end - x_start) / 8,
+           #y_space_size = (y_end - y_start) / 8,
+           x_space_size = NULL,
+           y_space_size = NULL,
            x_names = c('x',''),
            y_names = c('y',''),
            legend_title="Legend",

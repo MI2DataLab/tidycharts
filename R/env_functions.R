@@ -109,6 +109,31 @@ set_colors <- function(colors_df){
   pkg.env$colors_df <- colors_df
 }
 
+#' Change default colors of the scatter plots from the package
+#'
+#' Customize your scatter plots and change default color palette.
+#'
+#' @param new_scatter_colors vector of the length of 6 containing rgb values of chosen colors in format: "rgb(x,y,z)"
+#'
+#' @return No return value, called for side effects
+#' @export
+#'
+#' @examples
+#' mi2lab_scatter_colors <- c(
+#'    "rgb(68, 19, 71)",
+#'    "rgb(243, 46, 255)",
+#'    "rgb(106, 0, 112)",
+#'    "rgb(217, 43, 227)" ,
+#'    "rgb(114, 49, 117)",
+#'    "rgb(249, 110, 255)"
+#'  )
+#'
+#' set_scatter_colors(mi2lab_scatter_colors)
+#'
+set_scatter_colors <- function(new_scatter_colors){
+  #stopifnot(length(new_scatter_colors == 6))
+  pkg.env$scatter_colors <- new_scatter_colors
+}
 
 
 
