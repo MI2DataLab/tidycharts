@@ -173,30 +173,3 @@ df$Chinstrap <- as.numeric(df$Chinstrap)
 df$Gentoo <- as.numeric(df$Gentoo)
 column_chart(df, df$Year, c("Adelie", "Chinstrap", "Gentoo"))
 ```
-
-### Line charts - data in time
-
-```{r}
-p <- penguins_raw %>%
-  mutate(species = map_chr(str_split(Species, ' '), function(row) row[[1]])) %>%
-  group_by(`Date Egg`, species) %>% 
-  count() %>% 
-  pivot_wider(names_from = species, values_from = n, values_fill = list(n = 0)) %>% 
-  group_by(week = lubridate::week(`Date Egg`), year = lubridate::year(`Date Egg`)) %>% 
-  summarise(across(c('Adelie', 'Gentoo', 'Chinstrap'), sum)) %>% 
-  mutate(date = paste(paste0('W',week), year, sep = '\n')) %>% 
-  arrange(year, week) %>% 
-  as.data.frame()
-
-
-line_chart_stacked(p, p$date, 
-                  series = c('Adelie', 'Gentoo', 'Chinstrap'), 
-                  series_labels = c('Adelie', 'Gentoo', 'Chinstrap'), 
-                  show_labels = rep(NA, length.out = 14),
-                  interval = 'weeks') %>%
-  add_title('Palmer penguins sampling expedition', 
-            'Number of new eggs observed', '',
-            '2007...2009') 
-```
-
-
