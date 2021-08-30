@@ -112,3 +112,11 @@ test_that("Scatterplot with large difference in bubble size works without errors
               ) %>% show()
             )
           })
+
+test_that('Scatterplots with column names as args are ok',{
+  expect_magick(scatter_plot(mtcars, x = 'hp', y = 'qsec',
+               legend_title = '',
+               x_names = c('Horsepower', 'in hp'),
+               y_names = c('1/4 mile time', 'in s')) %>% show())
+})
+

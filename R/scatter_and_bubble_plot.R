@@ -99,8 +99,13 @@ draw_scatter_points <- function(svg_string, data, x, y, cat, x_space_size, y_spa
   categories <- unique(cat)
 
   for (i in 1:length(x)){
-    cat_index <- match(cat[i],categories)[1]
-    color <- get_scatter_colors(cat_index)
+    if(length(categories)==0){
+      color <- get_scatter_colors(1)
+    }else{
+      cat_index <- match(cat[i],categories)[1]
+      color <- get_scatter_colors(cat_index)
+    }
+
     if(is.null(bubble_value)== FALSE){
       stop_if_bubble_negative(bubble_value)
       bubble_min <- min(bubble_value)
@@ -206,21 +211,22 @@ scatter_plot <-
            legend_title="Legend",
            bubble_value = NULL,
            x_start = 0,
-           x_end = max(x),
+           x_end = max(get_vector(data, x)),
            y_start = 0,
-           y_end = max(y)) {
+           y_end = max(get_vector(data, y))) {
     height_of_one <- 200 / (y_end - y_start)
     width_of_one <- 250 / (x_end - x_start)
 
-    if (is.null(cat)) {
-      cat <- rep("", length(x))
-    }else{
-        if(length(cat) == 1){cat <- data[ , cat]}
-    }
+
     if(length(x) == 1){x <- data[ , x]}
     if(length(y) == 1){y <- data[ , y]}
     if (is.null(bubble_value)==FALSE) {
       if(length(bubble_value) == 1){bubble_value <- data[ , bubble_value]}
+    }
+    if (is.null(cat)) {
+      cat <- rep("", length(x))
+    }else{
+      if(length(cat) == 1){cat <- data[ , cat]}
     }
 
     #dealing with negative values
@@ -239,7 +245,6 @@ scatter_plot <-
     else{
       shift_x <- height_of_one * abs(min(neg_x))
     }
-
     svg_string <- initialize(width = 80 + shift_x + 250 + 80,
                height = 250 + shift_y + 20) %>%
       draw_scatter_points(

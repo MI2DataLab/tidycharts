@@ -16,9 +16,9 @@ scatter_plot(
   legend_title = "Legend",
   bubble_value = NULL,
   x_start = 0,
-  x_end = max(x),
+  x_end = max(get_vector(data, x)),
   y_start = 0,
-  y_end = max(y)
+  y_end = max(get_vector(data, y))
 )
 }
 \arguments{
