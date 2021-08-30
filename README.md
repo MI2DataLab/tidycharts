@@ -6,10 +6,9 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/MI2DataLab/tidycharts/workflows/R-CMD-check/badge.svg)](https://github.com/MI2DataLab/tidycharts/actions)
-<!-- badges: end -->
-
-<!-- badges: start -->
-
+[![CRAN monthly
+downloads](https://cranlogs.r-pkg.org/badges/tidycharts)](https://cran.r-project.org/package=tidycharts)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/tidycharts)](https://cran.r-project.org/package=tidycharts)
 [![Codecov test
 coverage](https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/tidycharts?branch=main)
 <!-- badges: end -->

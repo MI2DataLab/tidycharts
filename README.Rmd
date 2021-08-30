@@ -17,11 +17,12 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/MI2DataLab/tidycharts/workflows/R-CMD-check/badge.svg)](https://github.com/MI2DataLab/tidycharts/actions)
-<!-- badges: end -->
-
-<!-- badges: start -->
+[![CRAN monthly downloads](https://cranlogs.r-pkg.org/badges/tidycharts)](https://cran.r-project.org/package=tidycharts)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tidycharts)](https://cran.r-project.org/package=tidycharts)
 [![Codecov test coverage](https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/tidycharts?branch=main)
 <!-- badges: end -->
+
+
 
 The goal of tidycharts is to enable R users to create charts inspired by [International Business Communication Standards (IBCS)](https://www.ibcs.com/). The plots are generated in SVG format, so embedding them in HTML documents is straight forward. 
 
