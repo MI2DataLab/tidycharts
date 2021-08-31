@@ -19,7 +19,7 @@ add_column_bar <-
       column_name <- series[j]
       height <- df[i, column_name] * 200 / max_height
       if (is.null(color)) {
-        colors_ <- get_gray_color_stacked(j)
+        colors_ <- get_color_stacked(j)
       }
       else{
         colors_ <- list(bar_color = color,

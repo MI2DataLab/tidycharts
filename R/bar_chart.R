@@ -23,7 +23,7 @@ add_bar_basic <-
     x <- 80 + shift
     for (i in 1:length(series)){ #going through series
       value <- data[,series[i]] #a vector
-      if (is.null(color)) curr_color <- get_gray_color_stacked(i)
+      if (is.null(color)) curr_color <- get_color_stacked(i)
       else curr_color <- color
       if(is.null(series_labels)==FALSE){
         if(show_series_labels){

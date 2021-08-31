@@ -19,7 +19,7 @@ add_bar_grouped <-
     x <- 80 + shift
     for (i in length(series):1){ #going through series
       value <- data[,series[i]] #a vector
-      color <- get_gray_color_stacked(i)
+      color <- get_color_stacked(i)
       if(length(series) == 2 || i == 1){
         styles <- df_styles[,length(series)-i+1]
       }else{

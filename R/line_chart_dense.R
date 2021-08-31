@@ -48,7 +48,7 @@ draw_lines_complex <- function(svg_string, list, vector_x, vector_y, vector_cat,
     y <- vector_y[k]
     cat <- vector_cat[k]
     #color <- colors[k]
-    color <- get_gray_color_stacked(k)$bar_color
+    color <- get_color_stacked(k)$bar_color
     #labelka z nazwa serii
     labels <- paste(labels,
                     add_label(75.2, 250- height_of_one*data[,y][1] + 6, series_labels[k], anchor="end"),
@@ -99,7 +99,7 @@ draw_chosen_points_complex <- function(list, vector_x, vector_y, vector_cat, int
     y <- vector_y[k]
     cat <- vector_cat[k]
     #color <- colors[k]
-    color <- get_gray_color_stacked(k)$bar_color
+    color <- get_color_stacked(k)$bar_color
 
     #calculating x coordinate
     p_cat <- data[,cat][point_cords[i]]

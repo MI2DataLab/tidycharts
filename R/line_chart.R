@@ -50,7 +50,7 @@ draw_lines <- function(svg_string, data, cat, series, series_labels, ser_names, 
 
   for(k in 1:(length(series))){ #going through series
     #color <- colors[k]
-    color <- get_gray_color_stacked(k)$bar_color
+    color <- get_color_stacked(k)$bar_color
     values <- data[, series[k]]
     labels <- paste(labels,
                     add_label(75.2, 250- height_of_one*values[1] +6, series_labels[k],anchor="end"),
@@ -88,7 +88,7 @@ draw_chosen_points <- function(data, series, height_of_one, ser_names, point_cor
     x <- 80 + cat_width*(point_cords[i]-1)
     y <- 250 - height_of_one*data[, ser_names[i]][point_cords[i]]
     #circle_color <- colors[match(ser_names[i], series)[1]]
-    circle_color <- get_gray_color_stacked(match(ser_names[i], series)[1])$bar_color
+    circle_color <- get_color_stacked(match(ser_names[i], series)[1])$bar_color
     chosen_points <- paste(chosen_points,
                            draw_circle_lineplot(x,y,circle_color),
                            #label

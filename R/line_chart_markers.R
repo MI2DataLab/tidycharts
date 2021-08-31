@@ -59,7 +59,7 @@ draw_points <- function(svg_string, data, x, series, series_labels, cat_width, s
     }
 
     #color <- colors[k]
-    color <- get_gray_color_stacked(k)$bar_color
+    color <- get_color_stacked(k)$bar_color
     values <- data[, series[k]]
     labels <- paste(labels, add_label(80 - 4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
     for(i in 1:(length(x)-1)){ #drawing each point

@@ -4,7 +4,7 @@
 add_marker <- function(data, cat, value, x, height_of_one, k, y, show_label, cat_width){ #cat jest calym wektore, k to numer serii w ktorej jestesmy y - przesuniecie
 
   if(is.na(show_label) == FALSE){
-    value_label <- add_label(x, 250-y - (height_of_one*value/2) +6, value, get_gray_color_stacked(k)$text_color )
+    value_label <- add_label(x, 250-y - (height_of_one*value/2) +6, value, get_color_stacked(k)$text_color )
   }else{
     value_label<-""
   }
@@ -36,7 +36,7 @@ draw_polygons <- function(svg_string, data, cat, series, series_labels, show_lab
   #-----
   for(k in 1:(length(series))){ #points which series it is
 
-    color <- get_gray_color_stacked(k)$bar_color
+    color <- get_color_stacked(k)$bar_color
     values <- data[, series[k]]
 
     #series labels
