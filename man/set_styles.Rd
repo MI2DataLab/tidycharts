@@ -2,7 +2,7 @@
 % Please edit documentation in R/env_functions.R
 \name{set_styles}
 \alias{set_styles}
-\title{Change default styles for plots}
+\title{Change default styles for plots.}
 \usage{
 set_styles(styles_df)
 }
@@ -10,10 +10,10 @@ set_styles(styles_df)
 \item{styles_df}{data frame with columns 'fill' and 'stroke'. Rows represent subsequent styles which names can be passed to plotting functions, usually as styles argument.}
 }
 \value{
-No return value, called for side effects
+No return value, called for side effects.
 }
 \description{
-Change default styles for plots
+Change default styles for plots.
 }
 \examples{
 styles_df <-

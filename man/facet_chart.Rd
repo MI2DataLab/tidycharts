@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_charts.R
 \name{facet_chart}
 \alias{facet_chart}
-\title{Facet chart}
+\title{Facet chart.}
 \usage{
 facet_chart(data, facet_by, ncols = 3, FUN, ...)
 }
@@ -21,7 +21,7 @@ facet_chart(data, facet_by, ncols = 3, FUN, ...)
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Create multiple charts with data split into groups
+Create multiple charts with data split into groups.
 }
 \examples{
 facet_chart(

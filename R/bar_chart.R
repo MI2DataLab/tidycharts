@@ -293,7 +293,7 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
   return(svg_string)
 }
 
-#' Generate bar chart with absolute variance
+#' Generate bar chart with absolute variance.
 #'
 #' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
@@ -419,7 +419,7 @@ draw_bars_variance <-
     return(svg_string)
   }
 
-#' Generate bar chart with relative variance (in percents)
+#' Generate bar chart with relative variance (in percents).
 #'
 #' @inheritParams bar_chart_absolute_variance
 #' @param styles optional vector with styles of the pin heads

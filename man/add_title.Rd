@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_utils.R
 \name{add_title}
 \alias{add_title}
-\title{Add IBCS complient legend}
+\title{Add IBCS complient legend.}
 \usage{
 add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 }
@@ -21,7 +21,7 @@ add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Add IBCS complient legend
+Add IBCS complient legend.
 }
 \examples{
 df <- data.frame(x = 2010:2015, sales = rnorm(6,10, 2))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/env_functions.R
 \name{set_scatter_colors}
 \alias{set_scatter_colors}
-\title{Change default colors of the scatter plots from the package}
+\title{Change default colors of the scatter plots from the package.}
 \usage{
 set_scatter_colors(new_scatter_colors)
 }
@@ -10,7 +10,7 @@ set_scatter_colors(new_scatter_colors)
 \item{new_scatter_colors}{vector of the length of 6 containing rgb values of chosen colors in format: "rgb(x,y,z)"}
 }
 \value{
-No return value, called for side effects
+No return value, called for side effects.
 }
 \description{
 Customize your scatter plots and change default color palette.

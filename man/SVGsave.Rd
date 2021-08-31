@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_utils.R
 \name{SVGsave}
 \alias{SVGsave}
-\title{Save svg image}
+\title{Save svg image.}
 \usage{
 SVGsave(svg_string, path)
 }
@@ -15,5 +15,5 @@ SVGsave(svg_string, path)
 No return value, called for side effects
 }
 \description{
-Save svg image
+Save svg image.
 }

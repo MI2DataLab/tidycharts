@@ -2,7 +2,7 @@
 % Please edit documentation in R/column_chart_functions.R
 \name{column_chart_absolute_variance}
 \alias{column_chart_absolute_variance}
-\title{Generate column chart with absolute variance}
+\title{Generate column chart with absolute variance.}
 \usage{
 column_chart_absolute_variance(
   x,
