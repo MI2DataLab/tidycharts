@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_charts.R
 \name{join_charts}
 \alias{join_charts}
-\title{Join SVG charts This function first populates each place in the first row, then columns in the second row}
+\title{Join SVG charts.}
 \usage{
 join_charts(
   ...,
@@ -24,7 +24,7 @@ join_charts(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Join SVG charts This function first populates each place in the first row, then columns in the second row
+This function first populates each place in the first row, then columns in the second row.
 }
 \examples{
   df <- data.frame(

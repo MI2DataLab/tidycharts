@@ -170,7 +170,7 @@ add_result_bar <- function(svg_string,
   return(svg_string)
 }
 
-#' Generate horizontal waterfall chart
+#' Generate horizontal waterfall chart.
 #'
 #' @param add_result boolean value if result bar should be plotted
 #' @param result_title the title for the result bar. Ignored if add_result is false

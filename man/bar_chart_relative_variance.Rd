@@ -2,7 +2,7 @@
 % Please edit documentation in R/bar_chart.R
 \name{bar_chart_relative_variance}
 \alias{bar_chart_relative_variance}
-\title{Generate bar chart with relative variance (in percents)}
+\title{Generate bar chart with relative variance (in percents).}
 \usage{
 bar_chart_relative_variance(
   data = NULL,
@@ -36,7 +36,7 @@ bar_chart_relative_variance(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Generate bar chart with relative variance (in percents)
+Generate bar chart with relative variance (in percents).
 }
 \examples{
 # get some data

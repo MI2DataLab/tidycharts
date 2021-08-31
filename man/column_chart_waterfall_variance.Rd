@@ -2,7 +2,7 @@
 % Please edit documentation in R/column_chart_functions.R
 \name{column_chart_waterfall_variance}
 \alias{column_chart_waterfall_variance}
-\title{Generate column waterfall chart with absolute variance}
+\title{Generate column waterfall chart with absolute variance.}
 \usage{
 column_chart_waterfall_variance(
   x,
@@ -33,7 +33,7 @@ column_chart_waterfall_variance(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Generate column waterfall chart with absolute variance
+Generate column waterfall chart with absolute variance.
 }
 \examples{
 x <- month.abb

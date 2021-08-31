@@ -2,7 +2,7 @@
 % Please edit documentation in R/column_chart_functions.R
 \name{column_chart_relative_variance}
 \alias{column_chart_relative_variance}
-\title{Generate column chart with relative variance (in percents)}
+\title{Generate column chart with relative variance (in percents).}
 \usage{
 column_chart_relative_variance(
   x,
@@ -39,7 +39,7 @@ column_chart_relative_variance(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Generate column chart with relative variance (in percents)
+Generate column chart with relative variance (in percents).
 }
 \examples{
 x <- month.abb

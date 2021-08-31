@@ -2,7 +2,7 @@
 % Please edit documentation in R/column_chart_functions.R
 \name{column_chart_grouped}
 \alias{column_chart_grouped}
-\title{Generate grouped column chart for visualizing up to 3 data series}
+\title{Generate grouped column chart for visualizing up to 3 data series.}
 \usage{
 column_chart_grouped(
   x,
@@ -36,7 +36,7 @@ column_chart_grouped(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Generate grouped column chart for visualizing up to 3 data series
+Generate grouped column chart for visualizing up to 3 data series.
 }
 \examples{
 df <- data.frame(x = month.abb[7:12],

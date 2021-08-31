@@ -810,7 +810,9 @@ get_x_axis_pos_abs_variance <- function(baseline, real){
 
 }
 
-#' Generate basic column chart. If more than one series is supplied, stacked column plot is generated
+#' Generate basic column chart.
+#'
+#' If more than one series is supplied, stacked column plot is generated.
 #'
 #' @param data data frame in wide format containing data to be plotted
 #' @param x vector containing labels for x axis or name of column in data with values of x axis labels
@@ -854,7 +856,9 @@ column_chart <- function(data, x, series = NULL, series_labels = series, styles 
 }
 
 
-#' Generate column chart with normalization. Every column will be rescaled, so columns have the same height.
+#' Generate column chart with normalization.
+#'
+#' Every column will be rescaled, so columns have the same height.
 #'
 #' @inheritParams column_chart
 #' @inherit bar_chart return
@@ -992,7 +996,7 @@ column_chart_waterfall <-
     return(svg_string)
   }
 
-#' Generate column chart with absolute variance
+#' Generate column chart with absolute variance.
 #'
 #' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
@@ -1045,7 +1049,7 @@ column_chart_absolute_variance <-
     return(svg_string)
   }
 
-#' Generate grouped column chart for visualizing up to 3 data series
+#' Generate grouped column chart for visualizing up to 3 data series.
 #'
 #' @param foreground vector or name of column in data representing heights of bars visible in the foreground
 #' @param background vector or name of column in data representing heights of bars visible in the background
@@ -1161,7 +1165,7 @@ column_chart_grouped <-
   }
 
 
-#' Generate column chart with relative variance (in percents)
+#' Generate column chart with relative variance (in percents).
 #'
 #' @inheritParams column_chart_absolute_variance
 #' @param styles optional vector with styles of the pin heads
@@ -1216,7 +1220,7 @@ column_chart_relative_variance <-
   }
 
 
-#' Generate column waterfall chart with absolute variance
+#' Generate column waterfall chart with absolute variance.
 #'
 #' @inheritParams column_chart_absolute_variance
 #' @param result_title title for the result bar
