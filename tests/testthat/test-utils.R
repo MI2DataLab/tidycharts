@@ -45,3 +45,17 @@ test_that('Setting styles works',{
     )
   ))
 })
+
+test_that('Setting margins is correct',{
+  expect_error(set_margins(list(not_existing_margin_name = 133)))
+
+  expect_error(set_margins(list(top = 'abc')))
+
+  expect_equal(get_margins()$top, 75)
+
+  set_margins(top = 80)
+  expect_equal(get_margins()$top, 80)
+  set_margins(top = 75)
+  expect_equal(get_margins()$top, 75)
+
+})

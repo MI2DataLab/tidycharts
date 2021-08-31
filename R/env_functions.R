@@ -21,6 +21,51 @@ pkg.env$widths <- data.frame(
 
 rownames(pkg.env$widths) <- pkg.env$widths$interval
 
+#' Reset margin values to package defaults
+#'
+#' @inherit set_margins return
+#' @export
+#'
+#' @examples
+#' reset_margins()
+reset_margins <- function(){
+  pkg.env$margins <- list(
+    top = 75,
+    left = 80
+  )
+}
+# define default margins
+reset_margins()
+
+get_margins <- function(){
+  return(pkg.env$margins)
+}
+
+#' Set margins size
+#'
+#' Currently supported is setting 'top' and 'left' margins. Names of elements in x and keys in ... should be 'top' or 'left'.
+#'
+#' @param x A named list with numeric margin values. Default set to NULL.
+#' @param ... Key - value pairs, where key is the name of margin and value is a numeric value of a margin.
+#'
+#' @return No return value, called for side effects
+#' @export
+#'
+#' @examples
+#' set_margins(list(top = 75, left = 80))
+#'
+#' set_margins(top = 75, left = 80)
+set_margins <- function(x = NULL, ...){
+  x = append(list(...), x)
+  if (!all(names(x) %in% names(pkg.env$margins))) {
+    stop(paste('Wrong names in given list! Should be', paste(names(pkg.env$margins), collapse = ' '), '!'))
+  }
+  if (!all(sapply(x, is.numeric))) {
+    stop('Only numeric margin values can be set')
+  }
+  pkg.env$margins[names(x)] <- x
+}
+
 pkg.env$colors_df <- cbind(
   bar_colors =  c(
     "rgb(64,64,64)",
