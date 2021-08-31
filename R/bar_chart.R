@@ -346,7 +346,7 @@ bar_chart_absolute_variance <-
       shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
 
 
-    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 200 + get_margins()$left) %>%
       draw_bars_variance(cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
@@ -465,7 +465,7 @@ bar_chart_relative_variance <-
       shift <- width_of_one * abs(min(neg)) + 25 # 25 px for value labels
 
 
-    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 200 + get_margins()$left) %>%
     draw_pins_variance(cat, values, width_of_one, shift, colors, y_title, y_style, styles) %>%
     finalize()
     class(svg_string) <- c('tidychart', 'character')
