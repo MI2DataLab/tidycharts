@@ -190,7 +190,7 @@ draw_triangle <- function(svg_string, tip_position_x, tip_position_y, orientatio
 
 
 draw_ref_line_horizontal <- function(svg_string, x, bar_width, line_y, label) {
-  left_margin <- 80
+  left_margin <- get_margins()$left
   len <- bar_width * 1.5 * length(x)
   svg_string <- draw_bar(svg_string,
                          x = left_margin,

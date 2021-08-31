@@ -11,9 +11,9 @@ initialize <-
            height = 500,
            x_vector = NULL,
            bar_width = NULL,
-           x_margin = 130,
+           x_margin = get_margins()$left + 50,
            y_vector = NULL,
-           y_margin = 60) {
+           y_margin = get_margins()$top + 50) {
     if (!is.null(x_vector) & !is.null(bar_width)) {
       width <- length(x_vector) * 1.5 * bar_width + x_margin
     }

@@ -96,7 +96,7 @@ add_bars <-
 
     # TODO check series lengths and NA there
     n_bars <- length(x)
-    left_margin <- 80
+    left_margin <- get_margins()$left
 
     n_splits = length(series)
     x_axis_pos <- get_x_axis_pos(df[series], max_val)
@@ -169,7 +169,7 @@ add_first_bar <- function(svg_string,
                           bar_width,
                           color = "rgb(166,166,166)",
                           label_color = "black") {
-  left_margin <- 80
+  left_margin <- get_margins()$left
   x_pos <- 50 - bar_width * 1.5 + left_margin
   bar_height <- value / top_value * max_bar_height
   # calculate x labels y position
@@ -275,7 +275,7 @@ add_waterfall_bars <-
     max_bar_height <- 200
     top_value <- max(abs(df[series]))
     prev_level <- ref_value / top_value * max_bar_height
-    left_margin <- 80 + translate_vec[1]
+    left_margin <- get_margins()$left + translate_vec[1]
 
     # calculate x labels y position
     low_value <- min(df[series])
@@ -443,7 +443,8 @@ add_abs_variance_bars <-
            bar_width,
            x_title,
            x_style) {
-    x_pos <- 80
+    x_pos <- get_margins()$left
+
 
     color <- choose_variance_colors(colors)
     max_val <- max(abs(baseline), abs(real))
@@ -538,7 +539,8 @@ add_relative_variance_pins <-
            styles = NULL) {
     x_axis_pos <- 200
     color <- choose_variance_colors(colors)
-    x_pos <- 0
+    x_pos <- get_margins()$left
+
     values <- real / baseline * 100 - 100
     max_val <- 100
     # add legend on the left of plot
@@ -644,7 +646,7 @@ add_triangles <- function(svg_string,
                           styles = NULL) {
   x_axis_pos <- get_x_axis_pos(df[series], max_val)
   max_height <- ifelse(is.null(max_val), max(df[series]), max_val)
-  left_margin <- 80
+  left_margin <- get_margins()$left
   for (i in 1:length(x)) {
     x_pos <- 1.5 * bar_width * (i - 1) + 4 + 0.25 * bar_width + left_margin
 
@@ -668,7 +670,7 @@ add_triangles <- function(svg_string,
 
 add_legend <- function(svg_string, df, x, series, bar_width) {
   x_axis_pos <- get_x_axis_pos(df[series])
-  left_margin <- 80
+  left_margin <- get_margins()$left
   if (length(series) == 1)
     return(svg_string)
   x_pos = 1.5 * bar_width * length(x) + 4.8 - bar_width / 4 + left_margin
@@ -707,7 +709,7 @@ add_top_values <-
     heights <- rowSums(df[series])
     max_height <-
       ifelse(is.null(max_val), max(abs(heights)), max_val)
-    left_margin <- 80
+    left_margin <- get_margins()$left
 
     ref_value <-
       ifelse(is.null(ref_value), max_height, ref_value)
@@ -764,7 +766,8 @@ get_plot_height <- function(df_num, x_axis_pos = get_x_axis_pos(df_num), max_bar
 
 get_plot_height_abs_var <- function(real, baseline){
   max_bar_height <- 200
-  top_margin <- 75
+  top_margin <- get_margins()$top
+
   x_axis_pos <- get_x_axis_pos_abs_variance(baseline, real)
   max_val <- max(abs(baseline), abs(real))
   variance <- real - baseline
@@ -781,7 +784,7 @@ get_plot_height_abs_var <- function(real, baseline){
 
 get_x_axis_pos <- function(df_num, max_val = NULL){
   max_bar_height <- 200
-  top_margin <- 75
+  top_margin <- get_margins()$top
   min_val <- min(df_num)
   max_val <- max(df_num)
   longest_bar <- max(abs(min_val), abs(max_val))
@@ -795,7 +798,7 @@ get_x_axis_pos <- function(df_num, max_val = NULL){
 
 get_x_axis_pos_abs_variance <- function(baseline, real){
   max_bar_height <- 200
-  top_margin <- 75
+  top_margin <- get_margins()$top
   max_val <- max(abs(baseline), abs(real))
   variance <- real - baseline
   highest_bar <- max(variance) / max_val * max_bar_height
@@ -878,7 +881,7 @@ column_chart_normalized <- function(data, x, series = NULL, series_labels = seri
   svg_string <- initialize(x_vector = x, bar_width = bar_width, height = 300) %>%
     add_bars(normalized_df, x, series, bar_width = bar_width) %>%
     add_legend(normalized_df, x, series_labels, bar_width = bar_width) %>%
-    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = 75, label = "100") %>%
+    draw_ref_line_horizontal(x, bar_width = bar_width, line_y = get_margins()$top, label = "100") %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')
   return(svg_string)
