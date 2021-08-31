@@ -1,4 +1,6 @@
-#' Join SVG charts This function first populates each place in the first row, then columns in the second row
+#' Join SVG charts.
+#'
+#' This function first populates each place in the first row, then columns in the second row.
 #'
 #' @param ... mumltiple character vectors with SVG content
 #' @param nrows number of rows of plots in joint plot, default is set to number of plots
@@ -86,9 +88,9 @@ translate_svg<- function(svg_string, x, y){
         '</g>'))
 }
 
-#' Facet chart
+#' Facet chart.
 #'
-#' Create multiple charts with data split into groups
+#' Create multiple charts with data split into groups.
 #'
 #' @param facet_by a name of column in data, that the charts will be splitted by
 #' @param ncols number of columns of the plots. Number of rows will be adjusted accordingly

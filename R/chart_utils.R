@@ -52,7 +52,7 @@ finalize <- function(svg_string) {
 }
 
 
-#' Add IBCS complient legend
+#' Add IBCS complient legend.
 #'
 #' @param svg_string one element character vector containing SVG graphic statements. Legend will be added to this plot.
 #' @param line1 first line of title. Element(s) of the structure dimension represent the object of the report, typically a legal entity, an organization unit, or a line of business
@@ -90,7 +90,7 @@ get_svg_size <- function(svg_string){
   return(size)
 }
 
-#' Save svg image
+#' Save svg image.
 #'
 #' @param svg_string string containing SVG statements
 #' @param path path to file where image will be saved

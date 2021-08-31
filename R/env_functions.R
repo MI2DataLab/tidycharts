@@ -21,7 +21,7 @@ pkg.env$widths <- data.frame(
 
 rownames(pkg.env$widths) <- pkg.env$widths$interval
 
-#' Reset margin values to package defaults
+#' Reset margin values to package defaults.
 #'
 #' @inherit set_margins return
 #' @export
@@ -41,14 +41,14 @@ get_margins <- function(){
   return(pkg.env$margins)
 }
 
-#' Set margins size
+#' Set margins size.
 #'
 #' Currently supported is setting 'top' and 'left' margins. Names of elements in x and keys in ... should be 'top' or 'left'.
 #'
 #' @param x A named list with numeric margin values. Default set to NULL.
 #' @param ... Key - value pairs, where key is the name of margin and value is a numeric value of a margin.
 #'
-#' @return No return value, called for side effects
+#' @return No return value, called for side effects.
 #' @export
 #'
 #' @examples
@@ -125,13 +125,13 @@ get_interval_width <- function(interval){
 
 
 
-#' Change default colors of the package
+#' Change default colors of the package.
 #'
 #' Customize your plots and change default color palette.
 #'
 #' @param colors_df data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors". In cells there should be rgb values of chosen colors in format: "rgb(x,y,z)". Rows represent subsequent colors on stacked plots.
 #'
-#' @return No return value, called for side effects
+#' @return No return value, called for side effects.
 #' @export
 #'
 #' @examples
@@ -154,13 +154,13 @@ set_colors <- function(colors_df){
   pkg.env$colors_df <- colors_df
 }
 
-#' Change default colors of the scatter plots from the package
+#' Change default colors of the scatter plots from the package.
 #'
 #' Customize your scatter plots and change default color palette.
 #'
 #' @param new_scatter_colors vector of the length of 6 containing rgb values of chosen colors in format: "rgb(x,y,z)"
 #'
-#' @return No return value, called for side effects
+#' @return No return value, called for side effects.
 #' @export
 #'
 #' @examples
@@ -182,11 +182,11 @@ set_scatter_colors <- function(new_scatter_colors){
 
 
 
-#' Change default styles for plots
+#' Change default styles for plots.
 #'
 #' @param styles_df data frame with columns 'fill' and 'stroke'. Rows represent subsequent styles which names can be passed to plotting functions, usually as styles argument.
 #'
-#' @return No return value, called for side effects
+#' @return No return value, called for side effects.
 #' @export
 #'
 #' @examples
@@ -208,9 +208,9 @@ set_styles <- function(styles_df){
   pkg.env$styles_df <-styles_df
 }
 
-#' Restore default color and style settings
+#' Restore default color and style settings.
 #'
-#' @return No return value, called for side effects
+#' @return No return value, called for side effects.
 #' @export
 #'
 #' @examples

@@ -2,7 +2,7 @@
 % Please edit documentation in R/env_functions.R
 \name{set_colors}
 \alias{set_colors}
-\title{Change default colors of the package}
+\title{Change default colors of the package.}
 \usage{
 set_colors(colors_df)
 }
@@ -10,7 +10,7 @@ set_colors(colors_df)
 \item{colors_df}{data frame with 6 rows and 2 columns. Columns must nave names : "text_colors", "bar_colors". In cells there should be rgb values of chosen colors in format: "rgb(x,y,z)". Rows represent subsequent colors on stacked plots.}
 }
 \value{
-No return value, called for side effects
+No return value, called for side effects.
 }
 \description{
 Customize your plots and change default color palette.

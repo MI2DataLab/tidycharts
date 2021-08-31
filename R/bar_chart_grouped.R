@@ -16,7 +16,7 @@ add_bar_grouped <-
     svg_string <- ""
     labels <- ""
     value_label <- ""
-    x <- 80 + shift
+    x <- get_margins()$left + shift
     for (i in length(series):1){ #going through series
       value <- data[,series[i]] #a vector
       color <- get_color_stacked(i)
@@ -36,7 +36,7 @@ add_bar_grouped <-
       }else{
         rect <- draw_rect(x, y - 4.8*(i-2), color$bar_color, (width_of_one*abs(value[k])), 16, style = styles[k])
       }
-      x <- 80 + shift
+      x <- get_margins()$left + shift
 
       svg_string <- paste(svg_string, rect, labels,  sep = '\n')
 
@@ -54,9 +54,9 @@ add_bar_grouped <-
                  #add_label((x+4.8), y+12,all_sums[k], anchor="start"),
                  value_label,
                  #category label
-                 add_label( 72.2, y+14, cat[k], anchor="end"),
+                 add_label( get_margins()$left - 7.8, y+14, cat[k], anchor="end"),
                  #vertical axis
-                 draw_line(80 + shift, 80+shift, (y-4.8) - 4.8, (y+16+4.8)),
+                 draw_line(get_margins()$left + shift, get_margins()$left+shift, (y-4.8) - 4.8, (y+16+4.8)),
                  #labels,
                  sep = '\n'
     ))
@@ -65,7 +65,7 @@ add_bar_grouped <-
 #---
 draw_bars_grouped <- function(svg_string, data, cat, foreground, background, markers, series_labels, df_with_real_values=NULL, df_styles = NULL){
   bars <- svg_string
-  y = 50
+  y = get_margins()$top
   #series <- c(markers, foreground, background)
   if(length(foreground) == 1){forg <- data[ ,foreground]
   }else{
@@ -106,13 +106,13 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
   if(length(series)==3){
     bars <- paste(
       bars,
-      add_label(80 + shift + data[,series[3]][1]*width_of_one/2, 50 - 4.8*(length(series)-1), series_labels[3]),
+      add_label(get_margins()$left + shift + data[,series[3]][1]*width_of_one/2, get_margins()$top - 4.8*(length(series)-1), series_labels[3]),
       sep= '\n'
     )
   }
 
   bars <- paste(bars,
-                add_label(80 + shift + data[,series[2]][length(cat)]*width_of_one/2, 50 + 24 * length(cat) + 4.8, series_labels[2]),
+                add_label(get_margins()$left + shift + data[,series[2]][length(cat)]*width_of_one/2, get_margins()$top + 24 * length(cat) + 4.8, series_labels[2]),
                 add_bar_grouped(shift, data, cat, series, 1, y, width_of_one, series_labels, df_styles=df_styles),
                 sep='\n')
   y <- y + 24
@@ -158,7 +158,7 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 #' barchart_grouped
 #'
 bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, styles = NULL){
-  svg_string <- initialize(width = 350, height= 50 + 24*length(cat) + 50) %>%
+  svg_string <- initialize(width = 320 + get_margins()$left, height= get_margins()$top + 24*length(cat) + get_margins()$top) %>%
     draw_bars_grouped(data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')

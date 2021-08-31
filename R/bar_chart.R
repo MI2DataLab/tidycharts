@@ -20,7 +20,7 @@ add_bar_basic <-
     all_sums <- rowSums(data[series])
     svg_string <- ""
     labels <- ""
-    x <- 80 + shift
+    x <- get_margins()$left + shift
     for (i in 1:length(series)){ #going through series
       value <- data[,series[i]] #a vector
       if (is.null(color)) curr_color <- get_color_stacked(i)
@@ -60,7 +60,7 @@ add_bar_basic <-
     else{
       if (neg_pos == 'right') {
         sum_label <-
-          add_label(80 + shift + 4.8, y + 12, all_sums[k], anchor = "start")
+          add_label(get_margins()$left + shift + 4.8, y + 12, all_sums[k], anchor = "start")
       } else{
         sum_label <-
           add_label((x - 4.8), y + 12, all_sums[k], anchor = "end")
@@ -72,11 +72,11 @@ add_bar_basic <-
                  #add_label((x+4.8), y+12,all_sums[k], anchor="start"),
                  sum_label,
                  #category label
-                 add_label( 72.2, y+14, cat[k], anchor="end"),
+                 add_label(get_margins()$left - 7.8, y+14, cat[k], anchor="end"),
                  #vertical axis
                  ifelse(is.null(ax_style),
-                        draw_line(80+shift, 80+shift,(y-4.8), (y+16+4.8)),
-                        draw_rect(80+shift, (y-4.8), color = NULL, width = 4.8, height = 16 + 9.6, style = ax_style)
+                        draw_line(get_margins()$left+shift, get_margins()$left+shift,(y-4.8), (y+16+4.8)),
+                        draw_rect(get_margins()$left+shift, (y-4.8), color = NULL, width = 4.8, height = 16 + 9.6, style = ax_style)
                  ),
                  labels,
                  sep = '\n'
@@ -94,7 +94,7 @@ add_pin <-function(shift,
                    color = NULL,
                    ax_style = NULL,
                    show_series_labels = T) {
-  x <- 80 + shift
+  x <- get_margins()$left + shift
 
   if(value < 0){
     label_offset <- -10
@@ -106,20 +106,20 @@ add_pin <-function(shift,
 
   svg_strng <- ''
   # draw axis
-  svg_string <- draw_rect(80+shift - 2.4, (y - 12), color = NULL, width = 4.8, height = 16 + 8, style = ax_style)
+  svg_string <- draw_rect(get_margins()$left+shift - 2.4, (y - 12), color = NULL, width = 4.8, height = 16 + 8, style = ax_style)
   # draw category label
-  svg_string <- paste(svg_string, add_label(72.2, y + 6, cat, anchor="end"), sep = '\n')
+  svg_string <- paste(svg_string, add_label(get_margins()$left - 7.8, y + 6, cat, anchor="end"), sep = '\n')
   # draw pin head
   svg_string <- paste(svg_string,
-                      draw_rect(80+shift + width_of_one * value - 5.6, y - 5.6 , color = NULL, width = 11.2, height = 11.2),
+                      draw_rect(get_margins()$left+shift + width_of_one * value - 5.6, y - 5.6 , color = NULL, width = 11.2, height = 11.2),
                       sep = '\n')
   # draw pin line
   svg_string <- paste(svg_string,
-                      draw_rect(80+shift, y - 2.4 , color = color$bar_color, width = width_of_one * value, height = 4.8),
+                      draw_rect(get_margins()$left+shift, y - 2.4 , color = color$bar_color, width = width_of_one * value, height = 4.8),
                       sep = '\n')
   # draw pin label
   svg_string <- paste(svg_string,
-                      add_label(80+shift + width_of_one * value + label_offset, y + 6, format(value, digits = 2), anchor = label_anchor),
+                      add_label(get_margins()$left+shift + width_of_one * value + label_offset, y + 6, format(value, digits = 2), anchor = label_anchor),
                       sep = '\n')
   return(svg_string)
 }
@@ -127,7 +127,7 @@ add_pin <-function(shift,
 #---
 draw_bars_basic <- function(svg_string, data, cat, series, series_labels, df_with_real_values=NULL, styles = NULL, shift = 0){
   bars <- svg_string
-  y <- 50
+  y <- get_margins()$top
   all_sums <- rowSums(data[series])
   width_of_one <- 200/max(abs(all_sums))
 
@@ -240,9 +240,9 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
   if(length(neg) == 0){shift <- 0}
   else{shift <- width_of_one*abs(min(neg))}
 
-  svg_string <-initialize(width= 80 + shift + 250, height = 50 + 24*length(cat)) %>%
+  svg_string <-initialize(width= get_margins()$left + shift + 250, height = get_margins()$top + 24*length(cat)) %>%
     paste(draw_bars_basic("",data, cat, series, series_labels, styles = styles, shift = shift),
-          add_vertical_index(80+(width_of_one*ref_val)+shift, (66+24*(length(cat)-1)), ref_label),
+          add_vertical_index(get_margins()$left+(width_of_one*ref_val)+shift, (get_margins()$top + 16 + 24*(length(cat)-1)), ref_label),
           sep='\n') %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')
@@ -281,19 +281,19 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
     cat <- data[,cat]
   }
   df <- normalize_rows(data, cat, series)
-  y_end <- 50 + 24*length(cat)
+  y_end <- get_margins()$top + 24*length(cat)
   svg_string <- initialize(y_vector = cat,
              bar_width = 16) %>%
     draw_bars_basic(df, cat, series, series_labels, df_with_real_values = data) %>%
-    paste(add_vertical_index(280, (y_end+16+4.8-24)),
-          draw_rect(285, 50, "white", 25, y_end, style = "total_white"), #it covers the sum labels
+    paste(add_vertical_index(get_margins()$left + 200, (y_end+16+4.8-24)),
+          draw_rect(get_margins()$left + 200 + 5,  get_margins()$top, "white", 25, y_end, style = "total_white"), #it covers the sum labels
           sep='\n') %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')
   return(svg_string)
 }
 
-#' Generate bar chart with absolute variance
+#' Generate bar chart with absolute variance.
 #'
 #' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
 #'
@@ -346,7 +346,7 @@ bar_chart_absolute_variance <-
       shift <- width_of_one * abs(min(neg)) + 35 # 35 px for labels
 
 
-    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 200 + get_margins()$left) %>%
       draw_bars_variance(cat, variance, width_of_one, shift, colors, y_title, y_style) %>%
       finalize()
     class(svg_string) <- c('tidychart', 'character')
@@ -365,7 +365,7 @@ draw_bars_variance <-
            y_style) {
 
 
-    y <- 60
+    y <- get_margins()$top
 
 
     data <- data.frame(variance)
@@ -419,7 +419,7 @@ draw_bars_variance <-
     return(svg_string)
   }
 
-#' Generate bar chart with relative variance (in percents)
+#' Generate bar chart with relative variance (in percents).
 #'
 #' @inheritParams bar_chart_absolute_variance
 #' @param styles optional vector with styles of the pin heads
@@ -465,7 +465,7 @@ bar_chart_relative_variance <-
       shift <- width_of_one * abs(min(neg)) + 25 # 25 px for value labels
 
 
-    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 250) %>%
+    svg_string <- initialize(y_vector = cat, bar_width = 16, width = shift + 200 + get_margins()$left) %>%
     draw_pins_variance(cat, values, width_of_one, shift, colors, y_title, y_style, styles) %>%
     finalize()
     class(svg_string) <- c('tidychart', 'character')
@@ -475,7 +475,7 @@ bar_chart_relative_variance <-
 
 draw_pins_variance <- function(svg_string, cat, values, width_of_one, shift, colors, y_title, y_style, styles){
 
-  y <- 60
+  y <- get_margins()$top
 
   data <- data.frame(values)
   colnames(data) <- y_title

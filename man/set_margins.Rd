@@ -2,7 +2,7 @@
 % Please edit documentation in R/env_functions.R
 \name{set_margins}
 \alias{set_margins}
-\title{Set margins size}
+\title{Set margins size.}
 \usage{
 set_margins(x = NULL, ...)
 }
@@ -12,7 +12,7 @@ set_margins(x = NULL, ...)
 \item{...}{Key - value pairs, where key is the name of margin and value is a numeric value of a margin.}
 }
 \value{
-No return value, called for side effects
+No return value, called for side effects.
 }
 \description{
 Currently supported is setting 'top' and 'left' margins. Names of elements in x and keys in ... should be 'top' or 'left'.

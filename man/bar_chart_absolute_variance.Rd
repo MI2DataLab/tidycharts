@@ -2,7 +2,7 @@
 % Please edit documentation in R/bar_chart.R
 \name{bar_chart_absolute_variance}
 \alias{bar_chart_absolute_variance}
-\title{Generate bar chart with absolute variance}
+\title{Generate bar chart with absolute variance.}
 \usage{
 bar_chart_absolute_variance(
   data = NULL,

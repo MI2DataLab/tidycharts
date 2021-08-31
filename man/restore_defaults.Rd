@@ -2,15 +2,15 @@
 % Please edit documentation in R/env_functions.R
 \name{restore_defaults}
 \alias{restore_defaults}
-\title{Restore default color and style settings}
+\title{Restore default color and style settings.}
 \usage{
 restore_defaults()
 }
 \value{
-No return value, called for side effects
+No return value, called for side effects.
 }
 \description{
-Restore default color and style settings
+Restore default color and style settings.
 }
 \examples{
 
