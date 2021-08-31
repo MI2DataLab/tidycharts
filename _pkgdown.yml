@@ -36,6 +36,7 @@ reference:
 - contents:
   - starts_with('SVG')
   - starts_with('set')
+  - reset_margins
   - restore_defaults
   - add_title
   - parse_time_series
@@ -54,6 +55,7 @@ figures:
   fig.retina: 2
   fig.asp: 1.618
   bg: NA
+
 repo:
   url:
     home: https://github.com/MI2DataLab/tidycharts/
