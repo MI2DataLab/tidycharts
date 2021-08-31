@@ -106,7 +106,9 @@ draw_quadrangle <- function(x1,y1,x2,y2,x3,y3,x4,y4, color){
 
 add_index <- function(x, y, text="100"){ #x defines how long the line is
   return(paste(
-    paste0('<line x1="80" x2="',
+    paste0('<line x1="',
+           get_margins()$left,
+           '" x2="',
            x,
            '" y1="',
            y - 0.8,
@@ -164,16 +166,24 @@ add_vertical_index <- function(x, y, text="100"){ #y defines how long the index 
     paste0(
       '<polygon points="',
       x,
-      ', 50 ',
+      ',',
+      get_margins()$top,
+      ' ',
       x+ 4.8,
-      ', 34 ',
+      ', ',
+      get_margins()$top - 16,
+      ', ',
       x - 4.8,
-      ', 34" stroke="black" fill="black"/> '
+      ',',
+      get_margins()$top - 16,
+      '" stroke="black" fill="black"/> '
     ),
     paste0(
       '<text x="',
       x + 6.4,
-      '" y="45" font-family="Arial" text-anchor="start" font-size="12" >',
+      '" y="',
+      get_margins()$top - 5,
+      '" font-family="Arial" text-anchor="start" font-size="12" >',
       text,
       '</text>'
     ),
@@ -181,7 +191,9 @@ add_vertical_index <- function(x, y, text="100"){ #y defines how long the index 
            x,
            '" x2="',
            x,
-           '" y1="50" y2="',
+           '" y1="',
+           get_margins()$top,
+           '" y2="',
            y,
            '" stroke="black" stroke-width="1.6"/>'),
     sep='\n'
