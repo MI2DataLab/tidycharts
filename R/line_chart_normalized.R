@@ -3,14 +3,16 @@
 
 add_marker_normalized <- function(data, cat, value, x, height_of_one, k, y, show_label,if_rect, cat_width){ #cat jest calym wektore, k to numer serii w ktorej jestesmy y - przesuniecie
 
+  left_margin <- get_margins()$left
+  top_margin <- get_margins()$top
   #we do not draw the rectangle markers on the top
-  if(if_rect==1){rect<-draw_rect(x-2.4, (247.6-(height_of_one*value))-y, "rgb(127,127,127)", 4.8, 4.8)}
+  if(if_rect==1){rect<-draw_rect(x-2.4, (top_margin+197.6-(height_of_one*value))-y, "rgb(127,127,127)", 4.8, 4.8)}
   else(rect<-"")
 
   # if(is.na(show_label) == FALSE){
   #value_label <- add_label(x, 250-y - (height_of_one*value/2) +6, value,get_gray_color_stacked(k)$text_color)
   if(is.na(show_label) == FALSE){
-    value_label <- add_label(x, 250-y - (height_of_one*value/2) +6, value, get_color_stacked(k)$text_color )
+    value_label <- add_label(x, top_margin+200-y - (height_of_one*value/2) +6, value, get_color_stacked(k)$text_color )
   }else{
     value_label<-""
   }
@@ -20,7 +22,7 @@ add_marker_normalized <- function(data, cat, value, x, height_of_one, k, y, show
 
   return(paste(rect,
     #asisting line
-    draw_line(x, x, 50,250, "white", 0.1),
+    draw_line(x, x, top_margin, top_margin+200, "white", 0.1),
     #value label
     #add_label(x,250-y - (height_of_one*value/2) +6, value,"white"),
     value_label,
@@ -34,8 +36,10 @@ add_marker_normalized <- function(data, cat, value, x, height_of_one, k, y, show
 
 draw_polygons_normalized <- function(svg_string, data, cat, series, series_labels, show_labels, cat_width){
 
+  left_margin <- get_margins()$left
+  top_margin <- get_margins()$top
   polygons <- svg_string
-  x = 80
+  x = left_margin
   labels <- ""
   #markers need to be separated so the polygons wont overlap them
   markers <- ""
@@ -48,7 +52,7 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
     values <- data[, series[k]]
     #series labels
     labels <- paste(labels,
-                    add_label(75.2, 250-y[1] - (height_of_one*values[1]/2), series_labels[k], anchor="end"),
+                    add_label(left_margin-4.8, top_margin+200-y[1] - (height_of_one*values[1]/2), series_labels[k], anchor="end"),
                     sep="\n"
 
     )
@@ -61,19 +65,19 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
       if (k == 1) {
         polygons <- paste(polygons,
                           #adding ticks
-                          draw_line(x, x ,250, 251.6),
+                          draw_line(x, x, top_margin+200, top_margin+201.6),
                           #x-axis line
-                          draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+                          draw_line(x - cat_width/2, x + cat_width/2, top_margin+200, top_margin+200),
                           #category label
-                          add_label(x, 268.4, cat[i]),
+                          add_label(x, top_margin+218.4, cat[i]),
                           sep = '\n')
       }
       height_of_one <- 200/all_sums[i]
       polygons <- paste(polygons,
-                        draw_quadrangle(x, (250-(height_of_one*values[i])) - y[i],
-                                        x + cat_width, (250-(200/all_sums[i+1]*values[i+1])) - y[i+1],
-                                        x + cat_width, 250 - y[i+1],
-                                        x, 250 - y[i],
+                        draw_quadrangle(x, (top_margin+200-(height_of_one*values[i])) - y[i],
+                                        x + cat_width, (top_margin+200-(200/all_sums[i+1]*values[i+1])) - y[i+1],
+                                        x + cat_width, top_margin+200 - y[i+1],
+                                        x, top_margin+200 - y[i],
                                         color),
                         sep='\n')
 
@@ -86,22 +90,22 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
     if (k == 1) {
       polygons <- paste(polygons,
                         #adding ticks
-                        draw_line(x, x ,250, 251.6),
+                        draw_line(x, x ,top_margin+200, top_margin+201.6),
                         #x-axis line
-                        draw_line(x - cat_width/2, x + cat_width/2, 250, 250),
+                        draw_line(x - cat_width/2, x + cat_width/2, top_margin+200, top_margin+200),
                         #category label
-                        add_label(x, 268.4, cat[j]),
+                        add_label(x, top_margin+218.4, cat[j]),
                         sep = '\n')
     }
     polygons <- paste(polygons,
                       add_marker_normalized(data, cat[j], values[j], x, height_of_one, j, y[j], show_labels[j], if_rect, cat_width),
                       sep='\n')
-    x <- 80
+    x <- left_margin
     y[j] <- y[j] + height_of_one*values[j]
 
   }
-  x <- 80
-  return (paste(polygons, markers,labels, add_index(80 + cat_width*(length(cat)-1), 50),  sep='\n'))
+  x <- left_margin
+  return (paste(polygons, markers,labels, add_index(left_margin + cat_width*(length(cat)-1), top_margin),  sep='\n'))
 }
 
 #----

@@ -2,15 +2,16 @@
 
 #adding a rectangle marker with label above or under + categories labels
 add_point <- function(shift, data, x, value, x_pos, height_of_one, color, k, minimal, cat_width, style = NULL){ #cat jest calym wektore, k to numer serii w ktorej jestesmy
-
+  left_margin <- get_margins()$left
+  top_margin <- get_margins()$top
   label<-""
   if(value > 0){
-    rect <- draw_rect(x_pos-5.6, (244.4-(height_of_one*value)), color, 11.2, 11.2, style = style)
-    y_label <- (250-(height_of_one*value))
+    rect <- draw_rect(x_pos-5.6, (top_margin+200-5.6-(height_of_one*value)), color, 11.2, 11.2, style = style)
+    y_label <- (top_margin+200-(height_of_one*value))
     }
   else{
-    rect <- draw_rect(x_pos-5.6, (250-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2, style = style)
-    y_label <- (250 + (height_of_one*abs(value)))
+    rect <- draw_rect(x_pos-5.6, (top_margin+200-5.6 +(height_of_one*abs(value))), color, 11.2, 11.2, style = style)
+    y_label <- (top_margin+200 + (height_of_one*abs(value)))
     }
 
   if(minimal==1){ #ostatni podpis pod spodem
@@ -46,9 +47,11 @@ find_height <- function(data, series){
 #----
 draw_points <- function(svg_string, data, x, series, series_labels, cat_width, styles = NULL, height_of_one, min_avg, shift){
 
+  left_margin <- get_margins()$left
+  top_margin <- get_margins()$top
   points <- svg_string
   labels <- ""
-  x_pos <- 80
+  x_pos <- left_margin
 
   for(k in 1:(length(series))){ #going through series
 
@@ -61,23 +64,23 @@ draw_points <- function(svg_string, data, x, series, series_labels, cat_width, s
     #color <- colors[k]
     color <- get_color_stacked(k)$bar_color
     values <- data[, series[k]]
-    labels <- paste(labels, add_label(80 - 4.8 - 5.6, 250- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
+    labels <- paste(labels, add_label(left_margin - 4.8 - 5.6, top_margin+200- height_of_one*values[1]+3, series_labels[k], anchor="end"), sep='\n')
     for(i in 1:(length(x)-1)){ #drawing each point
       style <- styles[i, k]
       if (k == 1) {
         points <- paste(points,
                         #category label
-                        add_label(x_pos, 268.4 + shift, x[i], "black"),
+                        add_label(x_pos, top_margin+218.4 + shift, x[i], "black"),
                         #ticks
-                        draw_line(x_pos, x_pos, 250,251.6),
+                        draw_line(x_pos, x_pos, top_margin+200, top_margin+201.6),
                         #x-axis line
-                        draw_line(x_pos - cat_width/2, x_pos + cat_width/2, 250, 250),
+                        draw_line(x_pos - cat_width/2, x_pos + cat_width/2, top_margin+200, top_margin+200),
                         sep = '\n')
       }
       points <- paste(points,
                       add_point(shift, data, x[i], values[i], x_pos, height_of_one, color,k, minimal, cat_width, style = style),
                       #line between two points
-                      draw_line(x_pos+5.6, x_pos + cat_width, (250-(height_of_one*values[i])), (250-(height_of_one*values[i+1])),color),
+                      draw_line(x_pos+5.6, x_pos + cat_width, (top_margin+200-(height_of_one*values[i])), (top_margin+200-(height_of_one*values[i+1])),color),
                       sep='\n')
 
       x_pos <- x_pos + cat_width
@@ -87,17 +90,17 @@ draw_points <- function(svg_string, data, x, series, series_labels, cat_width, s
     if(k == 1){
       points <- paste(points,
                       #category label
-                      add_label(x_pos, 268.4 + shift, x[i], "black"),
+                      add_label(x_pos, top_margin+218.4 + shift, x[i], "black"),
                       #ticks
-                      draw_line(x_pos, x_pos, 250,251.6),
+                      draw_line(x_pos, x_pos, top_margin+200,top_margin+201.6),
                       #x-axis line
-                      draw_line(x_pos - cat_width/2, x_pos + cat_width/2, 250, 250),
+                      draw_line(x_pos - cat_width/2, x_pos + cat_width/2, top_margin+200, top_margin+200),
                       sep = "\n")
     }
     points <- paste(points,
                     add_point(shift, data, x[i], values[i], x_pos, height_of_one, color, k, minimal, cat_width, style = style ),
                     sep='\n')
-    x_pos <-80
+    x_pos <-left_margin
   }
 
 
@@ -141,6 +144,8 @@ draw_points <- function(svg_string, data, x, series, series_labels, cat_width, s
 #'
 line_chart_markers <- function(data, x, series, series_labels, interval="months", styles = NULL){ #interval <- week, month, quarter, year
 
+  left_margin <- get_margins()$left
+  top_margin <- get_margins()$top
   if(length(x) == 1){
     x <- data[,x]
   }
@@ -155,7 +160,7 @@ line_chart_markers <- function(data, x, series, series_labels, interval="months"
   if(length(neg) == 0){shift <- 0}
   else{shift <- height_of_one*abs(min(neg)) + 12 + 4.8}
 
-  svg_string <- initialize(width = 80+ cat_width*length(x) + 80, height = 250 + shift + 20) %>%
+  svg_string <- initialize(width = left_margin + cat_width*length(x) + 80, height = top_margin+200 + shift + 20) %>%
     draw_points(data, x, series, series_labels, cat_width, styles, height_of_one, min_avg, shift) %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')
@@ -207,6 +212,8 @@ line_chart_markers <- function(data, x, series, series_labels, interval="months"
 #'
 line_chart_markers_reference <- function(data, x, series, series_labels, ref_val, ref_label=ref_val, interval = "months", styles=NULL){
 
+  left_margin <- get_margins()$left
+  top_margin <- get_margins()$top
   if(length(x) == 1){
     x <- data[,x]
   }
@@ -221,9 +228,9 @@ line_chart_markers_reference <- function(data, x, series, series_labels, ref_val
   if(length(neg) == 0){shift <- 0}
   else{shift <- height_of_one*abs(min(neg)) + 12 + 4.8}
 
-  svg_string <- initialize(width = 80 + cat_width*length(x) + 80, height = 250+shift + 20) %>%
+  svg_string <- initialize(width = left_margin + cat_width*length(x) + 80, height = top_margin+200+shift + 20) %>%
     draw_points(data, x, series, series_labels, cat_width, styles, height_of_one, min_avg, shift) %>%
-    paste(add_index(80 +cat_width/2 + cat_width*(length(x)-1), 250-height_of_one*ref_val, ref_label),
+    paste(add_index(left_margin +cat_width/2 + cat_width*(length(x)-1), top_margin+200-height_of_one*ref_val, ref_label),
           sep='\n') %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')
