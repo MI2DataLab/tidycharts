@@ -158,7 +158,7 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 #' barchart_grouped
 #'
 bar_chart_grouped <- function(data, cat, foreground, background, markers=NULL, series_labels, styles = NULL){
-  svg_string <- initialize(width = 400, height= get_margins()$top + 24*length(cat) + get_margins()$top) %>%
+  svg_string <- initialize(width = 320 + get_margins()$left, height= get_margins()$top + 24*length(cat) + get_margins()$top) %>%
     draw_bars_grouped(data, cat, foreground, background, markers, series_labels, df_styles = styles) %>%
     finalize()
   class(svg_string) <- c('tidychart', 'character')
