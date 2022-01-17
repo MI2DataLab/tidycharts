@@ -16,13 +16,13 @@ line_chart_stacked(
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{cat}{vector cointaining time interwals of the values}
+\item{cat}{vector containing time intervals of the values}
 
 \item{series}{vector containing names of columns in data with values to plot}
 
 \item{series_labels}{vector containing names of series to be shown on the plot}
 
-\item{show_labels}{vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed}
+\item{show_labels}{vector of the same length as cat containing NA or not NA values defining which categories should have labels of values displayed}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }

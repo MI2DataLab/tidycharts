@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Although IBCS recommend to use gray colors for plotting, `tidycharts` enables user to define their color palette. The same applies to styles, the default IBSC are implemented, but there is a way to set one's own styles. In this vignette we will show how to customize the package. 
+Although IBCS recommend to use gray colors for plotting, `tidycharts` enables user to define their color palette. The same applies to styles, the default IBCS are implemented, but there is a way to set one's own styles. In this vignette we will show how to customize the package. 
 
 ```{r setup, message=FALSE}
 library(tidycharts)

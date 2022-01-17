@@ -128,7 +128,7 @@ draw_bars_grouped <- function(svg_string, data, cat, foreground, background, mar
 
 #' Generates grouped horizontal barchart with scenario triangles.
 #'
-#' @param cat vector cointaining category names of values
+#' @param cat vector containing category names of values
 #' @inheritParams column_chart_grouped
 #'
 #' @inherit bar_chart return

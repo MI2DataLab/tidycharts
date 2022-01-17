@@ -24,7 +24,7 @@ bar_chart_relative_variance(
 
 \item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}
 
-\item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
+\item{colors}{1 if green color represents positive values having good business impact and red negative values having bad impact or 2 if otherwise}
 
 \item{y_title}{title of the series values}
 

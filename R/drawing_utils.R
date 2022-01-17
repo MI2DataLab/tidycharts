@@ -114,10 +114,10 @@ choose_variance_colors <- function(colors){
 
 #' Draw triangle and append it to svg string
 #'
-#' @param svg_string svg string to paste a trinagle
+#' @param svg_string svg string to paste a triangle
 #' @param tip_position_x,tip_position_y  x, y position of tip of the triangle
 #' @param style style of the triangle
-#' @param translate_vec the transaltion vector
+#' @param translate_vec the translation vector
 #' @param orientation where the triangle should be pointing. One of c('top', 'right', 'bottom', 'left').
 #'
 #' @return svg string
@@ -209,7 +209,7 @@ draw_ref_line_horizontal <- function(svg_string, x, bar_width, line_y, label) {
   return(svg_string)
 }
 
-#' Caclulate string width in pixels
+#' Calculate string width in pixels
 #'
 #' @param string string which width will be calculated
 #' @param bold boolean value, if string will be written in bold

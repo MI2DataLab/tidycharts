@@ -112,10 +112,10 @@ draw_polygons_normalized <- function(svg_string, data, cat, series, series_label
 #' Generates normalized areas (stacked lines) plot. If more than one series is supplied, stacked areas plot is generated.
 #'
 #' @param data data frame containing data to be plotted
-#' @param x vector cointaining time interwals of the values
+#' @param x vector containing time intervals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
-#' @param show_labels vector of the same length as cat containg NA or not NA values defining which categories should have labels of values displayed
+#' @param show_labels vector of the same length as cat containing NA or not NA values defining which categories should have labels of values displayed
 #' @param interval intervals on x axis. The width of the bars depends on this parameter
 #'
 #'

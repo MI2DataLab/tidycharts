@@ -14,7 +14,7 @@ draw_triangle(
 )
 }
 \arguments{
-\item{svg_string}{svg string to paste a trinagle}
+\item{svg_string}{svg string to paste a triangle}
 
 \item{tip_position_x, tip_position_y}{x, y position of tip of the triangle}
 
@@ -22,7 +22,7 @@ draw_triangle(
 
 \item{style}{style of the triangle}
 
-\item{translate_vec}{the transaltion vector}
+\item{translate_vec}{the translation vector}
 }
 \value{
 svg string

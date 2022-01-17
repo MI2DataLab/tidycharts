@@ -23,7 +23,7 @@ bar_chart_absolute_variance(
 
 \item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}
 
-\item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
+\item{colors}{1 if green color represents positive values having good business impact and red negative values having bad impact or 2 if otherwise}
 
 \item{y_title}{title of the series values}
 
@@ -33,7 +33,7 @@ bar_chart_absolute_variance(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to business interpretation of larger/smaller values.
 }
 \examples{
 

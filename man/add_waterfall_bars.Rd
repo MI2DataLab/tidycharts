@@ -35,13 +35,13 @@ add_waterfall_bars(
 
 \item{styles}{vector of styles of the bars}
 
-\item{pos_color}{color to be asociated with positive values (in string format)}
+\item{pos_color}{color to be associated with positive values (in string format)}
 
-\item{neg_color}{color to be asociated with negative values (in string format)}
+\item{neg_color}{color to be associated with negative values (in string format)}
 
 \item{add_result_bar}{boolean flag to add result bar as the last bar or not.}
 
-\item{result_bar_pos}{flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completly new bar. If add_result_bar is false, it is ignored.}
+\item{result_bar_pos}{flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completely new bar. If add_result_bar is false, it is ignored.}
 
 \item{positive_prefix}{how to indicate positive value, ie. "+" or ""(empty string).}
 

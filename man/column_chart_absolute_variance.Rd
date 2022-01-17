@@ -22,13 +22,13 @@ column_chart_absolute_variance(
 
 \item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}
 
-\item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
+\item{colors}{1 if green color represents positive values having good business impact and red negative values having bad impact or 2 if otherwise}
 
 \item{data}{data frame with columns containing data for x, baseline or real series}
 
 \item{x_title}{the title of the plot}
 
-\item{x_style}{style of the x axis to indicate baseline scenario. The default is 'prevoius'.}
+\item{x_style}{style of the x axis to indicate baseline scenario. The default is 'previous'.}
 
 \item{interval}{intervals on x axis. The width of the bars depends on this parameter}
 }
@@ -36,7 +36,7 @@ column_chart_absolute_variance(
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to business interpretation of larger/smaller values.
 }
 \examples{
 x <- month.abb

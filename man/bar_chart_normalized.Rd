@@ -9,7 +9,7 @@ bar_chart_normalized(data, cat, series, series_labels = series)
 \arguments{
 \item{data}{data frame containing data to be plotted}
 
-\item{cat}{vector cointaining category names of values}
+\item{cat}{vector containing category names of values}
 
 \item{series}{vector containing names of columns in data with values to plot}
 

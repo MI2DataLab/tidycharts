@@ -253,7 +253,7 @@ bar_chart_reference <- function(data, cat, series, ref_val, series_labels = seri
 #'  Generates normalized horizontal barchart. If more than one series is supplied, stacked barchart is generated.
 #'
 #' @param data data frame containing data to be plotted
-#' @param cat vector cointaining category names of values
+#' @param cat vector containing category names of values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #'
@@ -295,7 +295,7 @@ bar_chart_normalized <- function(data, cat, series, series_labels = series){
 
 #' Generate bar chart with absolute variance.
 #'
-#' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+#' Visualize variance between baseline and real in absolute units. Choose colors parameter accordingly to business interpretation of larger/smaller values.
 #'
 #' @inheritParams column_chart_absolute_variance
 #' @inheritParams bar_chart

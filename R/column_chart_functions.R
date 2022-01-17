@@ -242,10 +242,10 @@ add_first_bar <- function(svg_string,
 #' @param series character vector of column names representing series to split bars by it
 #' @param bar_width the width of plotted bar
 #' @param styles vector of styles of the bars
-#' @param pos_color color to be asociated with positive values (in string format)
-#' @param neg_color color to be asociated with negative values (in string format)
+#' @param pos_color color to be associated with positive values (in string format)
+#' @param neg_color color to be associated with negative values (in string format)
 #' @param add_result_bar boolean flag to add result bar as the last bar or not.
-#' @param result_bar_pos flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completly new bar. If add_result_bar is false, it is ignored.
+#' @param result_bar_pos flag indicating position of the result bar. 1 - bar offset 1/9 category width right from the last bar. 2 - result bar as completely new bar. If add_result_bar is false, it is ignored.
 #' @param positive_prefix how to indicate positive value, ie. "+" or ""(empty string).
 #' @param result_bar_color color of result bar. If add_result_bar is false, it is ignored.
 #' @param result_title title of result bar to be on x axis. If add_result_bar is false, it is ignored.
@@ -998,14 +998,14 @@ column_chart_waterfall <-
 
 #' Generate column chart with absolute variance.
 #'
-#' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to buisness interpretation of larger/smaller values.
+#' Visualize variance between two time series (baseline and real) in the same units as the time series. Choose colors parameter accordingly to business interpretation of larger/smaller values.
 #'
 #' @param data data frame with columns containing data for x, baseline or real series
 #' @param baseline vector containing base values or name of column in data with base values
 #' @param real vector containing values that will be compared to baseline  or name of column in data with that values
-#' @param colors 1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise
+#' @param colors 1 if green color represents positive values having good business impact and red negative values having bad impact or 2 if otherwise
 #' @param x_title the title of the plot
-#' @param x_style style of the x axis to indicate baseline scenario. The default is 'prevoius'.
+#' @param x_style style of the x axis to indicate baseline scenario. The default is 'previous'.
 #'
 #' @inheritParams column_chart
 #'

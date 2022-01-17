@@ -23,13 +23,13 @@ column_chart_relative_variance(
 
 \item{real}{vector containing values that will be compared to baseline  or name of column in data with that values}
 
-\item{colors}{1 if green color represents positive values having good buisness impact and red negative values having bad impact or 2 if otherwise}
+\item{colors}{1 if green color represents positive values having good business impact and red negative values having bad impact or 2 if otherwise}
 
 \item{data}{data frame with columns containing data for x, baseline or real series}
 
 \item{x_title}{the title of the plot}
 
-\item{x_style}{style of the x axis to indicate baseline scenario. The default is 'prevoius'.}
+\item{x_style}{style of the x axis to indicate baseline scenario. The default is 'previous'.}
 
 \item{styles}{optional vector with styles of the pin heads}
 

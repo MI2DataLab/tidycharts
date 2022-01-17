@@ -17,7 +17,7 @@ parse_time_series(df, dates, series, convert.to = "months")
 }
 \value{
 list of data frames, each one containing data about one time series.  Data frames in returned list consist of columns:
-* containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinattes of the point)
+* containing numeric values from 0 to 100 defining the percentage of distance in one time interval of the point (x - coordinates of the point)
 * containing the value of a point  (y - coordinates of the point)
 * containing the time interval of the value
 }

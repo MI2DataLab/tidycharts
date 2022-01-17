@@ -2,7 +2,7 @@
 % Please edit documentation in R/chart_utils.R
 \name{add_title}
 \alias{add_title}
-\title{Add IBCS complient legend.}
+\title{Add IBCS compliant legend.}
 \usage{
 add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 }
@@ -11,7 +11,7 @@ add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 
 \item{line1}{first line of title. Element(s) of the structure dimension represent the object of the report, typically a legal entity, an organization unit, or a line of business}
 
-\item{line2_measure}{First part of second line of the title. It wil be in bold text. It should represent buisness measure being analyzed.}
+\item{line2_measure}{First part of second line of the title. It will be in bold text. It should represent business measure being analyzed.}
 
 \item{line2_rest}{Second part of second line of the title. It should represent units of measure.}
 
@@ -21,7 +21,7 @@ add_title(svg_string, line1, line2_measure, line2_rest, line3 = "")
 object of class tidychart with a character vector containing SVG elements
 }
 \description{
-Add IBCS complient legend.
+Add IBCS compliant legend.
 }
 \examples{
 df <- data.frame(x = 2010:2015, sales = rnorm(6,10, 2))

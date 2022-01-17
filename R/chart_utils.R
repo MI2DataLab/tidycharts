@@ -52,11 +52,11 @@ finalize <- function(svg_string) {
 }
 
 
-#' Add IBCS complient legend.
+#' Add IBCS compliant legend.
 #'
 #' @param svg_string one element character vector containing SVG graphic statements. Legend will be added to this plot.
 #' @param line1 first line of title. Element(s) of the structure dimension represent the object of the report, typically a legal entity, an organization unit, or a line of business
-#' @param line2_measure First part of second line of the title. It wil be in bold text. It should represent buisness measure being analyzed.
+#' @param line2_measure First part of second line of the title. It will be in bold text. It should represent business measure being analyzed.
 #' @param line2_rest Second part of second line of the title. It should represent units of measure.
 #' @param line3 Third line of the title, it should indicate time, scenarios, variances, etc
 #'

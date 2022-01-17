@@ -38,7 +38,7 @@ library(tidycharts)
 
 ## Data
 
-Bar charts shoud be used to show structure in one moment of time. One of typical usecase of the barchart is to visualize profit of a company in a division by departments. The data structure could look the following:
+Bar charts should be used to show structure in one moment of time. One of typical usecase of the barchart is to visualize profit of a company in a division by departments. The data structure could look the following:
 
 ```{r data}
 data_barchart <- data.frame(
@@ -69,7 +69,7 @@ bar_chart(data = data_barchart, cat = 'dep', series = 'profit') %>%
   add_title('The company XYZ', 'Profit', 'in mEUR', 'by departments, 2020')
 ```
 
-We can show the structure of each value by specyfing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
+We can show the structure of each value by specifing different `series` argument. It can be a vector of column names. It that case, stacked barchart will be generated.
 
 ```{r barchart-stacked}
 bar_chart(data = data_barchart, cat = 'dep', 
@@ -92,7 +92,7 @@ bar_chart_normalized(data = data_barchart, cat = 'dep',
 
 ## Referenced
 
-We use reference values (indecies) to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
+We use reference values (indices) to show a reference value on the plot. In the following example, index line is used to show the best result in previous year (PY). 
 
 ```{r barchart-index}
 bar_chart_reference(data = data_barchart,
@@ -104,9 +104,9 @@ bar_chart_reference(data = data_barchart,
 
 ## Grouped
 
-To visualize 2 or 3 series of data, which **do not** sum up to some value, grouped barchart should be used. First series is visualized by bars in the foreground, second by bars in the background and third in the form of triangles. Style of the bars and triangles indicates type of data, so called scenerios. 
+To visualize 2 or 3 series of data, which **do not** sum up to some value, grouped barchart should be used. First series is visualized by bars in the foreground, second by bars in the background and third in the form of triangles. Style of the bars and triangles indicates type of data, so called scenarios. 
 
-The most typical usecase of this chart is to visualize profit of different departments in a company with comparison to bugdet and previous year data.
+The most typical usecase of this chart is to visualize profit of different departments in a company with comparison to budget and previous year data.
 
 ```{r barchart-grouped}
 
@@ -164,7 +164,7 @@ scatter_data <- mtcars[c('hp','qsec','cyl', 'wt')]
 ```
 
 
-Scatter plots, also known as point plots, are used to visualize mulitidimensional relationships between variables. Therefore, they are extensively used in exploratory data analysis.
+Scatter plots, also known as point plots, are used to visualize multidimensional relationships between variables. Therefore, they are extensively used in exploratory data analysis.
 
 ## Scatter <a name="scatterplot"></a>
 
@@ -193,7 +193,7 @@ scatter_plot(scatter_data, x = 'hp',
 
 ## Bubble 
 
-Bubble plots can visualize the same dimensions as [scatter plots](#scatterplot). However even third numeric dimension can be added in a form of point size. On the other hand, there is a tradeoff between dimensionality and size of your data and readability of generated plots, so be carefull when using bubble charts.
+Bubble plots can visualize the same dimensions as [scatter plots](#scatterplot). However even third numeric dimension can be added in a form of point size. On the other hand, there is a tradeoff between dimensionality and size of your data and readability of generated plots, so be careful when using bubble charts.
 
 ```{r bubble}
 scatter_plot(scatter_data, x = 'hp',
@@ -208,7 +208,7 @@ scatter_plot(scatter_data, x = 'hp',
 
 # Column charts <a name="columncharts"></a>
 
-Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width dependt on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts).
+Charts with vertical columns are intended to visualize time series data. What is worth noticing, column width depends on the x-axis interval. The longer the interval, the wider the column. General guideline for this kind of chart is to plot **up to 24 columns**. If your data has more than 24 time points see [line chart section](#linecharts).
 
 ## Data 
 
@@ -223,7 +223,7 @@ data_time_series <- data.frame(
 )
 ```
 
-The `time` column consists of the three-letter abbreviations for the English month names and other columns constit of some artificial data, it could be for example sales in different countries.
+The `time` column consists of the three-letter abbreviations for the English month names and other columns consist of some artificial data, it could be for example sales in different countries.
 
 ## Basic
 
@@ -283,7 +283,7 @@ line_chart_markers(data_companies, x = 'time',
 
 ## Dense
 
-Use desnse line plot to visualize up to 6 time series with more than one point in a category on x-axis. The more advanced users are encouraged to use the `line_chart_dense_custom` function, where they can choose points that will be highlited by value label.
+Use dense line plot to visualize up to 6 time series with more than one point in a category on x-axis. The more advanced users are encouraged to use the `line_chart_dense_custom` function, where they can choose points that will be highlighted by value label.
 
 The most typical example is to show data with time granularity of 1 day among the years (mean day temperature in the course of 16 months). 
 

@@ -12,7 +12,7 @@ join_charts(
 )
 }
 \arguments{
-\item{...}{mumltiple character vectors with SVG content}
+\item{...}{multiple character vectors with SVG content}
 
 \item{nrows}{number of rows of plots in joint plot, default is set to number of plots}
 

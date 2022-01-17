@@ -2,7 +2,7 @@
 % Please edit documentation in R/drawing_utils.R
 \name{str_width}
 \alias{str_width}
-\title{Caclulate string width in pixels}
+\title{Calculate string width in pixels}
 \usage{
 str_width(string, bold = FALSE)
 }
@@ -15,5 +15,5 @@ str_width(string, bold = FALSE)
 string width in pixels
 }
 \description{
-Caclulate string width in pixels
+Calculate string width in pixels
 }

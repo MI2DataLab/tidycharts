@@ -113,7 +113,7 @@ draw_points <- function(svg_string, data, x, series, series_labels, cat_width, s
 #' Generates line plot with markers on every value.
 #'
 #' @param data data frame containing data to be plotted
-#' @param x vector cointaining time intervals of the values
+#' @param x vector containing time intervals of the values
 #' @param series vector containing names of columns in data with values to plot
 #' @param series_labels vector containing names of series to be shown on the plot
 #' @param interval intervals on x axis. The width of the bars depends on this parameter

@@ -17,7 +17,7 @@ bar_chart_grouped(
 \arguments{
 \item{data}{data frame in wide format containing data to be plotted}
 
-\item{cat}{vector cointaining category names of values}
+\item{cat}{vector containing category names of values}
 
 \item{foreground}{vector or name of column in data representing heights of bars visible in the foreground}
 
