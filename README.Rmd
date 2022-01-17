@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/MI2DataLab/tidycharts/workflows/R-CMD-check/badge.svg)](https://github.com/MI2DataLab/tidycharts/actions)
 [![CRAN monthly downloads](https://cranlogs.r-pkg.org/badges/tidycharts)](https://cran.r-project.org/package=tidycharts)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tidycharts)](https://cran.r-project.org/package=tidycharts)
-[![Codecov test coverage](https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg)](https://codecov.io/gh/SawickiBartosz/tidycharts?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/SawickiBartosz/tidycharts/branch/main/graph/badge.svg)](https://app.codecov.io/gh/SawickiBartosz/tidycharts?branch=main)
 <!-- badges: end -->
 
 
