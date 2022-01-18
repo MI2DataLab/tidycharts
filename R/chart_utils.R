@@ -1,3 +1,19 @@
+
+#' Function to render SVG as bitmap, used only in tests
+#'
+#' @param svg_string string containing SVG statements
+#'
+#' @return No return value, called for side effects
+#'
+#' @examples
+#' if(FALSE){
+#'
+#'   df <- data.frame(x = c(1,2,3), y = c(4,5,6))
+#'
+#'   column_chart(df, x = df$x, series = c("y")) %>% show()
+#' }
+#'
+#' @importFrom rsvg rsvg
 show <- function(svg_string) {
   magick::image_read_svg(svg_string, width = 500)
 }
